@@ -117,7 +117,7 @@
                 color: '#fff',
                 borderColor: 'rgba(255, 255, 255, 0.3)',
                 fontSize: '12rem',
-                margin:'0 -1px 00'
+                margin: '0 -1px 00',
               }"
               :cell-style="{
                 borderColor: 'rgba(255, 255, 255, 0.3)',
@@ -234,7 +234,7 @@
               <div class="huanxjdu">
                 <el-progress
                   class="huanxyet"
-                  :stroke-width="wwind == 1920 ? (16 * 1.33333333333) : 16"
+                  :stroke-width="wwind == 1920 ? 16 * 1.33333333333 : 16"
                   type="circle"
                   :percentage="30"
                   color="#C6502D"
@@ -288,10 +288,50 @@
             <div class="wenz">资产图谱</div>
           </div>
           <div class="yuanqiutu">
-            <Graph/>
+            <Graph />
           </div>
         </div>
-        <div class="fxlujig">3</div>
+        <div class="fxlujig">
+          <div class="btbox">
+            <div class="guns"></div>
+            <div class="wenz">关键风险路径</div>
+          </div>
+          <div class="guaninastye">
+            <div class="xialxz">
+              <div class="fkuai"></div>
+              <el-select
+                v-model="zq"
+                class="xialacx zhessless"
+                size="mini"
+                style="width: 180rem"
+              >
+                <el-option label="月" value="1"></el-option>
+                <el-option label="周" value="2"></el-option>
+                <el-option label="日" value="3"></el-option>
+              </el-select>
+            </div>
+            <div class="xhfor gdstyle">
+              <div v-for="(e,i) in 6" :key="i">
+                <div class="ytyz">
+                  <div class="imgtu">
+                    <img v-if="i == 0" src="../img/hip.png" alt="">
+                    <img v-else src="../img/lip.png" alt="">
+                  </div>
+                  <div class="zswenz">
+                    <div class="ipdiz">192.168.1.10（起点）</div>
+                    <div class="azswenztex">资产类型：文件服务器</div>
+                  </div>
+                </div>
+                <div class="zhesjiant">
+                  <div class="tetxbox">
+                    <div>注入数据等 》</div>
+                    <i class="el-icon-arrow-down"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -368,7 +408,10 @@ export default {
         {
           prop: "c",
           label: "风险值占比",
-          width: document.documentElement.clientWidth == 1920 ? (94 * 1.33333333333) + '' : '94',
+          width:
+            document.documentElement.clientWidth == 1920
+              ? 94 * 1.33333333333 + ""
+              : "94",
         },
       ],
       // 攻击list
@@ -391,8 +434,8 @@ export default {
       ],
     };
   },
-  created(){
-    this.wwind = document.documentElement.clientWidth
+  created() {
+    this.wwind = document.documentElement.clientWidth;
   },
   methods: {
     xx(e) {
