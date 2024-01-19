@@ -19,7 +19,7 @@ export default new Router({
       path: '/home',
       name: "主页",//主体件
       component: () => import("@/pages/home"),
-      redirect: '/assets',
+      redirect: '/instrumentpanel',
       children: [
         {
           path: '/instrumentpanel',
@@ -31,8 +31,14 @@ export default new Router({
           path: '/assets',
           name: "资产",
           component: () => import("@/pages/home/assets")
-          // meta:{type:1}
-        }
+          // meta:{type:1}drivingdepot
+        },
+        {
+          path: '/drivingdepot',
+          name: "驾驶舱",
+          component: () => import("@/pages/home/drivingdepot"),
+          meta:{type:9}
+        },
         
       ]
     }

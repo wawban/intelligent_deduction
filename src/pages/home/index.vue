@@ -12,6 +12,11 @@
               <img v-if="type == 1" src="./img/yo.png" alt="" />
               <img v-else src="./img/yf.png" alt="" />
             </div>
+            <div @click="gotu('/drivingdepot')" :class="type == 2 ? 'current' : ''">
+              <img v-if="type == 9" src="./img/yo.png" alt="" />
+              <img v-else src="./img/yf.png" alt="" />
+            </div>
+            <!-- drivingdepot -->
             <!-- <div @click="gotu('/xxxxxx')" :class="type == 2 ? 'current' : ''">
               <img v-if="type == 2" src="./img/xxxx.png" alt="" />
               <img v-else src="./img/xxxx.png" alt="" />
