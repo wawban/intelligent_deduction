@@ -8,7 +8,7 @@
           <img src="../img/sh.png" alt="" />
         </div>
         <div class="wys">知识库/漏洞知识库/</div>
-        <div class="yys">漏洞知识详情</div>
+        <div class="yys" @click="tz">漏洞知识详情</div>
       </div>
       <div class="fanh" @click="goto">
         <img src="../img/hip.png" alt="">返回
@@ -271,6 +271,9 @@ export default {
   methods:{
     goto(){
         this.$router.go(-1)
+    },
+    tz(){
+      this.$router.push("/defensivetechniquesandtactics");
     }
   }
 };

@@ -61,6 +61,24 @@ export default new Router({
               component: () => import("@/pages/home/knowledge/knowledgedetails"),
               meta:{type:5,nemr:"漏洞知识详情"}
             },
+            {
+              path: '/techniqueandtactics',
+              name: "技战术知识库",
+              component: () => import("@/pages/home/knowledge/techniqueandtactics"),
+              meta:{type:5,nemr:"技战术知识库"}
+            },
+            {
+              path: '/attacktechniqueandtactics',
+              name: "攻击技战术详情",
+              component: () => import("@/pages/home/knowledge/attacktechniqueandtactics"),
+              meta:{type:5,nemr:"攻击技战术详情"}
+            },
+            {
+              path: '/defensivetechniquesandtactics',
+              name: "防御技战术详情",
+              component: () => import("@/pages/home/knowledge/defensivetechniquesandtactics"),
+              meta:{type:5,nemr:"防御技战术详情"}
+            },
           ]
         },
         // -----------------------------------------------------------------------------------------------------
