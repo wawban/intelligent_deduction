@@ -42,6 +42,27 @@ export default new Router({
             },
           ]
         },
+        {
+          path: '/knowledge',
+          name: "知识库",
+          component: () => import("@/pages/home/knowledge"),
+          meta:{type:5,nemr:"知识库"},
+          redirect: '/loophole',
+          children: [
+            {
+              path: '/loophole',
+              name: "漏洞知识库",
+              component: () => import("@/pages/home/knowledge/loophole"),
+              meta:{type:5,nemr:"漏洞知识库"}
+            },
+            {
+              path: '/knowledgedetails',
+              name: "漏洞知识详情",
+              component: () => import("@/pages/home/knowledge/knowledgedetails"),
+              meta:{type:5,nemr:"漏洞知识详情"}
+            },
+          ]
+        },
         // -----------------------------------------------------------------------------------------------------
         {
           path: '/assets',

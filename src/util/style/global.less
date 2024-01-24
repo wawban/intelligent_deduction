@@ -45,19 +45,23 @@
 .tablebottom::before {
     background-color: #292929 !important;
 }
+
 // 带背景表格底部
 .ybjboder::before {
     background-color: rgba(255, 255, 255, 0.3) !important;
 }
+
 // 带背景表格右边框
-.ybjboder{
-    .el-table__header-wrapper{
+.ybjboder {
+    .el-table__header-wrapper {
         border-right: 1px solid #161616;
     }
-    .el-table__body-wrapper{
+
+    .el-table__body-wrapper {
         border-right: 1px solid #161616;
     }
 }
+
 // .ybjboder{
 //     /deep/.el-table--border::after {
 //         width: 0px !important;
@@ -93,10 +97,40 @@ body {
     // border: 1rem solid rgba(255, 255, 255, 0.2);
     box-shadow: 0rem 0rem 8rem 0rem rgba(250, 150, 0, 0.3);
 }
-// 标题样式
+
+// 带盒子无背景
+.wbb {
+    background: #161616;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+// 知识库标题样式
+.zsbtbox {
+    display: flex;
+    line-height: 18rem;
+    padding-bottom: 18rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+
+    .guns {
+        height: 18rem;
+        width: 4rem;
+        background: #FA9600;
+        margin-right: 8rem;
+    }
+
+    .wenz {
+        font-size: 18rem;
+        font-weight: 500;
+    }
+}
+
+// 仪表盘标题样式
 .btbox {
     display: flex;
     line-height: 16rem;
+
     // align-items: center;
     .guns {
         height: 16rem;
@@ -110,45 +144,202 @@ body {
         font-weight: 500;
     }
 }
+
 // 标题样式带右边
-.btbox_ammo{
+.btbox_ammo {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 // -----------------------------------
 // 表格或其它色值
-.bdrg{
+.bdrg {
     color: #E53A40;
 }
-.bdrz{
+
+.bdrz {
     color: #FA9600;
 }
-.bdrd{
+
+.bdrd {
     color: #4DE5B9;
 }
+
 // -------------------------------------
 // 滚动条
 // /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/  
-.gdstyle::-webkit-scrollbar  {  
-  width: 5rem;  
-//   height: 4rem;  
-//   background-color: none;  
-}  
-  
-// /*定义滚动条轨道 内阴影+圆角*/  
-.gdstyle::-webkit-scrollbar-track  
-{  
-//   -webkit-box-shadow: inset 0 0 6rem rgba(255,255,255,0);  
-//   border-radius: 10rem;  
-  background-color: none;  
-}  
-  
-// /*定义滑块 内阴影+圆角*/  
-.gdstyle::-webkit-scrollbar-thumb  
-{  
-  border-radius: 10rem;  
-//   -webkit-box-shadow: inset 0 0 6rem #dde2eb;  
-  background-color: #3C3C3C; 
+.gdstyle::-webkit-scrollbar {
+    width: 5rem;
+    //   height: 4rem;  
+    //   background-color: none;  
 }
+
+// /*定义滚动条轨道 内阴影+圆角*/  
+.gdstyle::-webkit-scrollbar-track {
+    //   -webkit-box-shadow: inset 0 0 6rem rgba(255,255,255,0);  
+    //   border-radius: 10rem;  
+    background-color: none;
+}
+
+// /*定义滑块 内阴影+圆角*/  
+.gdstyle::-webkit-scrollbar-thumb {
+    border-radius: 10rem;
+    //   -webkit-box-shadow: inset 0 0 6rem #dde2eb;  
+    background-color: #3C3C3C;
+}
+
 // ---------------------------------------------------------------
+// 面包屑
+.crumbss {
+    display: flex;
+    align-items: center;
+    padding-bottom: 16rem;
+
+    .img {
+        margin-right: 6rem;
+
+        >img {
+            height: 24px;
+        }
+    }
+
+    .wys {
+        font-size: 14rem;
+        font-weight: normal;
+        color: #aaa;
+    }
+
+    .yys {
+        font-size: 14rem;
+        font-weight: normal;
+        color: #FA9600;
+    }
+}
+
+// 带返回面包屑
+.crumbssfh {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .dq {
+        display: flex;
+        align-items: center;
+        padding-bottom: 16rem;
+
+        .img {
+            margin-right: 6rem;
+
+            >img {
+                height: 24px;
+            }
+        }
+
+        .wys {
+            font-size: 14rem;
+            font-weight: normal;
+            color: #aaa;
+        }
+
+        .yys {
+            font-size: 14rem;
+            font-weight: normal;
+            color: #FA9600;
+        }
+    }
+
+    .fanh {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-size: 16rem;
+        color: #aaa;
+
+        >img {
+            height: 13rem;
+            margin-right: 12rem;
+        }
+    }
+}
+
+// ---------------------------------
+// 按钮样式
+.buttonsy {
+    background: transparent !important;
+    color: #fff !important;
+}
+
+// 按钮样式
+.buttonsy:hover {
+    color: #FA9600 !important;
+    border-color: #FA9600 !important;
+}
+
+// -------------------------------
+// 查询组件
+.zheipr {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16rem 0;
+
+    .marginr {
+        padding-right: 74rem;
+    }
+
+    >div {
+        .boxjc {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: normal;
+            color: #aaa;
+
+            >img {
+                width: 24rem;
+                margin-right: 7rem;
+            }
+        }
+    }
+}
+
+// 查询组件-查看全部
+.ckqbtopqian {
+    text-align: center;
+}
+
+// 查询组件-条件筛选
+.tjiansxian {
+    color: #fff;
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    // text-align: center;
+}
+
+// // 查询组件-字段配置
+.zduanpeizi {
+    color: #fff;
+
+    .zdbox {
+        padding: 6rem 0;
+
+        >div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            >div {
+                >img {
+                    height: 20rem;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+// -------------------------------------------------

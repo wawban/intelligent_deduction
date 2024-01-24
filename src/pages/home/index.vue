@@ -9,13 +9,20 @@
           </div>
 
           <div class="menubox">
+            <!-- 仪表盘 -->
             <div @click="gotu('/instrumentpanel')" :class="type == 1 ? 'current' : ''">
               <img v-if="type == 1" src="./img/yo.png" alt="" />
               <img v-else src="./img/yf.png" alt="" />
             </div>
+            <!-- 资产治理 -->
             <div @click="gotu('/figure')" :class="type == 2 ? 'current' : ''">
               <img v-if="type == 2" src="./img/sk.png" alt="" />
               <img v-else src="./img/sg.png" alt="" />
+            </div>
+            <!-- 知识库 -->
+            <div @click="gotu('/knowledge')" :class="type == 2 ? 'current' : ''">
+              <img v-if="type == 5" src="./img/lk.png" alt="" />
+              <img v-else src="./img/lg.png" alt="" />
             </div>
             <div @click="gotu('/drivingdepot')" :class="type == 9 ? 'current' : ''">
               <img v-if="type == 9" src="./img/yo.png" alt="" />
