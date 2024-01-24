@@ -52,7 +52,7 @@
     			</div>
     			<div class="path">
     				<div class="box">
-	    				<div class="item" v-for="(item,index) in path" :key="index" @mouseenter="pathEnter" @mouseleave="pathLeave">
+	    				<div class="item" v-for="(item,index) in path" :key="index" @mouseenter="pathEnter(item)" @mouseleave="pathLeave(item)">
 	    					<div class="header" @click="pathSwitch(item)"><span :style="'border:4px '+item.color+' solid;'"></span>{{item.title}}</div>
 	    					<div class="body" :style="item.open===true?'':'display:none;'">
 	    						<div v-for="(item1,index1) in item.node" :key="index1">
@@ -74,7 +74,14 @@
     		</div>
     	</div>
     	<div class="center">
-    		<div class="control">控制区</div>
+    		<div class="control">
+    			<div class="switch">
+	    			<div class="item"><span class="icon" style="background:#0085FF;"></span><span class="text">业务图层</span><el-switch v-model="ywtc" active-color="#13ce66" inactive-color="#DCDFE6" disabled></el-switch></div>
+	    			<div class="item"><span class="icon" style="background:#E53A40;"></span><span class="text">攻击图层</span><el-switch v-model="gjtc" active-color="#13ce66" inactive-color="#DCDFE6"></el-switch></div>
+	    			<div class="item"><span class="icon" style="background:#29CA9B;"></span><span class="text">防护图层</span><el-switch v-model="fhtc" active-color="#13ce66" inactive-color="#DCDFE6"></el-switch></div>
+	    			<div class="item"><span class="icon" style="background:#FA9600;"></span><span class="text">风险图层</span><el-switch v-model="fxtc" active-color="#13ce66" inactive-color="#DCDFE6"></el-switch></div>
+    			</div>
+    		</div>
     		<div class="play">播放按钮区</div>
     		<div id="canvas" class="canvas"></div>
     	</div>
@@ -88,6 +95,13 @@ var paper;
 export default {
   data() {
     return {
+      ywtc:true,//业务图层
+      gjtc:true,//攻击图层
+      fhtc:true,//防护图层
+      fxtc:true,//风险图层
+      graps:{},//根据id记录主机图形
+      lines:{},//根据title记录线
+      
       gjzcs: 221,//关键资产数
       jkzcs: 222,//健康资产数
       zczs: 223,//资产总数
@@ -100,46 +114,28 @@ export default {
       	open:true,
       	title:'最高价值路径（路径八）',
       	node:[
-      		{ip:'192.168.0.100（起点）',desc:'内部网络',pass:'抓取评证技术等'},
-      		{ip:'192.168.0.101(途径)',desc:'数据库服务器',pass:'渗透测试技术等'},
-      		{ip:'192.168.0.102(途径)',desc:'邮件服务器',pass:'注入攻击等'},
-      		{ip:'192.168.0.103(终点)',desc:'文件服务器'}
+      		{id:1,ip:'192.168.3.123（起点）',desc:'内部网络',pass:'抓取评证技术等'},
+      		{id:5,ip:'192.168.4.123(途径)',desc:'数据库服务器',pass:'渗透测试技术等'},
+      		{id:9,ip:'192.168.5.123(途径)',desc:'邮件服务器',pass:'注入攻击等'},
+      		{id:16,ip:'192.168.1.123(终点)',desc:'文件服务器'}
       	]
       },{
       	color:'#29CA9B',
       	open:false,
       	title:'最隐蔽路径（路径六）',
       	node:[
-      		{ip:'192.168.0.200',desc:'内部网络',pass:'抓取评证技术等'},
-      		{ip:'192.168.0.201',desc:'数据库服务器',pass:'渗透测试技术等'},
-      		{ip:'192.168.0.202',desc:'邮件服务器',pass:'注入攻击等'},
-      		{ip:'192.168.0.203',desc:'文件服务器'}
+      		{id:3,ip:'192.168.3.125（起点）',desc:'内部网络',pass:'抓取评证技术等'},
+      		{id:14,ip:'192.168.5.128（途径）',desc:'数据库服务器',pass:'渗透测试技术等'},
+      		{id:8,ip:'192.168.4.126（途径）',desc:'邮件服务器',pass:'注入攻击等'},
+      		{id:18,ip:'192.168.1.125（终点）',desc:'文件服务器'}
       	]
       },{
       	color:'#CE6D39',
       	open:false,
       	title:'最短路径（路径三）',
       	node:[
-      		{ip:'192.168.1.200',desc:'内部网络',pass:'抓取评证技术等'},
-      		{ip:'192.168.1.203',desc:'文件服务器'}
-      	]
-      },{
-      	color:'#0085FF',
-      	open:false,
-      	title:'路径一',
-      	node:[
-      		{ip:'192.168.2.200',desc:'内部网络',pass:'抓取评证技术等'},
-      		{ip:'192.168.2.201',desc:'数据库服务器',pass:'渗透测试技术等'},
-      		{ip:'192.168.2.203',desc:'文件服务器'}
-      	]
-      },{
-      	color:'#0085FF',
-      	open:false,
-      	title:'路径二',
-      	node:[
-      		{ip:'192.168.2.200',desc:'内部网络',pass:'抓取评证技术等'},
-      		{ip:'192.168.2.201',desc:'数据库服务器',pass:'渗透测试技术等'},
-      		{ip:'192.168.2.203',desc:'文件服务器'}
+      		{id:10,ip:'192.168.5.124（起点）',desc:'内部网络',pass:'抓取评证技术等'},
+      		{id:20,ip:'192.168.2.124（终点）',desc:'文件服务器'}
       	]
       }],
       nodes:[{//主图数据
@@ -149,62 +145,84 @@ export default {
       		children:[{
 	      		name:'系统1-1-1',
 	      		children:[{
+	      			id:1,
 		      		ip:'192.168.3.123'
 		      	},{
+	      			id:2,
 		      		ip:'192.168.3.124'
 		      	},{
+	      			id:3,
 		      		ip:'192.168.3.125'
 		      	},{
+	      			id:4,
 		      		ip:'192.168.3.126'
 		      	}]
 	      	},{
 	      		name:'系统1-1-2',
 	      		children:[{
+	      			id:5,
 		      		ip:'192.168.4.123'
 		      	},{
+	      			id:6,
 		      		ip:'192.168.4.124'
 		      	},{
+	      			id:7,
 		      		ip:'192.168.4.125'
 		      	},{
+	      			id:8,
 		      		ip:'192.168.4.126'
 		      	}]
 	      	},{
 	      		name:'系统1-1-3',
 	      		children:[{
+	      			id:9,
 		      		ip:'192.168.5.123'
 		      	},{
+	      			id:10,
 		      		ip:'192.168.5.124'
 		      	},{
+	      			id:11,
 		      		ip:'192.168.5.125'
 		      	},{
+	      			id:12,
 		      		ip:'192.168.5.126'
 		      	},{
+	      			id:13,
 		      		ip:'192.168.5.127'
 		      	},{
+	      			id:14,
 		      		ip:'192.168.5.128'
 		      	},{
+	      			id:15,
 		      		ip:'192.168.5.129'
 		      	}]
 	      	}]
       	},{
       		name:'系统1-2',
       		children:[{
+      			id:16,
 	      		ip:'192.168.1.123'
 	      	},{
+      			id:17,
 	      		ip:'192.168.1.124'
 	      	},{
+      			id:18,
 	      		ip:'192.168.1.125'
 	      	},{
+      			id:19,
 	      		ip:'192.168.1.126'
 	      	}]
       	}]
       },{
       	name:'系统2',
       	children:[{
+  			id:20,
       		ip:'192.168.2.124'
       	},{
+  			id:21,
       		ip:'192.168.2.124'
       	},{
+  			id:22,
       		ip:'192.168.2.124'
       	}]
       }]
@@ -223,7 +241,8 @@ export default {
     //console.info(root.children||[]);
     
     paper = Raphael('canvas',width,height);
-    this.createGroup(root.children||[]);
+    this.createGrap(root.children||[]);
+    this.createPath();
   },
   methods: {
   	//创建综合得分pie图
@@ -291,15 +310,25 @@ export default {
     	alert('点击路径');
     },
     //鼠标移入路径，加粗显示路径
-    pathEnter(){
-    	console.info('加粗显示路径');
+    pathEnter(item){
+    	var ps = this.lines[item.title];
+    	if(ps){
+    		for(var i=0;i<ps.length;i++){
+    			ps[i].attr('stroke-width',5);
+    		}
+    	}
     },
     //鼠标移出路径，取消加粗显示路径
-    pathLeave(){
-    	console.info('取消加粗显示路径');
+    pathLeave(item){
+    	var ps = this.lines[item.title];
+    	if(ps){
+    		for(var i=0;i<ps.length;i++){
+    			ps[i].attr('stroke-width',1);
+    		}
+    	}
     },
-    //主图画组
-    createGroup(arr){
+    //主图画图
+    createGrap(arr){
     	for(var i=0;i<arr.length;i++){
 			var obj = arr[i];
 			var data = obj.data || {};
@@ -313,6 +342,7 @@ export default {
 					    stroke:'#E9E9E9',
 					    'stroke-width':1,
 					});
+					this.graps[data.id+''] = circle;
 				}
 				//组
 				else{
@@ -324,7 +354,36 @@ export default {
 				}
 			}
 			if(obj.children){
-				this.createGroup(obj.children);
+				this.createGrap(obj.children);
+			}
+		}
+    },
+    //主图画路线
+    createPath(){
+    	for(var i=0;i<this.path.length;i++){
+			var color = this.path[i].color;
+			var nodes = this.path[i].node;
+			for(var j=0;j<nodes.length;j++){
+				if(j+1<nodes.length){
+					var n = nodes[j];
+					var n1 = nodes[j+1];
+					var g = this.graps[n.id];
+					var g1 = this.graps[n1.id];
+					if(g && g1){
+						const line = paper.path(`M${g.attr('cx')} ${g.attr('cy')}L${g1.attr('cx')} ${g1.attr('cy')}`);
+					    line.attr({
+							stroke:color,
+							'stroke-width':1
+					    });
+					    //记录 路线
+					    var ps = this.lines[this.path[i].title];
+					    if(!ps){
+					    	ps = [];
+					    	this.lines[this.path[i].title] = ps;
+					    }
+					    ps.push(line);
+					}
+				}
 			}
 		}
     }
@@ -412,7 +471,11 @@ export default {
 	.paths .path .allow img{margin:0 15px 0 17px;cursor:pointer;}
 	
 	.layout .center{flex-grow:1;margin-left:20px;position:relative;}
-	.layout .control{position:absolute;top:0;bottom:0;left:0;width:130px;background:gray;}
+	.layout .control{position:absolute;top:0;bottom:0;left:0;width:150px;padding:18px 0 0 10px;z-index:1;}
+	.layout .control .item{margin-bottom:15px;}
+	.layout .control .item .icon{display:inline-block;width:12px;height:12px;}
+	.layout .control .item .text{font-size:16px;margin:0 10px;}
+	
 	.layout .play{position:absolute;bottom:20px;width:200px;right:60px;height:50px;background:gray;}
-	.layout .canvas{position:absolute;top:0;right:0;bottom:0;left:130px;}
+	.layout .canvas{position:absolute;top:0;right:0;bottom:0;left:140px;}
 </style>
