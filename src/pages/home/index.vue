@@ -1,3 +1,4 @@
+<!-- 菜单 -->
 <template>
   <div class="home">
     <el-container style="min-height: 100%">
@@ -12,35 +13,14 @@
               <img v-if="type == 1" src="./img/yo.png" alt="" />
               <img v-else src="./img/yf.png" alt="" />
             </div>
-            <div @click="gotu('/drivingdepot')" :class="type == 2 ? 'current' : ''">
+            <div @click="gotu('/figure')" :class="type == 2 ? 'current' : ''">
+              <img v-if="type == 2" src="./img/sk.png" alt="" />
+              <img v-else src="./img/sg.png" alt="" />
+            </div>
+            <div @click="gotu('/drivingdepot')" :class="type == 9 ? 'current' : ''">
               <img v-if="type == 9" src="./img/yo.png" alt="" />
               <img v-else src="./img/yf.png" alt="" />
             </div>
-            <!-- drivingdepot -->
-            <!-- <div @click="gotu('/xxxxxx')" :class="type == 2 ? 'current' : ''">
-              <img v-if="type == 2" src="./img/xxxx.png" alt="" />
-              <img v-else src="./img/xxxx.png" alt="" />
-            </div>
-            <div @click="gotu('/xxxxxx')" :class="type == 3 ? 'current' : ''">
-              <img v-if="type == 3" src="./img/xxxx.png" alt="" />
-              <img v-else src="./img/xxxx.png" alt="" />
-            </div>
-            <div @click="gotu('/xxxxxx')" :class="type == 4 ? 'current' : ''">
-              <img v-if="type == 4" src="./img/xxxx.png" alt="" />
-              <img v-else src="./img/xxxx.png" alt="" />
-            </div>
-            <div @click="gotu('/xxxxxx')" :class="type == 5 ? 'current' : ''">
-              <img v-if="type == 5" src="./img/xxxx.png" alt="" />
-              <img v-else src="./img/xxxx.png" alt="" />
-            </div>
-            <div @click="gotu('/xxxxxx')" :class="type == 6 ? 'current' : ''">
-              <img v-if="type == 6" src="./img/xxxx.png" alt="" />
-              <img v-else src="./img/xxxx.png" alt="" />
-            </div>
-            <div @click="gotu('/xxxxxx')" :class="type == 7 ? 'current' : ''">
-              <img v-if="type == 7" src="./img/xxxx.png" alt="" />
-              <img v-else src="./img/xxxx.png" alt="" />
-            </div> -->
           </div>
         </div>
       </el-aside>
@@ -91,7 +71,8 @@ export default {
   .headertop {
     display: flex;
     justify-content: space-between;
-    padding: 0 12rem;
+    // padding: 0 12rem;
+    // padding-left: 14rem;
     > div {
       line-height: 60rem;
       color: #fff;

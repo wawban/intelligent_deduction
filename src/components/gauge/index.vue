@@ -10,11 +10,11 @@ export default {
     },
     num: {
       type: String,
-      default: '0',
+      default: "0",
     },
     text: {
       type: String,
-      default: '',
+      default: "",
     },
   },
   mounted() {
@@ -27,17 +27,18 @@ export default {
       // let j = 100 * (w / 1920);
       // return e * j;
       let w = document.documentElement.clientWidth;
-      if (w <=1440) {
-        let j = w / 1440;
+      if (w <= 1440) {
+        let j = w / 1440 / 1.33333333333;
         return e * j;
       } else if (w >= 1920) {
         let j = w / 1920;
-        return e * j * 1.33333333333;
+        // return e * j * 1.33333333333;
+        return e * j;
       }
     },
     createCharts() {
       this.myChart = this.$echarts.init(this.$refs[this.refName]);
-      const _this = this
+      const _this = this;
       var option = {
         // backgroundColor: "#02041B",
         series: [
@@ -113,17 +114,17 @@ export default {
                 fontSize: this.sz(20),
                 color: "#FFA514",
                 backgroundColor: "#81520C",
-                width: this.sz(45),
-                height:this.sz(45),
-                borderRadius:this.sz(45),
-                padding:0
+                width: this.sz(48),
+                height: this.sz(48),
+                borderRadius: this.sz(48),
+                padding: 0,
               },
               formatter: function (value) {
                 // return `${value}%`;
                 return _this.text;
               },
             },
-            data: [{},],
+            data: [{}],
           },
         ],
       };

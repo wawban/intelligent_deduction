@@ -1,7 +1,6 @@
 <template>
   <div class="instrumentpanel">
     <div class="top">
-      <!-- 风险评估 -->
       <div class="top_left bb">
         <div class="yauntu">
           <div class="text">风险评估</div>
@@ -57,7 +56,7 @@
               <div class="tuiyannum">发现隐蔽问题数</div>
             </div>
           </div>
-          <div class="boxsjudhu" style="padding-top: 22rem">
+          <div class="boxsjudhu" style="padding-top: 26rem">
             <div class="yx">
               <div class="numcs">
                 <div class="numtew">80</div>
@@ -75,9 +74,8 @@
           </div>
         </div>
       </div>
-      <!-- 隐蔽问题趋势 -->
       <div class="top_right bb">
-        <div class="qsttop">
+        <div class="btbox">
           <div class="guns"></div>
           <div class="wenz">隐蔽问题趋势</div>
         </div>
@@ -101,7 +99,6 @@
     </div>
     <div class="bottrmbu">
       <div class="zuoniamt">
-        <!-- 潜在风险资产 -->
         <div class="czaifx bb">
           <div class="btbox">
             <div class="guns"></div>
@@ -114,18 +111,18 @@
               style="width: 100%"
               :header-cell-style="{
                 backgroundColor: '#161616',
-                color: '#fff',
+                color: '#aaa',
                 borderColor: 'rgba(255, 255, 255, 0.3)',
                 fontSize: '12rem',
-                margin: '0 -1px 00',
               }"
               :cell-style="{
                 borderColor: 'rgba(255, 255, 255, 0.3)',
                 backgroundColor: '#161616',
                 color: '#fff',
-                fontSize: '12rem',
+                fontSize: '14rem',
               }"
             >
+              <!-- padding:'6rem 0' -->
               <el-table-column
                 align="center"
                 show-overflow-tooltip
@@ -165,7 +162,6 @@
             </el-table>
           </div>
         </div>
-        <!-- 潜在攻击面 -->
         <div class="xianbian bb">
           <div class="btbox">
             <div class="guns"></div>
@@ -179,7 +175,7 @@
                 style="width: 100%"
                 :header-cell-style="{
                   backgroundColor: '#161616',
-                  color: '#fff',
+                  color: '#aaa',
                   borderColor: 'rgba(255, 255, 255, 0.3)',
                   fontSize: '12rem',
                 }"
@@ -187,7 +183,7 @@
                   borderColor: 'rgba(255, 255, 255, 0.3)',
                   backgroundColor: '#161616',
                   color: '#fff',
-                  fontSize: '12rem',
+                  fontSize: '14rem',
                 }"
               >
                 <el-table-column
@@ -232,9 +228,11 @@
                 </div>
               </div>
               <div class="huanxjdu">
+                <!-- :stroke-width="wwind == 1920 ? 16 * 1.33333333333 : 16" -->
+                <!-- :stroke-width="wwind == 1920 ? 16 * 1.33333333333 : 16" -->
                 <el-progress
                   class="huanxyet"
-                  :stroke-width="wwind == 1920 ? 16 * 1.33333333333 : 16"
+                  :stroke-width="wwind == 1920 ? 16 : 16 / 1.33333333333"
                   type="circle"
                   :percentage="30"
                   color="#C6502D"
@@ -283,7 +281,7 @@
               </div>
             </div>
           </div>
-          <div class="btbox" style="padding: 10rem 0">
+          <div class="btbox" style="padding: 13rem 0">
             <div class="guns"></div>
             <div class="wenz">资产图谱</div>
           </div>

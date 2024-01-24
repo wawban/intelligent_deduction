@@ -25,8 +25,24 @@ export default new Router({
           path: '/instrumentpanel',
           name: "仪表盘",
           component: () => import("@/pages/home/instrumentpanel"),
-          meta:{type:1}
+          meta:{type:1,nemr:"仪表盘"}
         },
+        {
+          path: '/figure',
+          name: "主机资产",
+          component: () => import("@/pages/home/figure"),
+          meta:{type:2,nemr:"数字空间治理"},
+          redirect: '/hostmachine',
+          children: [
+            {
+              path: '/hostmachine',
+              name: "主机资产",
+              component: () => import("@/pages/home/figure/hostmachine"),
+              meta:{type:2,nemr:"数字空间治理"}
+            },
+          ]
+        },
+        // -----------------------------------------------------------------------------------------------------
         {
           path: '/assets',
           name: "资产",

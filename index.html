@@ -44,8 +44,11 @@
           //与淘宝做法不同，直接采用简单的rem换算方法1rem=100px
           // var rem = width * 90 / designWidth;
           var rem = width * 90 / designWidth / 100;
-          if (htmlWidth >= 1920) {
-            rem = rem * 1.33333333333
+          // if (htmlWidth >= 1920) {
+          //   rem = rem * 1.33333333333
+          // }
+          if (htmlWidth == 1440) {
+            rem = rem / 1.33333333333
           }
           //兼容UC开始
           rootStyle = "html{font-size:" + rem + 'px !important}';

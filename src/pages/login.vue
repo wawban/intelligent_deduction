@@ -115,12 +115,12 @@ export default {
   height: 100%;
   position: relative;
   .top {
-    padding: 40rem 0 0 70rem;
+    padding: 38rem 0 0 46rem;
     display: flex;
     align-items: center;
     > img {
       height: 40rem;
-      margin-right: 12rem;
+      margin-right: 15rem;
     }
     > div {
       font-size: 26rem;
@@ -141,7 +141,7 @@ export default {
       width: 362rem;
       background: rgba(255, 255, 255, 0.12);
       border-radius: 10rem;
-      margin-right: 120rem;
+      margin-right: 224rem;
       padding: 55rem 43rem 74rem;
       .title {
         display: inline-block;
