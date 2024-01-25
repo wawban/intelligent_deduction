@@ -10,18 +10,121 @@
       <div class="yys">技战术知识库</div>
     </div>
     <div class="tbox wbb">
-        <div class="ttop"></div>
+      <div class="ttop">
+        <div class="tabla">
+          <div
+            :class="type == '1' ? 'dian styxian' : 'dian'"
+            @click="qihuan('1')"
+          >
+            攻击技术
+          </div>
+          <div class="xian"></div>
+          <div
+            :class="type == '2' ? 'dian styxian' : 'dian'"
+            @click="qihuan('2')"
+          >
+            防御技术
+          </div>
+        </div>
+        <div class="yousyib">
+          <el-switch
+            class="huandk"
+            v-model="flag"
+            active-color="#fa960069"
+            inactive-color="transparent"
+          >
+          </el-switch>
+          <div class="sttetx">列表视图</div>
+        </div>
+      </div>
+      <div class="ctainer">
+        <!-- 攻击技术-列表 -->
+        <Attack v-if="type == '1' && !flag" />
+        <!-- 攻击技术-表格 -->
+        <Attackform v-if="type == '1' && flag" />
+        <!-- 防御技术-列表 -->
+        <Def v-if="type == '2' && !flag" />
+        <!-- 防御技术-表格 -->
+        <Defform v-if="type == '2' && flag" />
+      </div>
     </div>
   </div>
 </template>
+<script>
+export default {
+  components: {
+    Attack: () => import("./cpmponents/attack.vue"),
+    Attackform: () => import("./cpmponents/attackform.vue"),
+    Def: () => import("./cpmponents/def.vue"),
+    Defform: () => import("./cpmponents/defform.vue")
+  },
+  data() {
+    return {
+      type: "1",
+      flag: false,
+    };
+  },
+  methods: {
+    qihuan(e) {
+      this.type = e;
+      this.flag = true;
+    },
+  },
+};
+</script>
 <style lang="less" scoped>
-.techniqueandtactics{
-    .tbox{
-        width: 1824rem;
-        height: 809rem;
+.techniqueandtactics {
+  .tbox {
+    width: 1824rem;
+    height: 809rem;
+    padding: 20rem 30rem;
+  }
+  .ttop {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    padding-bottom: 20rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    .tabla {
+      display: flex;
+      align-items: center;
+      .dian {
+        font-size: 18rem;
+        cursor: pointer;
+      }
+      .xian {
+        height: 14rem;
+        width: 1rem;
+        background: #d8d8d8;
+        margin: 0 28rem;
+      }
+      .dian:hover {
+        color: #fa9600;
+      }
+      .styxian {
+        color: #fa9600;
+        border-bottom: 3rem solid #fa9600;
+      }
     }
-    .ttop{
-        padding: 20rem 30rem;
+    .yousyib {
+      display: flex;
+      align-items: center;
+      .sttetx {
+        font-size: 16px;
+        font-weight: normal;
+        padding-right: 33rem;
+        padding-left: 8rem;
+      }
+      .huandk {
+        /deep/.el-switch__core {
+          border: 1rem solid #aaaaaa !important;
+        }
+      }
     }
+  }
+  // .ctainer{
+  //   padding-top: ;
+  //   background: red;
+  // }
 }
 </style>

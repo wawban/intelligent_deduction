@@ -242,6 +242,10 @@ export default {
         this.vararr = this.btarr.filter((e) => {
           return e.type;
         });
+        this.$nextTick(()=>{
+          this.tableData = JSON.parse(JSON.stringify(this.tableData))
+        })
+        // this.tableData = JSON.parse(JSON.stringify(this.tableData))
       },
       deep: true,
       immediate: true,
