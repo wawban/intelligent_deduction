@@ -11,7 +11,7 @@
         <div class="yys">攻击技战术详情</div>
       </div>
       <div class="fanh" @click="goto">
-        <img src="../img/hip.png" alt="" />返回
+        <img src="../img/fh.png" alt="" />返回
       </div>
     </div>
     <div class="container">

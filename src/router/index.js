@@ -38,8 +38,15 @@ export default new Router({
               path: '/hostmachine',
               name: "主机资产",
               component: () => import("@/pages/home/figure/hostmachine"),
-              meta:{type:2,nemr:"数字空间治理"}
+              meta:{type:2,nemr:"主机资产"}
             },
+            {
+              path: '/hostmachinedetails',
+              name: "主机资产",
+              component: () => import("@/pages/home/figure/hostmachinedetails"),
+              meta:{type:2,nemr:"主机资产详情"}
+            },
+            
           ]
         },
         {

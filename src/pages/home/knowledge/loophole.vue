@@ -29,11 +29,149 @@
           </el-popover>
         </div>
         <div class="marginr">
-          <el-popover placement="bottom" width="400" trigger="click">
+          <el-popover placement="bottom" width="530" trigger="hover">
             <div class="tjiansxian">
               <div class="top">
                 <div>筛选</div>
                 <div>清空</div>
+              </div>
+              <div class="dang">
+                <!-- 当 -->
+                <div v-if="typei == '2' || typei == '3'">
+                  <div>当</div>
+                  <div>
+                    <el-select
+                      class="zhessless"
+                      size="mini"
+                      v-model="cxl"
+                      filterable
+                      multiple
+                      collapse-tags
+                      style="width: 180rem"
+                      placeholder="请选择"
+                    >
+                      <el-option
+                        v-for="item in 4"
+                        :key="item"
+                        :label="'条件' + item"
+                        :value="item"
+                      >
+                      </el-option>
+                    </el-select>
+                  </div>
+                  <div>
+                    <el-select
+                      class="zhessless"
+                      size="mini"
+                      style="width: 88rem"
+                      v-model="cxz"
+                      placeholder="请选择"
+                    >
+                      <el-option label="包含" value="1"></el-option>
+                      <el-option label="不包含" value="2"></el-option>
+                      <el-option label="为空" value="3"></el-option>
+                      <el-option label="不为空" value="4"></el-option>
+                    </el-select>
+                  </div>
+                  <div>
+                    <el-select
+                      class="zhessless"
+                      size="mini"
+                      v-model="cxr"
+                      filterable
+                      multiple
+                      collapse-tags
+                      style="width: 180rem"
+                      placeholder="请选择"
+                    >
+                      <el-option
+                        v-for="item in 4"
+                        :key="item"
+                        :label="'条件' + item"
+                        :value="item"
+                      >
+                      </el-option>
+                    </el-select>
+                  </div>
+                  <div style="width: 20rem">
+                    <i
+                      @click="cxoff('1')"
+                      v-if="typei == '2'"
+                      class="el-icon-close"
+                      style="cursor: pointer"
+                    ></i>
+                  </div>
+                </div>
+                <!-- 且 -->
+                <div v-if="typei == '3'">
+                  <div>且</div>
+                  <div>
+                    <el-select
+                      class="zhessless"
+                      size="mini"
+                      v-model="cxl"
+                      filterable
+                      multiple
+                      collapse-tags
+                      style="width: 180rem"
+                      placeholder="请选择"
+                    >
+                      <el-option
+                        v-for="item in 4"
+                        :key="item"
+                        :label="'条件' + item"
+                        :value="item"
+                      >
+                      </el-option>
+                    </el-select>
+                  </div>
+                  <div>
+                    <el-select
+                      class="zhessless"
+                      size="mini"
+                      style="width: 88rem"
+                      v-model="cxz"
+                      placeholder="请选择"
+                    >
+                      <el-option label="包含" value="1"></el-option>
+                      <el-option label="不包含" value="2"></el-option>
+                      <el-option label="为空" value="3"></el-option>
+                      <el-option label="不为空" value="4"></el-option>
+                    </el-select>
+                  </div>
+                  <div>
+                    <el-select
+                      class="zhessless"
+                      size="mini"
+                      v-model="cxr"
+                      filterable
+                      multiple
+                      collapse-tags
+                      style="width: 180rem"
+                      placeholder="请选择"
+                    >
+                      <el-option
+                        v-for="item in 4"
+                        :key="item"
+                        :label="'条件' + item"
+                        :value="item"
+                      >
+                      </el-option>
+                    </el-select>
+                  </div>
+                  <div style="width: 20rem">
+                    <i
+                      @click="cxoff('2')"
+                      class="el-icon-close"
+                      style="cursor: pointer"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+              <div style="padding-top: 20rem">
+                <el-button class="buttonsy" @click="appendtj" size="mini"
+                  >添加条件</el-button
+                >
               </div>
             </div>
             <div slot="reference" class="boxjc">
@@ -43,7 +181,7 @@
           </el-popover>
         </div>
         <div class="marginr">
-          <el-popover placement="bottom" width="220" trigger="click">
+          <el-popover placement="bottom" width="220" trigger="hover">
             <div class="zduanpeizi">
               <div>字段配置</div>
               <div class="zdbox">
@@ -88,16 +226,16 @@
           :header-cell-style="{
             backgroundColor: '#292929',
             color: '#fff',
-            borderColor: 'rgba(255, 255, 255, 0.3)',
+            borderColor: '#292929',
             fontSize: '14rem',
-            padding:'16rem 0'
+            padding: '16rem 0',
           }"
           :cell-style="{
             borderColor: 'rgba(255, 255, 255, 0.3)',
             backgroundColor: '#161616',
             color: '#fff',
             fontSize: '14rem',
-            padding:'16rem 0'
+            padding: '16rem 0',
           }"
         >
           <el-table-column
@@ -135,7 +273,7 @@
               </div>
               <div v-else-if="item.label == '操作'">
                 <img
-                @click="gotu(scope.row)"
+                  @click="gotu(scope.row)"
                   style="height: 16rem; cursor: pointer"
                   src="../img/cx.png"
                   alt=""
@@ -166,7 +304,7 @@
 export default {
   data() {
     return {
-      // -----------------------------------------------------------------表格
+      // -----------------------------------------------------------------关联查询组件下
       // 表格数据
       tableData: [
         { a: "1", b: "2", c: "3" },
@@ -178,7 +316,7 @@ export default {
         { a: "1", b: "2", c: "3" },
         { a: "1", b: "2", c: "3" },
         { a: "1", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" }
+        { a: "1", b: "2", c: "3" },
       ],
       // 表头数据
       btarr: [],
@@ -227,7 +365,16 @@ export default {
           type: true,
         },
       ],
-      // -----------------------------------------------------------------分页
+      // 查询组件一排中间
+      cxz: "1",
+      // 查询组件一排left
+      cxl: "",
+      // 查询组件一排right
+      cxr: "",
+      // 查询组件条件显示
+      typei: "1",
+      // -----------------------------------------------------------------关联查询组件上
+      // 分页
       page: {
         current: 1,
         size: 10,
@@ -242,9 +389,9 @@ export default {
         this.vararr = this.btarr.filter((e) => {
           return e.type;
         });
-        this.$nextTick(()=>{
-          this.tableData = JSON.parse(JSON.stringify(this.tableData))
-        })
+        this.$nextTick(() => {
+          this.tableData = JSON.parse(JSON.stringify(this.tableData));
+        });
         // this.tableData = JSON.parse(JSON.stringify(this.tableData))
       },
       deep: true,
@@ -252,7 +399,8 @@ export default {
     },
   },
   mounted() {
-    // ----------------------------表格头
+    // ----------------------------关联查询组件下
+    // 表格头
     this.btarr = localStorage.getItem("vulnerabilityknowledgebasesw")
       ? JSON.parse(localStorage.getItem("vulnerabilityknowledgebasesw"))
       : this.tablearr;
@@ -263,9 +411,11 @@ export default {
         JSON.stringify(this.btarr)
       );
     });
+    // ----------------------------关联查询组件上
   },
   methods: {
-    // ----------------------------表格头
+    // ----------------------------关联查询组件下
+    // 表格头
     fields(e, i) {
       if (e == "1") {
         this.btarr[i].type = false;
@@ -277,6 +427,19 @@ export default {
         JSON.stringify(this.btarr)
       );
     },
+    // 查询组件添加条件
+    appendtj() {
+      if (this.typei == "1") {
+        this.typei = "2";
+      } else if (this.typei == "2") {
+        this.typei = "3";
+      }
+    },
+    // 查询组件减少条件
+    cxoff(e) {
+      this.typei = e;
+    },
+    // ----------------------------关联查询组件上
     // ---------------------------分页
     handleSizeChange(val) {
       // console.log(`每页 ${val} 条`);
@@ -287,10 +450,10 @@ export default {
       alert(val);
     },
     // ---------------------------跳转详情
-    gotu(e){
-        // console.log(e)
-        this.$router.push("/knowledgedetails");
-    }
+    gotu(e) {
+      // console.log(e)
+      this.$router.push("/knowledgedetails");
+    },
   },
 };
 </script>

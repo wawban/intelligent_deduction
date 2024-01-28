@@ -85,6 +85,7 @@ body {
     input {
         background: transparent !important;
         color: #fff;
+        border-color: #fff !important;
     }
 
 }
@@ -223,10 +224,12 @@ body {
     align-items: center;
     justify-content: space-between;
 
+    padding-bottom: 16rem;
+
     .dq {
         display: flex;
         align-items: center;
-        padding-bottom: 16rem;
+        // padding-bottom: 16rem;
 
         .img {
             margin-right: 6rem;
@@ -255,10 +258,12 @@ body {
         cursor: pointer;
         font-size: 16rem;
         color: #aaa;
+        padding-right: 12rem;
 
         >img {
-            height: 13rem;
-            margin-right: 12rem;
+            // width: 18rem;
+            height: 18rem;
+            margin-right: 8rem;
         }
     }
 }
@@ -315,6 +320,23 @@ body {
     .top {
         display: flex;
         justify-content: space-between;
+
+        >div {
+            cursor: pointer;
+        }
+
+        >div:hover {
+            color: #FA9600;
+        }
+    }
+
+    .dang {
+        >div {
+            padding-top: 10rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     }
 
     // text-align: center;
@@ -343,3 +365,65 @@ body {
 }
 
 // -------------------------------------------------
+// 树形样式
+.treestyle {
+    .el-tree {
+        background: none;
+    }
+
+    // .el-tree-node:hover{
+    //     background: red;
+    // }
+    .el-tree-node__content {
+        color: #fff !important;
+    }
+
+    .el-tree-node__content:hover {
+        background: none;
+        color: #FA9600 !important;
+    }
+
+    // .is-current{
+
+    //     background: none !important;
+    //     color: #FA9600;
+    //     // .el-tree-node__content:hover{
+    //     //     background: none !important;
+    //     //     color: #FA9600;
+    //     // }
+    // }
+    // el-tree-node is-current is-focusable
+    // el-tree-node is-expanded is-current is-focusable
+
+
+    // el-tree-node is-focusable
+    // el-tree-node__content
+    // el-tree-node is-current is-focusable
+    // 选中
+    .is-current>.el-tree-node__content {
+        // background: red;
+        // .el-tree-node__content{
+        //     background: none;
+        color: #FA9600 !important;
+        // }
+        // .custom-tree-node{
+        //     background: none;
+        //     color: #FA9600;
+        // }
+        // .el-tree-node>.el-tree-node__content{
+        //     color: #FA9600;
+        // }
+    }
+
+    .el-tree-node:focus>.el-tree-node__content {
+        background: none;
+    }
+}
+
+// -----------------------------------------------------------------
+// // 对话框
+// .tandialog {
+//     /deep/.el-dialog__header {
+//         padding: 0 !important;
+//     }
+// }
