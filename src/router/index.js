@@ -16,6 +16,12 @@ export default new Router({
       component: () => import("@/pages/login"),
     },
     {
+    	path: '/drivingdepot',
+    	name: "驾驶舱",
+    	component: () => import("@/pages/home/drivingdepot"),
+    	meta:{type:9}
+    },
+    {
       path: '/home',
       name: "主页",//主体件
       component: () => import("@/pages/home"),
@@ -33,13 +39,6 @@ export default new Router({
           component: () => import("@/pages/home/assets")
           // meta:{type:1}drivingdepot
         },
-        {
-          path: '/drivingdepot',
-          name: "驾驶舱",
-          component: () => import("@/pages/home/drivingdepot"),
-          meta:{type:9}
-        },
-        
       ]
     }
   ]
