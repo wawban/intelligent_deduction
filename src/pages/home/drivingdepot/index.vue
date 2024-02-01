@@ -64,25 +64,33 @@
 		    	</div>
 		    	<div class="layout-path">
 		    		<div class="title">
-	    				<div>攻击路径清单</div>
+	    				<input type="button" v-show="showPathDetail" value="&lt; 返回" @click="canPathDetail"/>
+	    				<div v-if="showPathDetail">攻击路径详情</div>
+	    				<div v-else>攻击路径清单</div>
 	    			</div>
 	    			<div class="path">
 	    				<div class="box">
 		    				<div class="item" v-for="(item,index) in path" :key="index" @mouseenter="pathEnter(item)" @mouseleave="pathLeave(item)">
-		    					<div class="header" @click="pathSwitch(item)"><span :style="'border:4px '+pathColor(index)+' solid;'"></span>{{item.title}}</div>
-		    					<div class="body" v-show="item.open">
-		    						<div v-for="(item1,index1) in item.node" :key="index1">
-			    						<div class="host">
-			    							<div :class="index1==0?'icon':'icon p'" @click="selIcon(item1)"></div>
-			    							<div class="ip">
-			    								<div>{{item1.ip}}</div>
-			    								<span>{{item1.desc}}</span>
-			    							</div>
-			    						</div>
-			    						<div class="allow" v-if="item1.pass != null">
-			    							<img src="../img/37.png" @click="selPass"/>{{item1.pass}}
-			    						</div>
-			    					</div>
+		    					<div :class="{'header':true,'open':item.open}" @click="pathSwitch(item)">
+		    						<span class="icon" :style="'border:4px '+pathColor(index)+' solid;'"></span>
+		    						{{item.title}}
+		    						<span class="detail" @click.stop="pathDetail(item)"></span>
+		    					</div>
+		    					<div :class="{'body':true,'detail':item.detail}" v-show="item.open">
+		    						<div class="host" v-for="(item1,index1) in item.node" :key="index1">
+		    							<div class="arrow" @click="selPass" v-if="item1.pass"></div>
+		    							<div :class="index1==0?'icon':'icon p'" @click="selIcon(item1)"></div>
+		    							<div class="ip">
+		    								<div>{{item1.ip}}</div>
+		    								<template v-if="item.detail">
+		    									<span v-for="(item2,index2) in item1.desc" :key="index2">{{item2}}</span>
+		    								</template>
+		    								<template v-else>
+		    									<span>{{item1.desc[0]}}</span>
+		    								</template>
+		    								<span class="pass" v-if="item1.pass">{{item1.pass}}</span>
+		    							</div>
+		    						</div>
 		    					</div>
 		    				</div>
 	    				</div>
@@ -134,6 +142,7 @@ export default {
       gjtc:true,//攻击图层
       fhtc:true,//防护图层
       fxtc:true,//风险图层
+      showPathDetail:false,//攻击路径详情返回按钮显示
       backbigShow:false,//微观到大图按钮
       tasklist:[{//任务列表
       	value:1,
@@ -162,28 +171,31 @@ export default {
       },
       path:[{//攻击路径清单
       	open:true,
+      	detail:false,
       	title:'最高价值路径（路径八）',
       	node:[
-      		{id:1,ip:'192.168.3.123（起点）',desc:'内部网络',pass:'抓取评证技术等'},
-      		{id:5,ip:'192.168.4.123(途径)',desc:'数据库服务器',pass:'渗透测试技术等'},
-      		{id:9,ip:'192.168.5.123(途径)',desc:'邮件服务器',pass:'注入攻击等'},
-      		{id:16,ip:'192.168.1.123(终点)',desc:'文件服务器'}
+      		{id:1,ip:'192.168.3.123（起点）',desc:['内部网络','内部网络11','内部网络22'],pass:'抓取评证技术等'},
+      		{id:5,ip:'192.168.4.123(途径)',desc:['数据库服务器','数据库服务器11','数据库服务器22'],pass:'渗透测试技术等'},
+      		{id:9,ip:'192.168.5.123(途径)',desc:['邮件服务器','邮件服务器11','邮件服务器22'],pass:'注入攻击等'},
+      		{id:16,ip:'192.168.1.123(终点)',desc:['文件服务器','文件服务器111','文件服务器222']}
       	]
       },{
       	open:false,
+      	detail:false,
       	title:'最隐蔽路径（路径六）',
       	node:[
-      		{id:3,ip:'192.168.3.125（起点）',desc:'内部网络',pass:'抓取评证技术等'},
-      		{id:14,ip:'192.168.5.128（途径）',desc:'数据库服务器',pass:'渗透测试技术等'},
-      		{id:8,ip:'192.168.4.126（途径）',desc:'邮件服务器',pass:'注入攻击等'},
-      		{id:18,ip:'192.168.1.125（终点）',desc:'文件服务器'}
+      		{id:3,ip:'192.168.3.125（起点）',desc:['内部网络','内部网络11','内部网络22'],pass:'抓取评证技术等'},
+      		{id:14,ip:'192.168.5.128（途径）',desc:['数据库服务器','数据库服务器11','数据库服务器22'],pass:'渗透测试技术等'},
+      		{id:8,ip:'192.168.4.126（途径）',desc:['邮件服务器','邮件服务器11','邮件服务器22'],pass:'注入攻击等'},
+      		{id:18,ip:'192.168.1.125（终点）',desc:['文件服务器','文件服务器111','文件服务器222']}
       	]
       },{
       	open:false,
+      	detail:false,
       	title:'最短路径（路径三）',
       	node:[
-      		{id:10,ip:'192.168.5.124（起点）',desc:'内部网络',pass:'抓取评证技术等'},
-      		{id:20,ip:'192.168.2.124（终点）',desc:'文件服务器'}
+      		{id:10,ip:'192.168.5.124（起点）',desc:['内部网络','内部网络11','内部网络22'],pass:'抓取评证技术等'},
+      		{id:20,ip:'192.168.2.124（终点）',desc:['文件服务器','文件服务器111','文件服务器222']}
       	]
       }],
       nodes:[{//主图数据
@@ -414,6 +426,30 @@ export default {
     pathColor(i){
     	var color = i<this.colors.length?this.colors[i]:this.colors[this.colors.length-1];
     	return color;
+    },
+    //攻击路径详情
+    pathDetail(item){
+    	this.showPathDetail = true;
+    	for(var i=0;i<this.path.length;i++){
+    		var path = this.path[i];
+			path.preopen = path.open === true;
+    		if(path.title == item.title){
+    			path.detail = true;
+    			path.open = true;
+    		}else{
+    			path.detail = false;
+    			path.open = false;
+    		}
+    	}
+    },
+    //取消攻击路径详情
+    canPathDetail(){
+    	this.showPathDetail = false;
+    	for(var i=0;i<this.path.length;i++){
+    		var path = this.path[i];
+    		path.detail = false;
+    		path.open = path.preopen;
+    	}
     },
     //切换任务
     chgtask(item){
@@ -702,22 +738,27 @@ export default {
 .layout-path .title div{padding-left:10px;border-left:3px #FA9600 solid;font-family: Source Han Sans;font-size: 18px;font-weight: 500;
 	height:18px;line-height:18px;
 }
+.layout-path .title input{float:right;font-family: Source Han Sans;font-weight: 500;background:none;border:0;color:white;margin-right:10px;cursor:pointer;}
 .layout-path .path{flex-grow:1;position:relative;}
 .layout-path .path .box{position:absolute;left:0;top:0;right:0;bottom:0;overflow-y:auto;padding:5px 10px;}
 .layout-path .path .item{margin:5px 0;}
 .layout-path .path .header{height:36px;line-height:36px;font-family: Source Han Sans;font-size: 14px;padding:0 0 0 10px;
-	background:url('../img/down.png') no-repeat right center #292929;
+	background:url('../img/down.png') no-repeat right center #292929;position:relative;
 }
-.layout-path .path .header span{display:inline-block;border-radius:4px;margin-right:8px;}
-.layout-path .path .body{padding:10px 0 10px 17px;}
-.layout-path .path .host{display:flex;}
+.layout-path .path .header.open{background:url('../img/up.png') no-repeat right center #292929;}
+.layout-path .path .header .icon{display:inline-block;border-radius:4px;margin-right:8px;}
+.layout-path .path .header .detail{display:inline-block;width:16px;height:16px;background:url('../img/4419.png') no-repeat;cursor:pointer;position:absolute;right:40px;top:10px;}
+.layout-path .path .body{padding:10px 0 10px 17px;position:relative;}
+.layout-path .path .host{display:flex;position:relative;}
+.layout-path .path .host .arrow{position:absolute;width:25px;background:url('../img/37.png') no-repeat center bottom;cursor:pointer;top:49px;left:8px;bottom:2px;}
 .layout-path .path .host .icon{height:44px;width:44px;background:url('../img/hip.png') no-repeat;background-size:100% 100%;cursor:pointer;}
 .layout-path .path .host .icon.p{background:url('../img/lip.png') no-repeat;background-size:100% 100%;}
 .layout-path .path .host .ip{flex-grow: 1;}
 .layout-path .path .host .ip div{margin:5px 0 3px 0;font-family: Source Han Sans;font-size: 12px;}
-.layout-path .path .host .ip span{font-family: Source Han Sans;font-size: 10px;color:#aaa;}
-.layout-path .path .allow{height:23px;line-height:23px;margin:5px 0;}
-.layout-path .path .allow img{margin:0 15px 0 17px;cursor:pointer;}
+.layout-path .path .host .ip span{font-family: Source Han Sans;font-size: 10px;color:#aaa;display:block;margin:5px 0;}
+.layout-path .path .host .ip .pass{margin:15px 0;}
+/*攻击路径详情*/
+.layout-path .path .body.detail{position:absolute;z-index:1;background:black;left:0;top:0;right:0;bottom:0;}
 /*主图区*/
 .layout-center .control{position:absolute;top:0;bottom:0;left:0;width:150px;padding:18px 0 0 10px;z-index:1;}
 .layout-center .canvas{position:absolute;top:0;right:0;bottom:0;left:130px;}
