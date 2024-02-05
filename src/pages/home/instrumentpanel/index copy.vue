@@ -16,7 +16,6 @@
             <div class="numtext">8</div>
             <div class="tibiao">
               <img src="../img/lst.png" alt="" />
-              <!-- <img src="../img/hst.png" alt="" /> -->
             </div>
           </div>
           <div class="footery">(与2023-12-25 12:00:00相比)</div>
@@ -33,7 +32,7 @@
                 v-model="zq"
                 class="zhessless"
                 size="mini"
-                style="width: 60px"
+                style="width: 60rem"
               >
                 <el-option label="月" value="1"></el-option>
                 <el-option label="周" value="2"></el-option>
@@ -50,14 +49,14 @@
               <div class="tuiyannum">推演任务数</div>
             </div>
             <div class="yb">
-              <div>
+              <div class="numcs">
                 <div class="numtew">262</div>
                 <div class="danwer">个</div>
               </div>
               <div class="tuiyannum">发现隐蔽问题数</div>
             </div>
           </div>
-          <div class="boxsjudhu" style="padding-top: 22px">
+          <div class="boxsjudhu" style="padding-top: 26rem">
             <div class="yx">
               <div class="numcs">
                 <div class="numtew">80</div>
@@ -76,7 +75,7 @@
         </div>
       </div>
       <div class="top_right bb">
-        <div class="qsttop">
+        <div class="btbox">
           <div class="guns"></div>
           <div class="wenz">隐蔽问题趋势</div>
         </div>
@@ -86,7 +85,7 @@
             class="zhessless"
             v-model="zq"
             size="mini"
-            style="width: 60px"
+            style="width: 60rem"
           >
             <el-option label="月" value="1"></el-option>
             <el-option label="周" value="2"></el-option>
@@ -100,7 +99,6 @@
     </div>
     <div class="bottrmbu">
       <div class="zuoniamt">
-        <!-- 潜在风险资产 -->
         <div class="czaifx bb">
           <div class="btbox">
             <div class="guns"></div>
@@ -113,17 +111,18 @@
               style="width: 100%"
               :header-cell-style="{
                 backgroundColor: '#161616',
-                color: '#fff',
+                color: '#aaa',
                 borderColor: 'rgba(255, 255, 255, 0.3)',
-                fontSize: '12px',
+                fontSize: '12rem',
               }"
               :cell-style="{
                 borderColor: 'rgba(255, 255, 255, 0.3)',
                 backgroundColor: '#161616',
                 color: '#fff',
-                fontSize: '12px',
+                fontSize: '14rem',
               }"
             >
+              <!-- padding:'6rem 0' -->
               <el-table-column
                 align="center"
                 show-overflow-tooltip
@@ -163,7 +162,6 @@
             </el-table>
           </div>
         </div>
-        <!-- 潜在攻击面 -->
         <div class="xianbian bb">
           <div class="btbox">
             <div class="guns"></div>
@@ -177,15 +175,15 @@
                 style="width: 100%"
                 :header-cell-style="{
                   backgroundColor: '#161616',
-                  color: '#fff',
+                  color: '#aaa',
                   borderColor: 'rgba(255, 255, 255, 0.3)',
-                  fontSize: '12px',
+                  fontSize: '12rem',
                 }"
                 :cell-style="{
                   borderColor: 'rgba(255, 255, 255, 0.3)',
                   backgroundColor: '#161616',
                   color: '#fff',
-                  fontSize: '12px',
+                  fontSize: '14rem',
                 }"
               >
                 <el-table-column
@@ -199,20 +197,6 @@
                 >
                   <template slot-scope="scope">
                     <div v-if="item.label == '风险值占比'">
-                      <!-- <el-progress
-                        :class="
-                          scope.row.c < 50
-                            ? 'bdrd jdutiao'
-                            : scope.row.c < 80 && scope.row.c >= 50
-                            ? 'bdrz jdutiao'
-                            : scope.row.c >= 80
-                            ? 'bdrg jdutiao'
-                            : '--'
-                        "
-                        :text-inside="true"
-                        :stroke-width="16"
-                        :percentage="scope.row.c"
-                      ></el-progress> -->
                       <el-progress
                         :class="
                           scope.row.c < 50
@@ -241,13 +225,14 @@
                 </div>
                 <div class="imgyuioj">
                   <img src="../img/lst.png" alt="" />
-                  <!-- <img src="../img/hst.png" alt="" /> -->
                 </div>
               </div>
               <div class="huanxjdu">
+                <!-- :stroke-width="wwind == 1920 ? 16 * 1.33333333333 : 16" -->
+                <!-- :stroke-width="wwind == 1920 ? 16 * 1.33333333333 : 16" -->
                 <el-progress
                   class="huanxyet"
-                  :stroke-width="16"
+                  :stroke-width="wwind == 1920 ? 16 : 16 / 1.33333333333"
                   type="circle"
                   :percentage="30"
                   color="#C6502D"
@@ -264,7 +249,7 @@
               <div class="guns"></div>
               <div class="wenz">关键风险资产</div>
             </div>
-            <div style="font-size: 12px; font-weight: normal; cursor: pointer">
+            <div style="font-size: 12rem; font-weight: normal; cursor: pointer">
               详情 >>
             </div>
           </div>
@@ -296,15 +281,55 @@
               </div>
             </div>
           </div>
-          <div class="btbox" style="padding: 10px 0">
+          <div class="btbox" style="padding: 13rem 0">
             <div class="guns"></div>
             <div class="wenz">资产图谱</div>
           </div>
           <div class="yuanqiutu">
-            <Graph/>
+            <Graph />
           </div>
         </div>
-        <div class="fxlujig">3</div>
+        <div class="fxlujig">
+          <div class="btbox">
+            <div class="guns"></div>
+            <div class="wenz">关键风险路径</div>
+          </div>
+          <div class="guaninastye">
+            <div class="xialxz">
+              <div class="fkuai"></div>
+              <el-select
+                v-model="zq"
+                class="xialacx zhessless"
+                size="mini"
+                style="width: 180rem"
+              >
+                <el-option label="月" value="1"></el-option>
+                <el-option label="周" value="2"></el-option>
+                <el-option label="日" value="3"></el-option>
+              </el-select>
+            </div>
+            <div class="xhfor gdstyle">
+              <div v-for="(e,i) in 6" :key="i">
+                <div class="ytyz">
+                  <div class="imgtu">
+                    <img v-if="i == 0" src="../img/hip.png" alt="">
+                    <img v-else src="../img/lip.png" alt="">
+                  </div>
+                  <div class="zswenz">
+                    <div class="ipdiz">192.168.1.10（起点）</div>
+                    <div class="azswenztex">资产类型：文件服务器</div>
+                  </div>
+                </div>
+                <div class="zhesjiant">
+                  <div class="tetxbox">
+                    <div>注入数据等 》</div>
+                    <i class="el-icon-arrow-down"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -318,6 +343,7 @@ export default {
   },
   data() {
     return {
+      wwind: 0,
       zq: "3", //周期选择
       // 列表数据
       tableData: [
@@ -380,7 +406,10 @@ export default {
         {
           prop: "c",
           label: "风险值占比",
-          width: 94,
+          width:
+            document.documentElement.clientWidth == 1920
+              ? 94 * 1.33333333333 + ""
+              : "94",
         },
       ],
       // 攻击list
@@ -402,6 +431,9 @@ export default {
         },
       ],
     };
+  },
+  created() {
+    this.wwind = document.documentElement.clientWidth;
   },
   methods: {
     xx(e) {

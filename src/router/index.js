@@ -27,12 +27,154 @@ export default new Router({
       component: () => import("@/pages/home"),
       redirect: '/instrumentpanel',
       children: [
+        // 仪表盘
         {
           path: '/instrumentpanel',
           name: "仪表盘",
           component: () => import("@/pages/home/instrumentpanel"),
-          meta:{type:1}
+          meta:{type:1,nemr:"仪表盘"}
         },
+        // 数字空间治理
+        {
+          path: '/figure',
+          name: "数字空间治理",
+          component: () => import("@/pages/home/figure"),
+          meta:{type:2,nemr:"数字空间治理"},
+          // redirect: '/hostmachine',
+          children: [
+            {
+              path: '/figure/hostmachine',
+              name: "主机资产",
+              component: () => import("@/pages/home/figure/hostmachine"),
+              meta:{type:2,nemr:"主机资产"}
+            },
+            {
+              path: '/figure/hostmachinedetails',
+              name: "主机资产",
+              component: () => import("@/pages/home/figure/hostmachinedetails"),
+              meta:{type:2,nemr:"主机资产详情"}
+            },
+            {
+              path: '/figure/website',
+              name: "网站资产",
+              component: () => import("@/pages/home/figure/website"),
+              meta:{type:2,nemr:"网站资产"}
+            },
+            {
+              path: '/figure/websitedetails',
+              name: "网站资产",
+              component: () => import("@/pages/home/figure/websitedetails"),
+              meta:{type:2,nemr:"网站资产详情"}
+            },
+            
+          ]
+        },
+        // 知识库
+        {
+          path: '/knowledge',
+          name: "知识库",
+          component: () => import("@/pages/home/knowledge"),
+          meta:{type:5,nemr:"知识库"},
+          // redirect: '/loophole',
+          children: [
+            {
+              path: '/knowledge/loophole',
+              name: "漏洞知识库",
+              component: () => import("@/pages/home/knowledge/loophole"),
+              meta:{type:5,nemr:"漏洞知识库"}
+            },
+            {
+              path: '/knowledgedetails',
+              name: "漏洞知识详情",
+              component: () => import("@/pages/home/knowledge/knowledgedetails"),
+              meta:{type:5,nemr:"漏洞知识详情"}
+            },
+            {
+              path: '/knowledge/techniqueandtactics',
+              name: "技战术知识库",
+              component: () => import("@/pages/home/knowledge/techniqueandtactics"),
+              meta:{type:5,nemr:"技战术知识库"}
+            },
+            {
+              path: '/attacktechniqueandtactics',
+              name: "攻击技战术详情",
+              component: () => import("@/pages/home/knowledge/attacktechniqueandtactics"),
+              meta:{type:5,nemr:"攻击技战术详情"}
+            },
+            {
+              path: '/defensivetechniquesandtactics',
+              name: "防御技战术详情",
+              component: () => import("@/pages/home/knowledge/defensivetechniquesandtactics"),
+              meta:{type:5,nemr:"防御技战术详情"}
+            },
+          ]
+        },
+        // 系统设置
+        {
+          path: '/systemsetting',
+          name: "系统设置",
+          component: () => import("@/pages/home/systemsetting"),
+          meta:{type:7,nemr:"系统设置"},
+          // redirect: '/loophole',
+          children: [
+            {
+              path: '/systemsetting/departmentmanagement',
+              name: "部门管理",
+              component: () => import("@/pages/home/systemsetting/departmentmanagement"),
+              meta:{type:7,nemr:"部门管理"}
+            },
+            {
+              path: '/systemsetting/personnelmanagement',
+              name: "人员管理",
+              component: () => import("@/pages/home/systemsetting/personnelmanagement"),
+              meta:{type:7,nemr:"人员管理"}
+            },
+            {
+              path: '/systemsetting/assetarea',
+              name: "资产区域管理",
+              component: () => import("@/pages/home/systemsetting/assetarea"),
+              meta:{type:7,nemr:"资产区域管理"}
+            },
+            {
+              path: '/systemsetting/assetregiondetails',
+              name: "资产区域详情",
+              component: () => import("@/pages/home/systemsetting/assetregiondetails"),
+              meta:{type:7,nemr:"资产区域详情"}
+            },
+            {
+              path: '/systemsetting/logmanagement',
+              name: "日志管理",
+              component: () => import("@/pages/home/systemsetting/logmanagement"),
+              meta:{type:7,nemr:"日志管理"}
+            },
+            {
+              path: '/systemsetting/toolmanagement',
+              name: "工具管理",
+              component: () => import("@/pages/home/systemsetting/toolmanagement"),
+              meta:{type:7,nemr:"工具管理"}
+            },
+            {
+              path: '/systemsetting/safetycontrol',
+              name: "安全性控制",
+              component: () => import("@/pages/home/systemsetting/safetycontrol"),
+              meta:{type:7,nemr:"安全性控制"}
+            },
+            {
+              path: '/systemsetting/overview',
+              name: "系统概况",
+              component: () => import("@/pages/home/systemsetting/overview"),
+              meta:{type:7,nemr:"系统概况"}
+            },
+          ]
+        },
+
+
+
+
+
+
+        // System setting
+        // -----------------------------------------------------------------------------------------------------
         {
           path: '/assets',
           name: "资产",

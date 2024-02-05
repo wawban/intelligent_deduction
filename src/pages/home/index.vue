@@ -1,3 +1,4 @@
+<!-- 菜单 -->
 <template>
   <div class="home">
     <el-container style="min-height: 100%">
@@ -7,40 +8,134 @@
             <img src="../img/logo.png" alt="" />
           </div>
 
-          <div class="menubox">
-            <div @click="gotu('/instrumentpanel')" :class="type == 1 ? 'current' : ''">
+          <div>
+            <!-- 仪表盘 -->
+            <div
+              @click="gotu('/instrumentpanel')"
+              :class="type == 1 ? 'current cdlis' : 'cdlis'"
+            >
               <img v-if="type == 1" src="./img/yo.png" alt="" />
               <img v-else src="./img/yf.png" alt="" />
             </div>
-            <div @click="gotu('/drivingdepot')" :class="type == 2 ? 'current' : ''">
+            <!-- 数字空间治理 -->
+            <div class="duixuanxji">
+              <el-popover placement="right" trigger="hover">
+                <div class="fuxuansju">
+                  <div
+                    :class="name == '主机资产' ? 'hovys' : ''"
+                    @click="gotu('/figure/hostmachine')"
+                  >
+                    主机资产
+                  </div>
+                  <div
+                    :class="name == '网站资产' ? 'hovys' : ''"
+                    @click="gotu('/figure/website')"
+                  >
+                    网站资产
+                  </div>
+                  <div>漏洞治理</div>
+                  <div>处置工单</div>
+                  <div>标签管理</div>
+                </div>
+                <div
+                  slot="reference"
+                  :class="type == 2 ? 'current cdlis' : 'cdlis'"
+                >
+                  <img v-if="type == 2" src="./img/sg.png" alt="" />
+                  <img v-else src="./img/sg.png" alt="" />
+                </div>
+              </el-popover>
+            </div>
+            <!-- 知识库-------------------------------------------- -->
+            <div class="duixuanxji">
+              <el-popover placement="right" trigger="hover">
+                <div class="fuxuansju">
+                  <div
+                    :class="name == '漏洞知识库' ? 'hovys' : ''"
+                    @click="gotu('/knowledge/loophole')"
+                  >
+                    漏洞知识库
+                  </div>
+                  <div
+                    :class="name == '技战术知识库' ? 'hovys' : ''"
+                    @click="gotu('/knowledge/techniqueandtactics')"
+                  >
+                    技战术知识库
+                  </div>
+                </div>
+                <div
+                  slot="reference"
+                  :class="type == 5 ? 'current cdlis' : 'cdlis'"
+                >
+                  <img v-if="type == 5" src="./img/lk.png" alt="" />
+                  <img v-else src="./img/lg.png" alt="" />
+                </div>
+              </el-popover>
+            </div>
+            <!-- 系统设置-------------------------------------------- -->
+            <div class="duixuanxji">
+              <el-popover placement="right" trigger="hover">
+                <div class="fuxuansju">
+                  <div
+                    :class="name == '系统概况' ? 'hovys' : ''"
+                    @click="gotu('/systemsetting/overview')"
+                  >
+                    系统概况
+                  </div>
+                  <div
+                    :class="name == '部门管理' ? 'hovys' : ''"
+                    @click="gotu('/systemsetting/departmentmanagement')"
+                  >
+                    部门管理
+                  </div>
+                  <div
+                    :class="name == '人员管理' ? 'hovys' : ''"
+                    @click="gotu('/systemsetting/personnelmanagement')"
+                  >
+                    人员管理
+                  </div>
+                  <div
+                    :class="name == '日志管理' ? 'hovys' : ''"
+                    @click="gotu('/systemsetting/logmanagement')"
+                  >
+                    日志管理
+                  </div>
+                  <div
+                    :class="name == '工具管理' ? 'hovys' : ''"
+                    @click="gotu('/systemsetting/toolmanagement')"
+                  >
+                    工具管理
+                  </div>
+                  <div
+                    :class="name == '安全性控制' ? 'hovys' : ''"
+                    @click="gotu('/systemsetting/safetycontrol')"
+                  >
+                    安全性控制
+                  </div>
+                  <div
+                    :class="name == '资产区域管理' ? 'hovys' : ''"
+                    @click="gotu('/systemsetting/assetarea')"
+                  >
+                    资产区域管理
+                  </div>
+                </div>
+                <div
+                  slot="reference"
+                  :class="type == 7 ? 'current cdlis' : 'cdlis'"
+                >
+                  <img v-if="type == 7" src="./img/szk.png" alt="" />
+                  <img v-else src="./img/szg.png" alt="" />
+                </div>
+              </el-popover>
+            </div>
+            <!-- --------------------------------------------------------------------- -->
+            <div
+              @click="gotu('/drivingdepot')"
+              :class="type == 9 ? 'current cdlis' : 'cdlis'"
+            >
               <img v-if="type == 9" src="./img/yo.png" alt="" />
               <img v-else src="./img/yf.png" alt="" />
             </div>
-            <!-- drivingdepot -->
-            <!-- <div @click="gotu('/xxxxxx')" :class="type == 2 ? 'current' : ''">
-              <img v-if="type == 2" src="./img/xxxx.png" alt="" />
-              <img v-else src="./img/xxxx.png" alt="" />
-            </div>
-            <div @click="gotu('/xxxxxx')" :class="type == 3 ? 'current' : ''">
-              <img v-if="type == 3" src="./img/xxxx.png" alt="" />
-              <img v-else src="./img/xxxx.png" alt="" />
-            </div>
-            <div @click="gotu('/xxxxxx')" :class="type == 4 ? 'current' : ''">
-              <img v-if="type == 4" src="./img/xxxx.png" alt="" />
-              <img v-else src="./img/xxxx.png" alt="" />
-            </div>
-            <div @click="gotu('/xxxxxx')" :class="type == 5 ? 'current' : ''">
-              <img v-if="type == 5" src="./img/xxxx.png" alt="" />
-              <img v-else src="./img/xxxx.png" alt="" />
-            </div>
-            <div @click="gotu('/xxxxxx')" :class="type == 6 ? 'current' : ''">
-              <img v-if="type == 6" src="./img/xxxx.png" alt="" />
-              <img v-else src="./img/xxxx.png" alt="" />
-            </div>
-            <div @click="gotu('/xxxxxx')" :class="type == 7 ? 'current' : ''">
-              <img v-if="type == 7" src="./img/xxxx.png" alt="" />
-              <img v-else src="./img/xxxx.png" alt="" />
-            </div> -->
           </div>
         </div>
       </el-aside>
@@ -49,7 +144,7 @@
           <div class="headertop">
             <div>CybSeer智能推演平台</div>
             <div>
-              <img src="./img/user.png" alt="">
+              <img src="./img/user.png" alt="" />
             </div>
           </div>
         </el-header>
@@ -65,40 +160,54 @@ export default {
   data() {
     return {
       url: 1,
-      type:''
+      type: "",
+      name: "",
     };
   },
-  watch:{
-    $route:{
-      handler(to,form){
-        this.type = this.$route.meta.type || ''
+  watch: {
+    $route: {
+      handler(to, form) {
+        this.type = this.$route.meta.type || "";
+        this.name = this.$route.meta.nemr || "";
       },
-      deep:true,
-      immediate:true
-    }
+      deep: true,
+      immediate: true,
+    },
   },
-  methods:{
-    gotu(e){
+  methods: {
+    gotu(e) {
       this.$router.push(e);
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="less" scoped>
+.fuxuansju {
+  > div {
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+  }
+  > div:hover {
+    color: #fa9600;
+  }
+  .hovys {
+    color: #fa9600;
+  }
+  // background: red;
+}
 .home {
   height: 100%;
   background: #000;
   .headertop {
     display: flex;
     justify-content: space-between;
-    padding: 0 12rem;
     > div {
       line-height: 60rem;
       color: #fff;
       font-size: 24rem;
       font-weight: bold;
-      >img{
-        cursor: pointer;
+      > img {
         height: 32rem;
       }
     }
@@ -113,28 +222,28 @@ export default {
         height: 38rem;
       }
     }
-    .menubox {
-      > div {
-        height: 74rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        > img {
-          height: 30rem;
-        }
-      }
-      >div:hover{
-        background: #292219;
-        box-shadow: inset 0rem 0rem 5rem 0rem #3C3C3C;
-        border-radius: 3rem;
-      }
-      .current{
-        background: #292219;
-        box-shadow: inset 0rem 0rem 5rem 0rem #3C3C3C;
-        border-radius: 3rem;
+    .cdlis {
+      height: 74rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      > img {
+        width: 40rem;
+        height: 40rem;
       }
     }
+    .cdlis:hover {
+      background: #292219;
+      box-shadow: inset 0rem 0rem 5rem 0rem #3c3c3c;
+      border-radius: 3rem;
+    }
+    .current {
+      background: #292219;
+      box-shadow: inset 0rem 0rem 5rem 0rem #3c3c3c;
+      border-radius: 3rem;
+    }
+    // }
   }
 }
 .el-main {
