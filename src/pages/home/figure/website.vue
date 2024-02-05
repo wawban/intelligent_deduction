@@ -1,13 +1,13 @@
-<!-- 主机资产 -->
+<!-- 网站资产 -->
 <template>
-  <div class="hostmachine">
+  <div class="website">
     <!-- 面包屑 -->
     <div class="crumbss">
       <div class="img">
         <img src="../img/sh.png" alt="" />
       </div>
       <div class="wys">数字空间治理/</div>
-      <div class="yys">主机资产</div>
+      <div class="yys">网站资产</div>
     </div>
     <!--  -->
     <div class="container">
@@ -18,6 +18,31 @@
         </div>
         <div class="treestyle">
           <!-- <el-tree :data="data" :expand-on-click-node="false" :current-node-key="treekry" node-key="id" :props="defaultProps"> -->
+          <!-- <el-tree
+            :data="data"
+            :expand-on-click-node="false"
+            :current-node-key="treekry"
+            node-key="label"
+            default-expand-all
+          >
+            <span class="custom-tree-node" slot-scope="{ node, data }">
+              <span style="font-size: 16rem; display: flex; align-items: center"
+                >{{ node.label }}
+                <div style="margin-left: 20rem">
+                  <el-popover placement="right" trigger="hover">
+                    <div class="treekub">
+                      <div @click="qiehuan(data)">
+                        {{ data.type ? "只看本级" : "查看本级和下级" }}
+                      </div>
+                    </div>
+                    <div slot="reference">
+                      <img style="height: 14rem" src="../img/sd.png" alt="" />
+                    </div>
+                  </el-popover>
+                </div>
+              </span>
+            </span>
+          </el-tree> -->
           <el-tree
             :data="data"
             :expand-on-click-node="false"
@@ -57,7 +82,7 @@
       <div class="right wbb">
         <div class="toptetol">
           <div class="guns"></div>
-          <div class="wenz">主机资产</div>
+          <div class="wenz">网站资产</div>
         </div>
         <!-- 查询组件 -->
         <div class="zheipr">
@@ -276,7 +301,6 @@
                     <div class="lv">自定义标签</div>
                   </div>
                 </div>
-                <!-- 操作 -->
                 <div v-else-if="item.label == '操作'">
                   <img
                     @click="gotu(scope.row)"
@@ -482,7 +506,7 @@
     </div>
   </div>
 </template>
-<script>
+  <script>
 export default {
   data() {
     return {
@@ -528,12 +552,12 @@ export default {
         },
         {
           prop: "b",
-          label: "资产名称",
+          label: "网站名称",
           type: true,
         },
         {
           prop: "c",
-          label: "IP地址",
+          label: "网站地址",
           type: true,
         },
         {
@@ -556,11 +580,11 @@ export default {
           label: "漏洞数",
           type: true,
         },
-        {
-          prop: "h",
-          label: "端口数",
-          type: true,
-        },
+        // {
+        //   prop: "h",
+        //   label: "端口数",
+        //   type: true,
+        // },
         {
           prop: "h",
           label: "所属资产组 ",
@@ -791,12 +815,12 @@ export default {
     // ---------------------------跳转详情
     gotu(e) {
       // console.log(e)
-      this.$router.push("/figure/hostmachinedetails");
+      this.$router.push("/figure/websitedetails");
     },
   },
 };
 </script>
-<style lang="less" scoped>
+  <style lang="less" scoped>
 .tandialog {
   /deep/.el-dialog {
     background: none !important;
@@ -807,9 +831,8 @@ export default {
   }
   /deep/.el-dialog__body {
     // background: #676767;
-    background: rgba(103, 103, 103, 0.2);
-    backdrop-filter: blur(13rem);
-    // background: #676767;
+    // background: rgba(103, 103, 103, 0.2);
+    background: #676767;
     border-radius: 5rem;
     border: 1rem solid;
     border-image: linear-gradient(270deg, #fb8619 0%, #fcba48 100%) 1;
@@ -830,7 +853,7 @@ export default {
   }
   // background: red;
 }
-.hostmachine {
+.website {
   .container {
     height: 809rem;
     display: flex;

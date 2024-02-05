@@ -56,7 +56,7 @@ export default {
     Attack: () => import("./cpmponents/attack.vue"),
     Attackform: () => import("./cpmponents/attackform.vue"),
     Def: () => import("./cpmponents/def.vue"),
-    Defform: () => import("./cpmponents/defform.vue")
+    Defform: () => import("./cpmponents/defform.vue"),
   },
   data() {
     return {
@@ -67,7 +67,7 @@ export default {
   methods: {
     qihuan(e) {
       this.type = e;
-      this.flag = true;
+      // this.flag = true;
     },
   },
 };

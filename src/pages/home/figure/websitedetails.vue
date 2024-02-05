@@ -1,12 +1,12 @@
 <template>
-  <div class="hostmachinedetails">
+  <div class="websitedetails">
     <!-- 面包屑 -->
     <div class="crumbssfh">
       <div class="dq">
         <div class="img">
           <img src="../img/sh.png" alt="" />
         </div>
-        <div class="wys">数字空间治理/主机资产/</div>
+        <div class="wys">数字空间治理/网站资产/</div>
         <div class="yys">资产详情</div>
       </div>
       <div class="fanh" @click="goto">
@@ -32,7 +32,7 @@
             <div class="jiassjian">
               <div class="zsbtboxdq">
                 <div class="guns"></div>
-                <div class="wenz">192.168.0.121</div>
+                <div class="wenz">http://192.168.0.121:8081</div>
               </div>
               <div class="sjianimg">
                 <img src="../img/cx.png" alt="" />
@@ -54,15 +54,15 @@
               <div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">资产名称:</div>
-                  <div>ASM-31509</div>
+                  <div>大数据分析平台</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">资产类型:</div>
-                  <div>数据服务器</div>
+                  <div style="color: #aaa; padding-right: 10rem">网站IP:</div>
+                  <div>10.10.33.202</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">MAC地址:</div>
-                  <div>00-1B-7C-A8-4B-E8</div>
+                  <div style="color: #aaa; padding-right: 10rem">端口:</div>
+                  <div>8080</div>
                 </div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">资产状态:</div>
@@ -100,6 +100,30 @@
                 </div>
               </div>
             </div>
+            <div class="daizw">
+              <div class="teszw">
+                <img src="../img/cx.png" alt="" />
+                指纹信息
+              </div>
+              <div>
+                <div style="color: #aaa; padding-right: 10rem">应用:</div>
+                <div>Jetty 9.2.11.v20150529</div>
+              </div>
+              <div>
+                <div style="color: #aaa; padding-right: 10rem">开发语言:</div>
+                <div>Java</div>
+              </div>
+              <div>
+                <div style="color: #aaa; padding-right: 10rem">开发框架:</div>
+                <div>Struts2</div>
+              </div>
+              <div>
+                <div style="color: #aaa; padding-right: 10rem">
+                  WAF/CND类型:
+                </div>
+                <div>-</div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="tablebg wbb">
@@ -119,12 +143,12 @@
                 :class="typenum == '2' ? 'wztext dqxianz' : 'wztext'"
                 @click="typenum = '2'"
               >
-                端口信息
+                URL信息
               </div>
               <div class="zxxian"></div>
               <div class="zsyuanq">33</div>
             </div>
-            <div>
+            <!-- <div>
               <div
                 :class="typenum == '3' ? 'wztext dqxianz' : 'wztext'"
                 @click="typenum = '3'"
@@ -143,13 +167,13 @@
               </div>
               <div style="width: 40rem"></div>
               <div class="zsyuanq" style="background: #aaaaaa">0</div>
-            </div>
+            </div> -->
           </div>
           <div>
             <!-- 漏洞信息 -->
-            <Loophole v-if="typenum == '1'" />
-            <!-- 端口信息 -->
-            <Port v-if="typenum == '2'" />
+            <!-- <Zcloophole v-if="typenum == '1'" /> -->
+            <!-- URL信息 -->
+            <Url v-if="typenum == '2'" />
             <!-- 资产图谱 -->
             <div
               v-if="typenum == '3'"
@@ -163,18 +187,18 @@
         </div>
       </div>
       <div class="right wbb">
-        <div class="zsbtboxdq">
+        <!-- <div class="zsbtboxdq">
           <div class="guns"></div>
           <div class="wenz">资产生命周期</div>
-        </div>
-        <div class="xdelis">
+        </div> -->
+        <!-- <div class="xdelis">
           <div v-for="(e, i) in 6" :key="i">
             <div class="yuanq"></div>
             <div class="biaot">2023.12.13 13:55:23</div>
             <div class="textr">系统将风险评分更新为</div>
             <div class="textr">中，76.8</div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -183,8 +207,8 @@
 export default {
   components: {
     Gauge: () => import("./components/gauge.vue"),
-    Loophole: () => import("./components/loophole.vue"),
-    Port: () => import("./components/port.vue"),
+    Zcloophole: () => import("./components/zcloophole.vue"),
+    Url: () => import("./components/url.vue"),
     Graph: () => import("./components/graph.vue"),
     Relevance: () => import("./components/relevance.vue"),
   },
@@ -201,5 +225,5 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-@import "./hostmachinedetails.less";
+@import "./websitedetails.less";
 </style>

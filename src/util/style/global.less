@@ -330,7 +330,7 @@ body {
         }
     }
 
-    .dang {
+    .tjiansearch {
         >div {
             padding-top: 10rem;
             display: flex;
@@ -427,3 +427,68 @@ body {
 //         padding: 0 !important;
 //     }
 // }
+// ---------------------------------------------------------
+// input框
+.inpustyle {
+    // background: red;
+
+    >input {
+        background: transparent;
+        border-color: #fff !important;
+        color: #fff;
+    }
+}
+
+// input框多行
+.inputtextarea {
+    >textarea {
+        background: transparent;
+        border-color: #fff !important;
+        color: #fff;
+    }
+}
+
+// 内部表单
+.formstyle {
+    .el-form-item__label {
+        color: #aaa;
+    }
+}
+
+// 单选
+.dxradio {
+    .el-radio {
+        color: #fff;
+    }
+
+    .el-radio__label {
+        color: #fff !important;
+    }
+
+    .el-radio__input.is-checked .el-radio__inner {
+        border-color: #FA9600;
+        background: #FA9600;
+    }
+}
+
+.drawerstyle {
+    .el-drawer__header {
+        display: none;
+    }
+
+    .el-drawer__open .el-drawer.rtl {
+        background: rgba(103, 103, 103, 0.2);
+        backdrop-filter: blur(13rem);
+    }
+}
+
+// 复选样式
+.fuxuan {
+    .el-checkbox__label {
+        color: #fff;
+    }
+
+    .el-checkbox__input.is-checked+.el-checkbox__label {
+        color: #fff;
+    }
+}
