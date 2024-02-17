@@ -33,8 +33,16 @@
                   >
                     网站资产
                   </div>
-                  <div>漏洞治理</div>
-                  <div>处置工单</div>
+                  <div
+                    :class="name == '漏洞治理' ? 'hovys' : ''"
+                    @click="gotu('/figure/vulnevrabilitymanagement')"
+                  >
+                    漏洞治理
+                  </div>
+                  <div
+                  :class="name == '处置工单' ? 'hovys' : ''"
+                    @click="gotu('/figure/disposalworkorder')"
+                  >处置工单</div>
                   <div>标签管理</div>
                 </div>
                 <div

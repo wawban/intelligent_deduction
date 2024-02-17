@@ -339,7 +339,7 @@ export default {
   data() {
     return {
       // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-      arrtree:[11,12,15,17,18],//请求的选中id(选中id集合)
+      arrtree:[11,15,17],//请求的选中id(选中id集合)
       treeall: [], //树形递归出全部数据（树形id）
       isIndeterminate: false, //全选/全不选   样式控制
       checkAll: false, //全选/全不选  值   样式控制  true   false
@@ -355,7 +355,7 @@ export default {
           children: [
             {
               label: "地区1",
-              id:12,
+              id:12
               // type: true,
             },
             {
@@ -598,9 +598,9 @@ export default {
       // var treeall = []
       for (var i = 0; i < this.data.length; i++) {
         if(this.arrtree.indexOf(this.data[i].id) !== -1){
-          this.$set(this.data[i],'type',true)
+          this.data[i].type = true
         }else{
-          this.$set(this.data[i],'type',false)
+          this.data[i].type = false
         }
         this.treeall.push(this.data[i].id);
         // if (this.data[i].label == e.label) {
@@ -627,6 +627,7 @@ export default {
         this.isIndeterminate = true;
         this.checkAll = false;
       }
+
     //   this.isIndeterminate = true;
     //   this.checkAll = false;
     },
@@ -634,11 +635,9 @@ export default {
     dg(arr) {
       for (var i = 0; i < arr.length; i++) {
         if(this.arrtree.indexOf(arr[i].id) !== -1){
-          // arr[i].type = true
-          this.$set(arr[i],'type',true)
+          arr[i].type = true
         }else{
-          // arr[i].type = false
-          this.$set(arr[i],'type',false)
+          arr[i].type = false
         }
         // if()
         this.treeall.push(arr[i].id);
@@ -662,8 +661,6 @@ export default {
         var i = this.arrtree.indexOf(e)
         this.arrtree.splice(i,1)
       }
-      console.log(this.arrtree)
-      console.log(this.data)
 // // 树形回显更新
 //       for (var i = 0; i < this.data.length; i++) {
 //         if (this.data[i].id == e) {

@@ -60,7 +60,30 @@ export default new Router({
               component: () => import("@/pages/home/figure/websitedetails"),
               meta:{type:2,nemr:"网站资产详情"}
             },
-            
+            {
+              path: '/figure/vulnevrabilitymanagement',
+              name: "漏洞治理",
+              component: () => import("@/pages/home/figure/vulnevrabilitymanagement"),
+              meta:{type:2,nemr:"漏洞治理"}
+            },
+            {
+              path: '/figure/vulnevrabilitymanagement/governancedetails',
+              name: "漏洞治理",
+              component: () => import("@/pages/home/figure/components/governancedetails"),
+              meta:{type:2,nemr:"治理详情"}
+            },
+            {
+              path: '/figure/vulnevrabilitymanagement/aggregateview',
+              name: "漏洞治理",
+              component: () => import("@/pages/home/figure/components/aggregateview"),
+              meta:{type:2,nemr:"聚合视角查看"}
+            },
+            {
+              path: '/figure/disposalworkorder',
+              name: "漏洞治理",
+              component: () => import("@/pages/home/figure/disposalworkorder"),
+              meta:{type:2,nemr:"处置工单"}
+            },
           ]
         },
         // 知识库

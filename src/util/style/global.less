@@ -430,13 +430,18 @@ body {
 // ---------------------------------------------------------
 // input框
 .inpustyle {
-    // background: red;
-
     >input {
         background: transparent;
         border-color: #fff !important;
         color: #fff;
     }
+}
+// 禁用input框
+.el-input.is-disabled .el-input__inner {
+    // >input {
+        background: #656565 !important;
+        border-color: #656565 !important;
+    // }
 }
 
 // input框多行
