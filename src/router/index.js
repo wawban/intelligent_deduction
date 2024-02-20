@@ -84,7 +84,27 @@ export default new Router({
               component: () => import("@/pages/home/figure/disposalworkorder"),
               meta:{type:2,nemr:"处置工单"}
             },
+            {
+              path: '/figure/labellmanagement',
+              name: "标签管理",
+              component: () => import("@/pages/home/figure/labellmanagement"),
+              meta:{type:2,nemr:"标签管理"}
+            },
           ]
+        },
+        // 任务管理
+        {
+          path: '/taskmanagement',
+          name: "任务管理",
+          component: () => import("@/pages/home/taskmanagement"),
+          meta:{type:3,nemr:"任务管理"},
+        },
+        // 任务管理-添加任务
+        {
+          path: '/taskmanagement/addquest',
+          name: "任务管理-添加",
+          component: () => import("@/pages/home/taskmanagement/addquest"),
+          meta:{type:3,nemr:"任务管理-添加"},
         },
         // 知识库
         {
