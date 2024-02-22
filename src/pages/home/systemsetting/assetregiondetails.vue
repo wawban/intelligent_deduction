@@ -1,12 +1,24 @@
 <template>
   <div class="assetregiondetails">
     <!-- 面包屑 -->
-    <div class="crumbss">
+    <!-- <div class="crumbss">
       <div class="img">
         <img src="../img/sh.png" alt="" />
       </div>
       <div class="wys">系统设置/资产区域管理/</div>
       <div class="yys">资产区域详情</div>
+    </div> -->
+    <div class="crumbssfh">
+      <div class="dq">
+        <div class="img">
+          <img src="../img/sh.png" alt="" />
+        </div>
+        <div class="wys">系统设置/资产区域管理/</div>
+        <div class="yys">资产区域详情</div>
+      </div>
+      <div class="fanh" @click="goto">
+        <img src="../img/fh.png" alt="" />返回
+      </div>
     </div>
     <!-- 核心区 -->
     <div class="hexqu wbb">
@@ -249,12 +261,12 @@ export default {
         },
         {
           prop: "b",
-          label: "互联网连通性",
+          label: "连通类型",
           type: true,
         },
         {
           prop: "c",
-          label: "区域类别",
+          label: "连通对象",
           type: true,
         },
         {
@@ -270,6 +282,11 @@ export default {
         total: 44,
       },
     };
+  },
+  methods: {
+    goto() {
+      this.$router.go(-1);
+    },
   },
 };
 </script>
