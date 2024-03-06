@@ -73,7 +73,7 @@
                   <div>内网</div>
                 </div>
               </div>
-              <div>
+              <div style="padding:8rem 0">
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">操作系统:</div>
                   <div>Liunx</div>
@@ -148,7 +148,7 @@
               <div class="zxxian"></div>
               <div class="zsyuanq">33</div>
             </div>
-            <!-- <div>
+            <div>
               <div
                 :class="typenum == '3' ? 'wztext dqxianz' : 'wztext'"
                 @click="typenum = '3'"
@@ -167,11 +167,11 @@
               </div>
               <div style="width: 40rem"></div>
               <div class="zsyuanq" style="background: #aaaaaa">0</div>
-            </div> -->
+            </div>
           </div>
           <div>
             <!-- 漏洞信息 -->
-            <!-- <Zcloophole v-if="typenum == '1'" /> -->
+            <Zcloophole v-if="typenum == '1'" />
             <!-- URL信息 -->
             <Url v-if="typenum == '2'" />
             <!-- 资产图谱 -->
@@ -187,18 +187,18 @@
         </div>
       </div>
       <div class="right wbb">
-        <!-- <div class="zsbtboxdq">
+        <div class="zsbtboxdq">
           <div class="guns"></div>
           <div class="wenz">资产生命周期</div>
-        </div> -->
-        <!-- <div class="xdelis">
+        </div>
+        <div class="xdelis">
           <div v-for="(e, i) in 6" :key="i">
             <div class="yuanq"></div>
             <div class="biaot">2023.12.13 13:55:23</div>
             <div class="textr">系统将风险评分更新为</div>
             <div class="textr">中，76.8</div>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>

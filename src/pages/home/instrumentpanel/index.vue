@@ -255,7 +255,7 @@
           </div>
           <div class="biaoge">
             <div class="gdstyle">
-              <div v-for="(e, i) in 6" :key="i">
+              <div v-for="(e, i) in 6" :key="i" :class="fxxz == i ? 'dqxz':''" @click="()=>{fxxz=i}">
                 <table border="1" cellspacing="0" width="100%">
                   <tr>
                     <td class="lefttr">IP</td>
@@ -343,6 +343,7 @@ export default {
   },
   data() {
     return {
+      fxxz:0,//关键风险资产选择状态
       wwind: 0,
       zq: "3", //周期选择
       // 列表数据

@@ -16,9 +16,9 @@
           <div class="guns"></div>
           <div class="wenz">资产组架构</div>
         </div>
-        <div class="treestyle gdstyle">
-          <Trees/>
-          <!-- <el-tree
+        <div class="treestyle">
+          <!-- <el-tree :data="data" :expand-on-click-node="false" :current-node-key="treekry" node-key="id" :props="defaultProps"> -->
+          <el-tree
             :data="data"
             :expand-on-click-node="false"
             :current-node-key="treekry"
@@ -51,7 +51,7 @@
                 </el-popover>
               </div>
             </span>
-          </el-tree> -->
+          </el-tree>
         </div>
       </div>
       <div class="right wbb">
@@ -586,112 +586,112 @@ export default {
       },
       // --------------------------------------------------------------------------------------
       // 默认选中值
-      // treekry: "地区3",
+      treekry: "地区3",
       // 树形数据
-      // data: [
-      //   {
-      //     label: "A地区",
-      //     type: true,
-      //     children: [
-      //       {
-      //         label: "地区1",
-      //         type: true,
-      //       },
-      //       {
-      //         label: "地区2",
-      //         type: true,
-      //       },
-      //       {
-      //         label: "地区3",
-      //         type: true,
-      //         children: [
-      //           {
-      //             label: "地区11",
-      //             type: true,
-      //           },
-      //           {
-      //             label: "地区22",
-      //             type: true,
-      //           },
-      //           {
-      //             label: "地区33",
-      //             type: true,
-      //           },
-      //         ],
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     label: "服务器组",
-      //     type: true,
-      //     children: [
-      //       {
-      //         label: "服务器组1",
-      //         type: true,
-      //       },
-      //       {
-      //         label: "服务器组2",
-      //         type: true,
-      //       },
-      //       {
-      //         label: "服务器组3",
-      //         type: true,
-      //       },
-      //     ],
-      //   },
-      //   // {
-      //   //   label: "一级 2",
-      //   //   type: true,
-      //   //   children: [
-      //   //     {
-      //   //       label: "二级 2-1",
-      //   //       type: true,
-      //   //       children: [
-      //   //         {
-      //   //           label: "三级 2-1-1",
-      //   //           type: true,
-      //   //         },
-      //   //       ],
-      //   //     },
-      //   //     {
-      //   //       label: "二级 2-2",
-      //   //       type: true,
-      //   //       children: [
-      //   //         {
-      //   //           label: "三级 2-2-1",
-      //   //           type: true,
-      //   //         },
-      //   //       ],
-      //   //     },
-      //   //   ],
-      //   // },
-      //   // {
-      //   //   label: "一级 3",
-      //   //   type: true,
-      //   //   children: [
-      //   //     {
-      //   //       label: "二级 3-1",
-      //   //       type: true,
-      //   //       children: [
-      //   //         {
-      //   //           label: "三级 3-1-1",
-      //   //           type: true,
-      //   //         },
-      //   //       ],
-      //   //     },
-      //   //     {
-      //   //       label: "二级 3-2",
-      //   //       type: true,
-      //   //       children: [
-      //   //         {
-      //   //           label: "三级 3-2-1",
-      //   //           type: true,
-      //   //         },
-      //   //       ],
-      //   //     },
-      //   //   ],
-      //   // },
-      // ],
+      data: [
+        {
+          label: "A地区",
+          type: true,
+          children: [
+            {
+              label: "地区1",
+              type: true,
+            },
+            {
+              label: "地区2",
+              type: true,
+            },
+            {
+              label: "地区3",
+              type: true,
+              children: [
+                {
+                  label: "地区11",
+                  type: true,
+                },
+                {
+                  label: "地区22",
+                  type: true,
+                },
+                {
+                  label: "地区33",
+                  type: true,
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: "服务器组",
+          type: true,
+          children: [
+            {
+              label: "服务器组1",
+              type: true,
+            },
+            {
+              label: "服务器组2",
+              type: true,
+            },
+            {
+              label: "服务器组3",
+              type: true,
+            },
+          ],
+        },
+        // {
+        //   label: "一级 2",
+        //   type: true,
+        //   children: [
+        //     {
+        //       label: "二级 2-1",
+        //       type: true,
+        //       children: [
+        //         {
+        //           label: "三级 2-1-1",
+        //           type: true,
+        //         },
+        //       ],
+        //     },
+        //     {
+        //       label: "二级 2-2",
+        //       type: true,
+        //       children: [
+        //         {
+        //           label: "三级 2-2-1",
+        //           type: true,
+        //         },
+        //       ],
+        //     },
+        //   ],
+        // },
+        // {
+        //   label: "一级 3",
+        //   type: true,
+        //   children: [
+        //     {
+        //       label: "二级 3-1",
+        //       type: true,
+        //       children: [
+        //         {
+        //           label: "三级 3-1-1",
+        //           type: true,
+        //         },
+        //       ],
+        //     },
+        //     {
+        //       label: "二级 3-2",
+        //       type: true,
+        //       children: [
+        //         {
+        //           label: "三级 3-2-1",
+        //           type: true,
+        //         },
+        //       ],
+        //     },
+        //   ],
+        // },
+      ],
     };
   },
   watch: {
@@ -758,36 +758,36 @@ export default {
       alert(val);
     },
     // -----------------------------------------------------------------------------------------------
-    // // 切换本级与下级
-    // qiehuan(e) {
-    //   for (var i = 0; i < this.data.length; i++) {
-    //     if (this.data[i].label == e.label) {
-    //       this.data[i].type = !this.data[i].type;
-    //       // console.log(this.data[i].label);
-    //       this.treekry = this.data[i].label;
-    //       return;
-    //     }
-    //     if (this.data[i].children && this.data[i].children.length !== 0) {
-    //       this.dg(this.data[i].children, e.label);
-    //     }
+    // 切换本级与下级
+    qiehuan(e) {
+      for (var i = 0; i < this.data.length; i++) {
+        if (this.data[i].label == e.label) {
+          this.data[i].type = !this.data[i].type;
+          // console.log(this.data[i].label);
+          this.treekry = this.data[i].label;
+          return;
+        }
+        if (this.data[i].children && this.data[i].children.length !== 0) {
+          this.dg(this.data[i].children, e.label);
+        }
 
-    //     // console.log(this.data[i].label);
-    //   }
-    // },
-    // // 递归树
-    // dg(arr, e) {
-    //   for (var i = 0; i < arr.length; i++) {
-    //     if (arr[i].label == e) {
-    //       arr[i].type = !arr[i].type;
-    //       this.treekry = arr[i].label;
-    //       return;
-    //     }
-    //     if (arr[i].children && arr[i].children.length !== 0) {
-    //       this.dg(arr[i].children, e);
-    //     }
-    //     // console.log(arr[i].label);
-    //   }
-    // },
+        // console.log(this.data[i].label);
+      }
+    },
+    // 递归树
+    dg(arr, e) {
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i].label == e) {
+          arr[i].type = !arr[i].type;
+          this.treekry = arr[i].label;
+          return;
+        }
+        if (arr[i].children && arr[i].children.length !== 0) {
+          this.dg(arr[i].children, e);
+        }
+        // console.log(arr[i].label);
+      }
+    },
     // ---------------------------跳转详情
     gotu(e) {
       // console.log(e)
@@ -816,20 +816,20 @@ export default {
   }
   // -------------------------------------------------------
 }
-// .treekub {
-//   > div {
-//     text-align: center;
-//     cursor: pointer;
-//     color: #fff;
-//   }
-//   > div:hover {
-//     color: #fa9600;
-//   }
-//   .hovys {
-//     color: #fa9600;
-//   }
-//   // background: red;
-// }
+.treekub {
+  > div {
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+  }
+  > div:hover {
+    color: #fa9600;
+  }
+  .hovys {
+    color: #fa9600;
+  }
+  // background: red;
+}
 .hostmachine {
   .container {
     height: 809rem;
@@ -860,8 +860,6 @@ export default {
       }
       .treestyle {
         padding-top: 17rem;
-        height: 740rem;
-        overflow: auto;
       }
     }
     .right {

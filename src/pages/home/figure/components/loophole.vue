@@ -41,8 +41,8 @@
           <div v-else-if="item.label == '操作'">
             <img
               @click="gotu(scope.row)"
-              style="height: 16rem; cursor: pointer"
-              src="../../img/cx.png"
+              style="height: 22rem; cursor: pointer"
+              src="../../img/bj.png"
               alt=""
             />
           </div>
@@ -143,12 +143,12 @@ export default {
         },
         {
           prop: "d",
-          label: "验证状态",
+          label: "漏洞状态",
           width: "100",
         },
         {
           prop: "e",
-          label: "处理状态",
+          label: "工单状态",
           width: "100",
         },
         {

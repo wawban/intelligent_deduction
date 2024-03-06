@@ -280,7 +280,7 @@
                 <el-option label="xxx" value="2"> </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="截至时间：" prop="jz">
+            <el-form-item label="截止时间：" prop="jz">
               <el-select
                 class="zhessless"
                 size="mini"
@@ -337,7 +337,7 @@ export default {
         ld: [
           { required: true, message: "请选择漏洞负责人 ", trigger: "change" },
         ],
-        jz: [{ required: true, message: "请选择截至时间 ", trigger: "change" }],
+        jz: [{ required: true, message: "请选择截止时间 ", trigger: "change" }],
       },
       // 分页
       page: {

@@ -366,6 +366,7 @@ export default {
   },
   mounted() {
     // 表格头
+    // this.btarr = localStorage.setItem("localdeduction",'')
     this.btarr = localStorage.getItem("localdeduction")
       ? JSON.parse(localStorage.getItem("localdeduction"))
       : this.tablearr;
