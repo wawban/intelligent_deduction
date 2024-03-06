@@ -30,6 +30,11 @@
                 type="password"
                 v-model="ruleForm.password"
               ></el-input>
+              <!-- <el-input
+                type="password"
+                v-model="ruleForm.mm"
+                @keyup.enter.native="submit"
+              ></el-input> -->
             </el-form-item>
           </el-form>
         </div>
@@ -50,9 +55,9 @@ export default {
       } else {
         const regex = /^[a-zA-Z_\u4e00-\u9fa5]+$/;
         if (regex.test(value)) {
-          // if (this.ruleForm.username !== "") {
-          //   this.$refs.ruleForm.validateField("username");
-          // }
+          if (this.ruleForm.username !== "") {
+            this.$refs.ruleForm.validateField("username");
+          }
           callback();
         } else {
           callback(new Error("仅支持中文、英文、下划线"));
@@ -64,9 +69,9 @@ export default {
       if (value === "") {
         callback(new Error("请输入密码"));
       } else {
-        // if (this.ruleForm.mm !== "") {
-        //   this.$refs.ruleForm.validateField("password");
-        // }
+        if (this.ruleForm.mm !== "") {
+          this.$refs.ruleForm.validateField("password");
+        }
         callback();
       }
     };
@@ -88,14 +93,15 @@ export default {
     sbmin() {
       this.$refs["ruleForm"].validate((valid) => {
         if (valid) {
-          auth_login(this.ruleForm).then((res) => {
-            localStorage.setItem("access_token", res.access_token);
-            this.$router.push("/home");
-          });
+          console.log(this.ruleForm);
+          //     auth_login().then((res) => {
+          //       console.log(res);
+          //     });
         } else {
           return false;
         }
       });
+      // this.$router.push("/home");
     },
     // 忘记密码提示
     wjmm() {

@@ -8,14 +8,37 @@ export default {
       type: String,
       default: String(Math.floor(Math.random() * 100)) + "lineadd",
     },
+    list: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+  },
+  watch: {
+    // list() {
+    //   alert(8);
+    // },
+    list: {
+      handler(to, form) {
+        // this.type = this.$route.meta.type || "";
+        // this.name = this.$route.meta.nemr || "";
+        // alert(8);
+        this.createCharts();
+      },
+      deep: true,
+      immediate: true,
+    },
   },
   mounted() {
-    this.createCharts();
+    // alert(1);
+    // alert(this.list);
+    // this.createCharts();
   },
   methods: {
     sz(e) {
       let w = document.documentElement.clientWidth;
-      if (w <=1440) {
+      if (w <= 1440) {
         let j = w / 1440;
         return e * j;
       } else if (w >= 1920) {
@@ -25,15 +48,22 @@ export default {
     },
     createCharts() {
       this.myChart = this.$echarts.init(this.$refs[this.refName]);
-      var arr = [
-        { a: "2023年12月1号" },
-        { a: "2023年12月2号" },
-        { a: "2023年12月3号" },
-        { a: "2023年12月4号" },
-        { a: "2023年12月5号" },
-        { a: "2023年12月6号" },
-        { a: "2023年12月7号" },
-      ];
+      var arr = this.list.map((item) => {
+        return item.date;
+      });
+      var arrvsj = this.list.map((item) => {
+        return item.value;
+      });
+      // alert(arr);
+      // var arr = [
+      //   { a: "2023年12月1号" },
+      //   { a: "2023年12月2号" },
+      //   { a: "2023年12月3号" },
+      //   { a: "2023年12月4号" },
+      //   { a: "2023年12月5号" },
+      //   { a: "2023年12月6号" },
+      //   { a: "2023年12月7号" },
+      // ];
       var option = {
         grid: {
           top: "16%",
@@ -73,14 +103,14 @@ export default {
             var i = e[0].dataIndex;
             return (
               "<div style='font-size: 12rem; font-weight: normal; color: #000000'>" +
-              arr[i].a +
+              arr[i] +
               "</div>" +
               "<div style='display: flex;align-items: flex-end;padding-top:10rem'>" +
-                "<div style='font-size: 14rem;font-weight: 500;color: #000000;margin-right: 10rem;'>隐蔽问题数</div>" +
-                "<div style='font-size: 16rem;font-weight: 500;color: #000000;'>" +
-                // "<div style='font-size: 0.14rem;font-weight: 500;color: #000000;'>" +
-                e[0].data +
-                "个</div>" +
+              "<div style='font-size: 14rem;font-weight: 500;color: #000000;margin-right: 10rem;'>隐蔽问题数</div>" +
+              "<div style='font-size: 16rem;font-weight: 500;color: #000000;'>" +
+              // "<div style='font-size: 0.14rem;font-weight: 500;color: #000000;'>" +
+              e[0].data +
+              "个</div>" +
               "</div>"
             );
           },
@@ -89,7 +119,8 @@ export default {
           nameLocation: "start",
           name: "日期",
           type: "category",
-          data: ["12.1", "12.2", "12.3", "12.4", "12.5", "12.6", "12.7"],
+          // data: ["12.1", "12.2", "12.3", "12.4", "12.5", "12.6", "12.7"],
+          data: arr,
         },
         yAxis: [
           {
@@ -107,7 +138,8 @@ export default {
           {
             name: "隐蔽问题数",
             type: "line",
-            data: [150, 230, 224, 218, 135, 147, 260],
+            // data: [150, 230, 224, 218, 135, 147, 260],arrvsj
+            data: arrvsj,
             // data: [
             //   {value:150,key:40}
             // ],

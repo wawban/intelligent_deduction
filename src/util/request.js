@@ -6,6 +6,7 @@ import {
   showLoading, // 加载中开
   hideLoading
 } from "./loading"
+const uuid =  require('uuid')
 // const whitelist = ['/file/download']
 
 
@@ -29,7 +30,14 @@ service.interceptors.request.use(
     if (config.loading != false) {
       showLoading() // 打开加载中
     }
-    const inituser = localStorage.getItem('inituser') ? JSON.parse(localStorage.getItem('inituser')) : {}
+    var uuid_num = localStorage.getItem('uuid_hc') || ''
+    if (!uuid_num || uuid_num.length ==0){
+      localStorage.setItem('uuid_hc',uuid.v1())
+    }
+    config.headers["access_token"] = localStorage.getItem('access_token') || ''; // 设置请求头token
+    config.headers["X-Request-ID"] = localStorage.getItem('uuid_hc') || ''; // 设置uuid
+    // access_token
+    // const inituser = localStorage.getItem('inituser') ? JSON.parse(localStorage.getItem('inituser')) : {}
     // var a = localStorage.getItem("flagxz");
     // // alert(a)
     // // if(a)

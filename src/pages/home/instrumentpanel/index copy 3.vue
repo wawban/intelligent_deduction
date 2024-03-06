@@ -67,7 +67,6 @@
                 class="zhessless"
                 size="mini"
                 style="width: 60rem"
-                @change="sjianrq"
               >
                 <el-option label="月" value="1"></el-option>
                 <el-option label="周" value="2"></el-option>
@@ -115,7 +114,6 @@
           <div class="guns"></div>
           <div class="wenz">隐蔽问题趋势</div>
         </div>
-        <!-- <div class="zqxuanz" v-if="ybwtqs"> -->
         <div class="zqxuanz">
           <div>显示周期：</div>
           <el-select
@@ -123,11 +121,10 @@
             v-model="zq"
             size="mini"
             style="width: 60rem"
-            @change="sjianrq"
           >
             <el-option label="月" value="1"></el-option>
             <el-option label="周" value="2"></el-option>
-            <!-- <el-option label="日" value="3"></el-option> -->
+            <el-option label="日" value="3"></el-option>
           </el-select>
         </div>
         <div class="ecrlin">
@@ -299,7 +296,6 @@
           </div>
         </div>
       </div>
-      <!-- 关键风险资产 -->
       <div class="yobiant bb">
         <div class="maxbgtp">
           <div class="btbox_ammo">
@@ -313,9 +309,8 @@
           </div>
           <div class="biaoge">
             <div class="gdstyle">
-              <!-- 关键风险资产 -->
               <div
-                v-for="(e, i) in ganxjian"
+                v-for="(e, i) in 6"
                 :key="i"
                 :class="fxxz == i ? 'dqxz' : ''"
                 @click="
@@ -327,31 +322,22 @@
                 <table border="1" cellspacing="0" width="100%">
                   <tr>
                     <td class="lefttr">IP</td>
-                    <td class="righttr">{{ e.ip }}</td>
+                    <td class="righttr">192.168.0.121</td>
                   </tr>
                   <tr>
                     <td class="lefttr">所属资源组</td>
-                    <td class="righttr">{{ e.asset_group_name }}</td>
+                    <td class="righttr">人力资源部</td>
                   </tr>
                   <tr>
                     <td class="lefttr">风险值</td>
-                    <!-- <td class="righttr">高</td> -->
-                    <td class="righttr">
-                      {{
-                        e.risk_score >= 80
-                          ? "高"
-                          : 40 > e.risk_score
-                          ? "低"
-                          : "中"
-                      }}
-                    </td>
+                    <td class="righttr">高</td>
                   </tr>
                   <tr>
                     <td class="lefttr">风险画像</td>
                     <td class="righttr">
-                      <div v-for="(item, index) in e.risk_profile" :key="index">
-                        {{ item }}
-                      </div>
+                      <div>未经授权的访问</div>
+                      <div>数据库注入攻击</div>
+                      <div>数据泄露或篡改</div>
                     </td>
                   </tr>
                 </table>
@@ -362,9 +348,8 @@
             <div class="guns"></div>
             <div class="wenz">资产图谱</div>
           </div>
-          <!-- 资产图谱 -->
           <div class="yuanqiutu">
-            <Graph :datasj="ganxjian[fxxz].graph" />
+            <Graph />
           </div>
         </div>
         <div class="fxlujig">
@@ -372,23 +357,21 @@
             <div class="guns"></div>
             <div class="wenz">关键风险路径</div>
           </div>
-          <!-- 关键风险路径 -->
           <div class="guaninastye">
             <div class="xialxz">
               <div class="fkuai"></div>
               <el-select
-                v-model="gjljy"
+                v-model="zq"
                 class="xialacx zhessless"
                 size="mini"
                 style="width: 180rem"
               >
-                <el-option label="最大收益攻击路径" value="1"></el-option>
-                <el-option label="最隐蔽攻击路径" value="2"></el-option>
-                <el-option label="最大概率攻击路径" value="3"></el-option>
+                <el-option label="月" value="1"></el-option>
+                <el-option label="周" value="2"></el-option>
+                <el-option label="日" value="3"></el-option>
               </el-select>
             </div>
             <div class="xhfor gdstyle">
-              <!-- <div v-for="(e, i) in ganxjian[fxxz].highest_value_path" :key="i"> -->
               <div v-for="(e, i) in 6" :key="i">
                 <div class="ytyz">
                   <div class="imgtu">
@@ -421,7 +404,10 @@ import {
   dashboard_issuestrend,
   dashboard_potential,
   dashboard_surface,
-  dashboard_keysurface,
+  // dashboard_surface,
+  // dashboard_surface,
+  // dashboard_surface,
+  // dashboard_surface,
 } from "@/api";
 // import { color } from "echarts";
 export default {
@@ -438,8 +424,6 @@ export default {
       ybwtqs: {}, //隐蔽问题趋势
       dashboardpotentialdata: [], //潜在风险资产
       qzgjm: {}, //潜在攻击面
-      ganxjian: [], //关键风险资产
-      gjljy: "1", //攻击路径选择
       // ------------------------------------------------------------
       fxxz: 0, //关键风险资产选择状态
       wwind: 0,
@@ -503,14 +487,11 @@ export default {
       this.dashboardissuestrend(); //隐蔽问题趋势
       this.dashboardpotential(); //潜在风险资产
       this.dashboardsurface(); //潜在攻击面
-      this.dashboardkeysurface(); //潜在攻击面
+      // this.dashboard_surface
     },
     // 风险评估
     dashboardevaluation() {
-      this.fxianpgutu.value = "";
-      dashboard_evaluation({
-        period: this.zq == "2" ? "weekly" : "monthly",
-      }).then((res) => {
+      dashboard_evaluation().then((res) => {
         this.fxianpgutu = res;
       });
     },
@@ -548,72 +529,8 @@ export default {
         this.qzgjm = res;
       });
     },
-    // 周期选择，更新数据
     sjianrq(e) {
-      this.dashboardevaluation(); // 风险评估
-      this.dashboardsummary(); // 风险评估-右
-      this.dashboardissuestrend(); //隐蔽问题趋势
-      this.dashboardsurface(); //潜在攻击面
-    },
-    // 关键风险资产
-    dashboardkeysurface() {
-      dashboard_keysurface().then((res) => {
-        var arr = JSON.parse(JSON.stringify(res.items[0]));
-        var a = JSON.parse(JSON.stringify(res.items[0]));
-        arr.risk_score = 88;
-        a.risk_score = 33;
-        // ----------------------
-        arr.graph.nodes = [
-          {
-            id: "string",
-            name: "string",
-            props: [11111, 22222, "192.168.1.1"],
-          },
-          {
-            id: "string1",
-            name: "string1",
-            props: [22222, "192.168.1.1"],
-          },
-          {
-            id: "string2",
-            name: "string2",
-            props: [11111, "192.168.1.1"],
-          },
-          {
-            id: "string3",
-            name: "string3",
-            props: [11111, "192.168.1.1"],
-          },
-          {
-            id: "string4",
-            name: "string4",
-            props: [11111, 22222, "192.168.1.1"],
-          },
-        ];
-        arr.graph.edges = [
-          {
-            src: "string",
-            dst: "string1",
-            type: "string-1",
-          },
-          {
-            src: "string",
-            dst: "string2",
-            type: "string-2",
-          },
-          {
-            src: "string",
-            dst: "string3",
-            type: "string-3",
-          },
-          {
-            src: "string2",
-            dst: "string1",
-            type: "string2-1",
-          },
-        ];
-        this.ganxjian = [res.items[0], arr, a];
-      });
+      console.log(e);
     },
     xx(e) {
       console.log(e);

@@ -1,13 +1,60 @@
 import request from "@/util/request";
 const url = "/"
-// export const account_login = (data) => {
-//     return request({
-//         url: `${url}account/login`,
-//         method: "post",
-//         data
-//     })
-// }
-
+// 登录
+export const auth_login = (data) => {
+    return request({
+        url: `${url}auth/login`,
+        method: "post",
+        data
+    })
+}
+// 仪表盘 风险评估
+export const dashboard_evaluation = (params) => {
+    return request({
+        url: `${url}dashboard/evaluation`,
+        method: "get",
+        params
+    })
+}
+// 仪表盘 风险评估右
+export const dashboard_summary = (params) => {
+    return request({
+        url: `${url}dashboard/summary`,
+        method: "get",
+        params
+    })
+}
+// 仪表盘 隐蔽问题趋势
+export const dashboard_issuestrend = (params) => {
+    return request({
+        url: `${url}dashboard/issues-trend`,
+        method: "get",
+        params
+    })
+}
+// 仪表盘 潜在风险资产
+export const dashboard_potential = (params) => {
+    return request({
+        url: `${url}dashboard/potential-risk-assets`,
+        method: "get",
+        params
+    })
+}
+// 仪表盘 潜在攻击面
+export const dashboard_surface = (params) => {
+    return request({
+        url: `${url}dashboard/potential-attack-surface`,
+        method: "get",
+        params
+    })
+}// 仪表盘 关键风险资产
+export const dashboard_keysurface = (params) => {
+    return request({
+        url: `${url}dashboard/key-risk-assets`,
+        method: "get",
+        params
+    })
+}
 // export const productInfo_getList = (params) => {
 //     return request({
 //         url: `${url}productInfo/getList`,
