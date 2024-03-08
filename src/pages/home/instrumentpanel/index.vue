@@ -307,7 +307,10 @@
               <div class="guns"></div>
               <div class="wenz">关键风险资产</div>
             </div>
-            <div style="font-size: 12rem; font-weight: normal; cursor: pointer">
+            <div
+              style="font-size: 12rem; font-weight: normal; cursor: pointer"
+              @click="gjgt"
+            >
               详情 >>
             </div>
           </div>
@@ -318,11 +321,7 @@
                 v-for="(e, i) in ganxjian"
                 :key="i"
                 :class="fxxz == i ? 'dqxz' : ''"
-                @click="
-                  () => {
-                    fxxz = i;
-                  }
-                "
+                @click="qhuanfx(i)"
               >
                 <table border="1" cellspacing="0" width="100%">
                   <tr>
@@ -364,7 +363,7 @@
           </div>
           <!-- 资产图谱 -->
           <div class="yuanqiutu">
-            <Graph :datasj="ganxjian[fxxz].graph" />
+            <Graph :datasj="tjity" v-if="tjity" />
           </div>
         </div>
         <div class="fxlujig">
@@ -440,6 +439,7 @@ export default {
       qzgjm: {}, //潜在攻击面
       ganxjian: [], //关键风险资产
       gjljy: "1", //攻击路径选择
+      tjity: {}, //资产图谱
       // ------------------------------------------------------------
       fxxz: 0, //关键风险资产选择状态
       wwind: 0,
@@ -613,7 +613,17 @@ export default {
           },
         ];
         this.ganxjian = [res.items[0], arr, a];
+        this.tjity = this.ganxjian[0].graph;
       });
+    },
+    // 关键风险资产-跳转
+    gjgt() {
+      this.$router.push("/figure/hostmachine");
+    },
+    // 切换风险
+    qhuanfx(i) {
+      this.fxxz = i;
+      this.tjity = this.ganxjian[i].graph;
     },
     xx(e) {
       console.log(e);

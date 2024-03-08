@@ -47,10 +47,19 @@ export const dashboard_surface = (params) => {
         method: "get",
         params
     })
-}// 仪表盘 关键风险资产
+}
+// 仪表盘 关键风险资产
 export const dashboard_keysurface = (params) => {
     return request({
         url: `${url}dashboard/key-risk-assets`,
+        method: "get",
+        params
+    })
+}
+// 仪表盘 关键风险资产 资产组架构
+export const governance_groups = (params) => {
+    return request({
+        url: `${url}data-governance/groups`,
         method: "get",
         params
     })

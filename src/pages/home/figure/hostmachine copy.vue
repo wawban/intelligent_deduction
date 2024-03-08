@@ -9,6 +9,7 @@
       <div class="wys">数字空间治理/</div>
       <div class="yys">主机资产</div>
     </div>
+    <!--  -->
     <div class="container">
       <div class="left wbb">
         <div class="toptetol">
@@ -16,8 +17,41 @@
           <div class="wenz">资产组架构</div>
         </div>
         <div class="treestyle gdstyle">
-          <!-- 树形 -->
-          <Trees />
+          <Trees/>
+          <!-- <el-tree
+            :data="data"
+            :expand-on-click-node="false"
+            :current-node-key="treekry"
+            node-key="label"
+            default-expand-all
+          >
+            <span
+              style="
+                padding-right: 12rem;
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+              "
+              slot-scope="{ node, data }"
+            >
+              <span style="font-size: 16rem; display: flex; align-items: center"
+                >{{ node.label }}
+              </span>
+              <div>
+                <el-popover placement="right" trigger="hover">
+                  <div class="treekub">
+                    <div @click="qiehuan(data)">
+                      {{ data.type ? "只看本级" : "查看本级和下级" }}
+                    </div>
+                  </div>
+                  <div slot="reference">
+                    <img style="height: 14rem" src="../img/sd.png" alt="" />
+                  </div>
+                </el-popover>
+              </div>
+            </span>
+          </el-tree> -->
         </div>
       </div>
       <div class="right wbb">
@@ -449,7 +483,6 @@
   </div>
 </template>
 <script>
-import { governance_groups } from "@/api";
 export default {
   data() {
     return {
@@ -678,7 +711,8 @@ export default {
     },
   },
   mounted() {
-    // -------------------------------------------------------------表格头
+    // ----------------------------关联查询组件下  lochostassets
+    // 表格头
     this.btarr = localStorage.getItem("lochostassets")
       ? JSON.parse(localStorage.getItem("lochostassets"))
       : this.tablearr;
@@ -686,15 +720,9 @@ export default {
       this.btarr = e.value.list;
       localStorage.setItem("lochostassets", JSON.stringify(this.btarr));
     });
-    // -------------------------------------------------------------表格头
-    this.getgovernancegroups(); //资产组架构
+    // ----------------------------关联查询组件上
   },
   methods: {
-    // 资产组架构
-    getgovernancegroups() {
-      governance_groups().then((res) => {});
-    },
-    // ============================================================================
     // ----------------------------关联查询组件下
     // 表格头
     fields(e, i) {
@@ -729,8 +757,40 @@ export default {
       // console.log(`当前页: ${val}`);
       alert(val);
     },
+    // -----------------------------------------------------------------------------------------------
+    // // 切换本级与下级
+    // qiehuan(e) {
+    //   for (var i = 0; i < this.data.length; i++) {
+    //     if (this.data[i].label == e.label) {
+    //       this.data[i].type = !this.data[i].type;
+    //       // console.log(this.data[i].label);
+    //       this.treekry = this.data[i].label;
+    //       return;
+    //     }
+    //     if (this.data[i].children && this.data[i].children.length !== 0) {
+    //       this.dg(this.data[i].children, e.label);
+    //     }
+
+    //     // console.log(this.data[i].label);
+    //   }
+    // },
+    // // 递归树
+    // dg(arr, e) {
+    //   for (var i = 0; i < arr.length; i++) {
+    //     if (arr[i].label == e) {
+    //       arr[i].type = !arr[i].type;
+    //       this.treekry = arr[i].label;
+    //       return;
+    //     }
+    //     if (arr[i].children && arr[i].children.length !== 0) {
+    //       this.dg(arr[i].children, e);
+    //     }
+    //     // console.log(arr[i].label);
+    //   }
+    // },
     // ---------------------------跳转详情
     gotu(e) {
+      // console.log(e)
       this.$router.push("/figure/hostmachinedetails");
     },
   },

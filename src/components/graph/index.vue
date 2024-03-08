@@ -117,35 +117,43 @@ export default {
     // console.log(this.links);
     this.createCharts();
   },
-  // watch: {
-  //   // list() {
-  //   //   alert(8);
-  //   // },
-  //   datasj: {
-  //     handler(to, form) {
-  //       // this.type = this.$route.meta.type || "";
-  //       // this.name = this.$route.meta.nemr || "";
-  //       alert(8);
-  //       console.log(33333333333333);
-  //       console.log(33333333333333);
-  //       console.log(33333333333333);
-  //       console.log(33333333333333);
-  //       // console.log(this.datasj.id);
-  //       // console.log(this.datasj);
-  //       // console.log(this.datasj);
-  //       // this.nodes = this.datasj.nodes;
-  //       // this.links = this.datasj.edges;
-  //       alert(7);
-  //       console.log(JSON.stringify(this.datasj.nodes));
-  //       alert(6);
-  //       console.log(JSON.stringify(this.datasj.edges));
-  //       alert(5);
-  //       this.createCharts();
-  //     },
-  //     deep: true,
-  //     immediate: true,
-  //   },
-  // },
+  watch: {
+    // list() {
+    //   alert(8);
+    // },
+    datasj: {
+      handler(to, form) {
+        // this.type = this.$route.meta.type || "";
+        // this.name = this.$route.meta.nemr || "";
+        // alert(8);
+        // console.log(33333333333333);
+        // console.log(33333333333333);
+        // console.log(33333333333333);
+        // console.log(33333333333333);
+        // // console.log(this.datasj.id);
+        // // console.log(this.datasj);
+        // // console.log(this.datasj);
+        // // this.nodes = this.datasj.nodes;
+        // // this.links = this.datasj.edges;
+        // alert(7);
+        // console.log(JSON.stringify(this.datasj.nodes));
+        // alert(6);
+        // console.log(JSON.stringify(this.datasj.edges));
+        // alert(5);
+        this.links = this.datasj.edges.map((res) => {
+          return {
+            source: res.src,
+            target: res.dst,
+            name: res.type,
+          };
+        });
+        this.nodes = this.datasj.nodes;
+        this.createCharts();
+      },
+      deep: true,
+      immediate: true,
+    },
+  },
   methods: {
     createCharts() {
       // alert(4);
