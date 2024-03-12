@@ -56,10 +56,18 @@ export const dashboard_keysurface = (params) => {
         params
     })
 }
-// 仪表盘 关键风险资产 资产组架构
+// 数字空间治理 主机资产 资产组架构
 export const governance_groups = (params) => {
     return request({
         url: `${url}data-governance/groups`,
+        method: "get",
+        params
+    })
+}
+// 数字空间治理 主机资产 主机资产列表
+export const governance_hosts = (params) => {
+    return request({
+        url: `${url}data-governance/hosts`,
         method: "get",
         params
     })

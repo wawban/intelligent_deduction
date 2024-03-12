@@ -17,7 +17,7 @@
         </div>
         <div class="treestyle gdstyle">
           <!-- 树形 -->
-          <Trees />
+          <Trees :datatree="zczdata" :treekry="modedata.id" />
         </div>
       </div>
       <div class="right wbb">
@@ -198,21 +198,21 @@
                 <div v-if="item.label == '风险值'" class="fxianz">
                   <div
                     :class="
-                      scope.row.a == 1
+                      scope.row.risk_level == 'high'
                         ? 'g'
-                        : scope.row.a == 2
+                        : scope.row.risk_level == 'medium'
                         ? 'z'
-                        : scope.row.a == 3
+                        : scope.row.risk_level == 'low'
                         ? 'd'
                         : '--'
                     "
                   >
                     {{
-                      scope.row.a == 1
+                      scope.row.risk_level == "high"
                         ? "高"
-                        : scope.row.a == 2
+                        : scope.row.risk_level == "medium"
                         ? "中"
-                        : scope.row.a == 3
+                        : scope.row.risk_level == "low"
                         ? "低"
                         : "--"
                     }}
@@ -222,13 +222,17 @@
                 <div v-else-if="item.label == '状态'">
                   <div
                     :class="
-                      scope.row.a == 1 ? 'ch' : scope.row.a == 2 ? 'bch' : '--'
+                      scope.row.state == 1
+                        ? 'ch'
+                        : scope.row.state == 0
+                        ? 'bch'
+                        : '--'
                     "
                   >
                     {{
-                      scope.row.a == 1
+                      scope.row.state == 1
                         ? "存活"
-                        : scope.row.a == 2 || scope.row.a == 3
+                        : scope.row.state == 0
                         ? "不存活"
                         : "--"
                     }}
@@ -237,9 +241,16 @@
                 <!-- 资产标签 -->
                 <div v-else-if="item.label == '资产标签'">
                   <div class="rqfangy">
-                    <div class="lan">防御</div>
-                    <!-- <div class="lan">入侵防御</div> -->
-                    <div class="lv">自定义标签</div>
+                    <div class="lan" v-for="(e, i) in scope.row.tags" :key="i">
+                      {{ e.name }}
+                    </div>
+                    <div
+                      class="lv"
+                      v-for="(e, i) in scope.row.custom_tags"
+                      :key="i"
+                    >
+                      {{ e.name }}
+                    </div>
                   </div>
                 </div>
                 <!-- 操作 -->
@@ -272,9 +283,9 @@
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
-              :current-page="page.current"
+              :current-page="page.offset"
               :page-sizes="[10, 20]"
-              :page-size="page.size"
+              :page-size="page.limit"
               layout="total, sizes, prev, pager, next, jumper"
               :total="page.total"
             >
@@ -449,72 +460,40 @@
   </div>
 </template>
 <script>
-import { governance_groups } from "@/api";
+import { governance_groups, governance_hosts } from "@/api";
 export default {
   data() {
     return {
-      // 标签表单
-      bqform: {
-        radio: 3,
-        bqmc: [],
-      },
-      bqflag: false, // 标签表单弹窗
-      // ------------------------------
-      // 表单数据
-      ruleForm: {},
-      // 表单验证
-      rules: {
-        // name: [{ validator: funcname, trigger: "blur" }],
-        // password: [{ validator: funcpassword, trigger: "blur" }],
-      },
-      dialogVisible: false, // 编辑弹窗
-      // -----------------------------------------------------------------关联查询组件下
+      zczdata: [], // 资产组架构
+      modedata: {}, //资产组架构-树形默认选中数据
       // 表格数据
-      tableData: [
-        { a: "1", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "2", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "2", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "3", b: "2", c: "3" },
-        { a: "3", b: "2", c: "3" },
-        { a: "3", b: "2", c: "3" },
-      ],
-      // 表头数据
-      btarr: [],
-      // 表头改变数据
-      vararr: [],
+      tableData: [],
       // 表头原始数据
       tablearr: [
         {
-          prop: "a",
           label: "风险值",
           type: true,
         },
         {
-          prop: "b",
+          prop: "name",
           label: "资产名称",
           type: true,
         },
         {
-          prop: "c",
+          prop: "ip",
           label: "IP地址",
           type: true,
         },
         {
-          prop: "a",
           label: "状态",
           type: true,
         },
         {
-          prop: "e",
+          prop: "category",
           label: "资产类型",
           type: true,
         },
         {
-          prop: "a",
           label: "资产标签",
           type: true,
         },
@@ -539,6 +518,26 @@ export default {
           type: true,
         },
       ],
+      btarr: [], // 表头数据
+      vararr: [], // 表头改变数据
+      // -------------------------------------------------------------------------------------------
+      // -------------------------------------------------------------------------------------------
+      // 标签表单
+      bqform: {
+        radio: 3,
+        bqmc: [],
+      },
+      bqflag: false, // 标签表单弹窗
+      // ------------------------------
+      // 表单数据
+      ruleForm: {},
+      // 表单验证
+      rules: {
+        // name: [{ validator: funcname, trigger: "blur" }],
+        // password: [{ validator: funcpassword, trigger: "blur" }],
+      },
+      dialogVisible: false, // 编辑弹窗
+      // -----------------------------------------------------------------关联查询组件下
       //   xxxxxxxxxxxxxxxxxxxxxxxxxxx
       rysy: "2", //符合条件，任一或所有
       //   查询数据
@@ -547,118 +546,10 @@ export default {
       // -----------------------------------------------------------------关联查询组件上
       // 分页
       page: {
-        current: 1,
-        size: 10,
+        offset: 1,
+        limit: 10,
         total: 44,
       },
-      // --------------------------------------------------------------------------------------
-      // 默认选中值
-      // treekry: "地区3",
-      // 树形数据
-      // data: [
-      //   {
-      //     label: "A地区",
-      //     type: true,
-      //     children: [
-      //       {
-      //         label: "地区1",
-      //         type: true,
-      //       },
-      //       {
-      //         label: "地区2",
-      //         type: true,
-      //       },
-      //       {
-      //         label: "地区3",
-      //         type: true,
-      //         children: [
-      //           {
-      //             label: "地区11",
-      //             type: true,
-      //           },
-      //           {
-      //             label: "地区22",
-      //             type: true,
-      //           },
-      //           {
-      //             label: "地区33",
-      //             type: true,
-      //           },
-      //         ],
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     label: "服务器组",
-      //     type: true,
-      //     children: [
-      //       {
-      //         label: "服务器组1",
-      //         type: true,
-      //       },
-      //       {
-      //         label: "服务器组2",
-      //         type: true,
-      //       },
-      //       {
-      //         label: "服务器组3",
-      //         type: true,
-      //       },
-      //     ],
-      //   },
-      //   // {
-      //   //   label: "一级 2",
-      //   //   type: true,
-      //   //   children: [
-      //   //     {
-      //   //       label: "二级 2-1",
-      //   //       type: true,
-      //   //       children: [
-      //   //         {
-      //   //           label: "三级 2-1-1",
-      //   //           type: true,
-      //   //         },
-      //   //       ],
-      //   //     },
-      //   //     {
-      //   //       label: "二级 2-2",
-      //   //       type: true,
-      //   //       children: [
-      //   //         {
-      //   //           label: "三级 2-2-1",
-      //   //           type: true,
-      //   //         },
-      //   //       ],
-      //   //     },
-      //   //   ],
-      //   // },
-      //   // {
-      //   //   label: "一级 3",
-      //   //   type: true,
-      //   //   children: [
-      //   //     {
-      //   //       label: "二级 3-1",
-      //   //       type: true,
-      //   //       children: [
-      //   //         {
-      //   //           label: "三级 3-1-1",
-      //   //           type: true,
-      //   //         },
-      //   //       ],
-      //   //     },
-      //   //     {
-      //   //       label: "二级 3-2",
-      //   //       type: true,
-      //   //       children: [
-      //   //         {
-      //   //           label: "三级 3-2-1",
-      //   //           type: true,
-      //   //         },
-      //   //       ],
-      //   //     },
-      //   //   ],
-      //   // },
-      // ],
     };
   },
   watch: {
@@ -688,11 +579,48 @@ export default {
     });
     // -------------------------------------------------------------表格头
     this.getgovernancegroups(); //资产组架构
+    this.getgovernancehosts(); // 主机资产列表
   },
   methods: {
     // 资产组架构
     getgovernancegroups() {
-      governance_groups().then((res) => {});
+      governance_groups().then((res) => {
+        this.modedata = res[0];
+        this.treedata(res);
+      });
+    },
+    // 资产组架-tree数据处理
+    treedata(e) {
+      for (var i = 0; i < e.length; i++) {
+        this.$set(e[i], "type", true);
+        if (e[i].sub_groups && e[i].sub_groups.length !== 0) {
+          this.dgtree(e[i].sub_groups);
+        }
+      }
+      this.zczdata = e;
+    },
+    // 资产组架-tree数据处理递归
+    dgtree(arr) {
+      for (var i = 0; i < arr.length; i++) {
+        this.$set(arr[i], "type", true);
+        if (arr[i].sub_groups && arr[i].sub_groups.length !== 0) {
+          this.dgtree(arr[i].sub_groups);
+        }
+      }
+    },
+    // 主机资产列表
+    getgovernancehosts() {
+      var obj = {
+        offset: this.page.offset,
+        limit: this.page.limit,
+        filter: "",
+      };
+      governance_hosts(obj).then((res) => {
+        console.log(2222222222222);
+        console.log(res);
+        this.page = res.pagination;
+        this.tableData = res.results;
+      });
     },
     // ============================================================================
     // ----------------------------关联查询组件下
@@ -862,12 +790,14 @@ export default {
         .rqfangy {
           display: flex;
           justify-content: center;
+          flex-wrap: wrap;
           > div {
+            // margin-bottom: 2rem;
             border: 1px solid;
             padding: 0 9rem;
             line-height: 22rem;
             border-radius: 3rem;
-            margin: 0 2rem;
+            margin: 1rem 2rem;
             white-space: nowrap;
           }
           .lan {

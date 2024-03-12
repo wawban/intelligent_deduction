@@ -2,9 +2,9 @@
   <div class="treerew">
     <div class="container wbb">
       <!-- 循环一层 -->
-      <div v-for="(e, i) in datatree" :key="i">
+      <div v-for="(e, i) in data" :key="i">
         <!-- 一层内容 -->
-        <!-- <div class="terewenr" style="background: #292929">
+        <div class="terewenr" style="background: #292929">
           <i
             @click="style(e.label + i, $event)"
             v-if="e.children && e.children.length != 0"
@@ -28,52 +28,27 @@
               </div>
             </el-popover>
           </div>
-        </div> -->
-        <div class="terewenr" style="background: #292929">
-          <i
-            @click="onstyle(e.id + i, $event)"
-            v-if="e.sub_groups && e.sub_groups.length != 0"
-            class="el-icon-arrow-right"
-          ></i>
-          <div
-            :class="treekry == e.id ? 'xuanz weizc' : 'weizc'"
-            @click="onxuanz(e)"
-          >
-            {{ e.name }}
-          </div>
-          <div class="sandina">
-            <el-popover placement="right" trigger="hover">
-              <div class="treekub">
-                <div @click="qiehuan(e)">
-                  {{ e.type ? "只看本级" : "查看本级和下级" }}
-                </div>
-              </div>
-              <div slot="reference">
-                <img style="height: 16rem" src="./sd.png" alt="" />
-              </div>
-            </el-popover>
-          </div>
         </div>
         <!-- 循环二层 -->
         <div
-          :class="e.id + i + ' hideen'"
-          v-for="(e1, i1) in e.sub_groups"
+          :class="e.label + i + ' hideen'"
+          v-for="(e1, i1) in e.children"
           :key="i1"
         >
           <!-- 二层内容 -->
           <div class="terewenr" style="background: #161616">
             <i
-              @click="onstyle(e1.id + i1, $event)"
-              v-if="e1.sub_groups && e1.sub_groups.length != 0"
+              @click="style(e1.label + i1, $event)"
+              v-if="e1.children && e1.children.length != 0"
               class="el-icon-arrow-right"
             ></i>
             <div v-else style="width: 60rem"></div>
             <div
-              :class="treekry == e1.id ? 'xuanz weizc' : 'weizc'"
+              :class="treekry == e1.label ? 'xuanz weizc' : 'weizc'"
               @click="onxuanz(e1)"
               style="padding-left: 20rem"
             >
-              {{ e1.name }}
+              {{ e1.label }}
             </div>
             <div class="sandina">
               <el-popover placement="right" trigger="hover">
@@ -90,24 +65,24 @@
           </div>
           <!-- 循环三层 -->
           <div
-            :class="e1.id + i1 + ' hideen'"
-            v-for="(e2, i2) in e1.sub_groups"
+            :class="e1.label + i1 + ' hideen'"
+            v-for="(e2, i2) in e1.children"
             :key="i2"
           >
             <!-- 三层内容 -->
             <div class="terewenr" style="background: #000000">
               <i
-                @click="onstyle(e2.id + i, $event)"
-                v-if="e2.sub_groups && e2.sub_groups.length != 0"
+                @click="style(e2.label + i, $event)"
+                v-if="e2.children && e2.children.length != 0"
                 class="el-icon-arrow-right"
               ></i>
               <div v-else style="width: 60rem"></div>
               <div
-                :class="treekry == e2.id ? 'xuanz weizc' : 'weizc'"
+                :class="treekry == e2.label ? 'xuanz weizc' : 'weizc'"
                 @click="onxuanz(e2)"
                 style="padding-left: 40rem"
               >
-                {{ e2.name }}
+                {{ e2.label }}
               </div>
               <div class="sandina">
                 <el-popover placement="right" trigger="hover">
@@ -138,49 +113,135 @@ export default {
         return [];
       },
     },
-    // 默认选中值
-    treekry: {
-      type: String,
-      default: "",
-    },
+  },
+  data() {
+    return {
+      // 默认选中值
+      treekry: "地区3",
+      // 树形数据
+      data: [
+        {
+          label: "A地区",
+          type: false,
+          children: [
+            {
+              label: "地区1",
+              type: true,
+            },
+            {
+              label: "地区2",
+              type: true,
+              children: [
+                {
+                  label: "地区11000",
+                  type: true,
+                },
+                {
+                  label: "地区22999",
+                  type: true,
+                },
+                {
+                  label: "地区33888",
+                  type: true,
+                },
+              ],
+            },
+            {
+              label: "地区3",
+              type: true,
+              children: [
+                {
+                  label: "地区11",
+                  type: true,
+                },
+                {
+                  label: "地区22",
+                  type: true,
+                },
+                {
+                  label: "地区33",
+                  type: true,
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: "服务器组",
+          type: true,
+          children: [
+            {
+              label: "服务器组1",
+              type: true,
+            },
+            {
+              label: "服务器组2",
+              type: true,
+            },
+            {
+              label: "服务器组3",
+              type: true,
+            },
+          ],
+        },
+        {
+          label: "一级 2",
+          type: true,
+          children: [
+            {
+              label: "二级 2-1",
+              type: true,
+              children: [
+                {
+                  label: "三级 2-1-1",
+                  type: true,
+                },
+              ],
+            },
+            {
+              label: "二级 2-2",
+              type: true,
+              children: [
+                {
+                  label: "三级 2-2-1",
+                  type: true,
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: "一级 3",
+          type: true,
+          children: [
+            {
+              label: "二级 3-1",
+              type: true,
+              children: [
+                {
+                  label: "三级 3-1-1",
+                  type: true,
+                },
+              ],
+            },
+            {
+              label: "二级 3-2",
+              type: true,
+              children: [
+                {
+                  label: "三级 3-2-1",
+                  type: true,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
   },
   methods: {
-    // 点击树展开
-    onxuanz(e) {
-      this.treekry = e.id;
-    },
-    // 切换本级与下级   +   初始化树
-
-    qiehuan(e, type) {
-      for (var i = 0; i < this.datatree.length; i++) {
-        if (this.datatree[i].id == e.id) {
-          this.datatree[i].type = !this.datatree[i].type;
-          this.treekry = this.datatree[i].id;
-          return;
-        }
-        if (
-          this.datatree[i].sub_groups &&
-          this.datatree[i].sub_groups.length !== 0
-        ) {
-          this.dg(this.datatree[i].sub_groups, e.id);
-        }
-      }
-    },
-    // 递归树
-    dg(arr, e) {
-      for (var i = 0; i < arr.length; i++) {
-        if (arr[i].id == e) {
-          arr[i].type = !arr[i].type;
-          this.treekry = arr[i].id;
-          return;
-        }
-        if (arr[i].sub_groups && arr[i].sub_groups.length !== 0) {
-          this.dg(arr[i].sub_groups, e);
-        }
-      }
-    },
     // 树形点击样式
-    onstyle(e, event) {
+    style(e, event) {
       if (event.target.className == "el-icon-arrow-right") {
         event.target.className = "el-icon-arrow-down";
       } else {
@@ -196,6 +257,36 @@ export default {
           arr[i].style.display = "none";
         }
       }
+    },
+    // 切换本级与下级
+    qiehuan(e) {
+      for (var i = 0; i < this.data.length; i++) {
+        if (this.data[i].label == e.label) {
+          this.data[i].type = !this.data[i].type;
+          this.treekry = this.data[i].label;
+          return;
+        }
+        if (this.data[i].children && this.data[i].children.length !== 0) {
+          this.dg(this.data[i].children, e.label);
+        }
+      }
+    },
+    // 递归树
+    dg(arr, e) {
+      for (var i = 0; i < arr.length; i++) {
+        if (arr[i].label == e) {
+          arr[i].type = !arr[i].type;
+          this.treekry = arr[i].label;
+          return;
+        }
+        if (arr[i].children && arr[i].children.length !== 0) {
+          this.dg(arr[i].children, e);
+        }
+      }
+    },
+    // 点击树
+    onxuanz(e) {
+      this.treekry = e.label;
     },
   },
 };
