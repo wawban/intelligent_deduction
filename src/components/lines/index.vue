@@ -15,6 +15,11 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      myChart: "",
+    };
+  },
   watch: {
     // list() {
     //   alert(8);
@@ -24,7 +29,8 @@ export default {
         // this.type = this.$route.meta.type || "";
         // this.name = this.$route.meta.nemr || "";
         // alert(8);
-        this.createCharts();
+        // alert(this.list.length);
+        this.createCharts(this.list);
       },
       deep: true,
       immediate: true,
@@ -46,14 +52,23 @@ export default {
         return e * j * 1.33333333333;
       }
     },
-    createCharts() {
+    createCharts(arrlis) {
+      // alert(9);
+      // alert(this.refName);
       this.myChart = this.$echarts.init(this.$refs[this.refName]);
-      var arr = this.list.map((item) => {
+      // alert(767);
+      // var arr = this.list.map((item) => {
+      // alert(1);
+      var arr = arrlis.map((item) => {
         return item.date;
       });
-      var arrvsj = this.list.map((item) => {
+      // alert(3);
+      var arrvsj = arrlis.map((item) => {
         return item.value;
       });
+      // alert(2);
+      // alert(JSON.stringify(arr));
+      // alert(JSON.stringify(arrvsj));
       // alert(arr);
       // var arr = [
       //   { a: "2023年12月1号" },

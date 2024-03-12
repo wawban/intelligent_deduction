@@ -18,25 +18,9 @@ export default {
       default: "",
     },
   },
-  watch: {
-    // list() {
-    //   alert(8);
-    // },
-    num: {
-      handler(to, form) {
-        // this.type = this.$route.meta.type || "";
-        // this.name = this.$route.meta.nemr || "";
-        // alert(8);
-        // alert(this.list.length);
-        this.createCharts(this.num);
-      },
-      deep: true,
-      immediate: true,
-    },
+  mounted() {
+    this.createCharts();
   },
-  // mounted() {
-  //   this.createCharts();
-  // },
   methods: {
     sz(e) {
       // let w = document.documentElement.clientWidth;
@@ -53,7 +37,7 @@ export default {
         return e * j;
       }
     },
-    createCharts(numd) {
+    createCharts() {
       this.myChart = this.$echarts.init(this.$refs[this.refName]);
       const _this = this;
       var option = {
@@ -105,8 +89,7 @@ export default {
                 width: this.sz(20),
                 color: [
                   [
-                    // Number(this.num) / 100,
-                    numd / 100,
+                    Number(this.num) / 100,
                     "#FF9A3E", // 数值变量
                   ],
                   [1, "rgba(255,255,255,.0)"],

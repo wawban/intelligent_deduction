@@ -56,8 +56,8 @@
         <div class="yauntu">
           <div class="text">风险评估</div>
           <div class="echar">
-            <!-- v-if="fxianpgutu.compared_value.length != 0" -->
             <Gauge
+              v-if="fxianpgutu.compared_value.length != 0"
               :num="fxianpgutu.compared_value"
               :text="
                 fxianpgutu.compared_value >= 80
@@ -429,36 +429,12 @@
                 class="xialacx zhessless"
                 size="mini"
                 style="width: 180rem"
-                @change="gjianurl"
               >
                 <el-option label="最大收益攻击路径" value="1"></el-option>
                 <el-option label="最隐蔽攻击路径" value="2"></el-option>
                 <el-option label="最大概率攻击路径" value="3"></el-option>
               </el-select>
             </div>
-            <!-- -------------------------------------------------------------------------------- -->
-            <!-- <div class="xhfor gdstyle">
-              <div v-for="(e, i) in ganxjian[fxxz].highest_value_path" :key="i">
-              <div v-for="(e, i) in 6" :key="i">
-                <div class="ytyz">
-                  <div class="imgtu">
-                    <img v-if="i == 0" src="../img/hip.png" alt="" />
-                    <img v-else src="../img/lip.png" alt="" />
-                  </div>
-                  <div class="zswenz">
-                    <div class="ipdiz">192.168.1.10（起点）</div>
-                    <div class="azswenztex">资产类型：文件服务器</div>
-                  </div>
-                </div>
-                <div class="zhesjiant">
-                  <div class="tetxbox">
-                    <div>注入数据等 》</div>
-                    <i class="el-icon-arrow-down"></i>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-
             <div class="xhfor gdstyle">
               <!-- <div v-for="(e, i) in ganxjian[fxxz].highest_value_path" :key="i"> -->
               <div v-for="(e, i) in 6" :key="i">
@@ -480,7 +456,6 @@
                 </div>
               </div>
             </div>
-            <!-- -------------------------------------------------- -->
           </div>
         </div>
       </div>
@@ -602,6 +577,8 @@ export default {
         period: this.zq == "2" ? "weekly" : "monthly",
       }).then((res) => {
         this.ybwtqs = res.series;
+        console.log("xxxxxxxxxxxxxxxx");
+        console.log(this.ybwtqs);
       });
     },
     // 潜在风险资产
@@ -632,50 +609,63 @@ export default {
     // 关键风险资产
     dashboardkeysurface() {
       dashboard_keysurface().then((res) => {
-        // ---------------------------------------------------------------------------------------------------
         var arr = JSON.parse(JSON.stringify(res.items[0]));
-        // 点数据
+        var a = JSON.parse(JSON.stringify(res.items[0]));
+        arr.risk_score = 88;
+        a.risk_score = 33;
+        // ----------------------
         arr.graph.nodes = [
-          { id: "string", label: "label", name: "name", props: {} },
-          { id: "string1", label: "label1", name: "name1", props: {} },
-          { id: "string2", label: "label2", name: "name2", props: {} },
-          { id: "string3", label: "label3", name: "name3", props: {} },
-        ];
-        // 线数据
-        arr.graph.edges = [
           {
             id: "string",
-            source: "string",
-            target: "string1",
-            label: "string",
-            props: {},
+            name: "string",
+            props: [11111, 22222, "192.168.1.1"],
           },
           {
             id: "string1",
-            source: "string",
-            target: "string2",
-            label: "string1",
-            props: {},
+            name: "string1",
+            props: [22222, "192.168.1.1"],
           },
           {
             id: "string2",
-            source: "string3",
-            target: "string2",
-            label: "string2-3",
-            props: {},
+            name: "string2",
+            props: [11111, "192.168.1.1"],
+          },
+          {
+            id: "string3",
+            name: "string3",
+            props: [11111, "192.168.1.1"],
+          },
+          {
+            id: "string4",
+            name: "string4",
+            props: [11111, 22222, "192.168.1.1"],
           },
         ];
-        // --------------------------------------------------------------------------------------
-        // 所有数据
-        this.ganxjian = [res.items[0], arr];
-        // 图谱数据
+        arr.graph.edges = [
+          {
+            src: "string",
+            dst: "string1",
+            type: "string-1",
+          },
+          {
+            src: "string",
+            dst: "string2",
+            type: "string-2",
+          },
+          {
+            src: "string",
+            dst: "string3",
+            type: "string-3",
+          },
+          {
+            src: "string2",
+            dst: "string1",
+            type: "string2-1",
+          },
+        ];
+        this.ganxjian = [res.items[0], arr, a];
         this.tjity = this.ganxjian[0].graph;
-        // 关键风险路径数据
       });
-    },
-    // 关键风险路径切换数据
-    gjianurl(e) {
-      console.log(e);
     },
     // 关键风险资产-跳转
     gjgt() {
@@ -685,6 +675,9 @@ export default {
     qhuanfx(i) {
       this.fxxz = i;
       this.tjity = this.ganxjian[i].graph;
+    },
+    xx(e) {
+      console.log(e);
     },
   },
 };
