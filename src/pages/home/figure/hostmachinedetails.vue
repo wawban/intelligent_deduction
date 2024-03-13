@@ -160,6 +160,7 @@
             </div>
           </div>
         </div>
+        <!-- 标签页 -->
         <div class="tablebg wbb">
           <div class="toubudiv">
             <div>
@@ -170,7 +171,7 @@
                 漏洞信息
               </div>
               <div class="zxxian"></div>
-              <div class="zsyuanq">33</div>
+              <div class="zsyuanq">{{ vulns.length }}</div>
             </div>
             <div>
               <div
@@ -180,7 +181,7 @@
                 端口信息
               </div>
               <div class="zxxian"></div>
-              <div class="zsyuanq">33</div>
+              <div class="zsyuanq">{{ ports.length }}</div>
             </div>
             <div>
               <div
@@ -190,7 +191,9 @@
                 资产图谱
               </div>
               <div class="zxxian"></div>
-              <div class="zsyuanq">33</div>
+              <div class="zsyuanq">
+                {{ graph.nodes ? graph.nodes.length : "" }}
+              </div>
             </div>
             <div>
               <div
@@ -200,37 +203,45 @@
                 关联资产
               </div>
               <div style="width: 40rem"></div>
-              <div class="zsyuanq" style="background: #aaaaaa">0</div>
+              <!-- <div class="zsyuanq" style="background: #aaaaaa"> -->
+              <div class="zsyuanq">
+                {{ related_assets.length }}
+              </div>
             </div>
           </div>
           <div>
             <!-- 漏洞信息 -->
-            <Loophole v-if="typenum == '1'" />
+            <Loophole v-if="typenum == '1'" :vulns="vulns" />
             <!-- 端口信息 -->
-            <Port v-if="typenum == '2'" />
+            <Port v-if="typenum == '2'" :ports="ports" />
             <!-- 资产图谱 -->
             <div
               v-if="typenum == '3'"
               style="height: 460rem; padding-top: 20rem"
             >
-              <Graph />
+              <Graph :datasj="graph" />
             </div>
             <!-- 关联资产 -->
-            <Relevance v-if="typenum == '4'" />
+            <Relevance v-if="typenum == '4'" :related_assets="related_assets" />
           </div>
         </div>
       </div>
+      <!-- 资产生命周期 -->
       <div class="right wbb">
         <div class="zsbtboxdq">
           <div class="guns"></div>
           <div class="wenz">资产生命周期</div>
         </div>
         <div class="xdelis">
-          <div v-for="(e, i) in 6" :key="i">
+          <div v-for="(e, i) in lifecycle" :key="i">
             <div class="yuanq"></div>
-            <div class="biaot">2023.12.13 13:55:23</div>
-            <div class="textr">系统将风险评分更新为</div>
-            <div class="textr">中，76.8</div>
+            <div class="biaot">
+              {{ $moment(e.timestamp).format("YYYY.MM.DD HH:mm:ss") }}
+            </div>
+            <div class="textr">
+              {{ e.user + " " + e.action }}
+            </div>
+            <div class="textr">{{ e.message }}</div>
           </div>
         </div>
       </div>
@@ -242,7 +253,6 @@ import { governance_hostsid } from "@/api";
 export default {
   components: {
     Gauge: () => import("@/components/gauge"),
-    // Gauge: () => import("./components/gauge.vue"),
     Loophole: () => import("./components/loophole.vue"),
     Port: () => import("./components/port.vue"),
     Graph: () => import("./components/graph.vue"),
@@ -251,8 +261,12 @@ export default {
   data() {
     return {
       typenum: "1", //标签页判断
-      // xqdata: {}, //详情数据
       meta: { asset_group: {} }, //风险评估
+      vulns: [], //漏洞信息
+      ports: [], //端口信息
+      graph: {}, //资产图谱
+      related_assets: [], //关联资产
+      lifecycle: "", //资产生命周期
     };
   },
   mounted() {
@@ -263,9 +277,32 @@ export default {
     getgovernancehostsid() {
       governance_hostsid(this.$route.query.id).then((res) => {
         console.log(res);
-        // this.xqdata = res;
-        // this.xqdata.meta.risk_score = 90;
         this.meta = res.meta; //风险评估
+        this.vulns = res.vulns; //漏洞信息
+        this.ports = res.ports; //端口信息
+        this.graph = res.graph; //资产图谱
+        this.related_assets = res.related_assets; //关联资产
+        // this.lifecycle = res.lifecycle; //资产生命周期
+        this.lifecycle = [
+          {
+            timestamp: "2024-03-13T13:16:33.713Z",
+            user: "admin",
+            action: "创建XX1",
+            message: "发现XX",
+          },
+          {
+            timestamp: "2024-02-13T13:16:33.713Z",
+            user: "admin",
+            action: "创建XX2",
+            message: "发现XX",
+          },
+          {
+            timestamp: "2024-03-13T13:16:33.713Z",
+            user: "admin",
+            action: "创建XX3",
+            message: "发现XX",
+          },
+        ];
       });
     },
     goto() {

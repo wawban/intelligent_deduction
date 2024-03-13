@@ -284,7 +284,7 @@
                     alt=""
                   />
                   <img
-                    @click="dialogVisible = true"
+                    @click="editor(scope.row)"
                     style="height: 22rem; cursor: pointer"
                     src="../img/bj.png"
                     alt=""
@@ -338,48 +338,49 @@
             label-width="100rem"
             class="demo-ruleForm"
           >
-            <el-form-item label="资产名称：" prop="zcmc">
+            <el-form-item label="资产名称：" prop="name">
               <el-input
                 class="inpustyle"
-                v-model="ruleForm.zcmc"
+                v-model="ruleForm.name"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="内外网：" prop="nww">
+            <el-form-item label="内外网：" prop="intranet">
               <el-select
                 class="zhessless"
                 size="mini"
-                v-model="ruleForm.nww"
+                v-model="ruleForm.intranet"
                 placeholder="请选择"
                 style="width: 340rem"
               >
-                <el-option label="内网" value="1"> </el-option>
-                <el-option label="外网" value="2"> </el-option>
+                <el-option label="内网" :value="1"> </el-option>
+                <el-option label="外网" :value="0"> </el-option>
+                <el-option label="未知" :value="-1"> </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="资产价值：" prop="czjz">
+            <el-form-item label="资产价值：" prop="value">
               <el-input
                 class="inpustyle"
-                v-model="ruleForm.czjz"
+                v-model="ruleForm.value"
                 size="mini"
                 style="width: 340rem"
                 placeholder="请输入1-5，分值越高，资产越重要"
               ></el-input>
             </el-form-item>
-            <el-form-item label="操作系统：" prop="czxt">
+            <el-form-item label="操作系统：" prop="os">
               <el-input
                 class="inpustyle"
-                v-model="ruleForm.czxt"
+                v-model="ruleForm.os"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="等级保护：" prop="djbh">
+            <el-form-item label="等级保护：" prop="location">
               <el-select
                 class="zhessless"
                 size="mini"
-                v-model="ruleForm.djbh"
+                v-model="ruleForm.location"
                 placeholder="请选择"
                 style="width: 340rem"
               >
@@ -391,7 +392,11 @@
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button
+            class="buttonsy"
+            size="mini"
+            style="margin-right: 30rem"
+            @click="submit"
             >确认</el-button
           >
           <el-button
@@ -431,11 +436,11 @@
             label-width="100rem"
             class="demo-ruleForm"
           >
-            <el-form-item label="资产名称：" prop="radio">
+            <el-form-item label="标签分类：" prop="radio">
               <el-radio-group v-model="bqform.radio" class="dxradio">
-                <el-radio :label="3">备选项</el-radio>
-                <el-radio :label="6">备选项</el-radio>
-                <el-radio :label="9">备选项</el-radio>
+                <el-radio :label="3">常用标签</el-radio>
+                <el-radio :label="6">预置标签</el-radio>
+                <el-radio :label="9">自定义</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="标签名称：" prop="bqmc">
@@ -476,7 +481,7 @@
   </div>
 </template>
 <script>
-import { governance_groups, governance_hosts } from "@/api";
+import { governance_groups, governance_hosts, governance_meta } from "@/api";
 export default {
   data() {
     return {
@@ -543,18 +548,21 @@ export default {
       },
       bqflag: false, // 标签表单弹窗
       // ------------------------------
-      // 表单数据
-      ruleForm: {},
       // 表单验证
       rules: {
-        // name: [{ validator: funcname, trigger: "blur" }],
+        name: [{ required: true, message: "请输入资产名称", trigger: "blur" }],
         // password: [{ validator: funcpassword, trigger: "blur" }],
       },
       dialogVisible: false, // 编辑弹窗
-      // -----------------------------------------------------------------关联查询组件下
-      //   xxxxxxxxxxxxxxxxxxxxxxxxxxx
-      //   xxxxxxxxxxxxxxxxxxxxxxxxxxx
-      // -----------------------------------------------------------------关联查询组件上
+      // 编辑表单数据
+      ruleForm: {
+        name: "",
+        os: "",
+        value: "",
+        intranet: "",
+        location: "",
+      },
+      bjid: "", //编辑id
       // 分页
       page: {
         offset: 1,
@@ -568,7 +576,6 @@ export default {
     };
   },
   watch: {
-    // --------------------表格头
     btarr: {
       handler: function (val, oldVal) {
         this.vararr = this.btarr.filter((e) => {
@@ -577,14 +584,12 @@ export default {
         this.$nextTick(() => {
           this.tableData = JSON.parse(JSON.stringify(this.tableData));
         });
-        // this.tableData = JSON.parse(JSON.stringify(this.tableData))
       },
       deep: true,
       immediate: true,
     },
   },
   mounted() {
-    // -------------------------------------------------------------表格头
     this.btarr = localStorage.getItem("lochostassets")
       ? JSON.parse(localStorage.getItem("lochostassets"))
       : this.tablearr;
@@ -592,7 +597,6 @@ export default {
       this.btarr = e.value.list;
       localStorage.setItem("lochostassets", JSON.stringify(this.btarr));
     });
-    // -------------------------------------------------------------表格头
     this.getgovernancegroups(); //资产组架构
     this.getgovernancehosts(); // 主机资产列表
   },
@@ -682,7 +686,34 @@ export default {
       this.page.offset = e;
       this.getgovernancehosts();
     },
-
+    // 打开编辑
+    editor(e) {
+      this.bjid = e.id;
+      this.ruleForm = {
+        name: e.name,
+        os: e.os,
+        value: e.value,
+        intranet: e.intranet,
+        location: e.location,
+      };
+      this.dialogVisible = true;
+      this.$nextTick(() => {
+        this.$refs["ruleForm"].resetFields();
+      });
+    },
+    // 编辑提交
+    submit() {
+      this.$refs["ruleForm"].validate((valid) => {
+        if (valid) {
+          governance_meta(this.ruleForm, this.bjid).then((res) => {
+            this.getgovernancehosts(); //更新数据
+            this.dialogVisible = false; //关闭弹窗
+          });
+        } else {
+          return false;
+        }
+      });
+    },
     // ---------------------------跳转详情
     gotu(e) {
       this.$router.push({

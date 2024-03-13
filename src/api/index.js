@@ -80,6 +80,14 @@ export const governance_hostsid = (params) => {
         // params
     })
 }
+// 数字空间治理 主机资产 主机资产资产编辑
+export const governance_meta = (data,id) => {
+    return request({
+        url: `${url}data-governance/hosts/${id}/meta`,
+        method: "patch",
+        data
+    })
+}
 // export const productInfo_getList = (params) => {
 //     return request({
 //         url: `${url}productInfo/getList`,
