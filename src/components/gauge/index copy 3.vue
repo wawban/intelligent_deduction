@@ -2,7 +2,7 @@
   <div :ref="refName" class="gauge_charts"></div>
 </template>
 <script>
-// import { number } from "echarts";
+import { number } from "echarts";
 export default {
   props: {
     refName: {
@@ -10,10 +10,8 @@ export default {
       default: String(Math.floor(Math.random() * 100)) + "lineadd",
     },
     num: {
-      type: Number,
-      default: () => {
-        return 0;
-      },
+      type: number,
+      default: 0,
     },
     text: {
       type: String,
@@ -32,8 +30,8 @@ export default {
         // alert(this.list.length);
         this.createCharts(this.num);
       },
-      // deep: true,
-      // immediate: true,
+      deep: true,
+      immediate: true,
     },
   },
   // mounted() {

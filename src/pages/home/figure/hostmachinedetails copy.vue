@@ -89,11 +89,10 @@
                 {{ e.name }}
               </div>
               <!-- 推理标签 -->
-              <div v-for="(e, i) in meta.infer_tags" :key="i + '1'" class="ys3">
-                {{ e }}
-              </div>
+              <!-- <div v-for="(e, i) in meta.infer_tags" :key="i + '1'" class="ys3">
+                {{ e.name }}
+              </div> -->
             </div>
-            <!-- 详情 -->
             <div class="lidlbi">
               <div>
                 <div>
@@ -252,7 +251,7 @@ export default {
     return {
       typenum: "1", //标签页判断
       // xqdata: {}, //详情数据
-      meta: { asset_group: {} }, //风险评估
+      meta: {}, //风险评估
     };
   },
   mounted() {

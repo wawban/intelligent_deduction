@@ -8,27 +8,38 @@ export default {
       type: String,
       default: String(Math.floor(Math.random() * 100)) + "lineadd",
     },
-    liste: {
+    list: {
       type: Array,
       default: () => {
         return [];
       },
     },
   },
-  // data() {
-  //   return {
-  //     myChart: "",
-  //   };
-  // },
+  data() {
+    return {
+      myChart: "",
+    };
+  },
   watch: {
-    liste: {
+    // list() {
+    //   alert(8);
+    // },
+    list: {
       handler(to, form) {
-        // console.log(this.liste);
-        this.createCharts(this.liste);
+        // this.type = this.$route.meta.type || "";
+        // this.name = this.$route.meta.nemr || "";
+        // alert(8);
+        // alert(this.list.length);
+        this.createCharts(this.list);
       },
-      // deep: true,
-      // immediate: true,
+      deep: true,
+      immediate: true,
     },
+  },
+  mounted() {
+    // alert(1);
+    // alert(this.list);
+    // this.createCharts();
   },
   methods: {
     sz(e) {
@@ -42,13 +53,32 @@ export default {
       }
     },
     createCharts(arrlis) {
+      // alert(9);
+      // alert(this.refName);
       this.myChart = this.$echarts.init(this.$refs[this.refName]);
+      // alert(767);
+      // var arr = this.list.map((item) => {
+      // alert(1);
       var arr = arrlis.map((item) => {
         return item.date;
       });
+      // alert(3);
       var arrvsj = arrlis.map((item) => {
         return item.value;
       });
+      // alert(2);
+      // alert(JSON.stringify(arr));
+      // alert(JSON.stringify(arrvsj));
+      // alert(arr);
+      // var arr = [
+      //   { a: "2023年12月1号" },
+      //   { a: "2023年12月2号" },
+      //   { a: "2023年12月3号" },
+      //   { a: "2023年12月4号" },
+      //   { a: "2023年12月5号" },
+      //   { a: "2023年12月6号" },
+      //   { a: "2023年12月7号" },
+      // ];
       var option = {
         grid: {
           top: "16%",

@@ -72,6 +72,14 @@ export const governance_hosts = (params) => {
         params
     })
 }
+// 数字空间治理 主机资产 主机资产资产详情
+export const governance_hostsid = (params) => {
+    return request({
+        url: `${url}data-governance/hosts/${params}`,
+        method: "get",
+        // params
+    })
+}
 // export const productInfo_getList = (params) => {
 //     return request({
 //         url: `${url}productInfo/getList`,

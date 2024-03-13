@@ -15,19 +15,18 @@ export default {
       },
     },
   },
-  // data() {
-  //   return {
-  //     myChart: "",
-  //   };
-  // },
+  data() {
+    return {
+      myChart: "",
+    };
+  },
   watch: {
     liste: {
       handler(to, form) {
-        // console.log(this.liste);
         this.createCharts(this.liste);
       },
-      // deep: true,
-      // immediate: true,
+      deep: true,
+      immediate: true,
     },
   },
   methods: {

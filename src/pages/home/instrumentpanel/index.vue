@@ -3,60 +3,9 @@
     <div class="top">
       <!-- 风险评估 -->
       <div class="top_left bb">
-        <!-- 风险评估 -->
-        <!-- <div class="yauntu">
-          <div class="text">风险评估</div>
-          <div class="echar">
-            <Gauge
-              v-if="fxianpgutu.value.length != 0"
-              :num="fxianpgutu.value"
-              :text="
-                fxianpgutu.value >= 80
-                  ? '高'
-                  : fxianpgutu.value < 40
-                  ? '低'
-                  : '中'
-              "
-            />
-            <div class="dw">
-              <div class="younum">0</div>
-              <div class="zuonum">100</div>
-              <div
-                class="zjiannum"
-                :style="{
-                  color:
-                    fxianpgutu.value >= 80
-                      ? '#e53a40'
-                      : fxianpgutu.value < 40
-                      ? '#f6d535'
-                      : '#fa9600',
-                }"
-              >
-                {{ fxianpgutu.value }}
-              </div>
-            </div>
-          </div>
-          <div class="bjtimg">
-            <div class="numtext">{{ fxianpgutu.compared_diff }}</div>
-            <div class="tibiao">
-              <img
-                v-if="fxianpgutu.compare_trend == 'down'"
-                src="../img/lst.png"
-                alt=""
-              />
-              <img
-                v-if="fxianpgutu.compare_trend == 'up'"
-                src="../img/hst.png"
-                alt=""
-              />
-            </div>
-          </div>
-          <div class="footery">(与{{ fxianpgutu.compared_to }}相比)</div>
-        </div> -->
         <div class="yauntu">
           <div class="text">风险评估</div>
           <div class="echar">
-            <!-- v-if="fxianpgutu.compared_value.length != 0" -->
             <Gauge
               :num="fxianpgutu.compared_value"
               :text="
@@ -164,7 +113,6 @@
           <div class="guns"></div>
           <div class="wenz">隐蔽问题趋势</div>
         </div>
-        <!-- <div class="zqxuanz" v-if="ybwtqs"> -->
         <div class="zqxuanz">
           <div>显示周期：</div>
           <el-select
@@ -176,11 +124,10 @@
           >
             <el-option label="月" value="1"></el-option>
             <el-option label="周" value="2"></el-option>
-            <!-- <el-option label="日" value="3"></el-option> -->
           </el-select>
         </div>
         <div class="ecrlin">
-          <Lines :list="ybwtqs" />
+          <Lines :liste="ybwtqs" />
         </div>
       </div>
     </div>
@@ -320,7 +267,6 @@
                   <div class="yuszbi">(与上周相比)</div>
                 </div>
                 <div class="imgyuioj">
-                  <!-- <img src="../img/lst.png" alt="" /> -->
                   <img
                     v-if="qzgjm.compare_trend == 'down'"
                     src="../img/lst.png"
@@ -334,8 +280,6 @@
                 </div>
               </div>
               <div class="huanxjdu">
-                <!-- :stroke-width="wwind == 1920 ? 16 * 1.33333333333 : 16" -->
-                <!-- :stroke-width="wwind == 1920 ? 16 * 1.33333333333 : 16" -->
                 <el-progress
                   class="huanxyet"
                   :stroke-width="wwind == 1920 ? 16 : 16 / 1.33333333333"
@@ -412,7 +356,7 @@
           </div>
           <!-- 资产图谱 -->
           <div class="yuanqiutu">
-            <Graph :datasj="tjity" v-if="tjity" />
+            <Graph :datasj="tjity" />
           </div>
         </div>
         <div class="fxlujig">
@@ -429,52 +373,76 @@
                 class="xialacx zhessless"
                 size="mini"
                 style="width: 180rem"
-                @change="gjianurl"
               >
                 <el-option label="最大收益攻击路径" value="1"></el-option>
                 <el-option label="最隐蔽攻击路径" value="2"></el-option>
                 <el-option label="最大概率攻击路径" value="3"></el-option>
               </el-select>
             </div>
-            <!-- -------------------------------------------------------------------------------- -->
-            <!-- <div class="xhfor gdstyle">
-              <div v-for="(e, i) in ganxjian[fxxz].highest_value_path" :key="i">
-              <div v-for="(e, i) in 6" :key="i">
+            <!-- 最大收益攻击路径 -->
+            <div class="xhfor gdstyle" v-if="gjljy == '1'">
+              <div v-for="(e, i) in zddata" :key="i">
                 <div class="ytyz">
                   <div class="imgtu">
                     <img v-if="i == 0" src="../img/hip.png" alt="" />
                     <img v-else src="../img/lip.png" alt="" />
                   </div>
                   <div class="zswenz">
-                    <div class="ipdiz">192.168.1.10（起点）</div>
-                    <div class="azswenztex">资产类型：文件服务器</div>
+                    <div class="ipdiz" v-if="e.node">
+                      {{ e.node.name }}{{ i == 0 ? "（起点）" : "（途径）" }}
+                    </div>
+                    <div class="azswenztex">资产类型：{{ e.node.label }}</div>
                   </div>
                 </div>
                 <div class="zhesjiant">
                   <div class="tetxbox">
-                    <div>注入数据等 》</div>
+                    <div v-if="e.edge">{{ e.edge.label }}</div>
                     <i class="el-icon-arrow-down"></i>
                   </div>
                 </div>
               </div>
-            </div> -->
-
-            <div class="xhfor gdstyle">
-              <!-- <div v-for="(e, i) in ganxjian[fxxz].highest_value_path" :key="i"> -->
-              <div v-for="(e, i) in 6" :key="i">
+            </div>
+            <!-- 最隐蔽攻击路径 -->
+            <div class="xhfor gdstyle" v-if="gjljy == '2'">
+              <div v-for="(e, i) in zydata" :key="i">
                 <div class="ytyz">
                   <div class="imgtu">
                     <img v-if="i == 0" src="../img/hip.png" alt="" />
                     <img v-else src="../img/lip.png" alt="" />
                   </div>
                   <div class="zswenz">
-                    <div class="ipdiz">192.168.1.10（起点）</div>
-                    <div class="azswenztex">资产类型：文件服务器</div>
+                    <div class="ipdiz" v-if="e.node">
+                      {{ e.node.name }}{{ i == 0 ? "（起点）" : "（途径）" }}
+                    </div>
+                    <div class="azswenztex">资产类型：{{ e.node.label }}</div>
                   </div>
                 </div>
                 <div class="zhesjiant">
                   <div class="tetxbox">
-                    <div>注入数据等 》</div>
+                    <div v-if="e.edge">{{ e.edge.label }}</div>
+                    <i class="el-icon-arrow-down"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 最大概率攻击路径 -->
+            <div class="xhfor gdstyle" v-if="gjljy == '3'">
+              <div v-for="(e, i) in gldata" :key="i">
+                <div class="ytyz">
+                  <div class="imgtu">
+                    <img v-if="i == 0" src="../img/hip.png" alt="" />
+                    <img v-else src="../img/lip.png" alt="" />
+                  </div>
+                  <div class="zswenz">
+                    <div class="ipdiz" v-if="e.node">
+                      {{ e.node.name }}{{ i == 0 ? "（起点）" : "（途径）" }}
+                    </div>
+                    <div class="azswenztex">资产类型：{{ e.node.label }}</div>
+                  </div>
+                </div>
+                <div class="zhesjiant">
+                  <div class="tetxbox">
+                    <div v-if="e.edge">{{ e.edge.label }}</div>
                     <i class="el-icon-arrow-down"></i>
                   </div>
                 </div>
@@ -496,7 +464,6 @@ import {
   dashboard_surface,
   dashboard_keysurface,
 } from "@/api";
-// import { color } from "echarts";
 export default {
   components: {
     Gauge: () => import("@/components/gauge"),
@@ -508,12 +475,15 @@ export default {
       fxianpgutu: {}, //风险评估(图)
       fxpgy: {}, //风险评估-右
       zq: "2", //周期选择
-      ybwtqs: {}, //隐蔽问题趋势
+      ybwtqs: [], //隐蔽问题趋势
       dashboardpotentialdata: [], //潜在风险资产
       qzgjm: {}, //潜在攻击面
       ganxjian: [], //关键风险资产
       gjljy: "1", //攻击路径选择
       tjity: {}, //资产图谱
+      zddata: [], //关键风险路径数据-最大收益攻击路径
+      zydata: [], //关键风险路径数据-最隐蔽攻击路径
+      gldata: [], //关键风险路径数据-最大概率攻击路径
       // ------------------------------------------------------------
       fxxz: 0, //关键风险资产选择状态
       wwind: 0,
@@ -632,50 +602,18 @@ export default {
     // 关键风险资产
     dashboardkeysurface() {
       dashboard_keysurface().then((res) => {
-        // ---------------------------------------------------------------------------------------------------
-        var arr = JSON.parse(JSON.stringify(res.items[0]));
-        // 点数据
-        arr.graph.nodes = [
-          { id: "string", label: "label", name: "name", props: {} },
-          { id: "string1", label: "label1", name: "name1", props: {} },
-          { id: "string2", label: "label2", name: "name2", props: {} },
-          { id: "string3", label: "label3", name: "name3", props: {} },
-        ];
-        // 线数据
-        arr.graph.edges = [
-          {
-            id: "string",
-            source: "string",
-            target: "string1",
-            label: "string",
-            props: {},
-          },
-          {
-            id: "string1",
-            source: "string",
-            target: "string2",
-            label: "string1",
-            props: {},
-          },
-          {
-            id: "string2",
-            source: "string3",
-            target: "string2",
-            label: "string2-3",
-            props: {},
-          },
-        ];
-        // --------------------------------------------------------------------------------------
         // 所有数据
-        this.ganxjian = [res.items[0], arr];
+        // this.ganxjian = [res.items[0], arr];
+        this.ganxjian = res.items;
         // 图谱数据
         this.tjity = this.ganxjian[0].graph;
-        // 关键风险路径数据
+        // 关键风险路径数据-最大收益攻击路径
+        this.zddata = this.ganxjian[0].highest_value_path.series;
+        // 关键风险路径数据-最隐蔽攻击路径
+        this.zydata = this.ganxjian[0].most_stealthy_path.series;
+        // 关键风险路径数据-最大概率攻击路径
+        this.gldata = this.ganxjian[0].shortest_path.series;
       });
-    },
-    // 关键风险路径切换数据
-    gjianurl(e) {
-      console.log(e);
     },
     // 关键风险资产-跳转
     gjgt() {
@@ -684,7 +622,16 @@ export default {
     // 切换风险
     qhuanfx(i) {
       this.fxxz = i;
-      this.tjity = this.ganxjian[i].graph;
+      this.$nextTick(() => {
+        // 图谱数据
+        this.tjity = this.ganxjian[i].graph;
+        // 关键风险路径数据-最大收益攻击路径
+        this.zddata = this.ganxjian[i].highest_value_path.series;
+        // 关键风险路径数据-最隐蔽攻击路径
+        this.zydata = this.ganxjian[i].most_stealthy_path.series;
+        // 关键风险路径数据-最大概率攻击路径
+        this.gldata = this.ganxjian[i].shortest_path.series;
+      });
     },
   },
 };

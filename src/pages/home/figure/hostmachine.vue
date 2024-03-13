@@ -31,7 +31,12 @@
             <!-- <el-popover placement="bottom" width="500" trigger="click"> hover-->
             <el-popover placement="bottom" trigger="hover">
               <div class="ckqbtopqian">
-                <el-button class="buttonsy" size="mini">查看全部</el-button>
+                <el-button
+                  class="buttonsy"
+                  size="mini"
+                  @click="getgovernancehosts('clear')"
+                  >查看全部</el-button
+                >
               </div>
               <div slot="reference" class="boxjc">
                 <img src="../img/qb.png" alt="" />
@@ -39,6 +44,7 @@
               </div>
             </el-popover>
           </div>
+          <!-- 复合查询 -->
           <div class="marginr">
             <el-popover placement="bottom" width="530" trigger="click">
               <div slot="reference" class="boxjc">
@@ -47,8 +53,8 @@
               </div>
               <div class="tjiansxian">
                 <div class="top">
-                  <div>筛选</div>
-                  <div @click="cleark">清空</div>
+                  <div @click="getgovernancehosts">筛选</div>
+                  <div @click="getgovernancehosts('clear')">清空</div>
                 </div>
                 <div
                   style="padding: 12rem 0; display: flex; align-items: center"
@@ -61,8 +67,8 @@
                     v-model="rysy"
                     placeholder="请选择"
                   >
-                    <el-option label="任一" value="1"></el-option>
-                    <el-option label="所有" value="2"></el-option>
+                    <el-option label="任一" value="or"></el-option>
+                    <el-option label="所有" value="and"></el-option>
                   </el-select>
                   &nbsp;&nbsp;条件
                 </div>
@@ -94,10 +100,15 @@
                         v-model="e.value"
                         placeholder="请选择"
                       >
-                        <el-option label="包含" value="1"></el-option>
-                        <el-option label="不包含" value="2"></el-option>
-                        <el-option label="为空" value="3"></el-option>
-                        <el-option label="不为空" value="4"></el-option>
+                        <el-option label="包含" value="contain"></el-option>
+                        <el-option
+                          label="不包含"
+                          value="notcontain"
+                        ></el-option>
+                        <el-option label="等于" value="eq"></el-option>
+                        <el-option label="不等于" value="ne"></el-option>
+                        <!-- <el-option label="为空" value="3"></el-option>
+                        <el-option label="不为空" value="4"></el-option> -->
                       </el-select>
                     </div>
                     <div>
@@ -126,6 +137,7 @@
               </div>
             </el-popover>
           </div>
+          <!-- -------------------------------------------------------- -->
           <div class="marginr">
             <el-popover placement="bottom" width="220" trigger="hover">
               <div class="zduanpeizi">
@@ -247,11 +259,15 @@
                     <div
                       class="lv"
                       v-for="(e, i) in scope.row.custom_tags"
-                      :key="i"
+                      :key="i + '0'"
                     >
                       {{ e.name }}
                     </div>
                   </div>
+                </div>
+                <!-- 所属资产组 -->
+                <div v-else-if="item.label == '所属资产组'">
+                  {{ scope.row.asset_group.name }}
                 </div>
                 <!-- 操作 -->
                 <div v-else-if="item.label == '操作'">
@@ -498,22 +514,20 @@ export default {
           type: true,
         },
         {
-          prop: "g",
+          prop: "count_vulns",
           label: "漏洞数",
           type: true,
         },
         {
-          prop: "h",
+          prop: "count_ports",
           label: "端口数",
           type: true,
         },
         {
-          prop: "h",
-          label: "所属资产组 ",
+          label: "所属资产组",
           type: true,
         },
         {
-          prop: "h",
           label: "操作",
           type: true,
         },
@@ -539,9 +553,6 @@ export default {
       dialogVisible: false, // 编辑弹窗
       // -----------------------------------------------------------------关联查询组件下
       //   xxxxxxxxxxxxxxxxxxxxxxxxxxx
-      rysy: "2", //符合条件，任一或所有
-      //   查询数据
-      searcharr: [{ key: "", value: "", type: "" }],
       //   xxxxxxxxxxxxxxxxxxxxxxxxxxx
       // -----------------------------------------------------------------关联查询组件上
       // 分页
@@ -550,6 +561,10 @@ export default {
         limit: 10,
         total: 44,
       },
+      // 复合查询
+      rysy: "and", //符合条件，任一或所有
+      //   查询数据
+      searcharr: [],
     };
   },
   watch: {
@@ -582,6 +597,15 @@ export default {
     this.getgovernancehosts(); // 主机资产列表
   },
   methods: {
+    // 表格头是否显示
+    fields(e, i) {
+      if (e == "1") {
+        this.btarr[i].type = false;
+      } else {
+        this.btarr[i].type = true;
+      }
+      localStorage.setItem("lochostassets", JSON.stringify(this.btarr));
+    },
     // 资产组架构
     getgovernancegroups() {
       governance_groups().then((res) => {
@@ -609,34 +633,36 @@ export default {
       }
     },
     // 主机资产列表
-    getgovernancehosts() {
+    getgovernancehosts(e) {
+      // 清空条件+查询所有
+      if (e == "clear") {
+        this.searcharr = [];
+        this.page.offset = 1;
+      }
       var obj = {
         offset: this.page.offset,
         limit: this.page.limit,
-        filter: "",
       };
+      if (this.searcharr.length != 0) {
+        var arr = this.searcharr.filter((item) => {
+          return item.key.length != 0 && item.type.length != 0;
+        });
+        if (arr.length != 0) {
+          var tj = arr.map((req) => {
+            var jihe = req.key + " " + req.value + " " + (req.type || "");
+            return jihe;
+          });
+          obj.filter = tj.join(" " + this.rysy + " ");
+        }
+      }
       governance_hosts(obj).then((res) => {
-        console.log(2222222222222);
-        console.log(res);
         this.page = res.pagination;
         this.tableData = res.results;
       });
     },
-    // ============================================================================
-    // ----------------------------关联查询组件下
-    // 表格头
-    fields(e, i) {
-      if (e == "1") {
-        this.btarr[i].type = false;
-      } else {
-        this.btarr[i].type = true;
-      }
-      localStorage.setItem("lochostassets", JSON.stringify(this.btarr));
-    },
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // 查询组件添加条件
     appendtj() {
-      this.searcharr.push({ key: "", value: "1", type: "" });
+      this.searcharr.push({ key: "", value: "contain", type: "" });
     },
     // 查询组件减少条件
     cxoff(i) {
@@ -644,22 +670,25 @@ export default {
     },
     // 触发清空
     cleark() {
-      this.searcharr = [{ key: "", value: "1", type: "" }];
+      this.searcharr = [];
     },
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    // ----------------------------关联查询组件上
-    // ---------------------------分页
-    handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
-      alert(val);
+    // 分页条数
+    handleSizeChange(e) {
+      this.page.limit = e;
+      this.getgovernancehosts();
     },
-    handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`);
-      alert(val);
+    // 分页页数
+    handleCurrentChange(e) {
+      this.page.offset = e;
+      this.getgovernancehosts();
     },
+
     // ---------------------------跳转详情
     gotu(e) {
-      this.$router.push("/figure/hostmachinedetails");
+      this.$router.push({
+        path: "/figure/hostmachinedetails",
+        query: { id: e.id },
+      });
     },
   },
 };

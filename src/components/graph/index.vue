@@ -30,8 +30,8 @@ export default {
         this.nodes = this.datasj.nodes;
         this.createCharts();
       },
-      deep: true,
-      immediate: true,
+      // deep: true,
+      // immediate: true,
     },
   },
   methods: {
