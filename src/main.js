@@ -13,6 +13,15 @@ const echarts = require('echarts')
 Vue.prototype.$echarts = echarts
 Vue.prototype.$code = 200
 // --------------------------------------------
+// 树形组件
+import Trees from '@/components/tree/index.vue'
+Vue.component('Trees',Trees)
+// src\components\tree\index.vue
+// --------------------------------------------
+// 时间转换组件
+import moment from "moment"
+Vue.prototype.$moment = moment;
+// --------------------------------------------
 Vue.config.productionTip = false
 new Vue({
   el: '#app',

@@ -53,7 +53,7 @@
                 <div class="xiantiao">
                   <i class="el-icon-caret-right"></i>
                   <div class="xiant"></div>
-                  技战术简介
+                  运作方式
                 </div>
               </div>
             </div>
@@ -85,7 +85,7 @@
         <div class="zjishu wbb">
           <div class="bordersj">
             <div class="guns"></div>
-            <div class="wenz">防御措施</div>
+            <div class="wenz">子技术</div>
           </div>
           <div class="toubukai">
             <div>ID</div>

@@ -208,19 +208,22 @@
               </div>
             </div>
             <div>
-              <div class="totol">机密性影响</div>
+              <div class="totol">机密性</div>
+              <!-- <div class="totol">机密性影响</div> -->
               <div class="borderh">
                 <div class="huangs">低</div>
               </div>
             </div>
             <div>
-              <div class="totol">完整性影响</div>
+              <div class="totol">完整性</div>
+              <!-- <div class="totol">完整性影响</div> -->
               <div class="borderh">
                 <div class="fens">高</div>
               </div>
             </div>
             <div>
-              <div class="totol">可用性影响</div>
+              <div class="totol">可用性</div>
+              <!-- <div class="totol">可用性影响</div> -->
               <div class="borderh">
                 <div class="huangs">低</div>
               </div>

@@ -389,13 +389,13 @@
                 <el-option label="外网" value="2"> </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="产值价值：" prop="czjz">
+            <el-form-item label="资产价值：" prop="czjz">
               <el-input
                 class="inpustyle"
                 v-model="ruleForm.czjz"
                 size="mini"
                 style="width: 340rem"
-                placeholder="请输入1-5，分值越高，产值越重要"
+                placeholder="请输入1-5，分值越高，资产越重要"
               ></el-input>
             </el-form-item>
             <el-form-item label="操作系统：" prop="czxt">

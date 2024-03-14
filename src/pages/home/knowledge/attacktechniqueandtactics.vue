@@ -125,7 +125,7 @@
         <div class="jzdzstp wbb">
           <div class="bordersj">
             <div class="guns"></div>
-            <div class="wenz">漏洞知识图谱</div>
+            <div class="wenz">技战术知识图谱</div>
           </div>
           <div class="tuput"><Graph /></div>
         </div>
@@ -199,7 +199,7 @@
         <div class="xsloud wbb" style="margin-top: 16rem;">
           <div class="bordersj">
             <div class="guns"></div>
-            <div class="wenz">可硷能会利用的漏洞</div>
+            <div class="wenz">可能会利用的漏洞</div>
           </div>
           <div class="toubukai">
             <div>编号</div>

@@ -1,30 +1,62 @@
 <template>
   <div class="instrumentpanel">
     <div class="top">
+      <!-- 风险评估 -->
       <div class="top_left bb">
         <div class="yauntu">
           <div class="text">风险评估</div>
           <div class="echar">
-            <Gauge num="76.8" text="中" />
+            <Gauge
+              :num="fxianpgutu.compared_value"
+              :text="
+                fxianpgutu.compared_value >= 80
+                  ? '高'
+                  : fxianpgutu.compared_value < 40
+                  ? '低'
+                  : '中'
+              "
+            />
             <div class="dw">
               <div class="younum">0</div>
               <div class="zuonum">100</div>
-              <div class="zjiannum">76.8</div>
+              <div
+                class="zjiannum"
+                :style="{
+                  color:
+                    fxianpgutu.compared_value >= 80
+                      ? '#e53a40'
+                      : fxianpgutu.compared_value < 40
+                      ? '#f6d535'
+                      : '#fa9600',
+                }"
+              >
+                {{ fxianpgutu.compared_value }}
+              </div>
             </div>
           </div>
           <div class="bjtimg">
-            <div class="numtext">8</div>
+            <div class="numtext">{{ fxianpgutu.compared_diff }}</div>
             <div class="tibiao">
-              <img src="../img/lst.png" alt="" />
+              <img
+                v-if="fxianpgutu.compare_trend == 'down'"
+                src="../img/lst.png"
+                alt=""
+              />
+              <img
+                v-if="fxianpgutu.compare_trend == 'up'"
+                src="../img/hst.png"
+                alt=""
+              />
             </div>
           </div>
-          <div class="footery">(与2023-12-25 12:00:00相比)</div>
+          <div class="footery">(与{{ fxianpgutu.compared_to }}相比)</div>
         </div>
+        <!-- 风险评估右 -->
         <div class="sjdata">
           <div class="scgxe">
             <div class="sjiangx">
               <i class="el-icon-refresh-left"></i>
-              <p>最近更新时间：2023-12-25 12:00:00</p>
+              <p>最近更新时间：{{ fxpgy.time_updated }}</p>
             </div>
             <div class="younsles">
               <div>数据周期：</div>
@@ -33,24 +65,25 @@
                 class="zhessless"
                 size="mini"
                 style="width: 60rem"
+                @change="sjianrq"
               >
                 <el-option label="月" value="1"></el-option>
                 <el-option label="周" value="2"></el-option>
-                <el-option label="日" value="3"></el-option>
+                <!-- <el-option label="日" value="3"></el-option> -->
               </el-select>
             </div>
           </div>
           <div class="boxsjudhu">
             <div class="tuiyan">
               <div class="numcs">
-                <div class="numtew">120</div>
+                <div class="numtew">{{ fxpgy.total_tasks }}</div>
                 <div class="danwer">次</div>
               </div>
               <div class="tuiyannum">推演任务数</div>
             </div>
             <div class="yb">
               <div class="numcs">
-                <div class="numtew">262</div>
+                <div class="numtew">{{ fxpgy.issues_discovered }}</div>
                 <div class="danwer">个</div>
               </div>
               <div class="tuiyannum">发现隐蔽问题数</div>
@@ -59,14 +92,14 @@
           <div class="boxsjudhu" style="padding-top: 26rem">
             <div class="yx">
               <div class="numcs">
-                <div class="numtew">80</div>
+                <div class="numtew">{{ fxpgy.paths_blocked }}</div>
                 <div class="danwer">条</div>
               </div>
               <div class="tuiyannum">有效封堵路径数</div>
             </div>
             <div class="zl">
               <div class="numcs">
-                <div class="numtew">499</div>
+                <div class="numtew">{{ fxpgy.vulns_remediated }}</div>
                 <div class="danwer">个</div>
               </div>
               <div class="tuiyannum">阻挡漏洞数</div>
@@ -74,6 +107,7 @@
           </div>
         </div>
       </div>
+      <!-- 隐蔽问题趋势 -->
       <div class="top_right bb">
         <div class="btbox">
           <div class="guns"></div>
@@ -86,18 +120,19 @@
             v-model="zq"
             size="mini"
             style="width: 60rem"
+            @change="sjianrq"
           >
             <el-option label="月" value="1"></el-option>
             <el-option label="周" value="2"></el-option>
-            <el-option label="日" value="3"></el-option>
           </el-select>
         </div>
         <div class="ecrlin">
-          <Lines />
+          <Lines :liste="ybwtqs" />
         </div>
       </div>
     </div>
     <div class="bottrmbu">
+      <!-- 潜在风险资产 -->
       <div class="zuoniamt">
         <div class="czaifx bb">
           <div class="btbox">
@@ -107,7 +142,7 @@
           <div>
             <el-table
               class="ybjboder"
-              :data="tableData"
+              :data="dashboardpotentialdata"
               style="width: 100%"
               :header-cell-style="{
                 backgroundColor: '#161616',
@@ -122,7 +157,6 @@
                 fontSize: '14rem',
               }"
             >
-              <!-- padding:'6rem 0' -->
               <el-table-column
                 align="center"
                 show-overflow-tooltip
@@ -136,25 +170,35 @@
                   <div v-if="item.label == '风险值'">
                     <div
                       :class="
-                        scope.row.c == 1
-                          ? 'bdrd'
-                          : scope.row.c == 2
-                          ? 'bdrz'
-                          : scope.row.c == 3
+                        scope.row.risk_score >= 80
                           ? 'bdrg'
-                          : '--'
+                          : scope.row.risk_score < 40
+                          ? 'bdrd'
+                          : 'bdrz'
                       "
                     >
                       {{
-                        scope.row.c == 1
-                          ? "低"
-                          : scope.row.c == 2
-                          ? "中"
-                          : scope.row.c == 3
+                        scope.row.risk_score >= 80
                           ? "高"
-                          : "--"
+                          : 40 > scope.row.risk_score
+                          ? "低"
+                          : "中"
                       }}
                     </div>
+                  </div>
+                  <!-- 操作 -->
+                  <div v-else-if="item.label == '操作'">
+                    <!-- <img
+                    @click="gotu(scope.row)"
+                    style="height: 22rem; cursor: pointer"
+                    src="../img/cx.png"
+                    alt=""
+                  /> -->
+                    <i
+                      @click="gotu(scope.row)"
+                      class="el-icon-right"
+                      style="font-size: 22rem; cursor: pointer"
+                    ></i>
                   </div>
                   <span v-else>{{ scope.row[scope.column.property] }}</span>
                 </template>
@@ -162,6 +206,7 @@
             </el-table>
           </div>
         </div>
+        <!-- 潜在攻击面 -->
         <div class="xianbian bb">
           <div class="btbox">
             <div class="guns"></div>
@@ -171,7 +216,7 @@
             <div class="tebdsw">
               <el-table
                 class="ybjboder"
-                :data="gjlist"
+                :data="qzgjm.items"
                 style="width: 100%"
                 :header-cell-style="{
                   backgroundColor: '#161616',
@@ -199,17 +244,15 @@
                     <div v-if="item.label == '风险值占比'">
                       <el-progress
                         :class="
-                          scope.row.c < 50
-                            ? 'bdrd jdutiao'
-                            : scope.row.c < 80 && scope.row.c >= 50
-                            ? 'bdrz jdutiao'
-                            : scope.row.c >= 80
+                          scope.row.percentage_exposed_nodes >= 80
                             ? 'bdrg jdutiao'
-                            : '--'
+                            : scope.row.percentage_exposed_nodes < 40
+                            ? 'bdrd jdutiao'
+                            : 'bdrz jdutiao'
                         "
                         :text-inside="true"
                         :stroke-width="16"
-                        :percentage="77"
+                        :percentage="scope.row.percentage_exposed_nodes"
                       ></el-progress>
                     </div>
                     <span v-else>{{ scope.row[scope.column.property] }}</span>
@@ -224,17 +267,24 @@
                   <div class="yuszbi">(与上周相比)</div>
                 </div>
                 <div class="imgyuioj">
-                  <img src="../img/lst.png" alt="" />
+                  <img
+                    v-if="qzgjm.compare_trend == 'down'"
+                    src="../img/lst.png"
+                    alt=""
+                  />
+                  <img
+                    v-if="qzgjm.compare_trend == 'up'"
+                    src="../img/hst.png"
+                    alt=""
+                  />
                 </div>
               </div>
               <div class="huanxjdu">
-                <!-- :stroke-width="wwind == 1920 ? 16 * 1.33333333333 : 16" -->
-                <!-- :stroke-width="wwind == 1920 ? 16 * 1.33333333333 : 16" -->
                 <el-progress
                   class="huanxyet"
                   :stroke-width="wwind == 1920 ? 16 : 16 / 1.33333333333"
                   type="circle"
-                  :percentage="30"
+                  :percentage="qzgjm.compared_diff"
                   color="#C6502D"
                 ></el-progress>
               </div>
@@ -242,6 +292,7 @@
           </div>
         </div>
       </div>
+      <!-- 关键风险资产 -->
       <div class="yobiant bb">
         <div class="maxbgtp">
           <div class="btbox_ammo">
@@ -249,32 +300,50 @@
               <div class="guns"></div>
               <div class="wenz">关键风险资产</div>
             </div>
-            <div style="font-size: 12rem; font-weight: normal; cursor: pointer">
+            <div
+              style="font-size: 12rem; font-weight: normal; cursor: pointer"
+              @click="gjgt"
+            >
               详情 >>
             </div>
           </div>
           <div class="biaoge">
             <div class="gdstyle">
-              <div v-for="(e, i) in 6" :key="i">
+              <!-- 关键风险资产 -->
+              <div
+                v-for="(e, i) in ganxjian"
+                :key="i"
+                :class="fxxz == i ? 'dqxz' : ''"
+                @click="qhuanfx(i)"
+              >
                 <table border="1" cellspacing="0" width="100%">
                   <tr>
                     <td class="lefttr">IP</td>
-                    <td class="righttr">192.168.0.121</td>
+                    <td class="righttr">{{ e.ip }}</td>
                   </tr>
                   <tr>
                     <td class="lefttr">所属资源组</td>
-                    <td class="righttr">人力资源部</td>
+                    <td class="righttr">{{ e.asset_group_name }}</td>
                   </tr>
                   <tr>
                     <td class="lefttr">风险值</td>
-                    <td class="righttr">高</td>
+                    <!-- <td class="righttr">高</td> -->
+                    <td class="righttr">
+                      {{
+                        e.risk_score >= 80
+                          ? "高"
+                          : 40 > e.risk_score
+                          ? "低"
+                          : "中"
+                      }}
+                    </td>
                   </tr>
                   <tr>
                     <td class="lefttr">风险画像</td>
                     <td class="righttr">
-                      <div>未经授权的访问</div>
-                      <div>数据库注入攻击</div>
-                      <div>数据泄露或篡改</div>
+                      <div v-for="(item, index) in e.risk_profile" :key="index">
+                        {{ item }}
+                      </div>
                     </td>
                   </tr>
                 </table>
@@ -285,8 +354,9 @@
             <div class="guns"></div>
             <div class="wenz">资产图谱</div>
           </div>
+          <!-- 资产图谱 -->
           <div class="yuanqiutu">
-            <Graph />
+            <Graph :datasj="tjity" />
           </div>
         </div>
         <div class="fxlujig">
@@ -294,40 +364,114 @@
             <div class="guns"></div>
             <div class="wenz">关键风险路径</div>
           </div>
+          <!-- 关键风险路径 -->
           <div class="guaninastye">
             <div class="xialxz">
               <div class="fkuai"></div>
               <el-select
-                v-model="zq"
+                v-model="gjljy"
                 class="xialacx zhessless"
                 size="mini"
                 style="width: 180rem"
               >
-                <el-option label="月" value="1"></el-option>
-                <el-option label="周" value="2"></el-option>
-                <el-option label="日" value="3"></el-option>
+                <el-option label="最大收益攻击路径" value="1"></el-option>
+                <el-option label="最隐蔽攻击路径" value="2"></el-option>
+                <el-option label="最大概率攻击路径" value="3"></el-option>
               </el-select>
             </div>
-            <div class="xhfor gdstyle">
-              <div v-for="(e,i) in 6" :key="i">
+            <!-- 最大收益攻击路径 -->
+            <div class="xhfor gdstyle" v-if="gjljy == '1'">
+              <div v-for="(e, i) in zddata" :key="i">
                 <div class="ytyz">
                   <div class="imgtu">
-                    <img v-if="i == 0" src="../img/hip.png" alt="">
-                    <img v-else src="../img/lip.png" alt="">
+                    <img v-if="i == 0" src="../img/hip.png" alt="" />
+                    <img v-else src="../img/lip.png" alt="" />
                   </div>
                   <div class="zswenz">
-                    <div class="ipdiz">192.168.1.10（起点）</div>
-                    <div class="azswenztex">资产类型：文件服务器</div>
+                    <div class="ipdiz" v-if="e.node">
+                      {{ e.node.name
+                      }}{{
+                        i == 0
+                          ? "（起点）"
+                          : zddata.length == i + 1
+                          ? "（终点）"
+                          : "（途径）"
+                      }}
+                    </div>
+                    <div class="azswenztex">资产类型：{{ e.node.label }}</div>
                   </div>
                 </div>
-                <div class="zhesjiant">
+                <div v-if="zddata.length != i + 1" class="zhesjiant">
                   <div class="tetxbox">
-                    <div>注入数据等 》</div>
+                    <div v-if="e.edge">{{ e.edge.label }}</div>
                     <i class="el-icon-arrow-down"></i>
                   </div>
                 </div>
               </div>
             </div>
+            <!-- 最隐蔽攻击路径 -->
+            <div class="xhfor gdstyle" v-if="gjljy == '2'">
+              <div v-for="(e, i) in zydata" :key="i">
+                <div class="ytyz">
+                  <div class="imgtu">
+                    <img v-if="i == 0" src="../img/hip.png" alt="" />
+                    <img v-else src="../img/lip.png" alt="" />
+                  </div>
+                  <div class="zswenz">
+                    <div class="ipdiz" v-if="e.node">
+                      {{ e.node.name }}
+                      <!-- {{ i == 0 ? "（起点）" : "（途径）" }} -->
+                      {{
+                        i == 0
+                          ? "（起点）"
+                          : zydata.length == i + 1
+                          ? "（终点）"
+                          : "（途径）"
+                      }}
+                    </div>
+                    <div class="azswenztex">资产类型：{{ e.node.label }}</div>
+                  </div>
+                </div>
+                <div v-if="zydata.length != i + 1" class="zhesjiant">
+                  <div class="tetxbox">
+                    <div v-if="e.edge">{{ e.edge.label }}</div>
+                    <i class="el-icon-arrow-down"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 最大概率攻击路径 -->
+            <div class="xhfor gdstyle" v-if="gjljy == '3'">
+              <div v-for="(e, i) in gldata" :key="i">
+                <div class="ytyz">
+                  <div class="imgtu">
+                    <img v-if="i == 0" src="../img/hip.png" alt="" />
+                    <img v-else src="../img/lip.png" alt="" />
+                  </div>
+                  <div class="zswenz">
+                    <div class="ipdiz" v-if="e.node">
+                      {{ e.node.name }}
+                      <!-- {{ i == 0 ? "（起点）" : "（途径）" }} -->
+                      {{
+                        i == 0
+                          ? "（起点）"
+                          : gldata.length == i + 1
+                          ? "（终点）"
+                          : "（途径）"
+                      }}
+                    </div>
+                    <div class="azswenztex">资产类型：{{ e.node.label }}</div>
+                  </div>
+                </div>
+                <div v-if="gldata.length != i + 1" class="zhesjiant">
+                  <div class="tetxbox">
+                    <div v-if="e.edge">{{ e.edge.label }}</div>
+                    <i class="el-icon-arrow-down"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- -------------------------------------------------- -->
           </div>
         </div>
       </div>
@@ -335,6 +479,14 @@
   </div>
 </template>
 <script>
+import {
+  dashboard_evaluation,
+  dashboard_summary,
+  dashboard_issuestrend,
+  dashboard_potential,
+  dashboard_surface,
+  dashboard_keysurface,
+} from "@/api";
 export default {
   components: {
     Gauge: () => import("@/components/gauge"),
@@ -343,47 +495,39 @@ export default {
   },
   data() {
     return {
+      fxianpgutu: {}, //风险评估(图)
+      fxpgy: {}, //风险评估-右
+      zq: "2", //周期选择
+      ybwtqs: [], //隐蔽问题趋势
+      dashboardpotentialdata: [], //潜在风险资产
+      qzgjm: {}, //潜在攻击面
+      ganxjian: [], //关键风险资产
+      gjljy: "1", //攻击路径选择
+      tjity: {}, //资产图谱
+      zddata: [], //关键风险路径数据-最大收益攻击路径
+      zydata: [], //关键风险路径数据-最隐蔽攻击路径
+      gldata: [], //关键风险路径数据-最大概率攻击路径
+      // ------------------------------------------------------------
+      fxxz: 0, //关键风险资产选择状态
       wwind: 0,
-      zq: "3", //周期选择
-      // 列表数据
-      tableData: [
-        {
-          a: "名称",
-          b: "192.168.22.88",
-          c: "1",
-          d: "可能存在密码泄露",
-        },
-        {
-          a: "名称",
-          b: "192.168.22.88",
-          c: "2",
-          d: "可能存在密码泄露",
-        },
-        {
-          a: "名称",
-          b: "192.168.22.88",
-          c: "3",
-          d: "可能存在密码泄露",
-        },
-      ],
       // 表头数据
       bt: [
         {
-          prop: "a",
+          prop: "name",
           label: "名称",
           // width:"90"
         },
         {
-          prop: "b",
+          prop: "ip",
           label: "IP",
           // width:110
         },
         {
-          prop: "c",
+          prop: "risk_score",
           label: "风险值",
         },
         {
-          prop: "d",
+          prop: "reason",
           label: "影响原因",
         },
         {
@@ -394,17 +538,17 @@ export default {
       // 攻击表头
       gjtb: [
         {
-          prop: "a",
+          prop: "name",
           label: "资产组名称",
           // width:"90"
         },
         {
-          prop: "b",
+          prop: "count_exposed_nodes",
           label: "暴露节点数",
           // width:110
         },
         {
-          prop: "c",
+          // prop: "c",
           label: "风险值占比",
           width:
             document.documentElement.clientWidth == 1920
@@ -412,32 +556,105 @@ export default {
               : "94",
         },
       ],
-      // 攻击list
-      gjlist: [
-        {
-          a: "人力资源部",
-          b: "30",
-          c: "46",
-        },
-        {
-          a: "人力资源部",
-          b: "80",
-          c: "80",
-        },
-        {
-          a: "人力资源部",
-          b: "77",
-          c: "77",
-        },
-      ],
     };
   },
   created() {
     this.wwind = document.documentElement.clientWidth;
+    this.getdata();
   },
   methods: {
-    xx(e) {
-      console.log(e);
+    // 初始请求
+    getdata() {
+      this.dashboardevaluation(); // 风险评估
+      this.dashboardsummary(); // 风险评估-右
+      this.dashboardissuestrend(); //隐蔽问题趋势
+      this.dashboardpotential(); //潜在风险资产
+      this.dashboardsurface(); //潜在攻击面
+      this.dashboardkeysurface(); //潜在攻击面
+    },
+    // 风险评估
+    dashboardevaluation() {
+      this.fxianpgutu.value = "";
+      dashboard_evaluation({
+        period: this.zq == "2" ? "weekly" : "monthly",
+      }).then((res) => {
+        this.fxianpgutu = res;
+      });
+    },
+    // 风险评估-右
+    dashboardsummary() {
+      dashboard_summary({ period: this.zq == "2" ? "weekly" : "monthly" }).then(
+        (res) => {
+          this.fxpgy = res;
+        }
+      );
+    },
+    // 隐蔽问题趋势
+    dashboardissuestrend() {
+      dashboard_issuestrend({
+        period: this.zq == "2" ? "weekly" : "monthly",
+      }).then((res) => {
+        this.ybwtqs = res.series;
+      });
+    },
+    // 潜在风险资产
+    dashboardpotential() {
+      dashboard_potential().then((res) => {
+        this.dashboardpotentialdata = res.items;
+      });
+    },
+    // 潜在风险资产-跳转
+    gotu() {
+      this.$router.push("/figure/hostmachinedetails");
+    },
+    // 潜在攻击面
+    dashboardsurface() {
+      dashboard_surface({
+        period: this.zq == "2" ? "weekly" : "monthly",
+      }).then((res) => {
+        this.qzgjm = res;
+      });
+    },
+    // 周期选择，更新数据
+    sjianrq(e) {
+      this.dashboardevaluation(); // 风险评估
+      this.dashboardsummary(); // 风险评估-右
+      this.dashboardissuestrend(); //隐蔽问题趋势
+      this.dashboardsurface(); //潜在攻击面
+    },
+    // 关键风险资产
+    dashboardkeysurface() {
+      dashboard_keysurface().then((res) => {
+        // 所有数据
+        // this.ganxjian = [res.items[0], arr];
+        this.ganxjian = res.items;
+        // 图谱数据
+        this.tjity = this.ganxjian[0].graph;
+        // 关键风险路径数据-最大收益攻击路径
+        this.zddata = this.ganxjian[0].highest_value_path.series;
+        // 关键风险路径数据-最隐蔽攻击路径
+        this.zydata = this.ganxjian[0].most_stealthy_path.series;
+        // 关键风险路径数据-最大概率攻击路径
+        this.gldata = this.ganxjian[0].shortest_path.series;
+      });
+    },
+    // 关键风险资产-跳转
+    gjgt() {
+      this.$router.push("/figure/hostmachine");
+    },
+    // 切换风险
+    qhuanfx(i) {
+      this.fxxz = i;
+      this.$nextTick(() => {
+        // 图谱数据
+        this.tjity = this.ganxjian[i].graph;
+        // 关键风险路径数据-最大收益攻击路径
+        this.zddata = this.ganxjian[i].highest_value_path.series;
+        // 关键风险路径数据-最隐蔽攻击路径
+        this.zydata = this.ganxjian[i].most_stealthy_path.series;
+        // 关键风险路径数据-最大概率攻击路径
+        this.gldata = this.ganxjian[i].shortest_path.series;
+      });
     },
   },
 };

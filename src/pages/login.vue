@@ -17,24 +17,19 @@
             ref="ruleForm"
             class="demo-ruleForm"
           >
-            <el-form-item label="" prop="name">
+            <el-form-item label="" prop="username">
               <el-input
                 placeholder="请输入账号"
-                v-model="ruleForm.name"
+                v-model="ruleForm.username"
                 maxlength="20"
               ></el-input>
             </el-form-item>
-            <el-form-item label="" prop="mm">
+            <el-form-item label="" prop="password">
               <el-input
                 placeholder="请输入密码"
                 type="password"
-                v-model="ruleForm.mm"
+                v-model="ruleForm.password"
               ></el-input>
-              <!-- <el-input
-                type="password"
-                v-model="ruleForm.mm"
-                @keyup.enter.native="submit"
-              ></el-input> -->
             </el-form-item>
           </el-form>
         </div>
@@ -45,6 +40,7 @@
   </div>
 </template>
 <script>
+import { auth_login } from "@/api";
 export default {
   data() {
     // 用户验证
@@ -54,9 +50,9 @@ export default {
       } else {
         const regex = /^[a-zA-Z_\u4e00-\u9fa5]+$/;
         if (regex.test(value)) {
-          if (this.ruleForm.name !== "") {
-            this.$refs.ruleForm.validateField("name");
-          }
+          // if (this.ruleForm.username !== "") {
+          //   this.$refs.ruleForm.validateField("username");
+          // }
           callback();
         } else {
           callback(new Error("仅支持中文、英文、下划线"));
@@ -68,21 +64,21 @@ export default {
       if (value === "") {
         callback(new Error("请输入密码"));
       } else {
-        if (this.ruleForm.mm !== "") {
-          this.$refs.ruleForm.validateField("mm");
-        }
+        // if (this.ruleForm.mm !== "") {
+        //   this.$refs.ruleForm.validateField("password");
+        // }
         callback();
       }
     };
     return {
       // 登录表单
       ruleForm: {
-        name: "",
-        mm: "",
+        username: "",
+        password: "",
       },
       // 表单验证
       rules: {
-        name: [{ validator: funcname, trigger: "blur" }],
+        username: [{ validator: funcname, trigger: "blur" }],
         password: [{ validator: funcpassword, trigger: "blur" }],
       },
     };
@@ -90,7 +86,16 @@ export default {
   methods: {
     // 点击登录
     sbmin() {
-      this.$router.push("/home");
+      this.$refs["ruleForm"].validate((valid) => {
+        if (valid) {
+          auth_login(this.ruleForm).then((res) => {
+            localStorage.setItem("access_token", res.access_token);
+            this.$router.push("/home");
+          });
+        } else {
+          return false;
+        }
+      });
     },
     // 忘记密码提示
     wjmm() {

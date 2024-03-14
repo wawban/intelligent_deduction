@@ -3,7 +3,7 @@
     <!-- 表格 -->
     <el-table
       class="tablebottom"
-      :data="tableData"
+      :data="ports"
       style="width: 100%"
       :header-cell-style="{
         backgroundColor: '#292929',
@@ -29,29 +29,10 @@
         :label="item.label"
         :width="item.width"
       >
-        <!-- <template slot-scope="scope">
-          <div v-if="item.label == '漏洞等级'">
-            <div :class="scope.row.c == '1' ? 'gw' : 'dw'">
-              {{ scope.row.c == "1" ? "高危" : "低危" }}
-            </div>
-          </div>
-          <div v-else-if="item.label == '处理状态'">
-            <div class="clizt">已处理</div>
-          </div>
-          <div v-else-if="item.label == '操作'">
-            <img
-              @click="gotu(scope.row)"
-              style="height: 16rem; cursor: pointer"
-              src="../../img/cx.png"
-              alt=""
-            />
-          </div>
-          <span v-else>{{ scope.row[scope.column.property] }}</span>
-        </template> -->
       </el-table-column>
     </el-table>
     <!-- 分页 -->
-    <div class="pagefy" style="padding-top: 20px; padding-bottom: 20px">
+    <!-- <div class="pagefy" style="padding-top: 20px; padding-bottom: 20px">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -62,79 +43,54 @@
         :total="page.total"
       >
       </el-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
 export default {
+  props: {
+    ports: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+  },
   data() {
     return {
       // 分页
-      page: {
-        current: 1,
-        size: 10,
-        total: 44,
-      },
-      // 表格数据
-      tableData: [
-        {
-          a: "80",
-          b: "SecureSite-12345",
-          c: "Web望帮镑ppwar-2024.01.06-prod",
-        },
-        {
-          a: "80",
-          b: "SecureSite-12345",
-          c: "Web望帮镑ppwar-2024.01.06-prod",
-        },
-        {
-          a: "80",
-          b: "SecureSite-12345",
-          c: "Web望帮镑ppwar-2024.01.06-prod",
-        },
-        {
-          a: "80",
-          b: "SecureSite-12345",
-          c: "Web望帮镑ppwar-2024.01.06-prod",
-        },
-        {
-          a: "80",
-          b: "SecureSite-12345",
-          c: "Web望帮镑ppwar-2024.01.06-prod",
-        },
-        {
-          a: "80",
-          b: "SecureSite-12345",
-          c: "Web望帮镑ppwar-2024.01.06-prod",
-        },
-      ],
+      // page: {
+      //   current: 1,
+      //   size: 10,
+      //   total: 44,
+      // },
       // 表头改变数据
       vararr: [
         {
-          prop: "a",
+          prop: "port",
           label: "端口号",
         },
         {
-          prop: "b",
+          prop: "service",
           label: "服务名",
         },
         {
-          prop: "c",
+          prop: "version",
           label: "应用版本",
         },
       ],
     };
   },
   methods: {
-    // ---------------------------分页
-    handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
-      alert(val);
-    },
-    handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`);
-      alert(val);
-    },
+    // // ---------------------------分页
+    // handleSizeChange(val) {
+    //   // console.log(`每页 ${val} 条`);
+    //   alert(val);
+    // },
+    // handleCurrentChange(val) {
+    //   // console.log(`当前页: ${val}`);
+    //   alert(val);
+    // },
   },
 };
 </script>

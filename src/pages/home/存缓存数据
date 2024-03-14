@@ -1,3 +1,23 @@
 漏洞知识库表格   vulnerabilityknowledgebasesw
 主机资产         lochostassets
 人员管理    localpersonnelmanagement
+漏洞治理-平铺视角   localtilingangle
+漏洞治理-聚合视角   localconvergent
+漏洞治理-聚合视角-聚合视角查看  localaggregateview
+漏洞治理-处置工单   localdisposalworkorder
+数字空间治理-标签管理-自定义标签   localcustom
+任务管理-推演任务   localdeduction
+
+
+
+表格多选在任务管理-菜单3
+删除提示在任务管理-菜单3
+
+
+仪表盘-关键风险资产-样式
+仪表盘-潜在风险资产-操作（跳转--数字空间治理/主机资产/资产详情）
+数字空间治理/主机资产（树形结构固定4级，样式统一）
+分页保持一致
+数字空间治理/主机资产/资产详情-漏洞信息(操作跳转漏洞详情-数字空间治理/漏洞治理/主机漏洞治理详情)
+数字空间治理/主机资产/资产详情（图标）
+数字空间治理/漏洞治理(补字段，多选放开)

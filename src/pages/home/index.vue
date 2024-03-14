@@ -33,18 +33,37 @@
                   >
                     网站资产
                   </div>
-                  <div>漏洞治理</div>
-                  <div>处置工单</div>
-                  <div>标签管理</div>
+                  <div
+                    :class="name == '漏洞治理' ? 'hovys' : ''"
+                    @click="gotu('/figure/vulnevrabilitymanagement')"
+                  >
+                    漏洞治理
+                  </div>
+                  <div
+                  :class="name == '处置工单' ? 'hovys' : ''"
+                    @click="gotu('/figure/disposalworkorder')"
+                  >处置工单</div>
+                  <div
+                  :class="name == '标签管理' ? 'hovys' : ''"
+                    @click="gotu('/figure/labellmanagement')"
+                  >标签管理</div>
                 </div>
                 <div
                   slot="reference"
                   :class="type == 2 ? 'current cdlis' : 'cdlis'"
                 >
-                  <img v-if="type == 2" src="./img/sg.png" alt="" />
+                  <img v-if="type == 2" src="./img/sk.png" alt="" />
                   <img v-else src="./img/sg.png" alt="" />
                 </div>
               </el-popover>
+            </div>
+            <!-- 任务管理 -->
+            <div
+              @click="gotu('/taskmanagement')"
+              :class="type == 3 ? 'current cdlis' : 'cdlis'"
+            >
+              <img v-if="type == 3" src="./img/rwk.png" alt="" />
+              <img v-else src="./img/rwg.png" alt="" />
             </div>
             <!-- 知识库-------------------------------------------- -->
             <div class="duixuanxji">

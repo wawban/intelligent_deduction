@@ -3,7 +3,7 @@
     <!-- 表格 -->
     <el-table
       class="tablebottom"
-      :data="tableData"
+      :data="vulns"
       style="width: 100%"
       :header-cell-style="{
         backgroundColor: '#292929',
@@ -30,9 +30,32 @@
         :width="item.width"
       >
         <template slot-scope="scope">
+          <!-- 漏洞等级 -->
           <div v-if="item.label == '漏洞等级'">
-            <div :class="scope.row.c == '1' ? 'gw' : 'dw'">
-              {{ scope.row.c == "1" ? "高危" : "低危" }}
+            <div
+              :class="
+                scope.row.severity == 'low'
+                  ? 'low'
+                  : scope.row.severity == 'medium'
+                  ? 'medium'
+                  : scope.row.severity == 'high'
+                  ? 'high'
+                  : scope.row.severity == 'critical'
+                  ? 'critical'
+                  : ''
+              "
+            >
+              {{
+                scope.row.severity == "low"
+                  ? "低危"
+                  : scope.row.severity == "medium"
+                  ? "中危"
+                  : scope.row.severity == "high"
+                  ? "高危"
+                  : scope.row.severity == "critical"
+                  ? "超危"
+                  : ""
+              }}
             </div>
           </div>
           <div v-else-if="item.label == '处理状态'">
@@ -41,8 +64,8 @@
           <div v-else-if="item.label == '操作'">
             <img
               @click="gotu(scope.row)"
-              style="height: 16rem; cursor: pointer"
-              src="../../img/cx.png"
+              style="height: 22rem; cursor: pointer"
+              src="../../img/bj.png"
               alt=""
             />
           </div>
@@ -51,7 +74,7 @@
       </el-table-column>
     </el-table>
     <!-- 分页 -->
-    <div class="pagefy" style="padding-top: 20px; padding-bottom: 20px">
+    <!-- <div class="pagefy" style="padding-top: 20px; padding-bottom: 20px">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -62,117 +85,76 @@
         :total="page.total"
       >
       </el-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
 export default {
+  props: {
+    vulns: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+  },
   data() {
     return {
       // 分页
-      page: {
-        current: 1,
-        size: 10,
-        total: 44,
-      },
-      // 表格数据
-      tableData: [
-        {
-          a: "Google Chrome Blob处理越界远程代码执行漏洞",
-          b: "远程代码执行漏洞",
-          c: "1",
-          d: "已验证",
-          e: "1",
-          f: "2023.10.23 02:12:15",
-        },
-        {
-          a: "Google Chrome Blob处理越界远程代码执行漏洞",
-          b: "远程代码执行漏洞",
-          c: "1",
-          d: "已验证",
-          e: "1",
-          f: "2023.10.23 02:12:15",
-        },
-        {
-          a: "Google Chrome Blob处理越界远程代码执行漏洞",
-          b: "远程代码执行漏洞",
-          c: "2",
-          d: "已验证",
-          e: "1",
-          f: "2023.10.23 02:12:15",
-        },
-        {
-          a: "Google Chrome Blob处理越界远程代码执行漏洞",
-          b: "远程代码执行漏洞",
-          c: "2",
-          d: "已验证",
-          e: "1",
-          f: "2023.10.23 02:12:15",
-        },
-        {
-          a: "Google Chrome Blob处理越界远程代码执行漏洞",
-          b: "远程代码执行漏洞",
-          c: "1",
-          d: "已验证",
-          e: "1",
-          f: "2023.10.23 02:12:15",
-        },
-        {
-          a: "Google Chrome Blob处理越界远程代码执行漏洞",
-          b: "远程代码执行漏洞",
-          c: "1",
-          d: "已验证",
-          e: "1",
-          f: "2023.10.23 02:12:15",
-        },
-      ],
-      // 表头改变数据
+      // page: {
+      //   current: 1,
+      //   size: 10,
+      //   total: 44,
+      // },
+      // 表头数据
       vararr: [
         {
-          prop: "a",
+          prop: "name",
           label: "漏洞名称",
         },
         {
-          prop: "b",
+          prop: "type",
           label: "漏洞类型",
         },
         {
-          prop: "c",
           label: "漏洞等级",
           width: "100",
         },
         {
-          prop: "d",
-          label: "验证状态",
+          prop: "treatment_result",
+          label: "漏洞状态",
           width: "100",
         },
         {
-          prop: "e",
-          label: "处理状态",
+          prop: "treatment_result",
+          label: "工单状态",
           width: "100",
         },
         {
-          prop: "f",
+          prop: "time_discovered",
           label: "发现时间",
         },
         {
-          prop: "a",
           label: "操作",
           width: "100",
         },
       ],
     };
   },
+  mounted() {
+    console.log(11111111);
+    console.log(this.vulns);
+  },
   methods: {
     // ---------------------------分页
-    handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
-      alert(val);
-    },
-    handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`);
-      alert(val);
-    },
+    // handleSizeChange(val) {
+    //   // console.log(`每页 ${val} 条`);
+    //   alert(val);
+    // },
+    // handleCurrentChange(val) {
+    //   // console.log(`当前页: ${val}`);
+    //   alert(val);
+    // },
   },
 };
 </script>
@@ -180,11 +162,17 @@ export default {
 .loophole {
   padding: 20rem 30rem;
   .tablebottom {
-    .gw {
+    .low {
+      color: #f6d535;
+    }
+    .medium {
+      color: #fa9600;
+    }
+    .high {
       color: #e53a40;
     }
-    .dw {
-      color: #fa9600;
+    .critical {
+      color: #8b0000;
     }
     .clizt {
       color: #29ca9b;

@@ -11,10 +11,10 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '*': {
-      //   target: "http://10.20.0.41:8001",
-      //   changeOrigin: true,
-      // }
+      '*': {
+        target: "https://virtserver.swaggerhub.com/cybseer/webclient/0.1.0/",
+        changeOrigin: true,
+      }
     },
 
     // Various Dev Server settings

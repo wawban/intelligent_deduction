@@ -9,49 +9,15 @@
       <div class="wys">数字空间治理/</div>
       <div class="yys">主机资产</div>
     </div>
-    <!--  -->
     <div class="container">
       <div class="left wbb">
         <div class="toptetol">
           <div class="guns"></div>
           <div class="wenz">资产组架构</div>
         </div>
-        <div class="treestyle">
-          <!-- <el-tree :data="data" :expand-on-click-node="false" :current-node-key="treekry" node-key="id" :props="defaultProps"> -->
-          <el-tree
-            :data="data"
-            :expand-on-click-node="false"
-            :current-node-key="treekry"
-            node-key="label"
-            default-expand-all
-          >
-            <span
-              style="
-                padding-right: 12rem;
-                flex: 1;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-              "
-              slot-scope="{ node, data }"
-            >
-              <span style="font-size: 16rem; display: flex; align-items: center"
-                >{{ node.label }}
-              </span>
-              <div>
-                <el-popover placement="right" trigger="hover">
-                  <div class="treekub">
-                    <div @click="qiehuan(data)">
-                      {{ data.type ? "只看本级" : "查看本级和下级" }}
-                    </div>
-                  </div>
-                  <div slot="reference">
-                    <img style="height: 14rem" src="../img/sd.png" alt="" />
-                  </div>
-                </el-popover>
-              </div>
-            </span>
-          </el-tree>
+        <div class="treestyle gdstyle">
+          <!-- 树形 -->
+          <Trees :datatree="zczdata" :treekry="modedata.id" />
         </div>
       </div>
       <div class="right wbb">
@@ -65,7 +31,12 @@
             <!-- <el-popover placement="bottom" width="500" trigger="click"> hover-->
             <el-popover placement="bottom" trigger="hover">
               <div class="ckqbtopqian">
-                <el-button class="buttonsy" size="mini">查看全部</el-button>
+                <el-button
+                  class="buttonsy"
+                  size="mini"
+                  @click="getgovernancehosts('clear')"
+                  >查看全部</el-button
+                >
               </div>
               <div slot="reference" class="boxjc">
                 <img src="../img/qb.png" alt="" />
@@ -73,6 +44,7 @@
               </div>
             </el-popover>
           </div>
+          <!-- 复合查询 -->
           <div class="marginr">
             <el-popover placement="bottom" width="530" trigger="click">
               <div slot="reference" class="boxjc">
@@ -81,8 +53,8 @@
               </div>
               <div class="tjiansxian">
                 <div class="top">
-                  <div>筛选</div>
-                  <div @click="cleark">清空</div>
+                  <div @click="getgovernancehosts">筛选</div>
+                  <div @click="getgovernancehosts('clear')">清空</div>
                 </div>
                 <div
                   style="padding: 12rem 0; display: flex; align-items: center"
@@ -95,8 +67,8 @@
                     v-model="rysy"
                     placeholder="请选择"
                   >
-                    <el-option label="任一" value="1"></el-option>
-                    <el-option label="所有" value="2"></el-option>
+                    <el-option label="任一" value="or"></el-option>
+                    <el-option label="所有" value="and"></el-option>
                   </el-select>
                   &nbsp;&nbsp;条件
                 </div>
@@ -128,10 +100,15 @@
                         v-model="e.value"
                         placeholder="请选择"
                       >
-                        <el-option label="包含" value="1"></el-option>
-                        <el-option label="不包含" value="2"></el-option>
-                        <el-option label="为空" value="3"></el-option>
-                        <el-option label="不为空" value="4"></el-option>
+                        <el-option label="包含" value="contain"></el-option>
+                        <el-option
+                          label="不包含"
+                          value="notcontain"
+                        ></el-option>
+                        <el-option label="等于" value="eq"></el-option>
+                        <el-option label="不等于" value="ne"></el-option>
+                        <!-- <el-option label="为空" value="3"></el-option>
+                        <el-option label="不为空" value="4"></el-option> -->
                       </el-select>
                     </div>
                     <div>
@@ -232,21 +209,21 @@
                 <div v-if="item.label == '风险值'" class="fxianz">
                   <div
                     :class="
-                      scope.row.a == 1
+                      scope.row.risk_level == 'high'
                         ? 'g'
-                        : scope.row.a == 2
+                        : scope.row.risk_level == 'medium'
                         ? 'z'
-                        : scope.row.a == 3
+                        : scope.row.risk_level == 'low'
                         ? 'd'
                         : '--'
                     "
                   >
                     {{
-                      scope.row.a == 1
+                      scope.row.risk_level == "high"
                         ? "高"
-                        : scope.row.a == 2
+                        : scope.row.risk_level == "medium"
                         ? "中"
-                        : scope.row.a == 3
+                        : scope.row.risk_level == "low"
                         ? "低"
                         : "--"
                     }}
@@ -256,13 +233,17 @@
                 <div v-else-if="item.label == '状态'">
                   <div
                     :class="
-                      scope.row.a == 1 ? 'ch' : scope.row.a == 2 ? 'bch' : '--'
+                      scope.row.state == 1
+                        ? 'ch'
+                        : scope.row.state == 0
+                        ? 'bch'
+                        : '--'
                     "
                   >
                     {{
-                      scope.row.a == 1
+                      scope.row.state == 1
                         ? "存活"
-                        : scope.row.a == 2 || scope.row.a == 3
+                        : scope.row.state == 0
                         ? "不存活"
                         : "--"
                     }}
@@ -271,10 +252,21 @@
                 <!-- 资产标签 -->
                 <div v-else-if="item.label == '资产标签'">
                   <div class="rqfangy">
-                    <div class="lan">防御</div>
-                    <!-- <div class="lan">入侵防御</div> -->
-                    <div class="lv">自定义标签</div>
+                    <div class="lan" v-for="(e, i) in scope.row.tags" :key="i">
+                      {{ e.name }}
+                    </div>
+                    <div
+                      class="lv"
+                      v-for="(e, i) in scope.row.custom_tags"
+                      :key="i + '0'"
+                    >
+                      {{ e.name }}
+                    </div>
                   </div>
+                </div>
+                <!-- 所属资产组 -->
+                <div v-else-if="item.label == '所属资产组'">
+                  {{ scope.row.asset_group.name }}
                 </div>
                 <!-- 操作 -->
                 <div v-else-if="item.label == '操作'">
@@ -285,13 +277,13 @@
                     alt=""
                   />
                   <img
-                    @click="bqflag = true"
+                    @click="dakaibq(scope.row)"
                     style="height: 22rem; cursor: pointer; margin: 0 26rem"
                     src="../img/bq.png"
                     alt=""
                   />
                   <img
-                    @click="dialogVisible = true"
+                    @click="editor(scope.row)"
                     style="height: 22rem; cursor: pointer"
                     src="../img/bj.png"
                     alt=""
@@ -306,9 +298,9 @@
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
-              :current-page="page.current"
+              :current-page="page.offset"
               :page-sizes="[10, 20]"
-              :page-size="page.size"
+              :page-size="page.limit"
               layout="total, sizes, prev, pager, next, jumper"
               :total="page.total"
             >
@@ -317,7 +309,6 @@
         </div>
       </div>
     </div>
-    <!-- --------------------------------------------------------------------- -->
     <!-- 编辑 -->
     <div class="tandialog">
       <el-dialog
@@ -345,48 +336,49 @@
             label-width="100rem"
             class="demo-ruleForm"
           >
-            <el-form-item label="资产名称：" prop="zcmc">
+            <el-form-item label="资产名称：" prop="name">
               <el-input
                 class="inpustyle"
-                v-model="ruleForm.zcmc"
+                v-model="ruleForm.name"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="内外网：" prop="nww">
+            <el-form-item label="内外网：" prop="intranet">
               <el-select
                 class="zhessless"
                 size="mini"
-                v-model="ruleForm.nww"
+                v-model="ruleForm.intranet"
                 placeholder="请选择"
                 style="width: 340rem"
               >
-                <el-option label="内网" value="1"> </el-option>
-                <el-option label="外网" value="2"> </el-option>
+                <el-option label="内网" :value="1"> </el-option>
+                <el-option label="外网" :value="0"> </el-option>
+                <el-option label="未知" :value="-1"> </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="产值价值：" prop="czjz">
+            <el-form-item label="资产价值：" prop="value">
               <el-input
                 class="inpustyle"
-                v-model="ruleForm.czjz"
+                v-model="ruleForm.value"
                 size="mini"
                 style="width: 340rem"
-                placeholder="请输入1-5，分值越高，产值越重要"
+                placeholder="请输入1-5，分值越高，资产越重要"
               ></el-input>
             </el-form-item>
-            <el-form-item label="操作系统：" prop="czxt">
+            <el-form-item label="操作系统：" prop="os">
               <el-input
                 class="inpustyle"
-                v-model="ruleForm.czxt"
+                v-model="ruleForm.os"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="等级保护：" prop="djbh">
+            <!-- <el-form-item label="等级保护：" prop="location">
               <el-select
                 class="zhessless"
                 size="mini"
-                v-model="ruleForm.djbh"
+                v-model="ruleForm.location"
                 placeholder="请选择"
                 style="width: 340rem"
               >
@@ -394,11 +386,15 @@
                 <el-option label="二级" value="2"> </el-option>
                 <el-option label="三级" value="3"> </el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button
+            class="buttonsy"
+            size="mini"
+            style="margin-right: 30rem"
+            @click="submit"
             >确认</el-button
           >
           <el-button
@@ -411,7 +407,6 @@
         </div>
       </el-dialog>
     </div>
-    <!-- --------------------------------------------------------------------- -->
     <!-- 添加标签 -->
     <div class="tandialog">
       <el-dialog
@@ -437,16 +432,26 @@
             ref="bqform"
             label-width="100rem"
             class="demo-ruleForm"
+            :rules="rulesbq"
           >
-            <el-form-item label="资产名称：" prop="radio">
-              <el-radio-group v-model="bqform.radio" class="dxradio">
-                <el-radio :label="3">备选项</el-radio>
-                <el-radio :label="6">备选项</el-radio>
-                <el-radio :label="9">备选项</el-radio>
+            <el-form-item label="标签分类：" prop="radio">
+              <el-radio-group
+                v-model="bqform.radio"
+                class="dxradio"
+                @change="bgden"
+              >
+                <el-radio :label="3">常用标签</el-radio>
+                <el-radio :label="6">预置标签</el-radio>
+                <el-radio :label="9">自定义</el-radio>
               </el-radio-group>
             </el-form-item>
+            <!-- cy: [], //常用标签
+      yz: [], //预置标签
+      zd: [], //自定义标签 -->
             <el-form-item label="标签名称：" prop="bqmc">
+              <!-- 常用标签 -->
               <el-select
+                v-if="bqform.radio == 3"
                 class="zhessless"
                 size="mini"
                 v-model="bqform.bqmc"
@@ -456,10 +461,49 @@
                 multiple
               >
                 <el-option
-                  v-for="item in 4"
-                  :key="item"
-                  :label="'标签' + item"
-                  :value="item"
+                  v-for="(item, index) in cy"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.id"
+                >
+                </el-option>
+              </el-select>
+              <!-- 预置标签 -->
+              <el-select
+                v-if="bqform.radio == 6"
+                class="zhessless"
+                size="mini"
+                v-model="bqform.bqmc"
+                placeholder="请选择"
+                style="width: 340rem"
+                filterable
+                multiple
+              >
+                <el-option
+                  v-for="(item, index) in yz"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.id"
+                >
+                </el-option>
+              </el-select>
+              <!-- 自定义标签 -->
+              <el-select
+                @keyup.enter.native="zdyiobnof"
+                v-if="bqform.radio == 9"
+                class="zhessless"
+                size="mini"
+                v-model="bqform.bqmc"
+                placeholder="请选择"
+                style="width: 340rem"
+                filterable
+                multiple
+              >
+                <el-option
+                  v-for="(item, index) in zd"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.id"
                 >
                 </el-option>
               </el-select>
@@ -467,7 +511,11 @@
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button
+            class="buttonsy"
+            size="mini"
+            style="margin-right: 30rem"
+            @click="bqsbmin"
             >确认</el-button
           >
           <el-button
@@ -483,219 +531,113 @@
   </div>
 </template>
 <script>
+import {
+  governance_groups,
+  governance_hosts,
+  governance_meta,
+  governance_tagshosts,
+  governance_tagscustom,
+  governance_tagscustomcj,
+  governance_metatags,
+} from "@/api";
 export default {
   data() {
     return {
+      zczdata: [], // 资产组架构
+      modedata: {}, //资产组架构-树形默认选中数据
+      // 表格数据
+      tableData: [],
+      // 表头原始数据
+      tablearr: [
+        {
+          label: "风险值",
+          type: true,
+        },
+        {
+          prop: "name",
+          label: "资产名称",
+          type: true,
+        },
+        {
+          prop: "ip",
+          label: "IP地址",
+          type: true,
+        },
+        {
+          label: "状态",
+          type: true,
+        },
+        {
+          prop: "category",
+          label: "资产类型",
+          type: true,
+        },
+        {
+          label: "资产标签",
+          type: true,
+        },
+        {
+          prop: "count_vulns",
+          label: "漏洞数",
+          type: true,
+        },
+        {
+          prop: "count_ports",
+          label: "端口数",
+          type: true,
+        },
+        {
+          label: "所属资产组",
+          type: true,
+        },
+        {
+          label: "操作",
+          type: true,
+        },
+      ],
+      btarr: [], // 表头数据
+      vararr: [], // 表头改变数据
       // 标签表单
       bqform: {
         radio: 3,
         bqmc: [],
       },
       bqflag: false, // 标签表单弹窗
-      // ------------------------------
-      // 表单数据
-      ruleForm: {},
       // 表单验证
       rules: {
-        // name: [{ validator: funcname, trigger: "blur" }],
-        // password: [{ validator: funcpassword, trigger: "blur" }],
+        name: [{ required: true, message: "请输入资产名称", trigger: "blur" }],
       },
       dialogVisible: false, // 编辑弹窗
-      // -----------------------------------------------------------------关联查询组件下
-      // 表格数据
-      tableData: [
-        { a: "1", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "2", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "2", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "3", b: "2", c: "3" },
-        { a: "3", b: "2", c: "3" },
-        { a: "3", b: "2", c: "3" },
-      ],
-      // 表头数据
-      btarr: [],
-      // 表头改变数据
-      vararr: [],
-      // 表头原始数据
-      tablearr: [
-        {
-          prop: "a",
-          label: "风险值",
-          type: true,
-        },
-        {
-          prop: "b",
-          label: "资产名称",
-          type: true,
-        },
-        {
-          prop: "c",
-          label: "IP地址",
-          type: true,
-        },
-        {
-          prop: "a",
-          label: "状态",
-          type: true,
-        },
-        {
-          prop: "e",
-          label: "资产类型",
-          type: true,
-        },
-        {
-          prop: "a",
-          label: "资产标签",
-          type: true,
-        },
-        {
-          prop: "g",
-          label: "漏洞数",
-          type: true,
-        },
-        {
-          prop: "h",
-          label: "端口数",
-          type: true,
-        },
-        {
-          prop: "h",
-          label: "所属资产组 ",
-          type: true,
-        },
-        {
-          prop: "h",
-          label: "操作",
-          type: true,
-        },
-      ],
-      //   xxxxxxxxxxxxxxxxxxxxxxxxxxx
-      rysy: "2", //符合条件，任一或所有
-      //   查询数据
-      searcharr: [{ key: "", value: "", type: "" }],
-      //   xxxxxxxxxxxxxxxxxxxxxxxxxxx
-      // -----------------------------------------------------------------关联查询组件上
+      // 编辑表单数据
+      ruleForm: {
+        name: "",
+        os: "",
+        value: "",
+        intranet: "",
+        // location: "",
+      },
+      bjid: "", //编辑id
       // 分页
       page: {
-        current: 1,
-        size: 10,
+        offset: 1,
+        limit: 10,
         total: 44,
       },
-      // --------------------------------------------------------------------------------------
-      // 默认选中值
-      treekry: "地区3",
-      // 树形数据
-      data: [
-        {
-          label: "A地区",
-          type: true,
-          children: [
-            {
-              label: "地区1",
-              type: true,
-            },
-            {
-              label: "地区2",
-              type: true,
-            },
-            {
-              label: "地区3",
-              type: true,
-              children: [
-                {
-                  label: "地区11",
-                  type: true,
-                },
-                {
-                  label: "地区22",
-                  type: true,
-                },
-                {
-                  label: "地区33",
-                  type: true,
-                },
-              ],
-            },
-          ],
-        },
-        {
-          label: "服务器组",
-          type: true,
-          children: [
-            {
-              label: "服务器组1",
-              type: true,
-            },
-            {
-              label: "服务器组2",
-              type: true,
-            },
-            {
-              label: "服务器组3",
-              type: true,
-            },
-          ],
-        },
-        // {
-        //   label: "一级 2",
-        //   type: true,
-        //   children: [
-        //     {
-        //       label: "二级 2-1",
-        //       type: true,
-        //       children: [
-        //         {
-        //           label: "三级 2-1-1",
-        //           type: true,
-        //         },
-        //       ],
-        //     },
-        //     {
-        //       label: "二级 2-2",
-        //       type: true,
-        //       children: [
-        //         {
-        //           label: "三级 2-2-1",
-        //           type: true,
-        //         },
-        //       ],
-        //     },
-        //   ],
-        // },
-        // {
-        //   label: "一级 3",
-        //   type: true,
-        //   children: [
-        //     {
-        //       label: "二级 3-1",
-        //       type: true,
-        //       children: [
-        //         {
-        //           label: "三级 3-1-1",
-        //           type: true,
-        //         },
-        //       ],
-        //     },
-        //     {
-        //       label: "二级 3-2",
-        //       type: true,
-        //       children: [
-        //         {
-        //           label: "三级 3-2-1",
-        //           type: true,
-        //         },
-        //       ],
-        //     },
-        //   ],
-        // },
-      ],
+      // 复合查询
+      rysy: "and", //符合条件，任一或所有
+      //   查询数据
+      searcharr: [],
+      cy: [], //常用标签
+      yz: [], //预置标签
+      zd: [], //自定义标签
+      // 标签表单验证
+      rulesbq: {
+        bqmc: [{ required: true, message: "请选择标签", trigger: "change" }],
+      },
+      bqid: "", //添加标签用id
     };
   },
   watch: {
-    // --------------------表格头
     btarr: {
       handler: function (val, oldVal) {
         this.vararr = this.btarr.filter((e) => {
@@ -704,15 +646,12 @@ export default {
         this.$nextTick(() => {
           this.tableData = JSON.parse(JSON.stringify(this.tableData));
         });
-        // this.tableData = JSON.parse(JSON.stringify(this.tableData))
       },
       deep: true,
       immediate: true,
     },
   },
   mounted() {
-    // ----------------------------关联查询组件下  lochostassets
-    // 表格头
     this.btarr = localStorage.getItem("lochostassets")
       ? JSON.parse(localStorage.getItem("lochostassets"))
       : this.tablearr;
@@ -720,11 +659,11 @@ export default {
       this.btarr = e.value.list;
       localStorage.setItem("lochostassets", JSON.stringify(this.btarr));
     });
-    // ----------------------------关联查询组件上
+    this.getgovernancegroups(); //资产组架构
+    this.getgovernancehosts(); // 主机资产列表
   },
   methods: {
-    // ----------------------------关联查询组件下
-    // 表格头
+    // 表格头是否显示
     fields(e, i) {
       if (e == "1") {
         this.btarr[i].type = false;
@@ -733,10 +672,63 @@ export default {
       }
       localStorage.setItem("lochostassets", JSON.stringify(this.btarr));
     },
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // 资产组架构
+    getgovernancegroups() {
+      governance_groups().then((res) => {
+        this.modedata = res[0];
+        this.treedata(res);
+      });
+    },
+    // 资产组架-tree数据处理
+    treedata(e) {
+      for (var i = 0; i < e.length; i++) {
+        this.$set(e[i], "type", true);
+        if (e[i].sub_groups && e[i].sub_groups.length !== 0) {
+          this.dgtree(e[i].sub_groups);
+        }
+      }
+      this.zczdata = e;
+    },
+    // 资产组架-tree数据处理递归
+    dgtree(arr) {
+      for (var i = 0; i < arr.length; i++) {
+        this.$set(arr[i], "type", true);
+        if (arr[i].sub_groups && arr[i].sub_groups.length !== 0) {
+          this.dgtree(arr[i].sub_groups);
+        }
+      }
+    },
+    // 主机资产列表
+    getgovernancehosts(e) {
+      // 清空条件+查询所有
+      if (e == "clear") {
+        this.searcharr = [];
+        this.page.offset = 1;
+      }
+      var obj = {
+        offset: this.page.offset,
+        limit: this.page.limit,
+      };
+      if (this.searcharr.length != 0) {
+        var arr = this.searcharr.filter((item) => {
+          return item.key.length != 0 && item.type.length != 0;
+        });
+        if (arr.length != 0) {
+          var tj = arr.map((req) => {
+            var jihe = req.key + " " + req.value + " " + (req.type || "");
+            return jihe;
+          });
+          obj.filter = tj.join(" " + this.rysy + " ");
+        }
+      }
+      governance_hosts(obj).then((res) => {
+        this.page = res.pagination;
+        this.tableData = res.results;
+      });
+    },
     // 查询组件添加条件
     appendtj() {
-      this.searcharr.push({ key: "", value: "1", type: "" });
+      this.searcharr.push({ key: "", value: "contain", type: "" });
     },
     // 查询组件减少条件
     cxoff(i) {
@@ -744,54 +736,125 @@ export default {
     },
     // 触发清空
     cleark() {
-      this.searcharr = [{ key: "", value: "1", type: "" }];
+      this.searcharr = [];
     },
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    // ----------------------------关联查询组件上
-    // ---------------------------分页
-    handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
-      alert(val);
+    // 分页条数
+    handleSizeChange(e) {
+      this.page.limit = e;
+      this.getgovernancehosts();
     },
-    handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`);
-      alert(val);
+    // 分页页数
+    handleCurrentChange(e) {
+      this.page.offset = e;
+      this.getgovernancehosts();
     },
-    // -----------------------------------------------------------------------------------------------
-    // 切换本级与下级
-    qiehuan(e) {
-      for (var i = 0; i < this.data.length; i++) {
-        if (this.data[i].label == e.label) {
-          this.data[i].type = !this.data[i].type;
-          // console.log(this.data[i].label);
-          this.treekry = this.data[i].label;
-          return;
-        }
-        if (this.data[i].children && this.data[i].children.length !== 0) {
-          this.dg(this.data[i].children, e.label);
-        }
-
-        // console.log(this.data[i].label);
-      }
+    // 打开编辑
+    editor(e) {
+      this.bjid = e.id;
+      this.ruleForm = {
+        name: e.name,
+        os: e.os,
+        value: e.value,
+        intranet: e.intranet,
+        // location: e.location,
+      };
+      this.dialogVisible = true;
+      this.$nextTick(() => {
+        this.$refs["ruleForm"].resetFields();
+      });
     },
-    // 递归树
-    dg(arr, e) {
-      for (var i = 0; i < arr.length; i++) {
-        if (arr[i].label == e) {
-          arr[i].type = !arr[i].type;
-          this.treekry = arr[i].label;
-          return;
+    // 编辑提交
+    submit() {
+      this.$refs["ruleForm"].validate((valid) => {
+        if (valid) {
+          governance_meta(this.ruleForm, this.bjid).then((res) => {
+            this.getgovernancehosts(); //更新数据
+            this.dialogVisible = false; //关闭弹窗
+          });
+        } else {
+          return false;
         }
-        if (arr[i].children && arr[i].children.length !== 0) {
-          this.dg(arr[i].children, e);
+      });
+    },
+    // 打开添加标签
+    dakaibq(e) {
+      this.bqid = e.id;
+      this.cy = [];
+      this.yz = [];
+      this.zd = [];
+      var dq = [...e.tags, ...e.custom_tags];
+      var idarr = dq.map((item) => {
+        return item.id;
+      });
+      // this.bqflag = true;
+      // 固定标签
+      governance_tagshosts().then((res) => {
+        res.map((item) => {
+          item.tags.map((e) => {
+            if (e.is_favorite) {
+              if (idarr.indexOf(e.id) == -1) {
+                this.cy.push(e);
+              }
+            } else {
+              if (idarr.indexOf(e.id) == -1) {
+                this.yz.push(e);
+              }
+            }
+          });
+        });
+        // 自定义标签
+        governance_tagscustom().then((req) => {
+          this.zd = req.results;
+          // 打开弹框
+          this.bqflag = true;
+        });
+        // console.log(idarr);
+        // console.log(this.cy);
+        // console.log(this.yz);
+      });
+    },
+    // 提交添加标签
+    bqsbmin() {
+      this.$refs["bqform"].validate((valid) => {
+        if (valid) {
+          var obj = {};
+          if (this.bqform == 3 || this.bqform == 6) {
+            obj.tags = this.bqform.bqmc;
+          } else {
+            obj.custom_tags = this.bqform.bqmc;
+          }
+          governance_metatags(obj, this.bqid).then((res) => {
+            this.getgovernancehosts(); //更新数据
+            this.bqflag = false; //关闭弹窗
+          });
+        } else {
+          return false;
         }
-        // console.log(arr[i].label);
+      });
+    },
+    // 变更标签类型
+    bgden() {
+      this.bqform.bqmc = [];
+      // this.$refs["bqform"].resetFields();
+    },
+    // 自定义标签回车添加
+    zdyiobnof(e) {
+      var arr = this.zd.map((item) => {
+        return item.name;
+      });
+      if (arr.indexOf(e.target.value) == -1) {
+        governance_tagscustomcj({ name: e.target.value }).then((res) => {
+          this.zd.push(res);
+          this.bqform.bqmc.push(res.id);
+        });
       }
     },
     // ---------------------------跳转详情
     gotu(e) {
-      // console.log(e)
-      this.$router.push("/figure/hostmachinedetails");
+      this.$router.push({
+        path: "/figure/hostmachinedetails",
+        query: { id: e.id },
+      });
     },
   },
 };
@@ -802,33 +865,15 @@ export default {
     background: none !important;
   }
   /deep/.el-dialog__header {
-    // padding: 0;
     display: none;
   }
   /deep/.el-dialog__body {
-    // background: #676767;
     background: rgba(103, 103, 103, 0.2);
     backdrop-filter: blur(13rem);
-    // background: #676767;
     border-radius: 5rem;
     border: 1rem solid;
     border-image: linear-gradient(270deg, #fb8619 0%, #fcba48 100%) 1;
   }
-  // -------------------------------------------------------
-}
-.treekub {
-  > div {
-    text-align: center;
-    cursor: pointer;
-    color: #fff;
-  }
-  > div:hover {
-    color: #fa9600;
-  }
-  .hovys {
-    color: #fa9600;
-  }
-  // background: red;
 }
 .hostmachine {
   .container {
@@ -860,6 +905,8 @@ export default {
       }
       .treestyle {
         padding-top: 17rem;
+        height: 740rem;
+        overflow: auto;
       }
     }
     .right {
@@ -920,12 +967,14 @@ export default {
         .rqfangy {
           display: flex;
           justify-content: center;
+          flex-wrap: wrap;
           > div {
+            // margin-bottom: 2rem;
             border: 1px solid;
             padding: 0 9rem;
             line-height: 22rem;
             border-radius: 3rem;
-            margin: 0 2rem;
+            margin: 1rem 2rem;
             white-space: nowrap;
           }
           .lan {

@@ -3,7 +3,7 @@
     <!-- 表格 -->
     <el-table
       class="tablebottom"
-      :data="tableData"
+      :data="related_assets"
       style="width: 100%"
       :header-cell-style="{
         backgroundColor: '#292929',
@@ -32,7 +32,7 @@
       </el-table-column>
     </el-table>
     <!-- 分页 -->
-    <div class="pagefy" style="padding-top: 20px; padding-bottom: 20px">
+    <!-- <div class="pagefy" style="padding-top: 20px; padding-bottom: 20px">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -43,84 +43,47 @@
         :total="page.total"
       >
       </el-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
 export default {
+  props: {
+    related_assets: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+  },
   data() {
     return {
       // 分页
-      page: {
-        current: 1,
-        size: 10,
-        total: 44,
-      },
-      // 表格数据
-      tableData: [
-        {
-          a: "连接关",
-          b: "TCR",
-          c: "192.168.0.120",
-          d: "数据服务器",
-          e: "ASM-31509",
-        },
-        {
-          a: "连接关",
-          b: "TCR",
-          c: "192.168.0.120",
-          d: "数据服务器",
-          e: "ASM-31509",
-        },
-        {
-          a: "连接关",
-          b: "TCR",
-          c: "192.168.0.120",
-          d: "数据服务器",
-          e: "ASM-31509",
-        },
-        {
-          a: "连接关",
-          b: "TCR",
-          c: "192.168.0.120",
-          d: "数据服务器",
-          e: "ASM-31509",
-        },
-        {
-          a: "连接关",
-          b: "TCR",
-          c: "192.168.0.120",
-          d: "数据服务器",
-          e: "ASM-31509",
-        },
-        {
-          a: "连接关",
-          b: "TCR",
-          c: "192.168.0.120",
-          d: "数据服务器",
-          e: "ASM-31509",
-        },
-      ],
+      // page: {
+      //   current: 1,
+      //   size: 10,
+      //   total: 44,
+      // },
       // 表头改变数据
       vararr: [
         {
-          prop: "a",
+          prop: "relation",
           label: "关联关系",
         },
         {
-          prop: "b",
+          prop: "protocol",
           label: "协议",
         },
         {
-          prop: "c",
+          prop: "ip",
           label: "设备IP",
         },
         {
-          prop: "d",
+          prop: "category",
           label: "设备类型",
         },
         {
-          prop: "e",
+          prop: "name",
           label: "设备名称",
         },
       ],
@@ -128,14 +91,14 @@ export default {
   },
   methods: {
     // ---------------------------分页
-    handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
-      alert(val);
-    },
-    handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`);
-      alert(val);
-    },
+    // handleSizeChange(val) {
+    //   // console.log(`每页 ${val} 条`);
+    //   alert(val);
+    // },
+    // handleCurrentChange(val) {
+    //   // console.log(`当前页: ${val}`);
+    //   alert(val);
+    // },
   },
 };
 </script>

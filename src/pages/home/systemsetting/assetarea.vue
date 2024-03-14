@@ -170,9 +170,6 @@
       </el-dialog>
     </div>
     <!-- 树形抽屉 -->
-    <!-- <el-drawer title="我是标题" :visible.sync="drawer" direction="rtl ">
-      <span>我来啦!</span>
-    </el-drawer> -->
     <el-drawer
       class="drawerstyle"
       :visible.sync="drawer"
@@ -187,7 +184,6 @@
           <div class="wenz">资产组架构</div>
         </div>
         <div class="testree">
-          <!-- <div class=""></div> -->
           <div style="padding-bottom: 12rem">
             <el-checkbox
               class="fuxuan"
@@ -197,7 +193,7 @@
               >全选/全不选</el-checkbox
             >
           </div>
-          <el-tree
+          <!-- <el-tree
             default-expand-all
             node-key="label"
             :data="data"
@@ -206,8 +202,110 @@
             ref="tree"
             @check="oncheck"
           >
+          </el-tree> -->
+          <el-tree
+            :data="data"
+            :expand-on-click-node="false"
+            node-key="id"
+            default-expand-all
+          >
+            <span
+              style="
+                padding-right: 12rem;
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+              "
+              slot-scope="{ node, data }"
+            >
+              <!-- <span style="font-size: 16rem; display: flex; align-items: center" -->
+                <el-checkbox
+              class="fuxuan"
+              v-model="data.type"
+              @change="treeChange($event,data.id)"
+              >
+              {{ node.label }}</el-checkbox
+            >
+            <!-- <el-checkbox
+              class="fuxuan"
+              v-model="data.type"
+              @change="()=>{
+                data.type=!data.type
+              }"
+              >
+              {{ node.label }}</el-checkbox
+            > -->
+              <!-- <span style="font-size: 16rem;"
+                >{{ node.label }}
+              </span> -->
+              <!-- <div>
+                <el-popover placement="right" trigger="hover">
+                  <div class="treekub">
+                    <div @click="qiehuan(data)">
+                      {{ data.type ? "只看本级" : "查看本级和下级" }}
+                    </div>
+                  </div>
+                  <div slot="reference">
+                    <img style="height: 14rem" src="../img/sd.png" alt="" />
+                  </div>
+                </el-popover>
+              </div> -->
+            </span>
           </el-tree>
-          <!-- <div @click="xxx">确定</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
           <div
             style="
               display: flex;
@@ -241,41 +339,49 @@ export default {
   data() {
     return {
       // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-      treeall: [], //树形递归出全部数据
+      arrtree:[11,12,15,17,18],//请求的选中id(选中id集合)
+      treeall: [], //树形递归出全部数据（树形id）
       isIndeterminate: false, //全选/全不选   样式控制
       checkAll: false, //全选/全不选  值   样式控制  true   false
 
       //   ff-k  ft-q  tt-b tf-b
-      xztreearr: ["A地区"], //树形选中数据-默认
+      // xztreearr: ["A地区"], //树形选中数据-默认
       // 树形数据
       data: [
         {
           label: "A地区",
-          type: true,
+          id:11,
+          // type: true,
           children: [
             {
               label: "地区1",
-              type: true,
+              id:12,
+              // type: true,
             },
             {
               label: "地区2",
-              type: true,
+              id:13
+              // type: true,
             },
             {
               label: "地区3",
-              type: true,
+              id:14,
+              // type: true,
               children: [
                 {
                   label: "地区11",
-                  type: true,
+                  id:15
+                  // type: true,
                 },
                 {
                   label: "地区22",
-                  type: true,
+                  id:16
+                  // type: true,
                 },
                 {
                   label: "地区33",
-                  type: true,
+                  id:17
+                  // type: true,
                 },
               ],
             },
@@ -283,19 +389,23 @@ export default {
         },
         {
           label: "服务器组",
-          type: true,
+          // type: true,
+          id:18,
           children: [
             {
               label: "服务器组1",
-              type: true,
+              // type: true,
+              id:19
             },
             {
               label: "服务器组2",
-              type: true,
+              // type: true,
+              id:20
             },
             {
               label: "服务器组3",
-              type: true,
+              // type: true,
+              id:21
             },
           ],
         },
@@ -441,28 +551,28 @@ export default {
   methods: {
     // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     // 树形  全选/全不选
-    handleCheckAllChange(val) {
-      //   this.checkedCities = val ? cityOptions : [];
-      //   this.isIndeterminate = false;
-      if (val) {
-        this.$refs.tree.setCheckedKeys(this.treeall);
-      } else {
-        this.$refs.tree.setCheckedKeys([]);
-      }
-      // if (this.treeall.length == 11) {
-      //   // 全选
-      //   this.isIndeterminate = false;
-      //   this.checkAll = true;
-      // } else if (this.treeall.length == 0) {
-      //   // 全空
-      //   this.isIndeterminate = false;
-      //   this.checkAll = false;
-      // } else {
-      //   // 半选
-      //   this.isIndeterminate = true;
-      //   this.checkAll = false;
-      // }
-    },
+    // handleCheckAllChange(val) {
+    //   //   this.checkedCities = val ? cityOptions : [];
+    //   //   this.isIndeterminate = false;
+    //   if (val) {
+    //     this.$refs.tree.setCheckedKeys(this.treeall);
+    //   } else {
+    //     this.$refs.tree.setCheckedKeys([]);
+    //   }
+    //   // if (this.treeall.length == 11) {
+    //   //   // 全选
+    //   //   this.isIndeterminate = false;
+    //   //   this.checkAll = true;
+    //   // } else if (this.treeall.length == 0) {
+    //   //   // 全空
+    //   //   this.isIndeterminate = false;
+    //   //   this.checkAll = false;
+    //   // } else {
+    //   //   // 半选
+    //   //   this.isIndeterminate = true;
+    //   //   this.checkAll = false;
+    //   // }
+    // },
     // // 树形清空
     // resetChecked() {
     //   this.$refs.tree.setCheckedKeys([]);
@@ -471,22 +581,28 @@ export default {
     // setCheckedKeys() {
     //   this.$refs.tree.setCheckedKeys([3]);
     // },
-    xxx() {
-      //   console.log(this.xztreearr);
-      console.log(this.$refs.tree.getCheckedNodes()); //获取选中数据，不含父级
-    },
+    // xxx() {
+    //   //   console.log(this.xztreearr);
+    //   console.log(this.$refs.tree.getCheckedNodes()); //获取选中数据，不含父级
+    // },
     // // 树形选择数据处理
-    oncheck(res, req) {
-      console.log(res);
-      console.log(req);
-      console.log(this.$refs.tree.getCheckedNodes());
-      //   this.smbdatazd = [...res, ...req.halfCheckedKeys]
-    },
-    // 前置获取数据后的处理
+    // oncheck(res, req) {
+    //   console.log(res);
+    //   console.log(req);
+    //   console.log(this.$refs.tree.getCheckedNodes());
+    //   //   this.smbdatazd = [...res, ...req.halfCheckedKeys]
+    // },
+    // 初始化树，前置获取数据后的处理
     qianz() {
+      // var arrtree=[11,15,17]//请求的选中id
       // var treeall = []
       for (var i = 0; i < this.data.length; i++) {
-        this.treeall.push(this.data[i].label);
+        if(this.arrtree.indexOf(this.data[i].id) !== -1){
+          this.$set(this.data[i],'type',true)
+        }else{
+          this.$set(this.data[i],'type',false)
+        }
+        this.treeall.push(this.data[i].id);
         // if (this.data[i].label == e.label) {
         //   this.data[i].type = !this.data[i].type;
         //   // console.log(this.data[i].label);
@@ -497,38 +613,101 @@ export default {
           this.dg(this.data[i].children);
         }
       }
-      // //   alert(this.treeall.length);
-      // if (this.treeall.length == 11) {
-      //   // 全选
-      //   this.isIndeterminate = false;
-      //   this.checkAll = true;
-      // } else if (this.treeall.length == 0) {
-      //   // 全空
-      //   this.isIndeterminate = false;
-      //   this.checkAll = false;
-      // } else {
-      //   // 半选
-      //   this.isIndeterminate = true;
-      //   this.checkAll = false;
-      // }
-
-      this.isIndeterminate = true;
-      this.checkAll = false;
-    }, // 递归树
+    //   // //   alert(this.treeall.length);
+      if (this.treeall.length == this.arrtree.length) {
+        // 全选
+        this.isIndeterminate = false;
+        this.checkAll = true;
+      } else if (this.treeall.length == 0) {
+        // 全空
+        this.isIndeterminate = false;
+        this.checkAll = false;
+      } else {
+        // 半选
+        this.isIndeterminate = true;
+        this.checkAll = false;
+      }
+    //   this.isIndeterminate = true;
+    //   this.checkAll = false;
+    },
+    // 递归树
     dg(arr) {
       for (var i = 0; i < arr.length; i++) {
-        this.treeall.push(arr[i].label);
-        // if (arr[i].label == e) {
-        //   arr[i].type = !arr[i].type;
-        //   this.treekry = arr[i].label;
-        //   return;
-        // }
+        if(this.arrtree.indexOf(arr[i].id) !== -1){
+          // arr[i].type = true
+          this.$set(arr[i],'type',true)
+        }else{
+          // arr[i].type = false
+          this.$set(arr[i],'type',false)
+        }
+        // if()
+        this.treeall.push(arr[i].id);
+    //     // if (arr[i].label == e) {
+    //     //   arr[i].type = !arr[i].type;
+    //     //   this.treekry = arr[i].label;
+    //     //   return;
+    //     // }
         if (arr[i].children && arr[i].children.length !== 0) {
           this.dg(arr[i].children);
         }
-        // console.log(arr[i].label);
+    //     // console.log(arr[i].label);
       }
     },
+    // 树形选中与取消
+    treeChange(type,e){
+      // 数据替换
+      if(type){
+        this.arrtree.push(e)
+      }else{
+        var i = this.arrtree.indexOf(e)
+        this.arrtree.splice(i,1)
+      }
+      console.log(this.arrtree)
+      console.log(this.data)
+// // 树形回显更新
+//       for (var i = 0; i < this.data.length; i++) {
+//         if (this.data[i].id == e) {
+//           // alert(e)
+//           if(type){
+//             this.$nextTick(() => {
+//               this.data[i].type = true
+//         });
+//             // this.data[i].type = true
+//           }else{
+//             this.$nextTick(() => {
+//               this.data[i].type = false
+//         });
+//             // this.data[i].type = false
+//           }
+//           // alert(this.data[i].type)
+//           return;
+//         }
+//         if (this.data[i].children && this.data[i].children.length !== 0) {
+//           this.typedg(this.data[i].children,e,type);
+//         }
+//       }
+    },
+    // // 更新是否选择递归
+    // typedg(arr, e,type) {
+    //   for (var i = 0; i < arr.length; i++) {
+    //     if (arr[i].id == e) {
+    //       // alert(e)
+    //       if(type){
+    //         arr[i].type = true
+    //       }else{
+    //         arr[i].type = false
+    //       }
+    //       // arr[i].type = !arr[i].type;
+    //       // this.treekry = arr[i].label;
+    //       return;
+    //     }
+    //     if (arr[i].children && arr[i].children.length !== 0) {
+    //       this.typedg(arr[i].children, e);
+    //     }
+    //     // console.log(arr[i].label);
+    //   }
+    // },
+
     // dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
     // ----------------------------关联查询组件下
     // 表格头
@@ -563,8 +742,19 @@ export default {
     <style lang="less" scoped>
 .ctishu {
   padding: 20rem;
+
   // 树形样式
   .testree {
+    // 复选样式
+//   .fuxuan {
+//     /deep/.el-checkbox__label {
+//         color: #fff;
+//     }
+
+//     /deep/.el-checkbox__input.is-checked+.el-checkbox__label {
+//         color: #fff;
+//     }
+// }
     padding-top: 20rem;
     /deep/.el-tree {
       background: none;
