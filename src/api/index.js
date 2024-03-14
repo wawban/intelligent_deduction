@@ -88,6 +88,37 @@ export const governance_meta = (data,id) => {
         data
     })
 }
+// 数字空间治理 主机资产 主机标签列表
+export const governance_tagshosts = (params) => {
+    return request({
+        url: `${url}data-governance/tags/host-tags`,
+        method: "get",
+        params
+    })
+}
+// 数字空间治理 主机资产 主机标签列表-自定义标签
+export const governance_tagscustom = (params) => {
+    return request({
+        url: `${url}data-governance/tags/custom-tags`,
+        method: "get",
+        params
+    })
+}// 数字空间治理 主机资产 主机标签列表-自定义标签创建
+export const governance_tagscustomcj = (data) => {
+    return request({
+        url: `${url}data-governance/tags/custom-tags`,
+        method: "post",
+        data
+    })
+}
+// 数字空间治理 主机资产 主机资产添加标签
+export const governance_metatags = (data,id) => {
+    return request({
+        url: `${url}data-governance/hosts/${id}/tags`,
+        method: "patch",
+        data
+    })
+}
 // export const productInfo_getList = (params) => {
 //     return request({
 //         url: `${url}productInfo/getList`,

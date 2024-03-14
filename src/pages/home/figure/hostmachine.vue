@@ -137,7 +137,6 @@
               </div>
             </el-popover>
           </div>
-          <!-- -------------------------------------------------------- -->
           <div class="marginr">
             <el-popover placement="bottom" width="220" trigger="hover">
               <div class="zduanpeizi">
@@ -278,7 +277,7 @@
                     alt=""
                   />
                   <img
-                    @click="bqflag = true"
+                    @click="dakaibq(scope.row)"
                     style="height: 22rem; cursor: pointer; margin: 0 26rem"
                     src="../img/bq.png"
                     alt=""
@@ -310,7 +309,6 @@
         </div>
       </div>
     </div>
-    <!-- --------------------------------------------------------------------- -->
     <!-- 编辑 -->
     <div class="tandialog">
       <el-dialog
@@ -409,7 +407,6 @@
         </div>
       </el-dialog>
     </div>
-    <!-- --------------------------------------------------------------------- -->
     <!-- 添加标签 -->
     <div class="tandialog">
       <el-dialog
@@ -435,16 +432,26 @@
             ref="bqform"
             label-width="100rem"
             class="demo-ruleForm"
+            :rules="rulesbq"
           >
             <el-form-item label="标签分类：" prop="radio">
-              <el-radio-group v-model="bqform.radio" class="dxradio">
+              <el-radio-group
+                v-model="bqform.radio"
+                class="dxradio"
+                @change="bgden"
+              >
                 <el-radio :label="3">常用标签</el-radio>
                 <el-radio :label="6">预置标签</el-radio>
                 <el-radio :label="9">自定义</el-radio>
               </el-radio-group>
             </el-form-item>
+            <!-- cy: [], //常用标签
+      yz: [], //预置标签
+      zd: [], //自定义标签 -->
             <el-form-item label="标签名称：" prop="bqmc">
+              <!-- 常用标签 -->
               <el-select
+                v-if="bqform.radio == 3"
                 class="zhessless"
                 size="mini"
                 v-model="bqform.bqmc"
@@ -454,10 +461,49 @@
                 multiple
               >
                 <el-option
-                  v-for="item in 4"
-                  :key="item"
-                  :label="'标签' + item"
-                  :value="item"
+                  v-for="(item, index) in cy"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.id"
+                >
+                </el-option>
+              </el-select>
+              <!-- 预置标签 -->
+              <el-select
+                v-if="bqform.radio == 6"
+                class="zhessless"
+                size="mini"
+                v-model="bqform.bqmc"
+                placeholder="请选择"
+                style="width: 340rem"
+                filterable
+                multiple
+              >
+                <el-option
+                  v-for="(item, index) in yz"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.id"
+                >
+                </el-option>
+              </el-select>
+              <!-- 自定义标签 -->
+              <el-select
+                @keyup.enter.native="zdyiobnof"
+                v-if="bqform.radio == 9"
+                class="zhessless"
+                size="mini"
+                v-model="bqform.bqmc"
+                placeholder="请选择"
+                style="width: 340rem"
+                filterable
+                multiple
+              >
+                <el-option
+                  v-for="(item, index) in zd"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.id"
                 >
                 </el-option>
               </el-select>
@@ -465,7 +511,11 @@
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button
+            class="buttonsy"
+            size="mini"
+            style="margin-right: 30rem"
+            @click="bqsbmin"
             >确认</el-button
           >
           <el-button
@@ -481,7 +531,15 @@
   </div>
 </template>
 <script>
-import { governance_groups, governance_hosts, governance_meta } from "@/api";
+import {
+  governance_groups,
+  governance_hosts,
+  governance_meta,
+  governance_tagshosts,
+  governance_tagscustom,
+  governance_tagscustomcj,
+  governance_metatags,
+} from "@/api";
 export default {
   data() {
     return {
@@ -539,19 +597,15 @@ export default {
       ],
       btarr: [], // 表头数据
       vararr: [], // 表头改变数据
-      // -------------------------------------------------------------------------------------------
-      // -------------------------------------------------------------------------------------------
       // 标签表单
       bqform: {
         radio: 3,
         bqmc: [],
       },
       bqflag: false, // 标签表单弹窗
-      // ------------------------------
       // 表单验证
       rules: {
         name: [{ required: true, message: "请输入资产名称", trigger: "blur" }],
-        // password: [{ validator: funcpassword, trigger: "blur" }],
       },
       dialogVisible: false, // 编辑弹窗
       // 编辑表单数据
@@ -573,6 +627,14 @@ export default {
       rysy: "and", //符合条件，任一或所有
       //   查询数据
       searcharr: [],
+      cy: [], //常用标签
+      yz: [], //预置标签
+      zd: [], //自定义标签
+      // 标签表单验证
+      rulesbq: {
+        bqmc: [{ required: true, message: "请选择标签", trigger: "change" }],
+      },
+      bqid: "", //添加标签用id
     };
   },
   watch: {
@@ -714,6 +776,79 @@ export default {
         }
       });
     },
+    // 打开添加标签
+    dakaibq(e) {
+      this.bqid = e.id;
+      this.cy = [];
+      this.yz = [];
+      this.zd = [];
+      var dq = [...e.tags, ...e.custom_tags];
+      var idarr = dq.map((item) => {
+        return item.id;
+      });
+      // this.bqflag = true;
+      // 固定标签
+      governance_tagshosts().then((res) => {
+        res.map((item) => {
+          item.tags.map((e) => {
+            if (e.is_favorite) {
+              if (idarr.indexOf(e.id) == -1) {
+                this.cy.push(e);
+              }
+            } else {
+              if (idarr.indexOf(e.id) == -1) {
+                this.yz.push(e);
+              }
+            }
+          });
+        });
+        // 自定义标签
+        governance_tagscustom().then((req) => {
+          this.zd = req.results;
+          // 打开弹框
+          this.bqflag = true;
+        });
+        // console.log(idarr);
+        // console.log(this.cy);
+        // console.log(this.yz);
+      });
+    },
+    // 提交添加标签
+    bqsbmin() {
+      this.$refs["bqform"].validate((valid) => {
+        if (valid) {
+          var obj = {};
+          if (this.bqform == 3 || this.bqform == 6) {
+            obj.tags = this.bqform.bqmc;
+          } else {
+            obj.custom_tags = this.bqform.bqmc;
+          }
+          governance_metatags(obj, this.bqid).then((res) => {
+            this.getgovernancehosts(); //更新数据
+            this.bqflag = false; //关闭弹窗
+          });
+        } else {
+          return false;
+        }
+      });
+    },
+    // 变更标签类型
+    bgden() {
+      this.bqform.bqmc = [];
+      // this.$refs["bqform"].resetFields();
+    },
+    // 自定义标签回车添加
+    zdyiobnof(e) {
+      var arr = this.zd.map((item) => {
+        return item.name;
+      });
+      if (arr.indexOf(e.target.value) == -1) {
+        governance_tagscustomcj({ name: e.target.value }).then((res) => {
+          this.zd.push(res);
+          this.bqform.bqmc.push(res.id);
+        });
+      }
+    },
     // ---------------------------跳转详情
     gotu(e) {
       this.$router.push({
@@ -730,34 +865,16 @@ export default {
     background: none !important;
   }
   /deep/.el-dialog__header {
-    // padding: 0;
     display: none;
   }
   /deep/.el-dialog__body {
-    // background: #676767;
     background: rgba(103, 103, 103, 0.2);
     backdrop-filter: blur(13rem);
-    // background: #676767;
     border-radius: 5rem;
     border: 1rem solid;
     border-image: linear-gradient(270deg, #fb8619 0%, #fcba48 100%) 1;
   }
-  // -------------------------------------------------------
 }
-// .treekub {
-//   > div {
-//     text-align: center;
-//     cursor: pointer;
-//     color: #fff;
-//   }
-//   > div:hover {
-//     color: #fa9600;
-//   }
-//   .hovys {
-//     color: #fa9600;
-//   }
-//   // background: red;
-// }
 .hostmachine {
   .container {
     height: 809rem;

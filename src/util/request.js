@@ -65,8 +65,14 @@ service.interceptors.response.use(
     const status = response.status;
     const data = response.data;
     const url = response.config.url;
+    // alert(status)
     if (status != 200) {
-      return Promise.reject(data);
+      // return Promise.reject(data);
+      Message({
+        message: "请求失败",
+        type: 'error',
+      });
+      // return data
     } else {
       if (data.code === 200) {
         return data

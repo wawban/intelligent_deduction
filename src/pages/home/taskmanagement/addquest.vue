@@ -84,7 +84,26 @@
                   <el-radio :label="6">资产组</el-radio>
                 </el-radio-group>
               </el-form-item>
-              <div>待确认需求</div>
+              <div v-if="ruleForm.ms == 3">
+                <el-form-item label="起点：" prop="gd">
+                  <el-input
+                    type="textarea"
+                    class="inputtextarea"
+                    size="mini"
+                    style="width: 630rem"
+                    :autosize="{ minRows: 6, maxRows: 6 }"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="终点：" prop="gd">
+                  <el-input
+                    type="textarea"
+                    class="inputtextarea"
+                    size="mini"
+                    style="width: 630rem"
+                    :autosize="{ minRows: 6, maxRows: 6 }"
+                  ></el-input>
+                </el-form-item>
+              </div>
             </el-form>
           </div>
         </div>
@@ -148,7 +167,9 @@ export default {
     return {
       type: 1, //当前步骤
       // 任务基础设置-表单数据
-      ruleForm: {},
+      ruleForm: {
+        ms: 3,
+      },
     };
   },
   methods: {
