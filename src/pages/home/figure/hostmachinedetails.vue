@@ -233,10 +233,14 @@
           <div class="wenz">资产生命周期</div>
         </div>
         <div class="xdelis">
-          <div v-for="(e, i) in lifecycle" :key="i">
+          <div
+            v-for="(e, i) in lifecycle"
+            :key="i"
+            :class="lifecycle.length != i + 1 ? 'disple_none' : ''"
+          >
             <div class="yuanq"></div>
             <div class="biaot">
-              {{ $moment(e.timestamp).format("YYYY.MM.DD HH:mm:ss") }}
+              {{ $moment(e.timestamp).format("YYYY-MM-DD HH:mm:ss") }}
             </div>
             <div class="textr">
               {{ e.user + " " + e.action }}
@@ -282,27 +286,27 @@ export default {
         this.ports = res.ports; //端口信息
         this.graph = res.graph; //资产图谱
         this.related_assets = res.related_assets; //关联资产
-        // this.lifecycle = res.lifecycle; //资产生命周期
-        this.lifecycle = [
-          {
-            timestamp: "2024-03-13T13:16:33.713Z",
-            user: "admin",
-            action: "创建XX1",
-            message: "发现XX",
-          },
-          {
-            timestamp: "2024-02-13T13:16:33.713Z",
-            user: "admin",
-            action: "创建XX2",
-            message: "发现XX",
-          },
-          {
-            timestamp: "2024-03-13T13:16:33.713Z",
-            user: "admin",
-            action: "创建XX3",
-            message: "发现XX",
-          },
-        ];
+        this.lifecycle = res.lifecycle; //资产生命周期
+        // this.lifecycle = [
+        //   {
+        //     timestamp: "2024-03-13T13:16:33.713Z",
+        //     user: "admin",
+        //     action: "创建XX1",
+        //     message: "发现XX",
+        //   },
+        //   {
+        //     timestamp: "2024-02-13T13:16:33.713Z",
+        //     user: "admin",
+        //     action: "创建XX2",
+        //     message: "发现XX",
+        //   },
+        //   {
+        //     timestamp: "2024-03-13T13:16:33.713Z",
+        //     user: "admin",
+        //     action: "创建XX3",
+        //     message: "发现XX",
+        //   },
+        // ];
       });
     },
     goto() {

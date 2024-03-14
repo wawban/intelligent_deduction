@@ -126,7 +126,7 @@ export default {
           width: "100",
         },
         {
-          prop: "e",
+          prop: "treatment_result",
           label: "工单状态",
           width: "100",
         },
@@ -140,6 +140,10 @@ export default {
         },
       ],
     };
+  },
+  mounted() {
+    console.log(11111111);
+    console.log(this.vulns);
   },
   methods: {
     // ---------------------------分页

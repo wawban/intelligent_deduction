@@ -200,7 +200,7 @@
                 alt=""
               />
               <img
-                style="height: 22rem; cursor: pointer;"
+                style="height: 22rem; cursor: pointer"
                 src="../img/sc.png"
                 alt=""
               />
@@ -233,19 +233,32 @@
       >
         <div
           style="
-            color: #FA9600;
-            font-size: 18rem;font-weight: 500;
+            color: #fa9600;
+            font-size: 18rem;
+            font-weight: 500;
             padding-bottom: 16rem;
             display: flex;
             align-items: center;
           "
         >
-        <i class="el-icon-warning-outline" style="font-size: 24rem;color: #FA9600;margin-right: 10rem;"></i>
+          <i
+            class="el-icon-warning-outline"
+            style="font-size: 24rem; color: #fa9600; margin-right: 10rem"
+          ></i>
           提示
         </div>
-        <div style="font-size: 16rem; padding: 20rem 0;color: #fff;">确定终止\删除风险推演任务一吗？</div>
+        <div style="font-size: 16rem; padding: 20rem 0; color: #fff">
+          确定终止\删除风险推演任务一吗？
+        </div>
         <div style="text-align: right">
-          <el-button size="mini" style="margin-right: 30rem;background: #fa9600 !important;color: #fff !important;border-color: #fa9600;"
+          <el-button
+            size="mini"
+            style="
+              margin-right: 30rem;
+              background: #fa9600 !important;
+              color: #fff !important;
+              border-color: #fa9600;
+            "
             >确认</el-button
           >
           <el-button
@@ -264,7 +277,7 @@
 export default {
   data() {
     return {
-      dialogVisible: true, //添加弹窗
+      dialogVisible: false, //添加弹窗
       // 表格数据
       tableData: [
         {
@@ -423,23 +436,23 @@ export default {
 <style lang="less" scoped>
 .deduction {
   .tandialog {
-  /deep/.el-dialog {
-    background: none !important;
+    /deep/.el-dialog {
+      background: none !important;
+    }
+    /deep/.el-dialog__header {
+      // padding: 0;
+      display: none;
+    }
+    /deep/.el-dialog__body {
+      // background: #676767;
+      // background: rgba(103, 103, 103, 0.2);
+      background: #676767;
+      border-radius: 5rem;
+      border: 1rem solid;
+      border-image: linear-gradient(270deg, #fb8619 0%, #fcba48 100%) 1;
+    }
+    // -------------------------------------------------------
   }
-  /deep/.el-dialog__header {
-    // padding: 0;
-    display: none;
-  }
-  /deep/.el-dialog__body {
-    // background: #676767;
-    // background: rgba(103, 103, 103, 0.2);
-    background: #676767;
-    border-radius: 5rem;
-    border: 1rem solid;
-    border-image: linear-gradient(270deg, #fb8619 0%, #fcba48 100%) 1;
-  }
-  // -------------------------------------------------------
-}
   .zheestoub {
     display: flex;
     justify-content: space-between;

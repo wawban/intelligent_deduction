@@ -389,12 +389,19 @@
                   </div>
                   <div class="zswenz">
                     <div class="ipdiz" v-if="e.node">
-                      {{ e.node.name }}{{ i == 0 ? "（起点）" : "（途径）" }}
+                      {{ e.node.name
+                      }}{{
+                        i == 0
+                          ? "（起点）"
+                          : zddata.length == i + 1
+                          ? "（终点）"
+                          : "（途径）"
+                      }}
                     </div>
                     <div class="azswenztex">资产类型：{{ e.node.label }}</div>
                   </div>
                 </div>
-                <div class="zhesjiant">
+                <div v-if="zddata.length != i + 1" class="zhesjiant">
                   <div class="tetxbox">
                     <div v-if="e.edge">{{ e.edge.label }}</div>
                     <i class="el-icon-arrow-down"></i>
@@ -412,12 +419,20 @@
                   </div>
                   <div class="zswenz">
                     <div class="ipdiz" v-if="e.node">
-                      {{ e.node.name }}{{ i == 0 ? "（起点）" : "（途径）" }}
+                      {{ e.node.name }}
+                      <!-- {{ i == 0 ? "（起点）" : "（途径）" }} -->
+                      {{
+                        i == 0
+                          ? "（起点）"
+                          : zydata.length == i + 1
+                          ? "（终点）"
+                          : "（途径）"
+                      }}
                     </div>
                     <div class="azswenztex">资产类型：{{ e.node.label }}</div>
                   </div>
                 </div>
-                <div class="zhesjiant">
+                <div v-if="zydata.length != i + 1" class="zhesjiant">
                   <div class="tetxbox">
                     <div v-if="e.edge">{{ e.edge.label }}</div>
                     <i class="el-icon-arrow-down"></i>
@@ -435,12 +450,20 @@
                   </div>
                   <div class="zswenz">
                     <div class="ipdiz" v-if="e.node">
-                      {{ e.node.name }}{{ i == 0 ? "（起点）" : "（途径）" }}
+                      {{ e.node.name }}
+                      <!-- {{ i == 0 ? "（起点）" : "（途径）" }} -->
+                      {{
+                        i == 0
+                          ? "（起点）"
+                          : gldata.length == i + 1
+                          ? "（终点）"
+                          : "（途径）"
+                      }}
                     </div>
                     <div class="azswenztex">资产类型：{{ e.node.label }}</div>
                   </div>
                 </div>
-                <div class="zhesjiant">
+                <div v-if="gldata.length != i + 1" class="zhesjiant">
                   <div class="tetxbox">
                     <div v-if="e.edge">{{ e.edge.label }}</div>
                     <i class="el-icon-arrow-down"></i>

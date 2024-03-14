@@ -376,7 +376,7 @@
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="等级保护：" prop="location">
+            <!-- <el-form-item label="等级保护：" prop="location">
               <el-select
                 class="zhessless"
                 size="mini"
@@ -388,7 +388,7 @@
                 <el-option label="二级" value="2"> </el-option>
                 <el-option label="三级" value="3"> </el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
           </el-form>
         </div>
         <div style="text-align: center">
@@ -560,7 +560,7 @@ export default {
         os: "",
         value: "",
         intranet: "",
-        location: "",
+        // location: "",
       },
       bjid: "", //编辑id
       // 分页
@@ -694,7 +694,7 @@ export default {
         os: e.os,
         value: e.value,
         intranet: e.intranet,
-        location: e.location,
+        // location: e.location,
       };
       this.dialogVisible = true;
       this.$nextTick(() => {
