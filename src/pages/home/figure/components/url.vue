@@ -3,7 +3,7 @@
     <!-- 表格 -->
     <el-table
       class="tablebottom"
-      :data="tableData"
+      :data="urls"
       style="width: 100%"
       :header-cell-style="{
         backgroundColor: '#292929',
@@ -52,7 +52,7 @@
       </el-table-column>
     </el-table>
     <!-- 分页 -->
-    <div class="pagefy" style="padding-top: 20px; padding-bottom: 20px">
+    <!-- <div class="pagefy" style="padding-top: 20px; padding-bottom: 20px">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -63,52 +63,60 @@
         :total="page.total"
       >
       </el-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
 export default {
+  props: {
+    urls: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
+  },
   data() {
     return {
-      // 分页
-      page: {
-        current: 1,
-        size: 10,
-        total: 44,
-      },
-      // 表格数据
-      tableData: [
-        {
-          b: "http://10.10.33.202:8081/doUpload.action;jsessionid=eqp25w92hm04q9qomhc818sd",
-          c: "POST",
-          d: "-",
-        },
-        {
-          b: "http://10.10.33.202:8081/doUpload.action;jsessionid=eqp25w92hm04q9qomhc818sd",
-          c: "POST",
-          d: "-",
-        },
-        {
-          b: "http://10.10.33.202:8081/doUpload.action;jsessionid=eqp25w92hm04q9qomhc818sd",
-          c: "POST",
-          d: "-",
-        },
-        {
-          b: "http://10.10.33.202:8081/doUpload.action;jsessionid=eqp25w92hm04q9qomhc818sd",
-          c: "POST",
-          d: "-",
-        },
-        {
-          b: "http://10.10.33.202:8081/doUpload.action;jsessionid=eqp25w92hm04q9qomhc818sd",
-          c: "POST",
-          d: "-",
-        },
-        {
-          b: "http://10.10.33.202:8081/doUpload.action;jsessionid=eqp25w92hm04q9qomhc818sd",
-          c: "POST",
-          d: "-",
-        },
-      ],
+      // // 分页
+      // page: {
+      //   current: 1,
+      //   size: 10,
+      //   total: 44,
+      // },
+      // // 表格数据
+      // tableData: [
+      //   {
+      //     b: "http://10.10.33.202:8081/doUpload.action;jsessionid=eqp25w92hm04q9qomhc818sd",
+      //     c: "POST",
+      //     d: "-",
+      //   },
+      //   {
+      //     b: "http://10.10.33.202:8081/doUpload.action;jsessionid=eqp25w92hm04q9qomhc818sd",
+      //     c: "POST",
+      //     d: "-",
+      //   },
+      //   {
+      //     b: "http://10.10.33.202:8081/doUpload.action;jsessionid=eqp25w92hm04q9qomhc818sd",
+      //     c: "POST",
+      //     d: "-",
+      //   },
+      //   {
+      //     b: "http://10.10.33.202:8081/doUpload.action;jsessionid=eqp25w92hm04q9qomhc818sd",
+      //     c: "POST",
+      //     d: "-",
+      //   },
+      //   {
+      //     b: "http://10.10.33.202:8081/doUpload.action;jsessionid=eqp25w92hm04q9qomhc818sd",
+      //     c: "POST",
+      //     d: "-",
+      //   },
+      //   {
+      //     b: "http://10.10.33.202:8081/doUpload.action;jsessionid=eqp25w92hm04q9qomhc818sd",
+      //     c: "POST",
+      //     d: "-",
+      //   },
+      // ],
       // 表头改变数据
       vararr: [
         {
@@ -116,16 +124,16 @@ export default {
           width: "100rem",
         },
         {
-          prop: "b",
+          prop: "url",
           label: "URL",
         },
         {
-          prop: "c",
+          prop: "method",
           label: "请求方式",
           width: "160rem",
         },
         {
-          prop: "d",
+          prop: "params",
           label: "参数名",
           width: "260rem",
         },
@@ -133,15 +141,15 @@ export default {
     };
   },
   methods: {
-    // ---------------------------分页
-    handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
-      alert(val);
-    },
-    handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`);
-      alert(val);
-    },
+    // // ---------------------------分页
+    // handleSizeChange(val) {
+    //   // console.log(`每页 ${val} 条`);
+    //   alert(val);
+    // },
+    // handleCurrentChange(val) {
+    //   // console.log(`当前页: ${val}`);
+    //   alert(val);
+    // },
   },
 };
 </script>

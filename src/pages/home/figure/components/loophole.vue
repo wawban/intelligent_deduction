@@ -63,7 +63,6 @@
           </div>
           <div v-else-if="item.label == '操作'">
             <img
-              @click="gotu(scope.row)"
               style="height: 22rem; cursor: pointer"
               src="../../img/bj.png"
               alt=""
@@ -142,8 +141,8 @@ export default {
     };
   },
   mounted() {
-    console.log(11111111);
-    console.log(this.vulns);
+    // console.log(11111111);
+    // console.log(this.vulns);
   },
   methods: {
     // ---------------------------分页
