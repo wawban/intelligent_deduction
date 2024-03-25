@@ -203,6 +203,7 @@
               :prop="item.prop"
               :label="item.label"
               :width="item.width"
+              show-overflow-tooltip
             >
               <template slot-scope="scope">
                 <!-- 风险值 -->
