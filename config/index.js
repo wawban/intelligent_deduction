@@ -13,7 +13,8 @@ module.exports = {
     proxyTable: {
       '*': {
         //target: "https://virtserver.swaggerhub.com/cybseer/webclient/0.1.0/",
-        target: "https://cybseer.vokeylee.com/api/",
+        // target: "https://cybseer.vokeylee.com/api/",
+        target: "http://10.128.20.20:4321/api/",
         changeOrigin: true,
       }
     },
