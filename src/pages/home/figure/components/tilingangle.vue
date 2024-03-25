@@ -321,6 +321,7 @@
   </div>
 </template>
 <script>
+// governance_vulns
 export default {
   data() {
     return {

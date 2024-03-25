@@ -197,6 +197,15 @@ export const infer_tasks = (params) => {
         params
     })
 }
+// 数字空间治理/漏洞治理 平铺视角
+export const governance_vulns= (params) => {
+    return request({
+        url: `${url}data-governance/vulns`,
+        method: "get",
+        params
+    })
+}
+// /data-governance/vulns
 // export const productInfo_getList = (params) => {
 //     return request({
 //         url: `${url}productInfo/getList`,
