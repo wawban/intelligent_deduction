@@ -16,6 +16,7 @@
     <div class="box">
       <div class="left">
         <div class="l_top wbb">
+          <!-- 漏洞等级 -->
           <div class="yuanqiu">
             <div class="textwz">漏洞等级</div>
             <span class="radius">
@@ -26,6 +27,7 @@
               </div>
             </span>
           </div>
+          <!-- 关键风险资产 -->
           <div class="xqdata">
             <div class="btbox_bji">
               <div class="teshude">
@@ -182,6 +184,7 @@
           </div>
         </div>
       </div>
+      <!-- 漏洞生命周期 -->
       <div class="right wbb">
         <div class="zsbtboxdq">
           <div class="guns"></div>
@@ -200,6 +203,7 @@
   </div>
 </template>
 <script>
+import { governance_vulnsxq } from "@/api";
 export default {
   components: {
     Repair: () => import("./repair.vue"),
@@ -213,7 +217,42 @@ export default {
       typenum: "1",
     };
   },
+  mounted() {
+    this.getgovernancehostsid(); //获取详情
+  },
   methods: {
+    // 获取详情
+    getgovernancehostsid() {
+      governance_vulnsxq(this.$route.query.id).then((res) => {
+        // console.log(res);
+        // this.meta = res.meta; //风险评估
+        // this.vulns = res.vulns; //漏洞信息
+        // this.ports = res.ports; //端口信息
+        // this.graph = res.graph; //资产图谱
+        // this.related_assets = res.related_assets; //关联资产
+        // this.lifecycle = res.lifecycle; //资产生命周期
+        // this.lifecycle = [
+        //   {
+        //     timestamp: "2024-03-13T13:16:33.713Z",
+        //     user: "admin",
+        //     action: "创建XX1",
+        //     message: "发现XX",
+        //   },
+        //   {
+        //     timestamp: "2024-02-13T13:16:33.713Z",
+        //     user: "admin",
+        //     action: "创建XX2",
+        //     message: "发现XX",
+        //   },
+        //   {
+        //     timestamp: "2024-03-13T13:16:33.713Z",
+        //     user: "admin",
+        //     action: "创建XX3",
+        //     message: "发现XX",
+        //   },
+        // ];
+      });
+    },
     goto() {
       this.$router.go(-1);
     },

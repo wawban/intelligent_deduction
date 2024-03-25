@@ -1,0 +1,34 @@
+.wangfengs {
+    position: relative;
+
+    .biangeng {
+        display: none;
+        z-index: 999999;
+        position: absolute;
+        // border-radius: 5rem;
+        top: 0;
+        left: 60rem;
+        background: #2F2D2B;
+
+        >div {
+            width: 140rem;
+            text-align: center;
+            line-height: 34rem;
+            border-top: 1rem solid #473825;
+            cursor: pointer;
+        }
+
+        >div:hover {
+            background: #4C4A48;
+            color: #fa9600;
+        }
+
+        .hovys {
+            color: #fa9600;
+        }
+    }
+}
+
+.wangfengs:hover .biangeng {
+    display: inline-block;
+}

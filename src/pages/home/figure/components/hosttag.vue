@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     funcswi(e, id) {
-      governance_tagssitetags({ is_favorite: e }, id).then((res) => {
+      governance_tagshosttags({ is_favorite: e }, id).then((res) => {
         this.governancetagshosts();
       });
     },

@@ -280,7 +280,6 @@ export default {
     // 获取详情
     getgovernancehostsid() {
       governance_hostsid(this.$route.query.id).then((res) => {
-        console.log(res);
         this.meta = res.meta; //风险评估
         this.vulns = res.vulns; //漏洞信息
         this.ports = res.ports; //端口信息

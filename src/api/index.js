@@ -205,6 +205,20 @@ export const governance_vulns= (params) => {
         params
     })
 }
+// 数字空间治理 漏洞详情
+export function governance_vulnsxq(id) {
+    return request({
+        url: `${url}data-governance/vulns/${id}`,
+        method: 'get'
+    })
+}
+// 任务管理/推演任务 删除
+export function infer_taskssc(id) {
+    return request({
+        url: `${url}infer/tasks/${id}`,
+        method: 'delete'
+    })
+}
 // /data-governance/vulns
 // export const productInfo_getList = (params) => {
 //     return request({

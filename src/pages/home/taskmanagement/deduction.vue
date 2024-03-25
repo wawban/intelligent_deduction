@@ -11,13 +11,13 @@
           @click="gotu"
           >添加</el-button
         >
-        <el-button
+        <!-- <el-button
           class="buttonsy"
           size="mini"
           icon="el-icon-delete"
           @click="dialogVisible = true"
           >删除</el-button
-        >
+        > -->
       </div>
       <div class="zheipr">
         <div class="marginr">
@@ -210,6 +210,7 @@
                 alt=""
               />
               <img
+                @click="sconcl(scope.row.id)"
                 style="height: 22rem; cursor: pointer"
                 src="../img/sc.png"
                 alt=""
@@ -269,6 +270,7 @@
               color: #fff !important;
               border-color: #fa9600;
             "
+            @click="onscsbmin"
             >确认</el-button
           >
           <el-button
@@ -284,10 +286,11 @@
   </div>
 </template>
 <script>
-import { infer_tasks } from "@/api";
+import { infer_tasks, infer_taskssc } from "@/api";
 export default {
   data() {
     return {
+      scid: "", //删除ID
       rysy: "and", //符合条件，任一或所有
       //   查询数据
       searcharr: [],
@@ -380,6 +383,18 @@ export default {
     this.getgovernancehosts(); // 列表
   },
   methods: {
+    // 删除打开
+    sconcl(id) {
+      this.scid = id;
+      this.dialogVisible = true;
+    },
+    // 执行删除
+    onscsbmin() {
+      infer_taskssc(this.scid).then((res) => {
+        this.dialogVisible = false;
+        this.getgovernancehosts("clear");
+      });
+    },
     // 查询组件添加条件
     appendtj() {
       this.searcharr.push({ key: "", value: "contain", type: "" });
@@ -417,6 +432,10 @@ export default {
           item.yxms = item.schedule.timing_mode;
           item.qdian = item.task_targets.tail.cidrs;
           item.zdian = item.task_targets.head.cidrs;
+          item.time_created = this.$moment(item.time_created).format(
+            "YYYY-MM-DD HH:mm:ss"
+          );
+
           return item;
         });
         // alert(this.tableData[0].name);

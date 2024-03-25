@@ -2,12 +2,18 @@
 <template>
   <div class="home">
     <el-container style="min-height: 100%">
-      <el-aside style="width: 60rem; background: #242322; min-height: 100%">
+      <el-aside
+        style="
+          width: 60rem;
+          background: #242322;
+          min-height: 100%;
+          overflow: inherit;
+        "
+      >
         <div class="asideleft">
           <div class="toplog">
             <img src="../img/logo.png" alt="" />
           </div>
-
           <div>
             <!-- 仪表盘 -->
             <div
@@ -18,44 +24,44 @@
               <img v-else src="./img/yf.png" alt="" />
             </div>
             <!-- 数字空间治理 -->
-            <div class="duixuanxji">
-              <el-popover placement="right" trigger="hover">
-                <div class="fuxuansju">
-                  <div
-                    :class="name == '主机资产' ? 'hovys' : ''"
-                    @click="gotu('/figure/hostmachine')"
-                  >
-                    主机资产
-                  </div>
-                  <div
-                    :class="name == '网站资产' ? 'hovys' : ''"
-                    @click="gotu('/figure/website')"
-                  >
-                    网站资产
-                  </div>
-                  <div
-                    :class="name == '漏洞治理' ? 'hovys' : ''"
-                    @click="gotu('/figure/vulnevrabilitymanagement')"
-                  >
-                    漏洞治理
-                  </div>
-                  <div
-                  :class="name == '处置工单' ? 'hovys' : ''"
-                    @click="gotu('/figure/disposalworkorder')"
-                  >处置工单</div>
-                  <div
-                  :class="name == '标签管理' ? 'hovys' : ''"
-                    @click="gotu('/figure/labellmanagement')"
-                  >标签管理</div>
+            <div class="wangfengs">
+              <div :class="type == 2 ? 'current cdlis' : 'cdlis'">
+                <img v-if="type == 2" src="./img/sk.png" alt="" />
+                <img v-else src="./img/sg.png" alt="" />
+              </div>
+              <div class="biangeng">
+                <div
+                  style="border: none"
+                  :class="name == '主机资产' ? 'hovys' : ''"
+                  @click="gotu('/figure/hostmachine')"
+                >
+                  主机资产
                 </div>
                 <div
-                  slot="reference"
-                  :class="type == 2 ? 'current cdlis' : 'cdlis'"
+                  :class="name == '网站资产' ? 'hovys' : ''"
+                  @click="gotu('/figure/website')"
                 >
-                  <img v-if="type == 2" src="./img/sk.png" alt="" />
-                  <img v-else src="./img/sg.png" alt="" />
+                  网站资产
                 </div>
-              </el-popover>
+                <div
+                  :class="name == '漏洞治理' ? 'hovys' : ''"
+                  @click="gotu('/figure/vulnevrabilitymanagement')"
+                >
+                  漏洞治理
+                </div>
+                <div
+                  :class="name == '处置工单' ? 'hovys' : ''"
+                  @click="gotu('/figure/disposalworkorder')"
+                >
+                  处置工单
+                </div>
+                <div
+                  :class="name == '标签管理' ? 'hovys' : ''"
+                  @click="gotu('/figure/labellmanagement')"
+                >
+                  标签管理
+                </div>
+              </div>
             </div>
             <!-- 任务管理 -->
             <div
@@ -66,86 +72,78 @@
               <img v-else src="./img/rwg.png" alt="" />
             </div>
             <!-- 知识库-------------------------------------------- -->
-            <div class="duixuanxji">
-              <el-popover placement="right" trigger="hover">
-                <div class="fuxuansju">
-                  <div
-                    :class="name == '漏洞知识库' ? 'hovys' : ''"
-                    @click="gotu('/knowledge/loophole')"
-                  >
-                    漏洞知识库
-                  </div>
-                  <div
-                    :class="name == '技战术知识库' ? 'hovys' : ''"
-                    @click="gotu('/knowledge/techniqueandtactics')"
-                  >
-                    技战术知识库
-                  </div>
+            <div class="wangfengs">
+              <div :class="type == 5 ? 'current cdlis' : 'cdlis'">
+                <img v-if="type == 5" src="./img/lk.png" alt="" />
+                <img v-else src="./img/lg.png" alt="" />
+              </div>
+              <div class="biangeng">
+                <div
+                  style="border: none"
+                  :class="name == '漏洞知识库' ? 'hovys' : ''"
+                  @click="gotu('/knowledge/loophole')"
+                >
+                  漏洞知识库
                 </div>
                 <div
-                  slot="reference"
-                  :class="type == 5 ? 'current cdlis' : 'cdlis'"
+                  :class="name == '技战术知识库' ? 'hovys' : ''"
+                  @click="gotu('/knowledge/techniqueandtactics')"
                 >
-                  <img v-if="type == 5" src="./img/lk.png" alt="" />
-                  <img v-else src="./img/lg.png" alt="" />
+                  技战术知识库
                 </div>
-              </el-popover>
+              </div>
             </div>
             <!-- 系统设置-------------------------------------------- -->
-            <div class="duixuanxji">
-              <el-popover placement="right" trigger="hover">
-                <div class="fuxuansju">
-                  <div
-                    :class="name == '系统概况' ? 'hovys' : ''"
-                    @click="gotu('/systemsetting/overview')"
-                  >
-                    系统概况
-                  </div>
-                  <div
-                    :class="name == '部门管理' ? 'hovys' : ''"
-                    @click="gotu('/systemsetting/departmentmanagement')"
-                  >
-                    部门管理
-                  </div>
-                  <div
-                    :class="name == '人员管理' ? 'hovys' : ''"
-                    @click="gotu('/systemsetting/personnelmanagement')"
-                  >
-                    人员管理
-                  </div>
-                  <div
-                    :class="name == '日志管理' ? 'hovys' : ''"
-                    @click="gotu('/systemsetting/logmanagement')"
-                  >
-                    日志管理
-                  </div>
-                  <div
-                    :class="name == '工具管理' ? 'hovys' : ''"
-                    @click="gotu('/systemsetting/toolmanagement')"
-                  >
-                    工具管理
-                  </div>
-                  <div
-                    :class="name == '安全性控制' ? 'hovys' : ''"
-                    @click="gotu('/systemsetting/safetycontrol')"
-                  >
-                    安全性控制
-                  </div>
-                  <div
-                    :class="name == '资产区域管理' ? 'hovys' : ''"
-                    @click="gotu('/systemsetting/assetarea')"
-                  >
-                    资产区域管理
-                  </div>
+            <div class="wangfengs">
+              <div :class="type == 7 ? 'current cdlis' : 'cdlis'">
+                <img v-if="type == 7" src="./img/szk.png" alt="" />
+                <img v-else src="./img/szg.png" alt="" />
+              </div>
+              <div class="biangeng">
+                <div
+                  style="border: none"
+                  :class="name == '系统概况' ? 'hovys' : ''"
+                  @click="gotu('/systemsetting/overview')"
+                >
+                  系统概况
                 </div>
                 <div
-                  slot="reference"
-                  :class="type == 7 ? 'current cdlis' : 'cdlis'"
+                  :class="name == '部门管理' ? 'hovys' : ''"
+                  @click="gotu('/systemsetting/departmentmanagement')"
                 >
-                  <img v-if="type == 7" src="./img/szk.png" alt="" />
-                  <img v-else src="./img/szg.png" alt="" />
+                  部门管理
                 </div>
-              </el-popover>
+                <div
+                  :class="name == '人员管理' ? 'hovys' : ''"
+                  @click="gotu('/systemsetting/personnelmanagement')"
+                >
+                  人员管理
+                </div>
+                <div
+                  :class="name == '日志管理' ? 'hovys' : ''"
+                  @click="gotu('/systemsetting/logmanagement')"
+                >
+                  日志管理
+                </div>
+                <div
+                  :class="name == '工具管理' ? 'hovys' : ''"
+                  @click="gotu('/systemsetting/toolmanagement')"
+                >
+                  工具管理
+                </div>
+                <div
+                  :class="name == '安全性控制' ? 'hovys' : ''"
+                  @click="gotu('/systemsetting/safetycontrol')"
+                >
+                  安全性控制
+                </div>
+                <div
+                  :class="name == '资产区域管理' ? 'hovys' : ''"
+                  @click="gotu('/systemsetting/assetarea')"
+                >
+                  资产区域管理
+                </div>
+              </div>
             </div>
             <!-- --------------------------------------------------------------------- -->
             <div
@@ -201,20 +199,21 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-.fuxuansju {
-  > div {
-    text-align: center;
-    cursor: pointer;
-    color: #fff;
-  }
-  > div:hover {
-    color: #fa9600;
-  }
-  .hovys {
-    color: #fa9600;
-  }
-  // background: red;
-}
+@import "./csdada.less";
+// .fuxuansju {
+//   > div {
+//     text-align: center;
+//     cursor: pointer;
+//     color: #fff;
+//   }
+//   > div:hover {
+//     color: #fa9600;
+//   }
+//   .hovys {
+//     color: #fa9600;
+//   }
+//   // background: red;
+// }
 .home {
   height: 100%;
   background: #000;
