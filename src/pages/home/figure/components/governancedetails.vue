@@ -206,7 +206,7 @@
 import { governance_vulnsxq } from "@/api";
 export default {
   components: {
-    Repair: () => import("./repair.vue"),
+    Repair: () => import("./tedsdepair.vue"),
     Attack: () => import("./attack.vue"),
     Uset: () => import("./use.vue"),
     Graph: () => import("./graph.vue"),
@@ -484,4 +484,4 @@ export default {
     }
   }
 }
-</style>
+</style>./tedsdepair.vue./tedsdepair.vue
