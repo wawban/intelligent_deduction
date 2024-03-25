@@ -119,6 +119,84 @@ export const governance_metatags = (data,id) => {
         data
     })
 }
+// 数字空间治理 网站资产 网站资产列表
+export const governance_sites = (params) => {
+    return request({
+        url: `${url}data-governance/sites`,
+        method: "get",
+        params
+    })
+}
+// 数字空间治理 网站资产 网站资产资产详情
+export const governance_sitesid = (params) => {
+    return request({
+        url: `${url}data-governance/sites/${params}`,
+        method: "get",
+    })
+}
+// 数字空间治理 网站资产 网站标签列表
+export const governance_tagssite = (params) => {
+    return request({
+        url: `${url}data-governance/tags/site-tags`,
+        method: "get",
+        params
+    })
+}
+// 数字空间治理 网站资产 网站资产添加标签
+export const governance_metatagssites = (data,id) => {
+    return request({
+        url: `${url}data-governance/sites/${id}/tags`,
+        method: "patch",
+        data
+    })
+}
+// 数字空间治理 网站资产 网站资产资产编辑
+export const governance_metasites = (data,id) => {
+    return request({
+        url: `${url}data-governance/sites/${id}/meta`,
+        method: "patch",
+        data
+    })
+}
+// 数字空间治理 标签管理 主机标签-更新
+export const governance_tagshosttags = (data,id) => {
+    return request({
+        url: `${url}data-governance/tags/host-tags/${id}`,
+        method: "patch",
+        data
+    })
+}
+// 数字空间治理 标签管理 网站标签-更新
+export const governance_tagssitetags = (data,id) => {
+    return request({
+        url: `${url}data-governance/tags/site-tags/${id}`,
+        method: "patch",
+        data
+    })
+}
+// 数字空间治理 标签管理 自定义标签-更新
+export const governance_tagscustomtags = (data,id) => {
+    return request({
+        url: `${url}data-governance/tags/custom-tags/${id}`,
+        method: "patch",
+        data
+    })
+}
+// 数字空间治理 标签管理 自定义标签-删除
+export function productInfo_remove(id) {
+    return request({
+        url: `${url}data-governance/tags/custom-tags/${id}`,
+        method: 'delete'
+    })
+}
+// 任务管理/推演任务 列表
+export const infer_tasks = (params) => {
+    return request({
+        url: `${url}infer/tasks`,
+        method: "get",
+        params
+    })
+}
 // export const productInfo_getList = (params) => {
 //     return request({
 //         url: `${url}productInfo/getList`,

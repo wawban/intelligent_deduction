@@ -206,7 +206,7 @@
 <script>
 export default {
   components: {
-    Gauge: () => import("./components/gauge.vue"),
+    // Gauge: () => import("./components/gauge.vue"),
     Zcloophole: () => import("./components/zcloophole.vue"),
     Url: () => import("./components/url.vue"),
     Graph: () => import("./components/graph.vue"),

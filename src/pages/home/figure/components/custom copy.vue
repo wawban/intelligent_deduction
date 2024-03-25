@@ -1,24 +1,17 @@
 <template>
-  <div class="deduction">
+  <div class="custom">
     <!-- 查询组件 -->
     <div class="zheestoub">
-      <!-- =============================== -->
       <div>
         <el-button
           class="buttonsy"
           size="mini"
           icon="el-icon-plus"
-          @click="gotu"
+          @click="dialogVisible = true"
           >添加</el-button
         >
-        <el-button
-          class="buttonsy"
-          size="mini"
-          icon="el-icon-delete"
-          @click="dialogVisible = true"
-          >删除</el-button
-        >
       </div>
+      <!-- ----------------------------------------------------------------------------------------------------- -->
       <div class="zheipr">
         <div class="marginr">
           <el-popover placement="bottom" trigger="hover">
@@ -31,23 +24,22 @@
               >
             </div>
             <div slot="reference" class="boxjc">
-              <img src="../img/qb.png" alt="" />
+              <img src="../../img/qb.png" alt="" />
               查看全部
             </div>
           </el-popover>
         </div>
-        <!--  -->
-        <!-- 复合查询 -->
+        <!-- --------------------------------- -->
         <div class="marginr">
           <el-popover placement="bottom" width="530" trigger="click">
             <div slot="reference" class="boxjc">
-              <img src="../img/tj.png" alt="" />
+              <img src="../../img/tj.png" alt="" />
               条件筛选
             </div>
             <div class="tjiansxian">
               <div class="top">
-                <div @click="getgovernancehosts">筛选</div>
-                <div @click="getgovernancehosts('clear')">清空</div>
+                <div>筛选</div>
+                <div @click="cleark">清空</div>
               </div>
               <div style="padding: 12rem 0; display: flex; align-items: center">
                 符合以下&nbsp;&nbsp;
@@ -58,8 +50,8 @@
                   v-model="rysy"
                   placeholder="请选择"
                 >
-                  <el-option label="任一" value="or"></el-option>
-                  <el-option label="所有" value="and"></el-option>
+                  <el-option label="任一" value="1"></el-option>
+                  <el-option label="所有" value="2"></el-option>
                 </el-select>
                 &nbsp;&nbsp;条件
               </div>
@@ -91,10 +83,10 @@
                       v-model="e.value"
                       placeholder="请选择"
                     >
-                      <el-option label="包含" value="contain"></el-option>
-                      <el-option label="不包含" value="notcontain"></el-option>
-                      <el-option label="等于" value="eq"></el-option>
-                      <el-option label="不等于" value="ne"></el-option>
+                      <el-option label="包含" value="1"></el-option>
+                      <el-option label="不包含" value="2"></el-option>
+                      <el-option label="为空" value="3"></el-option>
+                      <el-option label="不为空" value="4"></el-option>
                     </el-select>
                   </div>
                   <div>
@@ -123,7 +115,6 @@
             </div>
           </el-popover>
         </div>
-        <!--  -->
         <div class="marginr">
           <el-popover placement="bottom" width="220" trigger="hover">
             <div class="zduanpeizi">
@@ -140,13 +131,13 @@
                     <img
                       @click="fields('1', i)"
                       v-if="e.type"
-                      src="../img/yk.png"
+                      src="../../img/yk.png"
                       alt=""
                     />
                     <img
                       @click="fields('2', i)"
                       v-else
-                      src="../img/yg.png"
+                      src="../../img/yg.png"
                       alt=""
                     />
                   </div>
@@ -154,14 +145,13 @@
               </div>
             </div>
             <div slot="reference" class="boxjc">
-              <img src="../img/zd.png" alt="" />
+              <img src="../../img/zd.png" alt="" />
               字段配置
             </div>
           </el-popover>
         </div>
       </div>
     </div>
-    <!-- ================================================================================= -->
     <div>
       <!-- 表格 -->
       <el-table
@@ -183,13 +173,9 @@
           padding: '14rem 0',
         }"
       >
-        <!-- @selection-change="handleSelectionChange" -->
-        <!-- // vvs  多选2 handleSelectionChange -->
-        <!-- // vvs  多选3 -->
-        <!-- show-overflow-tooltip -->
-        <!-- <el-table-column type="selection" width="55"></el-table-column> -->
         <el-table-column
           align="center"
+          show-overflow-tooltip
           v-for="(item, index) in vararr"
           :key="index"
           :prop="item.prop"
@@ -201,17 +187,12 @@
             <div v-if="item.label == '操作'">
               <img
                 style="height: 22rem; cursor: pointer"
-                src="../img/zz.png"
+                src="../../img/bj.png"
                 alt=""
               />
               <img
                 style="height: 22rem; cursor: pointer; margin: 0 26rem"
-                src="../img/jx.png"
-                alt=""
-              />
-              <img
-                style="height: 22rem; cursor: pointer"
-                src="../img/sc.png"
+                src="../../img/sc.png"
                 alt=""
               />
             </div>
@@ -224,16 +205,16 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="page.offset"
+          :current-page="page.current"
           :page-sizes="[10, 20]"
-          :page-size="page.limit"
+          :page-size="page.size"
           layout="total, sizes, prev, pager, next, jumper"
           :total="page.total"
         >
         </el-pagination>
       </div>
     </div>
-    <!-- 删除框 -->
+    <!-- 添加\编辑 -->
     <div class="tandialog">
       <el-dialog
         :visible.sync="dialogVisible"
@@ -243,32 +224,35 @@
       >
         <div
           style="
-            color: #fa9600;
+            color: #fff;
+            text-align: center;
             font-size: 18rem;
-            font-weight: 500;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
             padding-bottom: 16rem;
-            display: flex;
-            align-items: center;
           "
         >
-          <i
-            class="el-icon-warning-outline"
-            style="font-size: 24rem; color: #fa9600; margin-right: 10rem"
-          ></i>
-          提示
+          添加
         </div>
-        <div style="font-size: 16rem; padding: 20rem 0; color: #fff">
-          确定终止\删除风险推演任务一吗？
+        <div class="formstyle" style="padding-top: 20rem">
+          <el-form
+            :model="ruleForm"
+            ref="ruleForm"
+            label-width="100rem"
+            class="demo-ruleForm"
+          >
+            <el-form-item label="标签名称：" prop="yhm">
+              <el-input
+                placeholder="请输入"
+                class="inpustyle"
+                v-model="ruleForm.name"
+                size="mini"
+                style="width: 340rem"
+              ></el-input>
+            </el-form-item>
+          </el-form>
         </div>
-        <div style="text-align: right">
-          <el-button
-            size="mini"
-            style="
-              margin-right: 30rem;
-              background: #fa9600 !important;
-              color: #fff !important;
-              border-color: #fa9600;
-            "
+        <div style="text-align: center">
+          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
             >确认</el-button
           >
           <el-button
@@ -284,23 +268,78 @@
   </div>
 </template>
 <script>
-import { infer_tasks } from "@/api";
+import { governance_tagscustom } from "@/api";
 export default {
   data() {
     return {
-      rysy: "and", //符合条件，任一或所有
-      //   查询数据
-      searcharr: [],
-      // 分页
-      page: {
-        offset: 1,
-        limit: 10,
-        total: 0,
+      // 添加表单数据
+      ruleForm: {
+        name: "",
       },
-      // ====================================
       dialogVisible: false, //添加弹窗
       // 表格数据
-      tableData: [],
+      tableData: [
+        {
+          a: "风险资产",
+          b: "12",
+          c: "2023.10.23 02:12:15",
+          d: "admin",
+        },
+        {
+          a: "风险资产",
+          b: "12",
+          c: "2023.10.23 02:12:15",
+          d: "admin",
+        },
+        {
+          a: "风险资产",
+          b: "12",
+          c: "2023.10.23 02:12:15",
+          d: "admin",
+        },
+        {
+          a: "风险资产",
+          b: "12",
+          c: "2023.10.23 02:12:15",
+          d: "admin",
+        },
+        {
+          a: "风险资产",
+          b: "12",
+          c: "2023.10.23 02:12:15",
+          d: "admin",
+        },
+        {
+          a: "风险资产",
+          b: "12",
+          c: "2023.10.23 02:12:15",
+          d: "admin",
+        },
+        {
+          a: "风险资产",
+          b: "12",
+          c: "2023.10.23 02:12:15",
+          d: "admin",
+        },
+        {
+          a: "风险资产",
+          b: "12",
+          c: "2023.10.23 02:12:15",
+          d: "admin",
+        },
+        {
+          a: "风险资产",
+          b: "12",
+          c: "2023.10.23 02:12:15",
+          d: "admin",
+        },
+        {
+          a: "风险资产",
+          b: "12",
+          c: "2023.10.23 02:12:15",
+          d: "admin",
+        },
+      ],
       // 表头数据
       btarr: [],
       // 表头改变数据
@@ -308,53 +347,44 @@ export default {
       // 表头原始数据
       tablearr: [
         {
-          prop: "name",
-          label: "任务名称",
+          prop: "a",
+          label: "标签名称",
           type: true,
         },
         {
-          prop: "task_type",
-          label: "任务类型",
+          prop: "b",
+          label: "应用资产数",
           type: true,
         },
         {
-          prop: "qdian",
-          label: "推演起点",
-          type: true,
-        },
-        {
-          prop: "zdian",
-          label: "推演终点",
-          type: true,
-        },
-        {
-          prop: "yxms",
-          label: "运行模式",
-          type: true,
-        },
-        {
-          prop: "status",
-          label: "任务状态",
-          type: true,
-        },
-        {
-          prop: "creator",
-          label: "创建人",
-          type: true,
-        },
-        {
-          prop: "time_created",
+          prop: "c",
           label: "创建时间",
           type: true,
         },
         {
+          prop: "d",
+          label: "创建人",
+          type: true,
+        },
+        {
+          prop: "h",
           label: "操作",
           type: true,
         },
       ],
+      rysy: "2", //符合条件，任一或所有
+      //   查询数据
+      searcharr: [{ key: "", value: "", type: "" }],
+      // 分页
+      page: {
+        current: 1,
+        size: 10,
+        total: 44,
+      },
     };
   },
   watch: {
+    // --------------------表格头
     btarr: {
       handler: function (val, oldVal) {
         this.vararr = this.btarr.filter((e) => {
@@ -369,70 +399,16 @@ export default {
     },
   },
   mounted() {
-    localStorage.setItem("localdeduction", "");
-    this.btarr = localStorage.getItem("localdeduction")
-      ? JSON.parse(localStorage.getItem("localdeduction"))
+    // 表格头
+    this.btarr = localStorage.getItem("localcustom")
+      ? JSON.parse(localStorage.getItem("localcustom"))
       : this.tablearr;
     this.$dragging.$on("dragged", (e) => {
       this.btarr = e.value.list;
-      localStorage.setItem("localdeduction", JSON.stringify(this.btarr));
+      localStorage.setItem("localcustom", JSON.stringify(this.btarr));
     });
-    this.getgovernancehosts(); // 列表
   },
   methods: {
-    // 查询组件添加条件
-    appendtj() {
-      this.searcharr.push({ key: "", value: "contain", type: "" });
-    },
-    // 查询组件减少条件
-    cxoff(i) {
-      this.searcharr.splice(i, 1);
-    },
-    // 列表
-    getgovernancehosts(e) {
-      // 清空条件+查询所有
-      if (e == "clear") {
-        this.searcharr = [];
-        this.page.offset = 1;
-      }
-      var obj = {
-        offset: this.page.offset,
-        limit: this.page.limit,
-      };
-      if (this.searcharr.length != 0) {
-        var arr = this.searcharr.filter((item) => {
-          return item.key.length != 0 && item.type.length != 0;
-        });
-        if (arr.length != 0) {
-          var tj = arr.map((req) => {
-            var jihe = req.key + " " + req.value + " " + (req.type || "");
-            return jihe;
-          });
-          obj.filter = tj.join(" " + this.rysy + " ");
-        }
-      }
-      infer_tasks(obj).then((res) => {
-        this.page = res.pagination;
-        this.tableData = res.results.map((item) => {
-          item.yxms = item.schedule.timing_mode;
-          item.qdian = item.task_targets.tail.cidrs;
-          item.zdian = item.task_targets.head.cidrs;
-          return item;
-        });
-        // alert(this.tableData[0].name);
-        console.log(this.tableData);
-      });
-    },
-    // 分页条数
-    handleSizeChange(e) {
-      this.page.limit = e;
-      this.getgovernancehosts();
-    },
-    // 分页页数
-    handleCurrentChange(e) {
-      this.page.offset = e;
-      this.getgovernancehosts();
-    },
     // 表格头
     fields(e, i) {
       if (e == "1") {
@@ -440,41 +416,59 @@ export default {
       } else {
         this.btarr[i].type = true;
       }
-      localStorage.setItem("localdeduction", JSON.stringify(this.btarr));
+      localStorage.setItem("localcustom", JSON.stringify(this.btarr));
     },
-    // =========================================================
-    // vvs  多选1
-    // handleSelectionChange(e) {
-    //   console.log(e);
-    // },
-    // ---------------------------跳转创建
+    // 查询组件添加条件
+    appendtj() {
+      this.searcharr.push({ key: "", value: "1", type: "" });
+    },
+    // 查询组件减少条件
+    cxoff(i) {
+      this.searcharr.splice(i, 1);
+    },
+    // 触发清空
+    cleark() {
+      this.searcharr = [{ key: "", value: "1", type: "" }];
+    },
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // ----------------------------关联查询组件上
+    // ---------------------------分页
+    handleSizeChange(val) {
+      // console.log(`每页 ${val} 条`);
+      alert(val);
+    },
+    handleCurrentChange(val) {
+      // console.log(`当前页: ${val}`);
+      alert(val);
+    },
+    // ---------------------------跳转详情
     gotu(e) {
       // console.log(e)
-      this.$router.push("/taskmanagement/addquest");
+      this.$router.push("/knowledgedetails");
     },
   },
 };
 </script>
 <style lang="less" scoped>
-.deduction {
+.custom {
   .tandialog {
     /deep/.el-dialog {
       background: none !important;
     }
     /deep/.el-dialog__header {
-      // padding: 0;
       display: none;
     }
     /deep/.el-dialog__body {
-      // background: #676767;
-      // background: rgba(103, 103, 103, 0.2);
-      background: #676767;
+      background: rgba(103, 103, 103, 0.2);
+      backdrop-filter: blur(13rem);
       border-radius: 5rem;
       border: 1rem solid;
       border-image: linear-gradient(270deg, #fb8619 0%, #fcba48 100%) 1;
     }
-    // -------------------------------------------------------
   }
+  //   padding-top: 30rem;
+  height: 720rem;
+  //   overflow: auto;
   .zheestoub {
     display: flex;
     justify-content: space-between;
