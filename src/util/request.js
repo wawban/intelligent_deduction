@@ -34,7 +34,7 @@ service.interceptors.request.use(
     if (!uuid_num || uuid_num.length ==0){
       localStorage.setItem('uuid_hc',uuid.v1())
     }
-    config.headers["access_token"] = localStorage.getItem('access_token') || ''; // 设置请求头token
+    config.headers["Authorization"] = "Bearer "+(localStorage.getItem('access_token') || ''); // 设置请求头token
     config.headers["X-Request-ID"] = localStorage.getItem('uuid_hc') || ''; // 设置uuid
     // access_token
     // const inituser = localStorage.getItem('inituser') ? JSON.parse(localStorage.getItem('inituser')) : {}

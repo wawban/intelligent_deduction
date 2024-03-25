@@ -1,29 +1,35 @@
 import request from "@/util/request";
 const url = "/"
+//驾驶舱
 
+//任务列表
+export const infer_tasks = (params) => {
+    return request({
+        url: `${url}infer/tasks`,
+        method: "get"
+    })
+}
 
+//统计数据
+export const results_summary = (params) => {
+	return request({
+		url: `${url}results/${params}/summary`,
+		method: "get"
+	})
+}
 
-// 请求失败单独做了处理，不需再做处理
+//攻击路径
+export const results_paths = (params) => {
+	return request({
+		url: `${url}results/${params}/paths`,
+		method: "get"
+	})
+}
 
-// url   --请求接口
-
-// post例子
-// export const auth_login = (data) => {
-//     return request({
-//         url: `${url}auth/login`,
-//         method: "post",
-//         data
-//     })
-// }
-
-
-
-
-// get例子
-// export const dashboard_evaluation = (params) => {
-//     return request({
-//         url: `${url}dashboard/evaluation`,
-//         method: "get",
-//         params
-//     })
-// }
+//主图数据
+export const results_graph = (params) => {
+	return request({
+		url: `${url}results/${params}/graph`,
+		method: "get"
+	})
+}

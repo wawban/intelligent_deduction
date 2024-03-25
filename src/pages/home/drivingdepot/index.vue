@@ -69,7 +69,7 @@
 	    				<div v-else>攻击路径清单</div>
 	    			</div>
 	    			<div class="path">
-	    				<div class="box">
+	    				<div :class="{box:true,nopath:path.length==0}">
 		    				<div class="item" v-for="(item,index) in path" :key="index" @mouseenter="pathEnter(item)" @mouseleave="pathLeave(item)">
 		    					<div :class="{'header':true,'open':item.open}" @click="pathSwitch(item)">
 		    						<span class="icon" :style="'border:4px '+pathColor(index)+' solid;'"></span>
@@ -98,6 +98,16 @@
 		    	</div>
 	    	</div>
 	    	<div class="layout-center" @click="centerCk">
+	    		<div :class="{'tuli':true,'show':weiguan != null}">
+	    			<div>图例</div>
+	    			<img src="../img/weiguan/5293.png"/>
+	    			<img src="../img/weiguan/5292.png"/>
+	    			<img src="../img/weiguan/5291.png"/>
+	    			<img src="../img/weiguan/5290.png"/>
+	    		</div>
+	    		<div :class="{'ttuli':true,'show':weiguan == null}">
+	    			<img src="../img/4842.png"/>
+	    		</div>
 	    		<div class="control">
 	    			<div class="switch">
 		    			<div class="item"><span class="icon" style="background:#0085FF;"></span><span class="text">业务图层</span><el-switch v-model="ywtc" active-color="#13ce66" inactive-color="#DCDFE6" disabled></el-switch></div>
@@ -126,6 +136,9 @@
     </div>
 </template>
 <script>
+import {
+  infer_tasks,results_summary,results_paths,results_graph
+} from "@/api/steer";
 import * as d3 from 'd3';
 import Raphael from 'raphael';
 import jbxx from "./jbxx.vue";
@@ -144,195 +157,226 @@ export default {
       fxtc:true,//风险图层
       showPathDetail:false,//攻击路径详情返回按钮显示
       backbigShow:false,//微观到大图按钮
-      tasklist:[{//任务列表
-      	value:1,
-      	label:'服务器推演任务一'
-      },{
-      	value:2,
-      	label:'服务器推演任务二'
-      },{
-      	value:3,
-      	label:'服务器推演任务三'
-      }],
+      tasklist:[],//任务列表
       weiguan:null,//微观图数据
       wggraps:{},//微观——根据id记录图形
       graps:{},//主图——根据id记录主机图形
       lines:{},//主图——根据title记录线
-      taskid:1,//当前任务id
+      taskid:null,//当前任务id
       taskname:'未选择任务',//当前任务名
       count:{//统计数据
-		  gjzcs: 221,//关键资产数
-	      jkzcs: 222,//健康资产数
-	      zczs: 223,//资产总数
-	      bjzcs: 224,//边界资产数
-	      zczhus: 225,//资产组数
-	      fhzcs: 226,//防护资产数
-	      score: 79.9,//综合得分
+		  gjzcs: 0,//关键资产数
+	      jkzcs: 0,//健康资产数
+	      zczs: 0,//资产总数
+	      bjzcs: 0,//边界资产数
+	      zczhus: 0,//资产组数
+	      fhzcs: 0,//防护资产数
+	      score: 0//综合得分
       },
-      path:[{//攻击路径清单
-      	open:true,
-      	detail:false,
-      	title:'最高价值路径（路径八）',
-      	node:[
-      		{id:1,ip:'192.168.3.123（起点）',desc:['内部网络','内部网络11','内部网络22'],pass:'抓取评证技术等'},
-      		{id:5,ip:'192.168.4.123(途径)',desc:['数据库服务器','数据库服务器11','数据库服务器22'],pass:'渗透测试技术等'},
-      		{id:9,ip:'192.168.5.123(途径)',desc:['邮件服务器','邮件服务器11','邮件服务器22'],pass:'注入攻击等'},
-      		{id:16,ip:'192.168.1.123(终点)',desc:['文件服务器','文件服务器111','文件服务器222']}
-      	]
-      },{
-      	open:false,
-      	detail:false,
-      	title:'最隐蔽路径（路径六）',
-      	node:[
-      		{id:3,ip:'192.168.3.125（起点）',desc:['内部网络','内部网络11','内部网络22'],pass:'抓取评证技术等'},
-      		{id:14,ip:'192.168.5.128（途径）',desc:['数据库服务器','数据库服务器11','数据库服务器22'],pass:'渗透测试技术等'},
-      		{id:8,ip:'192.168.4.126（途径）',desc:['邮件服务器','邮件服务器11','邮件服务器22'],pass:'注入攻击等'},
-      		{id:18,ip:'192.168.1.125（终点）',desc:['文件服务器','文件服务器111','文件服务器222']}
-      	]
-      },{
-      	open:false,
-      	detail:false,
-      	title:'最短路径（路径三）',
-      	node:[
-      		{id:10,ip:'192.168.5.124（起点）',desc:['内部网络','内部网络11','内部网络22'],pass:'抓取评证技术等'},
-      		{id:20,ip:'192.168.2.124（终点）',desc:['文件服务器','文件服务器111','文件服务器222']}
-      	]
-      }],
-      nodes:[{//主图数据
-      	name:'系统1',//资产组名称
-      	number:20,//资产数量
-      	depip:'192.168.0.1,192.168.0.2',//部门IP
-      	depaddr:'重庆市九龙坡区石小路177号',//部门地址
-      	fxzcs:11,//风险资产数量
-      	syxmj:'业务受影响面积xxxxxxx',//业务受影响面积
-      	yxzcz:'可能受影响资产组1',//可能受影响资产组
-      	fxhx:'风险画像aaaa',//风险画像
-      	children:[{
-      		name:'系统1-1',
-      		children:[{
-	      		name:'系统1-1-1',
-	      		number:4,
-	      		children:[{
-	      			id:1,
-	      			type:'router',
-		      		ip:'192.168.3.123'
-		      	},{
-	      			id:2,
-	      			type:'fw',
-		      		ip:'192.168.3.124'
-		      	},{
-	      			id:3,
-	      			type:'ids',
-		      		ip:'192.168.3.125'
-		      	},{
-	      			id:4,
-	      			name:'资产名',
-		      		ip:'192.168.3.126',
-		      		type:'ips',
-		      		typename:'terminal server',
-		      		os:'centos 7',
-		      		port:'80,443',
-		      		src:'来源11',
-		      		busin:'业务重要程度11',
-		      		connectivity:'是',//连通性
-		      		sdetetime:'首次探测时间xxx',
-		      		edetetime:'最后探测时间xxx',
-		      		sscantime:'首次扫描时间xxx',
-		      		escantime:'最后扫描时间xxx',
-		      		pgfz:'76.8',//评估分值
-		      		fxhx:'风险画像1111',
-		      		sgrmb:'潜在受感染目标1111',
-		      		hdqx:'已获得权限1111',
-		      		yxyw:'影响业务11111',
-		      	}]
-	      	},{
-	      		name:'系统1-1-2',
-	      		number:4,
-	      		children:[{
-	      			id:5,
-	      			type:'camera',
-		      		ip:'192.168.4.123'
-		      	},{
-	      			id:6,
-		      		ip:'192.168.4.124'
-		      	},{
-	      			id:7,
-		      		ip:'192.168.4.125'
-		      	},{
-	      			id:8,
-		      		ip:'192.168.4.126'
-		      	}]
-	      	},{
-	      		name:'系统1-1-3',
-	      		number:7,
-	      		children:[{
-	      			id:9,
-		      		ip:'192.168.5.123'
-		      	},{
-	      			id:10,
-		      		ip:'192.168.5.124'
-		      	},{
-	      			id:11,
-		      		ip:'192.168.5.125'
-		      	},{
-	      			id:12,
-		      		ip:'192.168.5.126'
-		      	},{
-	      			id:13,
-		      		ip:'192.168.5.127'
-		      	},{
-	      			id:14,
-		      		ip:'192.168.5.128'
-		      	},{
-	      			id:15,
-		      		ip:'192.168.5.129'
-		      	}]
-	      	}]
-      	},{
-      		name:'系统1-2',
-      		number:4,
-      		children:[{
-      			id:16,
-	      		ip:'192.168.1.123'
-	      	},{
-      			id:17,
-	      		ip:'192.168.1.124'
-	      	},{
-      			id:18,
-	      		ip:'192.168.1.125'
-	      	},{
-      			id:19,
-	      		ip:'192.168.1.126'
-	      	}]
-      	}]
-      },{
-      	name:'系统2',
-      	number:3,
-      	children:[{
-  			id:20,
-      		ip:'192.168.2.124'
-      	},{
-  			id:21,
-      		ip:'192.168.2.124'
-      	},{
-  			id:22,
-      		ip:'192.168.2.124'
-      	}]
-      }]
+      path:[],//攻击路径清单
+      nodes:[]//主图数据
     };
   },
   mounted() {
   	//创建综合得分pie图
   	this.createPie();
-  	//主内容区域
-  	this.drawConvas();
     //窗口改变大小重绘图形
     window.addEventListener('resize',this.drawConvas);
   },
   beforeDestroy() {
 	window.removeEventListener('resize',this.drawConvas);
   },
+  created() {
+  	this.getTaskData();
+  },
   methods: {
+  	//任务列表
+    getTaskData() {
+		infer_tasks({}).then((res) => {
+			for(var i=0;i<res.results.length;i++){
+				var obj = res.results[i];
+				this.tasklist.push({id:obj.latest_result_id,label:obj.name});
+			}
+			if(res.results.length > 0){
+				this.taskname = res.results[res.results.length-1].name;
+				this.taskid = res.results[res.results.length-1].latest_result_id;
+				this.getdata();
+			}
+		});
+    },
+  	//初始请求
+    getdata() {
+    	//统计数据
+		results_summary(this.taskid).then((res) => {
+			this.count = {
+			  gjzcs: res.count_exposures,
+		      jkzcs: res.count_healths,
+		      zczs: res.count_assets,
+		      bjzcs: res.count_edges,
+		      zczhus: res.count_asset_groups,
+		      fhzcs: res.count_shields,
+		      score: res.risk_score
+	      	};
+	      	this.myChart.setOption({
+			  series: [
+			    {
+			      data:[{value:this.count.score}]
+			    }
+			  ]
+			});
+		});
+		//攻击路径
+		results_paths(this.taskid).then((res) => {
+			var path = [];
+			for(var i=0;i<res.length;i++){
+				var nodes = [];
+				for(var j=0;j<res[i].series.length;j++){
+					var obj = res[i].series[j];
+					nodes.push({
+						id:obj.node.id,
+						ip:obj.node.name,
+						desc:[obj.node.label],pass:obj.edge?obj.edge.label:null
+					});
+				}
+				path.push({
+					open:i==0,
+					detail:false,
+					title:res[i].name,
+					node:nodes
+				});
+			}
+			this.path = path;
+			/*this.path = [{
+		      	open:true,
+		      	detail:false,
+		      	title:'最高价值路径（路径八）',
+		      	node:[
+		      		{id:1,ip:'192.168.3.123（起点）',desc:['内部网络','内部网络11','内部网络22'],pass:'抓取评证技术等'},
+		      		{id:5,ip:'192.168.4.123(途径)',desc:['数据库服务器','数据库服务器11','数据库服务器22'],pass:'渗透测试技术等'},
+		      		{id:9,ip:'192.168.5.123(途径)',desc:['邮件服务器','邮件服务器11','邮件服务器22'],pass:'注入攻击等'},
+		      		{id:16,ip:'192.168.1.123(终点)',desc:['文件服务器','文件服务器111','文件服务器222']}
+		      	]
+		      },{
+		      	open:false,
+		      	detail:false,
+		      	title:'最隐蔽路径（路径六）',
+		      	node:[
+		      		{id:3,ip:'192.168.3.125（起点）',desc:['内部网络','内部网络11','内部网络22'],pass:'抓取评证技术等'},
+		      		{id:14,ip:'192.168.5.128（途径）',desc:['数据库服务器','数据库服务器11','数据库服务器22'],pass:'渗透测试技术等'},
+		      		{id:8,ip:'192.168.4.126（途径）',desc:['邮件服务器','邮件服务器11','邮件服务器22'],pass:'注入攻击等'},
+		      		{id:18,ip:'192.168.1.125（终点）',desc:['文件服务器','文件服务器111','文件服务器222']}
+		      	]
+		      }]*/
+		});
+		//主图数据
+		results_graph(this.taskid).then((res) => {
+			var nodes = [];
+			var groupEntry = {};
+			var ns = res.base_graph.nodes;
+			for(var i=0;i<ns.length;i++){
+				var node = ns[i];
+				//组装组
+				var groupNames = node.props.asset_group.fullname.split('/');
+				var groupIds = node.props.asset_group.fullpath.split('/');
+				var pArray = nodes;
+				for(var j=0;j<groupIds.length;j++){
+					var group = groupEntry[groupIds[j]];
+					if(!group){
+						group = {
+							id:groupIds[j],
+							name:groupNames[j].trim(),
+							children:[]
+						};
+						groupEntry[groupIds[j]] = group;
+						pArray.push(group);
+					}
+					pArray = group.children;
+				}
+				//资产
+				pArray.push({
+					id:node.props.asset_id,
+	      			type:node.props.type,
+		      		ip:node.props.ip
+				});
+			}
+			//如果只有一层，则提出来显示
+			this.nodes = nodes.length == 1 ? nodes[0].children : nodes;
+			this.drawConvas();
+			/*this.nodes = [{//主图数据
+		      	name:'系统1',//资产组名称
+		      	number:20,//资产数量
+		      	depip:'192.168.0.1,192.168.0.2',//部门IP
+		      	depaddr:'重庆市九龙坡区石小路177号',//部门地址
+		      	fxzcs:11,//风险资产数量
+		      	syxmj:'业务受影响面积xxxxxxx',//业务受影响面积
+		      	yxzcz:'可能受影响资产组1',//可能受影响资产组
+		      	fxhx:'风险画像aaaa',//风险画像
+		      	children:[{
+		      		name:'系统1-1',
+		      		children:[{
+			      		name:'系统1-1-1',
+			      		number:4,
+			      		children:[{
+			      			id:1,
+			      			type:'router',
+				      		ip:'192.168.3.123'
+				      	},{
+			      			id:4,
+			      			name:'资产名',
+				      		ip:'192.168.3.126',
+				      		type:'ips',
+				      		typename:'terminal server',
+				      		os:'centos 7',
+				      		port:'80,443',
+				      		src:'来源11',
+				      		busin:'业务重要程度11',
+				      		connectivity:'是',//连通性
+				      		sdetetime:'首次探测时间xxx',
+				      		edetetime:'最后探测时间xxx',
+				      		sscantime:'首次扫描时间xxx',
+				      		escantime:'最后扫描时间xxx',
+				      		pgfz:'76.8',//评估分值
+				      		fxhx:'风险画像1111',
+				      		sgrmb:'潜在受感染目标1111',
+				      		hdqx:'已获得权限1111',
+				      		yxyw:'影响业务11111',
+				      	}]
+			      	},{
+			      		name:'系统1-1-2',
+			      		number:4,
+			      		children:[{
+			      			id:5,
+			      			type:'camera',
+				      		ip:'192.168.4.123'
+				      	},{
+			      			id:6,
+				      		ip:'192.168.4.124'
+				      	}]
+			      	},{
+			      		name:'系统1-1-3',
+			      		number:7,
+			      		children:[{
+			      			id:9,
+				      		ip:'192.168.5.123'
+				      	},{
+			      			id:10,
+				      		ip:'192.168.5.124'
+				      	}]
+			      	}]
+		      	},{
+		      		name:'系统1-2',
+		      		number:4,
+		      		children:[{
+		      			id:16,
+			      		ip:'192.168.1.123'
+			      	},{
+		      			id:17,
+			      		ip:'192.168.1.124'
+			      	}]
+		      	}]
+		      }]*/
+		});
+    },
   	drawConvas(){
   		var canvasDiv = document.getElementById('canvas');
 	    var width = canvasDiv.clientWidth;
@@ -348,7 +392,7 @@ export default {
 	    //微观图
 	    if(this.weiguan){
 	    	var root = d3.hierarchy(this.weiguan).sum(function(d){return 1;});
-	    	var pack = d3.pack().size([width,height]).padding(5);
+	    	var pack = d3.pack().size([width,height]).padding(250);
 	    	pack(root);
 	    	if(root.data.number > 0 && root.data.number == root.children.length && root.children[0].data.ip){
 		    	this.createWeiguan([root]);
@@ -358,8 +402,8 @@ export default {
 	    }
 	    //主图
 	    else{
-		    var root = d3.hierarchy({children:this.nodes}).sum(function(d){return d.ip?1:1000;});
-		    var pack = d3.pack().size([width,height]).padding(10);
+		    var root = d3.hierarchy({children:this.nodes}).sum(function(d){return d.ip?1:10000;});
+		    var pack = d3.pack().size([width,height]).padding(200);
 		    pack(root);
 		    this.createGrap(root.children||[]);
 		    if(this.gjtc){
@@ -453,8 +497,9 @@ export default {
     },
     //切换任务
     chgtask(item){
-    	this.taskid = item.value;
+    	this.taskid = item.id;
     	this.taskname = item.label;
+    	this.getdata();
     },
     //微观返回到大图
     backbig(){
@@ -503,15 +548,17 @@ export default {
     	for(var i=0;i<this.path.length;i++){
     		var path = this.path[i];
     		var ps = this.lines[path.title];
-    		var color = i<this.colors.length?this.colors[i]:this.colors[this.colors.length-1];
-    		var startCoord = ps[0].getPointAtLength(0);
-    		var circle = paper.circle(startCoord.x,startCoord.y,8);
-			circle.attr({
-			    fill:color,
-			    'stroke-width':0
-			});
-			circle.data('index',0);
-	    	this.pathAnim(circle,ps);
+    		if(ps){
+	    		var color = i<this.colors.length?this.colors[i]:this.colors[this.colors.length-1];
+	    		var startCoord = ps[0].getPointAtLength(0);
+	    		var circle = paper.circle(startCoord.x,startCoord.y,8);
+				circle.attr({
+				    fill:color,
+				    'stroke-width':0
+				});
+				circle.data('index',0);
+		    	this.pathAnim(circle,ps);
+    		}
     	}
     },
     //重播
@@ -552,11 +599,11 @@ export default {
 				var circle;
 				//资产
 				if(data.ip){
-					circle = paper.circle(obj.x,obj.y,5);
+					circle = paper.circle(obj.x,obj.y,3);
 					circle.attr({
 					    fill:'#E9E9E9',
 					    stroke:'#E9E9E9',
-					    'stroke-width':1,
+					    'stroke-width':1
 					});
 					this.graps[data.id+''] = circle;
 					//单击
@@ -570,11 +617,24 @@ export default {
 				}
 				//组
 				else{
-					circle = paper.circle(obj.x,obj.y,obj.r);
+					//圆形组
+					//circle = paper.circle(obj.x,obj.y,obj.r);
+					
+					//n边形组
+					var points = [];
+					var n = 6;//几边形
+					for (var j = 0; j < n; j++) {
+					    var angle = (2 * Math.PI / n) * j;
+					    var x = obj.x + obj.r * Math.cos(angle);
+					    var y = obj.y + obj.r * Math.sin(angle);
+					    points.push(x, y);
+					}
+					circle = paper.path("M" + points[0] + " " + points[1] + "L" + points.join(" ") + "Z");
+					
 					circle.attr({
 					    stroke:'#E9E9E9',
 					    fill:'rgba(0, 0, 0, 0)',
-					    'stroke-width':1,
+					    'stroke-width':1.5
 					});
 					//单击
 					circle.click(function(e) {
@@ -587,7 +647,18 @@ export default {
 					//双击
 					circle.dblclick(function() {
 					    clearTimeout(clickTimer);
-					    self.weiguan = this.data('data');
+					    
+					    var wg = this.data('data');
+					    var tempFun = function(arr){
+				    		for(var i=0;i<arr.length;i++){
+				    			if(arr[i].ip){
+				    				arr[i].children = [{type:'temp'}];
+				    			}else if(arr[i].children){
+				    				tempFun(arr[i].children);
+				    			}
+				    		}
+				    	};
+					    self.weiguan = wg;//tempFun(wg);
 					    self.drawConvas();
 					   	self.backbigShow = true;
 					});
@@ -610,7 +681,7 @@ export default {
 				var circle;
 				//资产
 				if(data.ip){
-					const image = require("../img/weiguan/"+(data.type||'host')+".png");
+					const image = require("../img/weiguan/"+(['Firewall','IDS','IPS','Router','Switch'].includes(data.type)?data.type:'Host')+".png");
 					circle = paper.image(image,obj.x,obj.y,52,52);
 					this.wggraps[data.id+''] = circle;
 					//图标下方文字
@@ -634,14 +705,14 @@ export default {
 					circle.attr({
 					    stroke:'#E9E9E9',
 					    fill:'rgba(0, 0, 0, 0)',
-					    'stroke-width':1,
+					    'stroke-width':1
 					});
+					if(obj.children){
+						this.createWeiguan(obj.children);
+					}
 				}
 				//绑定数据
 				circle.data('data',data);
-			}
-			if(obj.children){
-				this.createWeiguan(obj.children);
 			}
 		}
     },
@@ -741,6 +812,7 @@ export default {
 .layout-path .title input{float:right;font-family: Source Han Sans;font-weight: 500;background:none;border:0;color:white;margin-right:10px;cursor:pointer;}
 .layout-path .path{flex-grow:1;position:relative;}
 .layout-path .path .box{position:absolute;left:0;top:0;right:0;bottom:0;overflow-y:auto;padding:5px 10px;}
+.layout-path .path .box.nopath{background:url('../img/nopath.png') no-repeat center center;}
 .layout-path .path .item{margin:5px 0;}
 .layout-path .path .header{height:36px;line-height:36px;font-family: Source Han Sans;font-size: 14px;padding:0 0 0 10px;
 	background:url('../img/down.png') no-repeat right center #292929;position:relative;
@@ -771,6 +843,14 @@ export default {
 .layout-center .control .item{margin-bottom:15px;}
 .layout-center .control .item .icon{display:inline-block;width:12px;height:12px;}
 .layout-center .control .item .text{font-size:16px;margin:0 10px;}
+/*微观图例*/
+.tuli{position:absolute;bottom:50px;left:0;z-index:1;display:none;}
+.tuli.show{display:block;}
+.tuli div{font-family:'思源黑体';font-size:16px;text-align:center;}
+.tuli img{display:block;margin-top:10px;}
+/*主图图例*/
+.ttuli{position:absolute;bottom:290px;left:0;z-index:1;display:none;}
+.ttuli.show{display:block;}
 /*返回按钮*/
 .backbig{position:absolute;background:url('../img/weiguan/back.png') no-repeat;cursor:pointer;width:65px;height:24px;top:0;right:0;}
 </style>
