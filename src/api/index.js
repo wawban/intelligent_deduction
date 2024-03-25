@@ -189,6 +189,14 @@ export function productInfo_remove(id) {
         method: 'delete'
     })
 }
+// 任务管理/推演任务 列表
+export const infer_tasks = (params) => {
+    return request({
+        url: `${url}infer/tasks`,
+        method: "get",
+        params
+    })
+}
 // export const productInfo_getList = (params) => {
 //     return request({
 //         url: `${url}productInfo/getList`,
