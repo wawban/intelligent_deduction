@@ -950,12 +950,17 @@ export default {
           justify-content: center;
           align-items: center;
           > div {
-            display: flex;
-            justify-content: center;
-            align-content: center;
-            width: 22rem;
-            height: 22rem;
+            // display: flex;
+            // justify-content: center;
+            // align-content: center;
+            // width: 22rem;
+            width: 18rem;
+            // height: 22rem;
+            line-height: 19rem;
             border: 1rem solid;
+            font-size: 12rem;
+            text-align: center;
+            font-weight: bold;
           }
           .g {
             border-color: #e53a40;

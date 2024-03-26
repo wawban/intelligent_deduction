@@ -2,7 +2,10 @@
     position: relative;
 
     .biangeng {
-        display: none;
+        z-index: -1 !important;
+        // width: 0;
+        // overflow: hidden;
+        // display: none;
         z-index: 999999;
         position: absolute;
         // border-radius: 5rem;
@@ -30,5 +33,7 @@
 }
 
 .wangfengs:hover .biangeng {
-    display: inline-block;
+    // width: 140rem;
+    z-index: 9 !important;
+    // display: block;
 }

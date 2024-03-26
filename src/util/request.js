@@ -96,11 +96,29 @@ service.interceptors.response.use(
   },
   error => {
     hideLoading();
-    Message({
-      message: "网络超时,请稍后重试",
+    // console.log(error)
+    // console.log(error.response)
+    // console.log(1111111111)
+    // const status = response.status;
+    // const data = response.data;
+    // const url = response.config.url;
+    if(error.response){
+      var data= error.response.data.error
+      Message({
+        message:data.message ||  "网络超时,请稍后重试",
+        type: 'error',
+      });
+    }else{
+      Message({
+      message:error ||  "网络超时,请稍后重试",
       type: 'error',
     });
-    return Promise.reject(error)
+    }
+    // Message({
+    //   message:error ||  "网络超时,请稍后重试",
+    //   type: 'error',error
+    // });
+    // return Promise.reject(error)
   }
 );
 // service.interceptors.response.use(

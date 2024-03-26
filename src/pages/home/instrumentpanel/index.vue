@@ -604,8 +604,14 @@ export default {
       });
     },
     // 潜在风险资产-跳转
-    gotu() {
-      this.$router.push("/figure/hostmachinedetails");
+    // gotu() {
+    //   this.$router.push("/figure/hostmachinedetails");
+    // },
+    gotu(e) {
+      this.$router.push({
+        path: "/figure/hostmachinedetails",
+        query: { id: e.id },
+      });
     },
     // 潜在攻击面
     dashboardsurface() {
