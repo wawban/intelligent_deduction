@@ -117,13 +117,13 @@ export default {
           formatter: function (e) {
             var i = e[0].dataIndex;
             return (
-              "<div style='font-size: 12rem; font-weight: normal; color: #000000'>" +
+              "<div style='font-size: 12px; font-weight: normal; color: #000000'>" +
               arr[i] +
               "</div>" +
-              "<div style='display: flex;align-items: flex-end;padding-top:10rem'>" +
-              "<div style='font-size: 14rem;font-weight: 500;color: #000000;margin-right: 10rem;'>隐蔽问题数</div>" +
-              "<div style='font-size: 16rem;font-weight: 500;color: #000000;'>" +
-              // "<div style='font-size: 0.14rem;font-weight: 500;color: #000000;'>" +
+              "<div style='display: flex;align-items: flex-end;padding-top:10px'>" +
+              "<div style='font-size: 14px;font-weight: 500;color: #000000;margin-right: 10px;'>隐蔽问题数</div>" +
+              "<div style='font-size: 16px;font-weight: 500;color: #000000;'>" +
+              // "<div style='font-size: 0.14px;font-weight: 500;color: #000000;'>" +
               e[0].data +
               "个</div>" +
               "</div>"

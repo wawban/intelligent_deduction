@@ -126,15 +126,15 @@ export default {
   height: 100%;
   position: relative;
   .top {
-    padding: 38rem 0 0 46rem;
+    padding: 38px 0 0 46px;
     display: flex;
     align-items: center;
     > img {
-      height: 40rem;
-      margin-right: 15rem;
+      height: 40px;
+      margin-right: 15px;
     }
     > div {
-      font-size: 26rem;
+      font-size: 26px;
       font-weight: bold;
       color: #fff;
     }
@@ -149,44 +149,44 @@ export default {
     align-items: center;
     justify-content: flex-end;
     > div {
-      width: 362rem;
+      width: 362px;
       background: rgba(255, 255, 255, 0.12);
-      border-radius: 10rem;
-      margin-right: 224rem;
-      padding: 55rem 43rem 74rem;
+      border-radius: 10px;
+      margin-right: 224px;
+      padding: 55px 43px 74px;
       .title {
         display: inline-block;
         .name {
-          font-size: 26rem;
+          font-size: 26px;
           font-weight: bold;
           color: #fff;
         }
         .border {
-          height: 4rem;
+          height: 4px;
           background: #fa9600;
-          margin-top: 2rem;
-          border-radius: 1rem;
+          margin-top: 2px;
+          border-radius: 1px;
         }
       }
       .form {
-        padding-top: 55rem;
+        padding-top: 55px;
       }
       .wj {
         color: #aaa;
-        font-size: 12rem;
+        font-size: 12px;
         font-weight: 350;
         text-align: right;
         cursor: pointer;
       }
       .funcdl {
-        line-height: 40rem;
+        line-height: 40px;
         background: #fb8619;
         text-align: center;
         cursor: pointer;
-        border-radius: 4rem;
-        font-size: 18rem;
+        border-radius: 4px;
+        font-size: 18px;
         font-weight: normal;
-        margin-top: 23rem;
+        margin-top: 23px;
         color: #000;
       }
     }

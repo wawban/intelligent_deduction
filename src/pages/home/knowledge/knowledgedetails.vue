@@ -11,7 +11,7 @@
         <div class="yys">漏洞知识详情</div>
       </div>
       <div class="fanh" @click="goto">
-        <img src="../img/fh.png" alt="">返回
+        <img src="../img/fh.png" alt="" />返回
       </div>
     </div>
     <!-- 主体 -->
@@ -29,29 +29,27 @@
               <div class="textwenz">
                 <div>
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">
-                      CVE编号:
-                    </div>
+                    <div style="color: #aaa; padding-right: 10px">CVE编号:</div>
                     <div>CVE-2023-48049</div>
                   </div>
 
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">
+                    <div style="color: #aaa; padding-right: 10px">
                       CNNVD编号:
                     </div>
                     <div>CNNVD-202312-1496</div>
                   </div>
                 </div>
-                <div style="padding-top: 14rem">
+                <div style="padding-top: 14px">
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">
+                    <div style="color: #aaa; padding-right: 10px">
                       漏洞类型:
                     </div>
                     <div>关键资源的不正确权限授予</div>
                   </div>
 
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">
+                    <div style="color: #aaa; padding-right: 10px">
                       发布日期:
                     </div>
                     <div>2023-12-15</div>
@@ -67,31 +65,31 @@
               <div class="textwenz">
                 <div>
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">
+                    <div style="color: #aaa; padding-right: 10px">
                       操作系统:
                     </div>
                     <div>xxx</div>
                   </div>
 
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">厂商:</div>
+                    <div style="color: #aaa; padding-right: 10px">厂商:</div>
                     <div>xxx</div>
                   </div>
                 </div>
-                <div style="padding-top: 14rem">
+                <div style="padding-top: 14px">
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">产品:</div>
+                    <div style="color: #aaa; padding-right: 10px">产品:</div>
                     <div>xxx</div>
                   </div>
 
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">应用:</div>
+                    <div style="color: #aaa; padding-right: 10px">应用:</div>
                     <div>xxx</div>
                   </div>
                 </div>
-                <div style="padding-top: 14rem">
+                <div style="padding-top: 14px">
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">版本:</div>
+                    <div style="color: #aaa; padding-right: 10px">版本:</div>
                     <div>xxx</div>
                   </div>
                 </div>
@@ -134,11 +132,11 @@
               </div>
               <div class="laiyaunxd">
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">来源:</div>
+                  <div style="color: #aaa; padding-right: 10px">来源:</div>
                   <div>nvd.nist.gov</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">链接:</div>
+                  <div style="color: #aaa; padding-right: 10px">链接:</div>
                   <a href="">https://nvd.nist.gov/vuln/detail/CVE-2023-48049</a>
                   <!-- <div>CVE-2023-48049</div> -->
                 </div>
@@ -148,7 +146,7 @@
                 <i class="el-icon-caret-right"></i>官方补丁
                 <div></div>
               </div>
-              <div style="padding: 20rem 0">
+              <div style="padding: 20px 0">
                 <a href="" style="color: #02a7f0"
                   >https://nvd.nist.gov/vuln/detail/CVE-2023-48049</a
                 >
@@ -271,14 +269,14 @@ export default {
   components: {
     Graph: () => import("@/components/graph"),
   },
-  methods:{
-    goto(){
-        this.$router.go(-1)
+  methods: {
+    goto() {
+      this.$router.go(-1);
     },
     // tz(){
     //   this.$router.push("/defensivetechniquesandtactics");
     // }
-  }
+  },
 };
 </script>
 <style lang="less" scoped>

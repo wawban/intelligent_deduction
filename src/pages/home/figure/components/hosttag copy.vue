@@ -201,18 +201,18 @@ export default {
 </script>
 <style lang="less" scoped>
 .hosttag {
-  padding-top: 30rem;
-  height: 720rem;
+  padding-top: 30px;
+  height: 720px;
   overflow: auto;
   > div {
     tr {
       td {
-        line-height: 39rem;
+        line-height: 39px;
         text-align: center;
-        font-size: 16rem;
+        font-size: 16px;
         .huandk {
           /deep/.el-switch__core {
-            border: 1rem solid #aaaaaa !important;
+            border: 1px solid #aaaaaa !important;
           }
         }
       }

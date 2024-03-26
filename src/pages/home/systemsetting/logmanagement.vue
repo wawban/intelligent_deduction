@@ -13,7 +13,7 @@
         <div class="guns"></div>
         <div class="wenz">日志管理</div>
       </div>
-      <div style="padding-top: 30rem">
+      <div style="padding-top: 30px">
         <!-- 表格 -->
         <el-table
           class="tablebottom"
@@ -23,15 +23,15 @@
             backgroundColor: '#292929',
             color: '#fff',
             borderColor: '#292929',
-            fontSize: '14rem',
-            padding: '16rem 0',
+            fontSize: '14px',
+            padding: '16px 0',
           }"
           :cell-style="{
             borderColor: 'rgba(255, 255, 255, 0.3)',
             backgroundColor: '#161616',
             color: '#fff',
-            fontSize: '14rem',
-            padding: '16rem 0',
+            fontSize: '14px',
+            padding: '16px 0',
           }"
         >
           <el-table-column
@@ -48,13 +48,13 @@
               <div v-if="item.label == '操作'">
                 <img
                   @click="gotu(scope.row)"
-                  style="height: 22rem; cursor: pointer"
+                  style="height: 22px; cursor: pointer"
                   src="../img/cx.png"
                   alt=""
                 />
                 <img
                   @click="drawer = true"
-                  style="height: 22rem; cursor: pointer"
+                  style="height: 22px; cursor: pointer"
                   src="../img/bj.png"
                   alt=""
                 />
@@ -213,8 +213,8 @@ export default {
   <style lang="less" scoped>
 .logmanagement {
   .rizbox {
-    height: 809rem;
-    padding: 20rem 30rem;
+    height: 809px;
+    padding: 20px 30px;
   }
 }
 </style>

@@ -35,7 +35,7 @@
             <el-form
               :rules="rules"
               :model="ruleForm"
-              label-width="100rem"
+              label-width="100px"
               class="demo-ruleForm"
               ref="rwjicin"
             >
@@ -51,7 +51,7 @@
                   class="inpustyle"
                   v-model="ruleForm.name"
                   size="mini"
-                  style="width: 630rem"
+                  style="width: 630px"
                 ></el-input>
               </el-form-item>
               <el-form-item label="任务描述：" prop="description">
@@ -61,7 +61,7 @@
                   class="inputtextarea"
                   v-model="ruleForm.description"
                   size="mini"
-                  style="width: 630rem"
+                  style="width: 630px"
                 ></el-input>
               </el-form-item>
               <el-form-item label="运行模式：" prop="timing_mode">
@@ -77,7 +77,7 @@
           <div class="formstyle">
             <el-form
               :model="ruleForm"
-              label-width="120rem"
+              label-width="120px"
               class="demo-ruleForm"
             >
               <el-form-item label="推演目标：" prop="target_type">
@@ -93,7 +93,7 @@
                     type="textarea"
                     class="inputtextarea"
                     size="mini"
-                    style="width: 630rem"
+                    style="width: 630px"
                     :autosize="{ minRows: 6, maxRows: 6 }"
                   ></el-input>
                 </el-form-item>
@@ -103,7 +103,7 @@
                     type="textarea"
                     class="inputtextarea"
                     size="mini"
-                    style="width: 630rem"
+                    style="width: 630px"
                     :autosize="{ minRows: 6, maxRows: 6 }"
                   ></el-input>
                 </el-form-item>
@@ -113,26 +113,26 @@
                     type="textarea"
                     class="inputtextarea"
                     size="mini"
-                    style="width: 630rem"
+                    style="width: 630px"
                     :autosize="{ minRows: 6, maxRows: 6 }"
                   ></el-input>
                 </el-form-item>
               </div>
               <div v-else class="teshu">
                 <div>
-                  <div style="color: #aaa; font-size: 14rem">
+                  <div style="color: #aaa; font-size: 14px">
                     选择起始资产组：
                   </div>
                   <div style="display: flex; align-items: center">
                     <div class="treestyle gdstyle">
                       <Treemu :datatree="zczdata" />
                     </div>
-                    <div style="padding: 0 24rem">
+                    <div style="padding: 0 24px">
                       <i
                         class="el-icon-d-arrow-right"
                         style="
                           color: #fa9600;
-                          font-size: 28rem;
+                          font-size: 28px;
                           cursor: pointer;
                           font-weight: bolder;
                         "
@@ -141,12 +141,12 @@
                     <div class="treestyle gdstyle">
                       <!-- <Treemu :datatree="zczdata" /> -->
                     </div>
-                    <div style="padding-left: 41rem">
+                    <div style="padding-left: 41px">
                       <el-radio-group class="dxradio" v-model="xxx">
                         <div>
                           <el-radio label="1">外界资产优先</el-radio>
                         </div>
-                        <div style="padding: 38rem 0">
+                        <div style="padding: 38px 0">
                           <el-radio label="2">外联资产优先</el-radio>
                         </div>
                         <div>
@@ -164,7 +164,7 @@
           <div class="formstyle">
             <el-form
               :model="ruleForm"
-              label-width="100rem"
+              label-width="100px"
               class="demo-ruleForm"
             >
               <el-form-item label="推演算法：" prop="radio">
@@ -173,7 +173,7 @@
                   size="mini"
                   v-model="ruleForm.bqmc"
                   placeholder="请选择"
-                  style="width: 340rem"
+                  style="width: 340px"
                   filterable
                   multiple
                 >
@@ -312,24 +312,24 @@ export default {
 <style lang="less" scoped>
 .addquest {
   .box {
-    width: 1824rem;
-    height: 809rem;
-    padding: 20rem 30rem;
+    width: 1824px;
+    height: 809px;
+    padding: 20px 30px;
     .zhengti {
-      padding-top: 40rem;
+      padding-top: 40px;
       display: flex;
       > div {
-        width: 576rem;
-        height: 42rem;
+        width: 576px;
+        height: 42px;
         display: flex;
         align-items: center;
         .xhuhao {
-          padding-left: 43rem;
+          padding-left: 43px;
           font-size: 30px;
           font-weight: 900;
         }
         .textr {
-          padding-left: 140rem;
+          padding-left: 140px;
           font-size: 18px;
           font-weight: bold;
         }
@@ -360,9 +360,9 @@ export default {
       //   }
     }
     .jducontainer {
-      padding-top: 40rem;
+      padding-top: 40px;
       // background: red;
-      height: 620rem;
+      height: 620px;
       position: relative;
       .bottbot {
         position: absolute;
@@ -370,7 +370,7 @@ export default {
         width: 100%;
         text-align: center;
         button {
-          margin: 0 20rem;
+          margin: 0 20px;
         }
         // 按钮样式
         .tsbuttonsy {
@@ -383,8 +383,8 @@ export default {
         > div {
           display: flex;
           .treestyle {
-            width: 318rem;
-            height: 140rem;
+            width: 318px;
+            height: 140px;
             overflow: auto;
             border: 1px solid #aaaaaa;
           }

@@ -49,12 +49,12 @@
                 <div @click="getgovernancehosts">筛选</div>
                 <div @click="getgovernancehosts('clear')">清空</div>
               </div>
-              <div style="padding: 12rem 0; display: flex; align-items: center">
+              <div style="padding: 12px 0; display: flex; align-items: center">
                 符合以下&nbsp;&nbsp;
                 <el-select
                   class="zhessless"
                   size="mini"
-                  style="width: 74rem"
+                  style="width: 74px"
                   v-model="rysy"
                   placeholder="请选择"
                 >
@@ -71,7 +71,7 @@
                       size="mini"
                       v-model="e.key"
                       filterable
-                      style="width: 180rem"
+                      style="width: 180px"
                       placeholder="请选择"
                     >
                       <el-option
@@ -87,7 +87,7 @@
                     <el-select
                       class="zhessless"
                       size="mini"
-                      style="width: 88rem"
+                      style="width: 88px"
                       v-model="e.value"
                       placeholder="请选择"
                     >
@@ -103,10 +103,10 @@
                       class="inpustyle"
                       v-model="e.type"
                       size="mini"
-                      style="width: 180rem"
+                      style="width: 180px"
                     ></el-input>
                   </div>
-                  <div style="width: 20rem">
+                  <div style="width: 20px">
                     <i
                       @click="cxoff(i)"
                       class="el-icon-close"
@@ -114,7 +114,7 @@
                     ></i>
                   </div>
                 </div>
-                <div style="padding-top: 20rem">
+                <div style="padding-top: 20px">
                   <el-button class="buttonsy" @click="appendtj" size="mini"
                     >添加条件</el-button
                   >
@@ -172,15 +172,15 @@
           backgroundColor: '#292929',
           color: '#fff',
           borderColor: '#292929',
-          fontSize: '14rem',
-          padding: '14rem 0',
+          fontSize: '14px',
+          padding: '14px 0',
         }"
         :cell-style="{
           borderColor: 'rgba(255, 255, 255, 0.3)',
           backgroundColor: '#161616',
           color: '#fff',
-          fontSize: '14rem',
-          padding: '14rem 0',
+          fontSize: '14px',
+          padding: '14px 0',
         }"
       >
         <!-- @selection-change="handleSelectionChange" -->
@@ -200,18 +200,18 @@
             <!-- 操作 -->
             <div v-if="item.label == '操作'">
               <img
-                style="height: 22rem; cursor: pointer"
+                style="height: 22px; cursor: pointer"
                 src="../img/zz.png"
                 alt=""
               />
               <img
-                style="height: 22rem; cursor: pointer; margin: 0 26rem"
+                style="height: 22px; cursor: pointer; margin: 0 26px"
                 src="../img/jx.png"
                 alt=""
               />
               <img
                 @click="sconcl(scope.row.id)"
-                style="height: 22rem; cursor: pointer"
+                style="height: 22px; cursor: pointer"
                 src="../img/sc.png"
                 alt=""
               />
@@ -238,34 +238,34 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="dialogVisible"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
         <div
           style="
             color: #fa9600;
-            font-size: 18rem;
+            font-size: 18px;
             font-weight: 500;
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
             display: flex;
             align-items: center;
           "
         >
           <i
             class="el-icon-warning-outline"
-            style="font-size: 24rem; color: #fa9600; margin-right: 10rem"
+            style="font-size: 24px; color: #fa9600; margin-right: 10px"
           ></i>
           提示
         </div>
-        <div style="font-size: 16rem; padding: 20rem 0; color: #fff">
+        <div style="font-size: 16px; padding: 20px 0; color: #fff">
           确定终止\删除风险推演任务一吗？
         </div>
         <div style="text-align: right">
           <el-button
             size="mini"
             style="
-              margin-right: 30rem;
+              margin-right: 30px;
               background: #fa9600 !important;
               color: #fff !important;
               border-color: #fa9600;
@@ -276,7 +276,7 @@
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="dialogVisible = false"
             >取消</el-button
           >
@@ -488,8 +488,8 @@ export default {
       // background: #676767;
       // background: rgba(103, 103, 103, 0.2);
       background: #676767;
-      border-radius: 5rem;
-      border: 1rem solid;
+      border-radius: 5px;
+      border: 1px solid;
       border-image: linear-gradient(270deg, #fb8619 0%, #fcba48 100%) 1;
     }
     // -------------------------------------------------------

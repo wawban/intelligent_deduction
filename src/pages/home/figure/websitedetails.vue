@@ -88,19 +88,19 @@
             <div class="lidlbi">
               <div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">资产名称:</div>
+                  <div style="color: #aaa; padding-right: 10px">资产名称:</div>
                   <div>{{ meta.name }}</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">网站IP:</div>
+                  <div style="color: #aaa; padding-right: 10px">网站IP:</div>
                   <div>{{ meta.ip }}</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">端口:</div>
+                  <div style="color: #aaa; padding-right: 10px">端口:</div>
                   <div>{{ meta.port }}</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">资产状态:</div>
+                  <div style="color: #aaa; padding-right: 10px">资产状态:</div>
                   <div>
                     {{
                       meta.state == 0 ? "不存活" : meta.state == 1 ? "存活" : ""
@@ -108,7 +108,7 @@
                   </div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">内外网:</div>
+                  <div style="color: #aaa; padding-right: 10px">内外网:</div>
                   <div>
                     {{
                       meta.intranet == 0
@@ -122,29 +122,29 @@
                   </div>
                 </div>
               </div>
-              <div style="padding: 8rem 0">
+              <div style="padding: 8px 0">
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">操作系统:</div>
+                  <div style="color: #aaa; padding-right: 10px">操作系统:</div>
                   <div>{{ meta.os }}</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">资产价值:</div>
+                  <div style="color: #aaa; padding-right: 10px">资产价值:</div>
                   <div>{{ meta.value }}</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">
+                  <div style="color: #aaa; padding-right: 10px">
                     所属资产组:
                   </div>
                   <div>{{ meta.asset_group.name }}</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">数据来源:</div>
+                  <div style="color: #aaa; padding-right: 10px">数据来源:</div>
                   <div>{{ meta.source }}</div>
                 </div>
               </div>
               <div>
                 <div style="width: 100%">
-                  <div style="color: #aaa; padding-right: 10rem">位置信息:</div>
+                  <div style="color: #aaa; padding-right: 10px">位置信息:</div>
                   <div>{{ meta.location }}</div>
                 </div>
               </div>
@@ -155,21 +155,19 @@
                 <div>{{ meta.fingerprint.description }}</div>
               </div>
               <div>
-                <div style="color: #aaa; padding-right: 10rem">应用:</div>
+                <div style="color: #aaa; padding-right: 10px">应用:</div>
                 <div>{{ meta.fingerprint.application }}</div>
               </div>
               <div>
-                <div style="color: #aaa; padding-right: 10rem">开发语言:</div>
+                <div style="color: #aaa; padding-right: 10px">开发语言:</div>
                 <div>{{ meta.fingerprint.programming_language }}</div>
               </div>
               <div>
-                <div style="color: #aaa; padding-right: 10rem">开发框架:</div>
+                <div style="color: #aaa; padding-right: 10px">开发框架:</div>
                 <div>{{ meta.fingerprint.framework }}</div>
               </div>
               <div>
-                <div style="color: #aaa; padding-right: 10rem">
-                  WAF/CND类型:
-                </div>
+                <div style="color: #aaa; padding-right: 10px">WAF/CND类型:</div>
                 <div>{{ meta.fingerprint.waf }}/{{ meta.fingerprint.cdn }}</div>
               </div>
             </div>
@@ -216,7 +214,7 @@
               >
                 关联资产
               </div>
-              <div style="width: 40rem"></div>
+              <div style="width: 40px"></div>
               <!-- <div class="zsyuanq" style="background: #aaaaaa">0</div> -->
               <div class="zsyuanq">
                 {{ related_assets.length }}
@@ -229,10 +227,7 @@
             <!-- URL信息 -->
             <Url v-if="typenum == '2'" :urls="urls" />
             <!-- 资产图谱 -->
-            <div
-              v-if="typenum == '3'"
-              style="height: 460rem; padding-top: 20rem"
-            >
+            <div v-if="typenum == '3'" style="height: 460px; padding-top: 20px">
               <Graph :datasj="graph" />
             </div>
             <!-- 关联资产 -->

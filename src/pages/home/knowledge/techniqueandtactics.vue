@@ -75,35 +75,35 @@ export default {
 <style lang="less" scoped>
 .techniqueandtactics {
   .tbox {
-    width: 1824rem;
-    height: 809rem;
-    padding: 20rem 30rem;
+    width: 1824px;
+    height: 809px;
+    padding: 20px 30px;
   }
   .ttop {
     display: flex;
     justify-content: space-between;
     align-content: center;
-    padding-bottom: 20rem;
+    padding-bottom: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     .tabla {
       display: flex;
       align-items: center;
       .dian {
-        font-size: 18rem;
+        font-size: 18px;
         cursor: pointer;
       }
       .xian {
-        height: 14rem;
-        width: 1rem;
+        height: 14px;
+        width: 1px;
         background: #d8d8d8;
-        margin: 0 28rem;
+        margin: 0 28px;
       }
       .dian:hover {
         color: #fa9600;
       }
       .styxian {
         color: #fa9600;
-        border-bottom: 3rem solid #fa9600;
+        border-bottom: 3px solid #fa9600;
       }
     }
     .yousyib {
@@ -112,12 +112,12 @@ export default {
       .sttetx {
         font-size: 16px;
         font-weight: normal;
-        padding-right: 33rem;
-        padding-left: 8rem;
+        padding-right: 33px;
+        padding-left: 8px;
       }
       .huandk {
         /deep/.el-switch__core {
-          border: 1rem solid #aaaaaa !important;
+          border: 1px solid #aaaaaa !important;
         }
       }
     }

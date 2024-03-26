@@ -41,12 +41,12 @@
                 <div @click="getgovernancehosts">筛选</div>
                 <div @click="getgovernancehosts('clear')">清空</div>
               </div>
-              <div style="padding: 12rem 0; display: flex; align-items: center">
+              <div style="padding: 12px 0; display: flex; align-items: center">
                 符合以下&nbsp;&nbsp;
                 <el-select
                   class="zhessless"
                   size="mini"
-                  style="width: 74rem"
+                  style="width: 74px"
                   v-model="rysy"
                   placeholder="请选择"
                 >
@@ -63,7 +63,7 @@
                       size="mini"
                       v-model="e.key"
                       filterable
-                      style="width: 180rem"
+                      style="width: 180px"
                       placeholder="请选择"
                     >
                       <el-option
@@ -79,7 +79,7 @@
                     <el-select
                       class="zhessless"
                       size="mini"
-                      style="width: 88rem"
+                      style="width: 88px"
                       v-model="e.value"
                       placeholder="请选择"
                     >
@@ -97,10 +97,10 @@
                       class="inpustyle"
                       v-model="e.type"
                       size="mini"
-                      style="width: 180rem"
+                      style="width: 180px"
                     ></el-input>
                   </div>
-                  <div style="width: 20rem">
+                  <div style="width: 20px">
                     <i
                       @click="cxoff(i)"
                       class="el-icon-close"
@@ -108,7 +108,7 @@
                     ></i>
                   </div>
                 </div>
-                <div style="padding-top: 20rem">
+                <div style="padding-top: 20px">
                   <el-button class="buttonsy" @click="appendtj" size="mini"
                     >添加条件</el-button
                   >
@@ -164,15 +164,15 @@
           backgroundColor: '#292929',
           color: '#fff',
           borderColor: '#292929',
-          fontSize: '14rem',
-          padding: '15rem 0',
+          fontSize: '14px',
+          padding: '15px 0',
         }"
         :cell-style="{
           borderColor: 'rgba(255, 255, 255, 0.3)',
           backgroundColor: '#161616',
           color: '#fff',
-          fontSize: '14rem',
-          padding: '15rem 0',
+          fontSize: '14px',
+          padding: '15px 0',
         }"
       >
         <el-table-column
@@ -230,13 +230,13 @@
             <div v-else-if="item.label == '操作'">
               <img
                 @click="gotu(scope.row)"
-                style="height: 22rem; cursor: pointer"
+                style="height: 22px; cursor: pointer"
                 src="../../img/cx.png"
                 alt=""
               />
               <img
                 @click="flagbj = true"
-                style="height: 22rem; cursor: pointer"
+                style="height: 22px; cursor: pointer"
                 src="../../img/bjj.png"
                 alt=""
               />
@@ -264,7 +264,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="dialogVisible"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -272,19 +272,19 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           创建工单
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="110rem"
+            label-width="110px"
             class="demo-ruleForm"
           >
             <el-form-item label="漏洞负责人：" prop="ld">
@@ -293,7 +293,7 @@
                 size="mini"
                 v-model="ruleForm.ld"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="管理员" value="1"> </el-option>
                 <el-option label="xxx" value="2"> </el-option>
@@ -305,7 +305,7 @@
                 size="mini"
                 v-model="ruleForm.fp"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="管理员" value="1"> </el-option>
                 <el-option label="xxx" value="2"> </el-option>
@@ -317,7 +317,7 @@
                 size="mini"
                 v-model="ruleForm.jz"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="管理员" value="1"> </el-option>
                 <el-option label="xxx" value="2"> </el-option>
@@ -330,19 +330,19 @@
                 class="inputtextarea"
                 v-model="ruleForm.gd"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button class="buttonsy" size="mini" style="margin-right: 30px"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="dialogVisible = false"
             >取消</el-button
           >
@@ -573,22 +573,22 @@ export default {
     /deep/.el-dialog__body {
       // background: #676767;
       background: rgba(103, 103, 103, 0.2);
-      backdrop-filter: blur(13rem);
+      backdrop-filter: blur(13px);
       // background: #676767;
-      border-radius: 5rem;
-      border: 1rem solid;
+      border-radius: 5px;
+      border: 1px solid;
       border-image: linear-gradient(270deg, #fb8619 0%, #fcba48 100%) 1;
     }
     // -------------------------------------------------------
     .huandk {
       /deep/.el-switch__core {
-        border: 1rem solid #aaaaaa !important;
+        border: 1px solid #aaaaaa !important;
       }
     }
   }
   // background: red;
-  border-top: 1rem solid rgba(255, 255, 255, 0.3);
-  margin-top: 16rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  margin-top: 16px;
   .zheestoub {
     display: flex;
     justify-content: space-between;

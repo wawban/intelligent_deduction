@@ -6,7 +6,7 @@
     <title>智能推演平台</title>
     <!-- --------------------------------------------------------- -->
     
-    <script>
+    <!-- <script>
       // @charset "UTF-8";@font-face{font-family:element-icons;src:url(fonts/
       // (()=>{
 
@@ -33,7 +33,7 @@
         var tid;
         var rootItem, rootStyle;
   
-        function refreshRem() {
+        function refreshpx() {
           var width = docEl.getBoundingClientRect().width;
           if (!maxWidth) {
             maxWidth = 540;
@@ -41,17 +41,17 @@
           if (width > maxWidth) {
             width = maxWidth;
           }
-          //与淘宝做法不同，直接采用简单的rem换算方法1rem=100px
-          // var rem = width * 90 / designWidth;
-          var rem = width * 90 / designWidth / 100;
+          //与淘宝做法不同，直接采用简单的px换算方法1px=100px
+          // var px = width * 90 / designWidth;
+          var px = width * 90 / designWidth / 100;
           // if (htmlWidth >= 1920) {
-          //   rem = rem * 1.33333333333
+          //   px = px * 1.33333333333
           // }
           if (htmlWidth == 1440) {
-            rem = rem / 1.33333333333
+            px = px / 1.33333333333
           }
           //兼容UC开始
-          rootStyle = "html{font-size:" + rem + 'px !important}';
+          rootStyle = "html{font-size:" + px + 'px !important}';
           rootItem = document.getElementById('rootsize') || document.createElement("style");
           if (!document.getElementById('rootsize')) {
             document.getElementsByTagName("head")[0].appendChild(rootItem);
@@ -63,19 +63,19 @@
             try { rootItem.innerHTML = rootStyle } catch (f) { rootItem.innerText = rootStyle }
           }
           //兼容UC结束
-          docEl.style.fontSize = rem + "px";
+          docEl.style.fontSize = px + "px";
         };
-        refreshRem();
+        refreshpx();
   
         win.addEventListener("resize", function () {
           clearTimeout(tid); //防止执行两次
-          tid = setTimeout(refreshRem, 300);
+          tid = setTimeout(refreshpx, 300);
         }, false);
   
         win.addEventListener("pageshow", function (e) {
           if (e.persisted) { // 浏览器后退的时候重新计算
             clearTimeout(tid);
-            tid = setTimeout(refreshRem, 300);
+            tid = setTimeout(refreshpx, 300);
           }
         }, false);
   
@@ -96,7 +96,7 @@
       // (1728, 1920);
         // (1296, 1440);
         // (1440, 1920);
-    </script>
+    </script> -->
     
     <link rel="shortcut icon" href="./favicon.ico">
     <!-- <link rel="shortcut icon" href="./favicon.ico"> -->

@@ -9,15 +9,15 @@
         backgroundColor: '#292929',
         color: '#fff',
         borderColor: '#292929',
-        fontSize: '14rem',
-        padding: '10rem 0',
+        fontSize: '14px',
+        padding: '10px 0',
       }"
       :cell-style="{
         borderColor: 'rgba(255, 255, 255, 0.3)',
         backgroundColor: '#161616',
         color: '#fff',
-        fontSize: '14rem',
-        padding: '14rem 0',
+        fontSize: '14px',
+        padding: '14px 0',
       }"
     >
       <el-table-column
@@ -96,6 +96,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .port {
-  padding: 20rem 30rem;
+  padding: 20px 30px;
 }
 </style>

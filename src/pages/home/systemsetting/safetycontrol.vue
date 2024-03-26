@@ -10,7 +10,7 @@
     </div>
     <div class="box">
       <div class="left wbb">
-        <div class="zsbtbox" style="padding-left: 30rem">
+        <div class="zsbtbox" style="padding-left: 30px">
           <div class="guns"></div>
           <div class="wenz">安全性控制</div>
         </div>
@@ -58,19 +58,19 @@ export default {
     display: flex;
     justify-content: space-between;
     > div {
-      height: 809rem;
+      height: 809px;
     }
     .left {
-      width: 298rem;
-      padding-top: 20rem;
+      width: 298px;
+      padding-top: 20px;
       .daohang {
-        padding-top: 18rem;
+        padding-top: 18px;
         > div {
           text-align: center;
-          line-height: 40rem;
+          line-height: 40px;
           font-size: 16px;
           font-weight: 500;
-          border-bottom: 1rem solid #292929;
+          border-bottom: 1px solid #292929;
           cursor: pointer;
         }
         .ys {
@@ -80,7 +80,7 @@ export default {
       }
     }
     .right {
-      width: 1510rem;
+      width: 1510px;
     }
   }
 }

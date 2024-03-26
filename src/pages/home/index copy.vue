@@ -2,7 +2,7 @@
 <template>
   <div class="home">
     <el-container style="min-height: 100%">
-      <el-aside style="width: 60rem; background: #242322; min-height: 100%">
+      <el-aside style="width: 60px; background: #242322; min-height: 100%">
         <div class="asideleft">
           <div class="toplog">
             <img src="../img/logo.png" alt="" />
@@ -40,13 +40,17 @@
                     漏洞治理
                   </div>
                   <div
-                  :class="name == '处置工单' ? 'hovys' : ''"
+                    :class="name == '处置工单' ? 'hovys' : ''"
                     @click="gotu('/figure/disposalworkorder')"
-                  >处置工单</div>
+                  >
+                    处置工单
+                  </div>
                   <div
-                  :class="name == '标签管理' ? 'hovys' : ''"
+                    :class="name == '标签管理' ? 'hovys' : ''"
                     @click="gotu('/figure/labellmanagement')"
-                  >标签管理</div>
+                  >
+                    标签管理
+                  </div>
                 </div>
                 <div
                   slot="reference"
@@ -159,7 +163,7 @@
         </div>
       </el-aside>
       <el-container>
-        <el-header style="height: 60rem; background: #242322">
+        <el-header style="height: 60px; background: #242322">
           <div class="headertop">
             <div>CybSeer智能推演平台</div>
             <div>
@@ -222,51 +226,51 @@ export default {
     display: flex;
     justify-content: space-between;
     > div {
-      line-height: 60rem;
+      line-height: 60px;
       color: #fff;
-      font-size: 24rem;
+      font-size: 24px;
       font-weight: bold;
       > img {
-        height: 32rem;
+        height: 32px;
       }
     }
   }
   .asideleft {
     .toplog {
-      height: 60rem;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: center;
       > img {
-        height: 38rem;
+        height: 38px;
       }
     }
     .cdlis {
-      height: 74rem;
+      height: 74px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       > img {
-        width: 40rem;
-        height: 40rem;
+        width: 40px;
+        height: 40px;
       }
     }
     .cdlis:hover {
       background: #292219;
-      box-shadow: inset 0rem 0rem 5rem 0rem #3c3c3c;
-      border-radius: 3rem;
+      box-shadow: inset 0px 0px 5px 0px #3c3c3c;
+      border-radius: 3px;
     }
     .current {
       background: #292219;
-      box-shadow: inset 0rem 0rem 5rem 0rem #3c3c3c;
-      border-radius: 3rem;
+      box-shadow: inset 0px 0px 5px 0px #3c3c3c;
+      border-radius: 3px;
     }
     // }
   }
 }
 .el-main {
-  padding: 18rem;
+  padding: 18px;
   background: #000;
 }
 </style>

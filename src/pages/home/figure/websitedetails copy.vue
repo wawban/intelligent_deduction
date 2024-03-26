@@ -53,49 +53,49 @@
             <div class="lidlbi">
               <div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">资产名称:</div>
+                  <div style="color: #aaa; padding-right: 10px">资产名称:</div>
                   <div>大数据分析平台</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">网站IP:</div>
+                  <div style="color: #aaa; padding-right: 10px">网站IP:</div>
                   <div>10.10.33.202</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">端口:</div>
+                  <div style="color: #aaa; padding-right: 10px">端口:</div>
                   <div>8080</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">资产状态:</div>
+                  <div style="color: #aaa; padding-right: 10px">资产状态:</div>
                   <div>存活</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">内外网:</div>
+                  <div style="color: #aaa; padding-right: 10px">内外网:</div>
                   <div>内网</div>
                 </div>
               </div>
               <div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">操作系统:</div>
+                  <div style="color: #aaa; padding-right: 10px">操作系统:</div>
                   <div>Liunx</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">资产价值:</div>
+                  <div style="color: #aaa; padding-right: 10px">资产价值:</div>
                   <div>4</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">
+                  <div style="color: #aaa; padding-right: 10px">
                     所属资产组:
                   </div>
                   <div>财务部</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">数据来源:</div>
+                  <div style="color: #aaa; padding-right: 10px">数据来源:</div>
                   <div>数据推送</div>
                 </div>
               </div>
               <div>
                 <div style="width: 100%">
-                  <div style="color: #aaa; padding-right: 10rem">位置信息:</div>
+                  <div style="color: #aaa; padding-right: 10px">位置信息:</div>
                   <div>湖南省宝现市莲池区华理技术园6楼201</div>
                 </div>
               </div>
@@ -106,21 +106,19 @@
                 指纹信息
               </div>
               <div>
-                <div style="color: #aaa; padding-right: 10rem">应用:</div>
+                <div style="color: #aaa; padding-right: 10px">应用:</div>
                 <div>Jetty 9.2.11.v20150529</div>
               </div>
               <div>
-                <div style="color: #aaa; padding-right: 10rem">开发语言:</div>
+                <div style="color: #aaa; padding-right: 10px">开发语言:</div>
                 <div>Java</div>
               </div>
               <div>
-                <div style="color: #aaa; padding-right: 10rem">开发框架:</div>
+                <div style="color: #aaa; padding-right: 10px">开发框架:</div>
                 <div>Struts2</div>
               </div>
               <div>
-                <div style="color: #aaa; padding-right: 10rem">
-                  WAF/CND类型:
-                </div>
+                <div style="color: #aaa; padding-right: 10px">WAF/CND类型:</div>
                 <div>-</div>
               </div>
             </div>
@@ -165,7 +163,7 @@
               >
                 关联资产
               </div>
-              <div style="width: 40rem"></div>
+              <div style="width: 40px"></div>
               <div class="zsyuanq" style="background: #aaaaaa">0</div>
             </div>
           </div>
@@ -175,10 +173,7 @@
             <!-- URL信息 -->
             <Url v-if="typenum == '2'" />
             <!-- 资产图谱 -->
-            <div
-              v-if="typenum == '3'"
-              style="height: 460rem; padding-top: 20rem"
-            >
+            <div v-if="typenum == '3'" style="height: 460px; padding-top: 20px">
               <Graph />
             </div>
             <!-- 关联资产 -->

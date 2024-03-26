@@ -26,7 +26,7 @@
           >
             <span
               style="
-                padding-right: 12rem;
+                padding-right: 12px;
                 flex: 1;
                 display: flex;
                 align-items: center;
@@ -34,7 +34,7 @@
               "
               slot-scope="{ node, data }"
             >
-              <span style="font-size: 16rem; display: flex; align-items: center"
+              <span style="font-size: 16px; display: flex; align-items: center"
                 >{{ node.label }}
               </span>
               <div>
@@ -45,7 +45,7 @@
                     </div>
                   </div>
                   <div slot="reference">
-                    <img style="height: 14rem" src="../img/sd.png" alt="" />
+                    <img style="height: 14px" src="../img/sd.png" alt="" />
                   </div>
                 </el-popover>
               </div>
@@ -83,12 +83,12 @@
           </div>
         </div>
         <!-- 表单 -->
-        <div v-else style="padding-top: 60rem">
+        <div v-else style="padding-top: 60px">
           <el-form
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="110rem"
+            label-width="110px"
             class="demo-ruleForm"
           >
             <el-form-item label="部门名称：" prop="bmmc">
@@ -97,7 +97,7 @@
                 class="inpustyle"
                 v-model="ruleForm.bmmc"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="部门负责人：">
@@ -106,7 +106,7 @@
                 size="mini"
                 v-model="ruleForm.fzr"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="张三" value="1"> </el-option>
                 <el-option label="李四" value="2"> </el-option>
@@ -118,7 +118,7 @@
                 class="inpustyle"
                 v-model="ruleForm.bmmc"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <!-- ------------------------------------------------------------------------------------------------- -->
@@ -143,28 +143,24 @@
                   class="inpustyle"
                   v-model="item.ip"
                   size="mini"
-                  style="width: 340rem"
+                  style="width: 340px"
                 ></el-input>
                 <span style="display: flex">
-                  <div style="padding: 5rem 4rem 0 4rem">
+                  <div style="padding: 5px 4px 0 4px">
                     <i
                       @click="adddltip"
                       class="el-icon-circle-plus-outline"
-                      style="
-                        font-size: 22rem;
-                        cursor: pointer;
-                        padding-top: 6rem;
-                      "
+                      style="font-size: 22px; cursor: pointer; padding-top: 6px"
                     ></i>
                   </div>
                   <div
-                    style="padding-top: 5rem"
+                    style="padding-top: 5px"
                     v-if="ruleForm.iparr.length !== 1"
                   >
                     <i
                       @click="delrte(i)"
-                      class="el-icon-remove-outline"
-                      style="font-size: 22rem; cursor: pointer"
+                      class="el-icon-pxove-outline"
+                      style="font-size: 22px; cursor: pointer"
                     ></i>
                   </div>
                 </span>
@@ -181,24 +177,24 @@
                   class="inpustyle"
                   v-model="ruleForm.iparr[i]"
                   size="mini"
-                  style="width: 340rem"
+                  style="width: 340px"
                 ></el-input>
 
               </div>
             </el-form-item> -->
           </el-form>
-          <div style="padding-left: 110rem">
+          <div style="padding-left: 110px">
             <el-button
               class="buttonsy"
               @click="sbmin"
               size="mini"
-              style="margin-right: 30rem"
+              style="margin-right: 30px"
               >确认</el-button
             >
             <el-button
               class="buttonsy"
               size="mini"
-              style="margin-left: 30rem"
+              style="margin-left: 30px"
               @click="flag = true"
               >取消</el-button
             >
@@ -211,7 +207,7 @@
     <!-- <div class="tandialog">
       <el-dialog
         :visible.sync="dialogVisible"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -219,19 +215,19 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           编辑
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="100rem"
+            label-width="100px"
             class="demo-ruleForm"
           >
             <el-form-item label="资产名称：" prop="zcmc">
@@ -239,7 +235,7 @@
                 class="inpustyle"
                 v-model="ruleForm.zcmc"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="内外网：" prop="nww">
@@ -248,7 +244,7 @@
                 size="mini"
                 v-model="ruleForm.nww"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="内网" value="1"> </el-option>
                 <el-option label="外网" value="2"> </el-option>
@@ -259,7 +255,7 @@
                 class="inpustyle"
                 v-model="ruleForm.czjz"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
                 placeholder="请输入1-5，分值越高，产值越重要"
               ></el-input>
             </el-form-item>
@@ -268,7 +264,7 @@
                 class="inpustyle"
                 v-model="ruleForm.czxt"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="等级保护：" prop="djbh">
@@ -277,7 +273,7 @@
                 size="mini"
                 v-model="ruleForm.djbh"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="一级" value="1"> </el-option>
                 <el-option label="二级" value="2"> </el-option>
@@ -287,13 +283,13 @@
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button class="buttonsy" size="mini" style="margin-right: 30px"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="dialogVisible = false"
             >取消</el-button
           >
@@ -448,10 +444,10 @@ export default {
   /deep/.el-dialog__body {
     // background: #676767;
     background: rgba(103, 103, 103, 0.2);
-    backdrop-filter: blur(13rem);
+    backdrop-filter: blur(13px);
     // background: #676767;
-    border-radius: 5rem;
-    border: 1rem solid;
+    border-radius: 5px;
+    border: 1px solid;
     border-image: linear-gradient(270deg, #fb8619 0%, #fcba48 100%) 1;
   }
   // -------------------------------------------------------
@@ -472,42 +468,42 @@ export default {
 }
 .departmentmanagement {
   .container {
-    height: 809rem;
+    height: 809px;
     display: flex;
     justify-content: space-between;
     .left {
-      width: 298rem;
+      width: 298px;
       .toptetol {
         display: flex;
         align-items: center;
-        line-height: 18rem;
-        padding-bottom: 16rem;
-        padding-top: 20rem;
-        padding-left: 30rem;
+        line-height: 18px;
+        padding-bottom: 16px;
+        padding-top: 20px;
+        padding-left: 30px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 
         .guns {
-          height: 18rem;
-          width: 4rem;
+          height: 18px;
+          width: 4px;
           background: #fa9600;
-          margin-right: 8rem;
+          margin-right: 8px;
         }
 
         .wenz {
-          font-size: 18rem;
+          font-size: 18px;
           font-weight: 500;
         }
       }
       .treestyle {
-        padding-top: 17rem;
+        padding-top: 17px;
       }
     }
     .right {
-      width: 1510rem;
-      padding: 0 30rem;
+      width: 1510px;
+      padding: 0 30px;
       .toptetol {
-        padding-bottom: 16rem;
-        padding-top: 20rem;
+        padding-bottom: 16px;
+        padding-top: 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -515,16 +511,16 @@ export default {
         .zbbt {
           display: flex;
           align-items: center;
-          line-height: 18rem;
+          line-height: 18px;
           .guns {
-            height: 18rem;
-            width: 4rem;
+            height: 18px;
+            width: 4px;
             background: #fa9600;
-            margin-right: 8rem;
+            margin-right: 8px;
           }
 
           .wenz {
-            font-size: 18rem;
+            font-size: 18px;
             font-weight: 500;
           }
         }
@@ -533,24 +529,24 @@ export default {
           align-items: center;
           cursor: pointer;
           > img {
-            height: 22rem;
-            margin-right: 10rem;
+            height: 22px;
+            margin-right: 10px;
           }
-          font-size: 14rem;
+          font-size: 14px;
           color: #aaa;
         }
       }
       .xqinq {
-        padding-top: 10rem;
+        padding-top: 10px;
         > div {
-          padding-top: 30rem;
+          padding-top: 30px;
           display: flex;
           > div {
-            font-size: 14rem;
+            font-size: 14px;
           }
           .qtext {
             color: #aaaaaa;
-            padding-right: 20rem;
+            padding-right: 20px;
           }
         }
       }

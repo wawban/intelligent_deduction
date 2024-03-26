@@ -4,28 +4,28 @@
       <i class="el-icon-caret-right"></i>利用信息
       <div></div>
     </div>
-    <div style="margin-top: 15rem; display: flex">
-      <div style="color: #aaa; padding-right: 10rem">处置方式:</div>
+    <div style="margin-top: 15px; display: flex">
+      <div style="color: #aaa; padding-right: 10px">处置方式:</div>
       <div>补丁修复</div>
     </div>
-    <div style="margin-top: 15rem; display: flex">
-      <div style="color: #aaa; padding-right: 10rem">分配对象:</div>
+    <div style="margin-top: 15px; display: flex">
+      <div style="color: #aaa; padding-right: 10px">分配对象:</div>
       <div>张有志</div>
     </div>
-    <div style="margin-top: 15rem; display: flex">
-      <div style="color: #aaa; padding-right: 10rem">漏洞负责人:</div>
+    <div style="margin-top: 15px; display: flex">
+      <div style="color: #aaa; padding-right: 10px">漏洞负责人:</div>
       <div>张有志</div>
     </div>
-    <div style="margin-top: 15rem; display: flex">
-      <div style="color: #aaa; padding-right: 10rem">处置结果:</div>
+    <div style="margin-top: 15px; display: flex">
+      <div style="color: #aaa; padding-right: 10px">处置结果:</div>
       <div>已处理</div>
     </div>
-    <div style="margin-top: 15rem; display: flex">
-      <div style="color: #aaa; padding-right: 10rem">处置时间:</div>
+    <div style="margin-top: 15px; display: flex">
+      <div style="color: #aaa; padding-right: 10px">处置时间:</div>
       <div>2023.10.23  12:45:16</div>
     </div>
-    <div style="margin-top: 15rem; display: flex">
-      <div style="color: #aaa; padding-right: 10rem">处置过程:</div>
+    <div style="margin-top: 15px; display: flex">
+      <div style="color: #aaa; padding-right: 10px">处置过程:</div>
       <div>
         <div>发现漏洞：内部安全团队在常规安全检查中发现该漏洞。</div>
         <div>
@@ -46,27 +46,27 @@
         </div>
       </div>
     </div>
-    <div style="margin-top: 15rem; display: flex">
-      <div style="color: #aaa; padding-right: 10rem">备注:</div>
+    <div style="margin-top: 15px; display: flex">
+      <div style="color: #aaa; padding-right: 10px">备注:</div>
       <div></div>
     </div>
   </div>
 </template>
 <style lang="less" scoped>
 .disposal {
-  padding: 33rem 39rem;
+  padding: 33px 39px;
   .ckaowz {
     display: flex;
     align-items: center;
-    font-size: 14rem;
+    font-size: 14px;
     position: relative;
 
     > div {
       position: absolute;
-      height: 1rem;
+      height: 1px;
       background: rgba(255, 255, 255, 0.3);
-      width: 1300rem;
-      left: 80rem;
+      width: 1300px;
+      left: 80px;
     }
   }
 }

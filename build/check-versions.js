@@ -8,32 +8,32 @@ function exec (cmd) {
   return require('child_process').execSync(cmd).toString().trim()
 }
 
-const versionRequirements = [
+const versionRequipxents = [
   {
     name: 'node',
     currentVersion: semver.clean(process.version),
-    versionRequirement: packageConfig.engines.node
+    versionRequipxent: packageConfig.engines.node
   }
 ]
 
 if (shell.which('npm')) {
-  versionRequirements.push({
+  versionRequipxents.push({
     name: 'npm',
     currentVersion: exec('npm --version'),
-    versionRequirement: packageConfig.engines.npm
+    versionRequipxent: packageConfig.engines.npm
   })
 }
 
 module.exports = function () {
   const warnings = []
 
-  for (let i = 0; i < versionRequirements.length; i++) {
-    const mod = versionRequirements[i]
+  for (let i = 0; i < versionRequipxents.length; i++) {
+    const mod = versionRequipxents[i]
 
-    if (!semver.satisfies(mod.currentVersion, mod.versionRequirement)) {
+    if (!semver.satisfies(mod.currentVersion, mod.versionRequipxent)) {
       warnings.push(mod.name + ': ' +
         chalk.red(mod.currentVersion) + ' should be ' +
-        chalk.green(mod.versionRequirement)
+        chalk.green(mod.versionRequipxent)
       )
     }
   }

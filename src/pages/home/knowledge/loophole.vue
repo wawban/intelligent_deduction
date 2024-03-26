@@ -29,92 +29,90 @@
           </el-popover>
         </div>
         <div class="marginr">
-            <el-popover placement="bottom" width="530" trigger="click">
-              <div slot="reference" class="boxjc">
-                <img src="../img/tj.png" alt="" />
-                条件筛选
+          <el-popover placement="bottom" width="530" trigger="click">
+            <div slot="reference" class="boxjc">
+              <img src="../img/tj.png" alt="" />
+              条件筛选
+            </div>
+            <div class="tjiansxian">
+              <div class="top">
+                <div>筛选</div>
+                <div @click="cleark">清空</div>
               </div>
-              <div class="tjiansxian">
-                <div class="top">
-                  <div>筛选</div>
-                  <div @click="cleark">清空</div>
-                </div>
-                <div
-                  style="padding: 12rem 0; display: flex; align-items: center"
+              <div style="padding: 12px 0; display: flex; align-items: center">
+                符合以下&nbsp;&nbsp;
+                <el-select
+                  class="zhessless"
+                  size="mini"
+                  style="width: 74px"
+                  v-model="rysy"
+                  placeholder="请选择"
                 >
-                  符合以下&nbsp;&nbsp;
-                  <el-select
-                    class="zhessless"
-                    size="mini"
-                    style="width: 74rem"
-                    v-model="rysy"
-                    placeholder="请选择"
-                  >
-                    <el-option label="任一" value="1"></el-option>
-                    <el-option label="所有" value="2"></el-option>
-                  </el-select>
-                  &nbsp;&nbsp;条件
-                </div>
-                <div class="tjiansearch">
-                  <div v-for="(e, i) in searcharr" :key="i">
-                    <div>
-                      <el-select
-                        class="zhessless"
-                        size="mini"
-                        v-model="e.key"
-                        filterable
-                        style="width: 180rem"
-                        placeholder="请选择"
-                      >
-                        <el-option
-                          v-for="item in 4"
-                          :key="item"
-                          :label="'条件' + item"
-                          :value="item"
-                        >
-                        </el-option>
-                      </el-select>
-                    </div>
-                    <div>
-                      <el-select
-                        class="zhessless"
-                        size="mini"
-                        style="width: 88rem"
-                        v-model="e.value"
-                        placeholder="请选择"
-                      >
-                        <el-option label="包含" value="1"></el-option>
-                        <el-option label="不包含" value="2"></el-option>
-                        <el-option label="为空" value="3"></el-option>
-                        <el-option label="不为空" value="4"></el-option>
-                      </el-select>
-                    </div>
-                    <div>
-                      <el-input
-                        placeholder="请输入"
-                        class="inpustyle"
-                        v-model="e.type"
-                        size="mini"
-                        style="width: 180rem"
-                      ></el-input>
-                    </div>
-                    <div style="width: 20rem">
-                      <i
-                        @click="cxoff(i)"
-                        class="el-icon-close"
-                        style="cursor: pointer"
-                      ></i>
-                    </div>
-                  </div>
-                  <div style="padding-top: 20rem">
-                    <el-button class="buttonsy" @click="appendtj" size="mini"
-                      >添加条件</el-button
+                  <el-option label="任一" value="1"></el-option>
+                  <el-option label="所有" value="2"></el-option>
+                </el-select>
+                &nbsp;&nbsp;条件
+              </div>
+              <div class="tjiansearch">
+                <div v-for="(e, i) in searcharr" :key="i">
+                  <div>
+                    <el-select
+                      class="zhessless"
+                      size="mini"
+                      v-model="e.key"
+                      filterable
+                      style="width: 180px"
+                      placeholder="请选择"
                     >
+                      <el-option
+                        v-for="item in 4"
+                        :key="item"
+                        :label="'条件' + item"
+                        :value="item"
+                      >
+                      </el-option>
+                    </el-select>
                   </div>
+                  <div>
+                    <el-select
+                      class="zhessless"
+                      size="mini"
+                      style="width: 88px"
+                      v-model="e.value"
+                      placeholder="请选择"
+                    >
+                      <el-option label="包含" value="1"></el-option>
+                      <el-option label="不包含" value="2"></el-option>
+                      <el-option label="为空" value="3"></el-option>
+                      <el-option label="不为空" value="4"></el-option>
+                    </el-select>
+                  </div>
+                  <div>
+                    <el-input
+                      placeholder="请输入"
+                      class="inpustyle"
+                      v-model="e.type"
+                      size="mini"
+                      style="width: 180px"
+                    ></el-input>
+                  </div>
+                  <div style="width: 20px">
+                    <i
+                      @click="cxoff(i)"
+                      class="el-icon-close"
+                      style="cursor: pointer"
+                    ></i>
+                  </div>
+                </div>
+                <div style="padding-top: 20px">
+                  <el-button class="buttonsy" @click="appendtj" size="mini"
+                    >添加条件</el-button
+                  >
                 </div>
               </div>
-            </el-popover>
-          </div>
+            </div>
+          </el-popover>
+        </div>
         <div class="marginr">
           <el-popover placement="bottom" width="220" trigger="hover">
             <div class="zduanpeizi">
@@ -162,15 +160,15 @@
             backgroundColor: '#292929',
             color: '#fff',
             borderColor: '#292929',
-            fontSize: '14rem',
-            padding: '16rem 0',
+            fontSize: '14px',
+            padding: '16px 0',
           }"
           :cell-style="{
             borderColor: 'rgba(255, 255, 255, 0.3)',
             backgroundColor: '#161616',
             color: '#fff',
-            fontSize: '14rem',
-            padding: '16rem 0',
+            fontSize: '14px',
+            padding: '16px 0',
           }"
         >
           <el-table-column
@@ -209,7 +207,7 @@
               <div v-else-if="item.label == '操作'">
                 <img
                   @click="gotu(scope.row)"
-                  style="height: 16rem; cursor: pointer"
+                  style="height: 16px; cursor: pointer"
                   src="../img/cx.png"
                   alt=""
                 />
@@ -394,8 +392,8 @@ export default {
 <style lang="less" scoped>
 .loophole {
   .lbox {
-    height: 809rem;
-    padding: 20rem 30rem;
+    height: 809px;
+    padding: 20px 30px;
     .biaotab {
       .styg {
         color: #e53a40;

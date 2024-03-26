@@ -43,63 +43,61 @@
             <div class="lidlbi">
               <div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">漏洞分类:</div>
+                  <div style="color: #aaa; padding-right: 10px">漏洞分类:</div>
                   <div>SQL注入</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">CVSS评分:</div>
+                  <div style="color: #aaa; padding-right: 10px">CVSS评分:</div>
                   <div>8.8</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">影响系统:</div>
+                  <div style="color: #aaa; padding-right: 10px">影响系统:</div>
                   <div>Windows</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">影响产品:</div>
+                  <div style="color: #aaa; padding-right: 10px">影响产品:</div>
                   <div>phantompdf,reader</div>
                 </div>
               </div>
               <div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">
+                  <div style="color: #aaa; padding-right: 10px">
                     原理性漏洞:
                   </div>
                   <div>-</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">CVE编号:</div>
+                  <div style="color: #aaa; padding-right: 10px">CVE编号:</div>
                   <div>CVE-2023-48049</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">CNVD编号:</div>
+                  <div style="color: #aaa; padding-right: 10px">CNVD编号:</div>
                   <div>CNVD-2018-21835</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">
-                    CNNVD编号:
-                  </div>
+                  <div style="color: #aaa; padding-right: 10px">CNNVD编号:</div>
                   <div>-</div>
                 </div>
               </div>
               <div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">处置结果:</div>
+                  <div style="color: #aaa; padding-right: 10px">处置结果:</div>
                   <div class="bianshe">已处理</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">
+                  <div style="color: #aaa; padding-right: 10px">
                     所在资产IP:
                   </div>
                   <div>10.0.0.252</div>
                 </div>
                 <div>
-                  <div style="color: #aaa; padding-right: 10rem">端口:</div>
+                  <div style="color: #aaa; padding-right: 10px">端口:</div>
                   <div>8080</div>
                 </div>
               </div>
               <div>
                 <div style="width: 100%">
-                  <div style="color: #aaa; padding-right: 10rem; width: 82rem">
+                  <div style="color: #aaa; padding-right: 10px; width: 82px">
                     漏洞描述:
                   </div>
                   <div>
@@ -161,7 +159,7 @@
               >
                 处置信息
               </div>
-              <div style="width: 40rem"></div>
+              <div style="width: 40px"></div>
               <div class="zsyuanq" style="background: #aaaaaa">0</div>
             </div>
           </div>
@@ -173,10 +171,7 @@
             <!-- 利用信息 -->
             <Uset v-if="typenum == '3'" />
             <!-- 漏洞图谱 -->
-            <div
-              v-if="typenum == '4'"
-              style="height: 460rem; padding-top: 20rem"
-            >
+            <div v-if="typenum == '4'" style="height: 460px; padding-top: 20px">
               <Graph />
             </div>
             <!-- 处置信息 -->
@@ -265,15 +260,15 @@ export default {
     display: flex;
     justify-content: space-between;
     .left {
-      width: 1468rem;
+      width: 1468px;
       .l_top {
-        height: 256rem;
-        padding: 30rem;
+        height: 256px;
+        padding: 30px;
         display: flex;
         .yuanqiu {
-          width: 300rem;
+          width: 300px;
           .textwz {
-            font-size: 18rem;
+            font-size: 18px;
             font-weight: bold;
             text-align: center;
           }
@@ -281,86 +276,86 @@ export default {
             display: flex;
             justify-content: center;
 
-            margin-top: 20rem;
+            margin-top: 20px;
             > div {
-              width: 160rem;
-              height: 160rem;
+              width: 160px;
+              height: 160px;
               border-radius: 50%;
-              border: 16rem solid #fa9600;
+              border: 16px solid #fa9600;
               display: flex;
               align-items: center;
               justify-content: center;
               > div {
-                width: 98rem;
-                height: 98rem;
+                width: 98px;
+                height: 98px;
                 border-radius: 50%;
                 background: #fa9600;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 > div {
-                  font-size: 24rem;
+                  font-size: 24px;
                 }
               }
             }
           }
         }
         .xqdata {
-          width: 1094rem;
+          width: 1094px;
           .btbox_bji {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1rem solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 18rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 18px;
             .teshude {
               display: flex;
               align-items: center;
-              line-height: 24rem;
+              line-height: 24px;
 
               .guns {
-                height: 20rem;
-                width: 4rem;
+                height: 20px;
+                width: 4px;
                 background: #fa9600;
-                margin-right: 8rem;
+                margin-right: 8px;
               }
 
               .wenz {
-                font-size: 24rem;
+                font-size: 24px;
                 font-weight: 500;
               }
               .biqoq {
-                line-height: 22rem;
+                line-height: 22px;
                 text-align: center;
-                border: 1rem solid #fa9600;
-                border-radius: 4rem;
-                padding: 0 9rem;
-                font-size: 12rem;
+                border: 1px solid #fa9600;
+                border-radius: 4px;
+                padding: 0 9px;
+                font-size: 12px;
                 font-weight: 500;
-                margin-left: 10rem;
+                margin-left: 10px;
               }
             }
             .rightsian {
               display: flex;
               align-items: center;
               > img {
-                width: 24rem;
-                margin-right: 5rem;
+                width: 24px;
+                margin-right: 5px;
               }
             }
           }
 
           .lidlbi {
-            padding-top: 10rem;
+            padding-top: 10px;
 
             > div {
               display: flex;
-              padding: 10rem 0;
+              padding: 10px 0;
 
               > div {
                 display: flex;
-                width: 275rem;
-                font-size: 12rem;
+                width: 275px;
+                font-size: 12px;
                 .bianshe {
                   color: #29ca9b;
                 }
@@ -370,29 +365,29 @@ export default {
         }
       }
       .l_bottom {
-        margin-top: 16rem;
-        height: 537rem;
+        margin-top: 16px;
+        height: 537px;
         .toubudiv {
-          padding-top: 19rem;
-          padding-bottom: 15rem;
-          border-bottom: 1rem solid rgba(255, 255, 255, 0.3);
-          padding-left: 40rem;
+          padding-top: 19px;
+          padding-bottom: 15px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+          padding-left: 40px;
           display: flex;
 
           > div {
-            padding-left: 24rem;
-            padding-right: 40rem;
+            padding-left: 24px;
+            padding-right: 40px;
             display: flex;
             align-items: center;
             position: relative;
 
             .wztext {
-              font-size: 16rem;
+              font-size: 16px;
               font-weight: 500;
               position: relative;
               cursor: pointer;
-              border-bottom: 3rem solid #161616;
-              padding-bottom: 4rem;
+              border-bottom: 3px solid #161616;
+              padding-bottom: 4px;
             }
 
             .wztext:hover {
@@ -406,25 +401,25 @@ export default {
             }
 
             .zxxian {
-              height: 14rem;
-              width: 1rem;
+              height: 14px;
+              width: 1px;
               background: #d8d8d8;
-              margin-left: 40rem;
-              margin-bottom: 6rem;
+              margin-left: 40px;
+              margin-bottom: 6px;
             }
 
             .zsyuanq {
-              width: 20rem;
-              height: 20rem;
+              width: 20px;
+              height: 20px;
               border-radius: 50%;
               display: flex;
               align-items: center;
               justify-content: center;
               position: absolute;
               background: #fa9600;
-              font-size: 12rem;
-              top: -10rem;
-              right: 58rem;
+              font-size: 12px;
+              top: -10px;
+              right: 58px;
               color: #fff;
             }
           }
@@ -432,47 +427,47 @@ export default {
       }
     }
     .right {
-      width: 340rem;
+      width: 340px;
 
       .zsbtboxdq {
-        padding: 20rem 0 16rem 30rem;
+        padding: 20px 0 16px 30px;
         display: flex;
         align-items: center;
-        border-bottom: 1rem solid rgba(255, 255, 255, 0.3);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 
         .guns {
-          height: 18rem;
-          width: 3rem;
+          height: 18px;
+          width: 3px;
           background: #fa9600;
-          margin-right: 8rem;
+          margin-right: 8px;
         }
 
         .wenz {
-          font-size: 18rem;
+          font-size: 18px;
           font-weight: bold;
         }
       }
 
       .xdelis {
-        padding: 16rem 0 0 30rem;
+        padding: 16px 0 0 30px;
 
         > div {
-          padding-left: 13rem;
-          padding-bottom: 40rem;
+          padding-left: 13px;
+          padding-bottom: 40px;
           position: relative;
-          border-left: 2rem solid #797979;
+          border-left: 2px solid #797979;
 
           .textr {
-            line-height: 20rem;
+            line-height: 20px;
           }
 
           .yuanq {
-            width: 9rem;
-            height: 9rem;
+            width: 9px;
+            height: 9px;
             border-radius: 50%;
             background: #fa9600;
             position: absolute;
-            left: -5rem;
+            left: -5px;
             top: 0;
           }
 

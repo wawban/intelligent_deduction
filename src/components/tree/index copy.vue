@@ -24,7 +24,7 @@
                 </div>
               </div>
               <div slot="reference">
-                <img style="height: 16rem" src="./sd.png" alt="" />
+                <img style="height: 16px" src="./sd.png" alt="" />
               </div>
             </el-popover>
           </div>
@@ -42,11 +42,11 @@
               v-if="e1.children && e1.children.length != 0"
               class="el-icon-arrow-right"
             ></i>
-            <div v-else style="width: 60rem"></div>
+            <div v-else style="width: 60px"></div>
             <div
               :class="treekry == e1.label ? 'xuanz weizc' : 'weizc'"
               @click="onxuanz(e1)"
-              style="padding-left: 20rem"
+              style="padding-left: 20px"
             >
               {{ e1.label }}
             </div>
@@ -58,7 +58,7 @@
                   </div>
                 </div>
                 <div slot="reference">
-                  <img style="height: 16rem" src="./sd.png" alt="" />
+                  <img style="height: 16px" src="./sd.png" alt="" />
                 </div>
               </el-popover>
             </div>
@@ -76,11 +76,11 @@
                 v-if="e2.children && e2.children.length != 0"
                 class="el-icon-arrow-right"
               ></i>
-              <div v-else style="width: 60rem"></div>
+              <div v-else style="width: 60px"></div>
               <div
                 :class="treekry == e2.label ? 'xuanz weizc' : 'weizc'"
                 @click="onxuanz(e2)"
-                style="padding-left: 40rem"
+                style="padding-left: 40px"
               >
                 {{ e2.label }}
               </div>
@@ -92,7 +92,7 @@
                     </div>
                   </div>
                   <div slot="reference">
-                    <img style="height: 16rem" src="./sd.png" alt="" />
+                    <img style="height: 16px" src="./sd.png" alt="" />
                   </div>
                 </el-popover>
               </div>
@@ -310,7 +310,7 @@ export default {
   .container {
     //   width: 400px;
     //   height: 500px;
-    font-size: 16rem;
+    font-size: 16px;
     .hideen {
       display: none;
     }
@@ -321,19 +321,19 @@ export default {
       color: #fa9600;
     }
     .terewenr {
-      border-bottom: 1rem solid rgba(255, 255, 255, 0.2);
-      line-height: 40rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      line-height: 40px;
       display: flex;
       align-items: center;
       position: relative;
       .sandina {
         position: absolute;
-        right: 16rem;
+        right: 16px;
       }
     }
     i {
-      // padding: 0 22rem;
-      margin: 0 22rem;
+      // padding: 0 22px;
+      margin: 0 22px;
       cursor: pointer;
     }
   }

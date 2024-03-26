@@ -183,7 +183,7 @@ export const governance_tagscustomtags = (data,id) => {
     })
 }
 // 数字空间治理 标签管理 自定义标签-删除
-export function productInfo_remove(id) {
+export function productInfo_pxove(id) {
     return request({
         url: `${url}data-governance/tags/custom-tags/${id}`,
         method: 'delete'
@@ -236,9 +236,9 @@ export function infer_taskssc(id) {
 //     })
 // }
 
-// export function productInfo_remove(params) {
+// export function productInfo_pxove(params) {
 //     return request({
-//         url: `${url}productInfo/remove`,
+//         url: `${url}productInfo/pxove`,
 //         method: 'delete',
 //         data: params
 //     })

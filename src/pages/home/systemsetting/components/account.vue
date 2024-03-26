@@ -17,9 +17,9 @@
           class="inpustyle"
           v-model="zxcd"
           size="mini"
-          style="width: 166rem"
+          style="width: 166px"
         ></el-input>
-        <span style="padding-left: 10rem">次(5~20)</span>
+        <span style="padding-left: 10px">次(5~20)</span>
       </div>
     </div>
     <div>
@@ -39,9 +39,9 @@
           class="inpustyle"
           v-model="ts"
           size="mini"
-          style="width: 166rem"
+          style="width: 166px"
         ></el-input>
-        <span style="padding-left: 10rem">分钟(1~120)</span>
+        <span style="padding-left: 10px">分钟(1~120)</span>
       </div>
     </div>
   </div>
@@ -65,23 +65,23 @@ export default {
 </script>
 <style lang="less" scoped>
 .account {
-  padding: 60rem;
+  padding: 60px;
   > div {
     display: flex;
     align-items: center;
-    margin-bottom: 30rem;
+    margin-bottom: 30px;
     .text {
-      width: 84rem;
+      width: 84px;
       text-align: right;
       font-size: 14px;
       font-weight: 500;
     }
     .xianz {
-      padding: 0 54rem 0 24rem;
+      padding: 0 54px 0 24px;
     }
     .huandk {
       /deep/.el-switch__core {
-        border: 1rem solid #aaaaaa !important;
+        border: 1px solid #aaaaaa !important;
       }
     }
   }

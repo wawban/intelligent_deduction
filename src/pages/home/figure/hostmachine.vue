@@ -57,13 +57,13 @@
                   <div @click="getgovernancehosts('clear')">清空</div>
                 </div>
                 <div
-                  style="padding: 12rem 0; display: flex; align-items: center"
+                  style="padding: 12px 0; display: flex; align-items: center"
                 >
                   符合以下&nbsp;&nbsp;
                   <el-select
                     class="zhessless"
                     size="mini"
-                    style="width: 74rem"
+                    style="width: 74px"
                     v-model="rysy"
                     placeholder="请选择"
                   >
@@ -80,7 +80,7 @@
                         size="mini"
                         v-model="e.key"
                         filterable
-                        style="width: 180rem"
+                        style="width: 180px"
                         placeholder="请选择"
                       >
                         <el-option
@@ -96,7 +96,7 @@
                       <el-select
                         class="zhessless"
                         size="mini"
-                        style="width: 88rem"
+                        style="width: 88px"
                         v-model="e.value"
                         placeholder="请选择"
                       >
@@ -117,10 +117,10 @@
                         class="inpustyle"
                         v-model="e.type"
                         size="mini"
-                        style="width: 180rem"
+                        style="width: 180px"
                       ></el-input>
                     </div>
-                    <div style="width: 20rem">
+                    <div style="width: 20px">
                       <i
                         @click="cxoff(i)"
                         class="el-icon-close"
@@ -128,7 +128,7 @@
                       ></i>
                     </div>
                   </div>
-                  <div style="padding-top: 20rem">
+                  <div style="padding-top: 20px">
                     <el-button class="buttonsy" @click="appendtj" size="mini"
                       >添加条件</el-button
                     >
@@ -184,15 +184,15 @@
               backgroundColor: '#292929',
               color: '#fff',
               borderColor: 'rgba(255, 255, 255, 0.3)',
-              fontSize: '14rem',
-              padding: '16rem 0',
+              fontSize: '14px',
+              padding: '16px 0',
             }"
             :cell-style="{
               borderColor: 'rgba(255, 255, 255, 0.3)',
               backgroundColor: '#161616',
               color: '#fff',
-              fontSize: '14rem',
-              padding: '16rem 0',
+              fontSize: '14px',
+              padding: '16px 0',
             }"
           >
             <!-- show-overflow-tooltip -->
@@ -273,19 +273,19 @@
                 <div v-else-if="item.label == '操作'">
                   <img
                     @click="gotu(scope.row)"
-                    style="height: 22rem; cursor: pointer"
+                    style="height: 22px; cursor: pointer"
                     src="../img/cx.png"
                     alt=""
                   />
                   <img
                     @click="dakaibq(scope.row)"
-                    style="height: 22rem; cursor: pointer; margin: 0 26rem"
+                    style="height: 22px; cursor: pointer; margin: 0 26px"
                     src="../img/bq.png"
                     alt=""
                   />
                   <img
                     @click="editor(scope.row)"
-                    style="height: 22rem; cursor: pointer"
+                    style="height: 22px; cursor: pointer"
                     src="../img/bj.png"
                     alt=""
                   />
@@ -314,7 +314,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="dialogVisible"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -322,19 +322,19 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           编辑
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="100rem"
+            label-width="100px"
             class="demo-ruleForm"
           >
             <el-form-item label="资产名称：" prop="name">
@@ -342,7 +342,7 @@
                 class="inpustyle"
                 v-model="ruleForm.name"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="内外网：" prop="intranet">
@@ -351,7 +351,7 @@
                 size="mini"
                 v-model="ruleForm.intranet"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="内网" :value="1"> </el-option>
                 <el-option label="外网" :value="0"> </el-option>
@@ -363,7 +363,7 @@
                 class="inpustyle"
                 v-model="ruleForm.value"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
                 placeholder="请输入1-5，分值越高，资产越重要"
               ></el-input>
             </el-form-item>
@@ -372,7 +372,7 @@
                 class="inpustyle"
                 v-model="ruleForm.os"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <!-- <el-form-item label="等级保护：" prop="location">
@@ -381,7 +381,7 @@
                 size="mini"
                 v-model="ruleForm.location"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="一级" value="1"> </el-option>
                 <el-option label="二级" value="2"> </el-option>
@@ -394,14 +394,14 @@
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-right: 30rem"
+            style="margin-right: 30px"
             @click="submit"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="dialogVisible = false"
             >取消</el-button
           >
@@ -412,7 +412,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="bqflag"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -420,18 +420,18 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           添加标签
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="bqform"
             ref="bqform"
-            label-width="100rem"
+            label-width="100px"
             class="demo-ruleForm"
             :rules="rulesbq"
           >
@@ -457,7 +457,7 @@
                 size="mini"
                 v-model="bqform.bqmc"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
                 filterable
                 multiple
               >
@@ -476,7 +476,7 @@
                 size="mini"
                 v-model="bqform.bqmc"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
                 filterable
                 multiple
               >
@@ -496,7 +496,7 @@
                 size="mini"
                 v-model="bqform.bqmc"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
                 filterable
                 multiple
               >
@@ -515,14 +515,14 @@
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-right: 30rem"
+            style="margin-right: 30px"
             @click="bqsbmin"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="bqflag = false"
             >取消</el-button
           >
@@ -881,66 +881,66 @@ export default {
   }
   /deep/.el-dialog__body {
     background: rgba(103, 103, 103, 0.2);
-    backdrop-filter: blur(13rem);
-    border-radius: 5rem;
-    border: 1rem solid;
+    backdrop-filter: blur(13px);
+    border-radius: 5px;
+    border: 1px solid;
     border-image: linear-gradient(270deg, #fb8619 0%, #fcba48 100%) 1;
   }
 }
 .hostmachine {
   .container {
-    height: 809rem;
+    height: 809px;
     display: flex;
     justify-content: space-between;
     .left {
-      width: 298rem;
+      width: 298px;
       .toptetol {
         display: flex;
         align-items: center;
-        line-height: 18rem;
-        padding-bottom: 16rem;
-        padding-top: 20rem;
-        padding-left: 30rem;
+        line-height: 18px;
+        padding-bottom: 16px;
+        padding-top: 20px;
+        padding-left: 30px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 
         .guns {
-          height: 18rem;
-          width: 4rem;
+          height: 18px;
+          width: 4px;
           background: #fa9600;
-          margin-right: 8rem;
+          margin-right: 8px;
         }
 
         .wenz {
-          font-size: 18rem;
+          font-size: 18px;
           font-weight: 500;
         }
       }
       .treestyle {
-        padding-top: 17rem;
-        height: 740rem;
+        padding-top: 17px;
+        height: 740px;
         overflow: auto;
       }
     }
     .right {
-      width: 1510rem;
+      width: 1510px;
       .toptetol {
         display: flex;
         align-items: center;
-        line-height: 18rem;
-        padding-bottom: 16rem;
-        padding-top: 20rem;
-        padding-left: 30rem;
+        line-height: 18px;
+        padding-bottom: 16px;
+        padding-top: 20px;
+        padding-left: 30px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 
         .guns {
-          height: 18rem;
-          width: 4rem;
+          height: 18px;
+          width: 4px;
           background: #fa9600;
-          margin-right: 8rem;
+          margin-right: 8px;
         }
 
         .wenz {
-          font-size: 18rem;
+          font-size: 18px;
           font-weight: 500;
         }
       }
@@ -953,12 +953,12 @@ export default {
             // display: flex;
             // justify-content: center;
             // align-content: center;
-            // width: 22rem;
-            width: 18rem;
-            // height: 22rem;
-            line-height: 19rem;
-            border: 1rem solid;
-            font-size: 12rem;
+            // width: 22px;
+            width: 18px;
+            // height: 22px;
+            line-height: 19px;
+            border: 1px solid;
+            font-size: 12px;
             text-align: center;
             font-weight: bold;
           }
@@ -986,12 +986,12 @@ export default {
           justify-content: center;
           flex-wrap: wrap;
           > div {
-            // margin-bottom: 2rem;
+            // margin-bottom: 2px;
             border: 1px solid;
-            padding: 0 9rem;
-            line-height: 22rem;
-            border-radius: 3rem;
-            margin: 1rem 2rem;
+            padding: 0 9px;
+            line-height: 22px;
+            border-radius: 3px;
+            margin: 1px 2px;
             white-space: nowrap;
           }
           .lan {

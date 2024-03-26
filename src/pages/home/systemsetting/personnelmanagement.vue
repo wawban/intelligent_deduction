@@ -57,7 +57,7 @@
                         filterable
                         multiple
                         collapse-tags
-                        style="width: 180rem"
+                        style="width: 180px"
                         placeholder="请选择"
                       >
                         <el-option
@@ -73,7 +73,7 @@
                       <el-select
                         class="zhessless"
                         size="mini"
-                        style="width: 88rem"
+                        style="width: 88px"
                         v-model="cxz"
                         placeholder="请选择"
                       >
@@ -91,7 +91,7 @@
                         filterable
                         multiple
                         collapse-tags
-                        style="width: 180rem"
+                        style="width: 180px"
                         placeholder="请选择"
                       >
                         <el-option
@@ -103,7 +103,7 @@
                         </el-option>
                       </el-select>
                     </div>
-                    <div style="width: 20rem">
+                    <div style="width: 20px">
                       <i
                         @click="cxoff('1')"
                         v-if="typei == '2'"
@@ -122,7 +122,7 @@
                         filterable
                         multiple
                         collapse-tags
-                        style="width: 180rem"
+                        style="width: 180px"
                         placeholder="请选择"
                       >
                         <el-option
@@ -138,7 +138,7 @@
                       <el-select
                         class="zhessless"
                         size="mini"
-                        style="width: 88rem"
+                        style="width: 88px"
                         v-model="cxz"
                         placeholder="请选择"
                       >
@@ -156,7 +156,7 @@
                         filterable
                         multiple
                         collapse-tags
-                        style="width: 180rem"
+                        style="width: 180px"
                         placeholder="请选择"
                       >
                         <el-option
@@ -168,7 +168,7 @@
                         </el-option>
                       </el-select>
                     </div>
-                    <div style="width: 20rem">
+                    <div style="width: 20px">
                       <i
                         @click="cxoff('2')"
                         class="el-icon-close"
@@ -177,7 +177,7 @@
                     </div>
                   </div>
                 </div>
-                <div style="padding-top: 20rem">
+                <div style="padding-top: 20px">
                   <el-button class="buttonsy" @click="appendtj" size="mini"
                     >添加条件</el-button
                   >
@@ -202,13 +202,13 @@
                   <div @click="cleark">清空</div>
                 </div>
                 <div
-                  style="padding: 12rem 0; display: flex; align-items: center"
+                  style="padding: 12px 0; display: flex; align-items: center"
                 >
                   符合以下&nbsp;&nbsp;
                   <el-select
                     class="zhessless"
                     size="mini"
-                    style="width: 74rem"
+                    style="width: 74px"
                     v-model="rysy"
                     placeholder="请选择"
                   >
@@ -225,7 +225,7 @@
                         size="mini"
                         v-model="e.key"
                         filterable
-                        style="width: 180rem"
+                        style="width: 180px"
                         placeholder="请选择"
                       >
                         <el-option
@@ -241,7 +241,7 @@
                       <el-select
                         class="zhessless"
                         size="mini"
-                        style="width: 88rem"
+                        style="width: 88px"
                         v-model="e.value"
                         placeholder="请选择"
                       >
@@ -257,10 +257,10 @@
                         class="inpustyle"
                         v-model="e.type"
                         size="mini"
-                        style="width: 180rem"
+                        style="width: 180px"
                       ></el-input>
                     </div>
-                    <div style="width: 20rem">
+                    <div style="width: 20px">
                       <i
                         @click="cxoff(i)"
                         class="el-icon-close"
@@ -268,7 +268,7 @@
                       ></i>
                     </div>
                   </div>
-                  <div style="padding-top: 20rem">
+                  <div style="padding-top: 20px">
                     <el-button class="buttonsy" @click="appendtj" size="mini"
                       >添加条件</el-button
                     >
@@ -329,15 +329,15 @@
             backgroundColor: '#292929',
             color: '#fff',
             borderColor: '#292929',
-            fontSize: '14rem',
-            padding: '16rem 0',
+            fontSize: '14px',
+            padding: '16px 0',
           }"
           :cell-style="{
             borderColor: 'rgba(255, 255, 255, 0.3)',
             backgroundColor: '#161616',
             color: '#fff',
-            fontSize: '14rem',
-            padding: '16rem 0',
+            fontSize: '14px',
+            padding: '16px 0',
           }"
         >
           <el-table-column
@@ -354,19 +354,19 @@
               <div v-if="item.label == '操作'">
                 <img
                   @click="gotu(scope.row)"
-                  style="height: 22rem; cursor: pointer"
+                  style="height: 22px; cursor: pointer"
                   src="../img/cx.png"
                   alt=""
                 />
                 <img
                   @click="flagcz = true"
-                  style="height: 22rem; cursor: pointer; margin: 0 26rem"
+                  style="height: 22px; cursor: pointer; margin: 0 26px"
                   src="../img/bq.png"
                   alt=""
                 />
                 <img
                   @click="flagbj = true"
-                  style="height: 22rem; cursor: pointer"
+                  style="height: 22px; cursor: pointer"
                   src="../img/bj.png"
                   alt=""
                 />
@@ -394,7 +394,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="dialogVisible"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -402,19 +402,19 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           添加
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="100rem"
+            label-width="100px"
             class="demo-ruleForm"
           >
             <el-form-item label="角色：" prop="js">
@@ -423,7 +423,7 @@
                 size="mini"
                 v-model="ruleForm.js"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="管理员" value="1"> </el-option>
                 <el-option label="xxx" value="2"> </el-option>
@@ -435,7 +435,7 @@
                 class="inpustyle"
                 v-model="ruleForm.yhm"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="账号：" prop="zh">
@@ -444,7 +444,7 @@
                 class="inpustyle"
                 v-model="ruleForm.zh"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="密码：" prop="mm">
@@ -453,7 +453,7 @@
                 class="inpustyle"
                 v-model="ruleForm.mm"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="确认密码：" prop="qrmm">
@@ -462,7 +462,7 @@
                 class="inpustyle"
                 v-model="ruleForm.qrmm"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="部门：" prop="bm">
@@ -471,7 +471,7 @@
                 size="mini"
                 v-model="ruleForm.bm"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="管理员" value="1"> </el-option>
                 <el-option label="xxx" value="2"> </el-option>
@@ -492,7 +492,7 @@
                 class="inpustyle"
                 v-model="ruleForm.sjh"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="邮箱：" prop="yx">
@@ -501,19 +501,19 @@
                 class="inpustyle"
                 v-model="ruleForm.yx"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button class="buttonsy" size="mini" style="margin-right: 30px"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="dialogVisible = false"
             >取消</el-button
           >
@@ -524,7 +524,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="flagbj"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -532,19 +532,19 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           编辑
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="100rem"
+            label-width="100px"
             class="demo-ruleForm"
           >
             <el-form-item label="角色：" prop="js">
@@ -553,7 +553,7 @@
                 size="mini"
                 v-model="ruleForm.js"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="管理员" value="1"> </el-option>
                 <el-option label="xxx" value="2"> </el-option>
@@ -565,7 +565,7 @@
                 class="inpustyle"
                 v-model="ruleForm.yhm"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="账号：" prop="zh">
@@ -574,7 +574,7 @@
                 class="inpustyle"
                 v-model="ruleForm.zh"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="部门：" prop="bm">
@@ -583,7 +583,7 @@
                 size="mini"
                 v-model="ruleForm.bm"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="管理员" value="1"> </el-option>
                 <el-option label="xxx" value="2"> </el-option>
@@ -604,7 +604,7 @@
                 class="inpustyle"
                 v-model="ruleForm.sjh"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="邮箱：" prop="yx">
@@ -613,19 +613,19 @@
                 class="inpustyle"
                 v-model="ruleForm.yx"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button class="buttonsy" size="mini" style="margin-right: 30px"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="flagbj = false"
             >取消</el-button
           >
@@ -636,7 +636,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="flagcz"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -644,19 +644,19 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           重置密码
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="100rem"
+            label-width="100px"
             class="demo-ruleForm"
           >
             <el-form-item label="密码：" prop="mm">
@@ -665,7 +665,7 @@
                 class="inpustyle"
                 v-model="ruleForm.mm"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="确认密码：" prop="qrmm">
@@ -674,19 +674,19 @@
                 class="inpustyle"
                 v-model="ruleForm.qrmm"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button class="buttonsy" size="mini" style="margin-right: 30px"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="flagcz = false"
             >取消</el-button
           >
@@ -977,22 +977,22 @@ export default {
     /deep/.el-dialog__body {
       // background: #676767;
       background: rgba(103, 103, 103, 0.2);
-      backdrop-filter: blur(13rem);
+      backdrop-filter: blur(13px);
       // background: #676767;
-      border-radius: 5rem;
-      border: 1rem solid;
+      border-radius: 5px;
+      border: 1px solid;
       border-image: linear-gradient(270deg, #fb8619 0%, #fcba48 100%) 1;
     }
     // -------------------------------------------------------
     .huandk {
       /deep/.el-switch__core {
-        border: 1rem solid #aaaaaa !important;
+        border: 1px solid #aaaaaa !important;
       }
     }
   }
   .lbox {
-    height: 809rem;
-    padding: 20rem 30rem;
+    height: 809px;
+    padding: 20px 30px;
     // .biaotab {
     //   .styg {
     //     color: #e53a40;

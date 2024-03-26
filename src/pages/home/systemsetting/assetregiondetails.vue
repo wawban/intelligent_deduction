@@ -29,18 +29,18 @@
       <div class="textwenz">
         <div>
           <div>
-            <div style="color: #aaa; padding-right: 10rem">安全重要性:</div>
+            <div style="color: #aaa; padding-right: 10px">安全重要性:</div>
             <div>10</div>
           </div>
 
           <div>
-            <div style="color: #aaa; padding-right: 10rem">互联网连通性:</div>
+            <div style="color: #aaa; padding-right: 10px">互联网连通性:</div>
             <div>是(主动)</div>
           </div>
         </div>
         <div>
           <div>
-            <div style="color: #aaa; padding-right: 10rem">区域资产组:</div>
+            <div style="color: #aaa; padding-right: 10px">区域资产组:</div>
             <div>利和服务集团</div>
           </div>
         </div>
@@ -63,7 +63,7 @@
         >
       </div>
       <!-- 列表 -->
-      <div style="padding-top: 30rem">
+      <div style="padding-top: 30px">
         <!-- 表格 -->
         <el-table
           class="tablebottom"
@@ -73,15 +73,15 @@
             backgroundColor: '#292929',
             color: '#fff',
             borderColor: '#292929',
-            fontSize: '14rem',
-            padding: '18rem 0',
+            fontSize: '14px',
+            padding: '18px 0',
           }"
           :cell-style="{
             borderColor: 'rgba(255, 255, 255, 0.3)',
             backgroundColor: '#161616',
             color: '#fff',
-            fontSize: '14rem',
-            padding: '18rem 0',
+            fontSize: '14px',
+            padding: '18px 0',
           }"
         >
           <el-table-column
@@ -98,13 +98,13 @@
               <div v-if="item.label == '操作'">
                 <img
                   @click="gotu(scope.row)"
-                  style="height: 22rem; cursor: pointer"
+                  style="height: 22px; cursor: pointer"
                   src="../img/cx.png"
                   alt=""
                 />
                 <img
                   @click="drawer = true"
-                  style="height: 22rem; cursor: pointer"
+                  style="height: 22px; cursor: pointer"
                   src="../img/bj.png"
                   alt=""
                 />
@@ -132,7 +132,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="dialogVisible"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -140,19 +140,19 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           添加
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="124rem"
+            label-width="124px"
             class="demo-ruleForm"
           >
             <el-form-item label="连通类型：" prop="ltlx">
@@ -161,7 +161,7 @@
                 size="mini"
                 v-model="ruleForm.ltlx"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="管理员" value="1"> </el-option>
                 <el-option label="xxx" value="2"> </el-option>
@@ -173,7 +173,7 @@
                 size="mini"
                 v-model="ruleForm.zcz"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="管理员" value="1"> </el-option>
                 <el-option label="xxx" value="2"> </el-option>
@@ -186,19 +186,19 @@
                 class="inputtextarea"
                 v-model="ruleForm.ltdx"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button class="buttonsy" size="mini" style="margin-right: 30px"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="dialogVisible = false"
             >取消</el-button
           >
@@ -303,56 +303,56 @@ export default {
     /deep/.el-dialog__body {
       // background: #676767;
       background: rgba(103, 103, 103, 0.2);
-      backdrop-filter: blur(13rem);
+      backdrop-filter: blur(13px);
       // background: #676767;
-      border-radius: 5rem;
-      border: 1rem solid;
+      border-radius: 5px;
+      border: 1px solid;
       border-image: linear-gradient(270deg, #fb8619 0%, #fcba48 100%) 1;
     }
     // -------------------------------------------------------
   }
   .hexqu {
-    height: 246rem;
-    padding: 20rem 30rem;
+    height: 246px;
+    padding: 20px 30px;
     .textwenz {
-      padding-top: 20rem;
+      padding-top: 20px;
       > div {
         display: flex;
 
         > div {
           display: flex;
-          width: 314rem;
-          font-size: 14rem;
+          width: 314px;
+          font-size: 14px;
           > div {
-            line-height: 40rem;
+            line-height: 40px;
           }
         }
       }
     }
   }
   .ltcel {
-    height: 547rem;
-    padding: 20rem 30rem;
-    margin-top: 16rem;
+    height: 547px;
+    padding: 20px 30px;
+    margin-top: 16px;
     .toupai {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-bottom: 18rem;
+      padding-bottom: 18px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.3);
       .tesbt {
         display: flex;
-        line-height: 18rem;
+        line-height: 18px;
 
         .guns {
-          height: 18rem;
-          width: 4rem;
+          height: 18px;
+          width: 4px;
           background: #fa9600;
-          margin-right: 8rem;
+          margin-right: 8px;
         }
 
         .wenz {
-          font-size: 18rem;
+          font-size: 18px;
           font-weight: 500;
         }
       }

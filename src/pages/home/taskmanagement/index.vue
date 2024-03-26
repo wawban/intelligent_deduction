@@ -14,14 +14,14 @@
           :class="type == '1' ? 'dian styxian' : 'dian'"
           @click="qihuan('1')"
         >
-        推演任务
+          推演任务
         </div>
         <div class="xian"></div>
         <div
           :class="type == '2' ? 'dian styxian' : 'dian'"
           @click="qihuan('2')"
         >
-        采集任务
+          采集任务
         </div>
       </div>
       <div>
@@ -51,30 +51,30 @@ export default {
 <style lang="less" scoped>
 .taskmanagement {
   .tbox {
-    width: 1824rem;
-    height: 809rem;
-    padding: 20rem 30rem;
+    width: 1824px;
+    height: 809px;
+    padding: 20px 30px;
     .tabla {
       display: flex;
       align-items: center;
-      padding-bottom: 20rem;
+      padding-bottom: 20px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       .dian {
-        font-size: 18rem;
+        font-size: 18px;
         cursor: pointer;
       }
       .xian {
-        height: 14rem;
-        width: 1rem;
+        height: 14px;
+        width: 1px;
         background: #d8d8d8;
-        margin: 0 28rem;
+        margin: 0 28px;
       }
       .dian:hover {
         color: #fa9600;
       }
       .styxian {
         color: #fa9600;
-        border-bottom: 3rem solid #fa9600;
+        border-bottom: 3px solid #fa9600;
       }
     }
   }

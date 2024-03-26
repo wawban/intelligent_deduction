@@ -28,21 +28,21 @@
               <div class="textwenz">
                 <div>
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">
+                    <div style="color: #aaa; padding-right: 10px">
                       技战术编号:
                     </div>
                     <div>D3-CA</div>
                   </div>
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">
+                    <div style="color: #aaa; padding-right: 10px">
                       父/子技术:
                     </div>
                     <div>D3-ACA</div>
                   </div>
                 </div>
-                <div style="padding-top: 14rem">
+                <div style="padding-top: 14px">
                   <div class="quankuan">
-                    <div style="color: #aaa; padding-right: 10rem">
+                    <div style="color: #aaa; padding-right: 10px">
                       技战术定义:
                     </div>
                     <div>

@@ -28,40 +28,40 @@
               <div class="textwenz">
                 <div>
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">
+                    <div style="color: #aaa; padding-right: 10px">
                       技战术编号:
                     </div>
                     <div>CT1059.004</div>
                   </div>
 
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">
+                    <div style="color: #aaa; padding-right: 10px">
                       父/子技术:
                     </div>
                     <div>T1059</div>
                   </div>
                 </div>
-                <div style="padding-top: 14rem">
+                <div style="padding-top: 14px">
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">战术:</div>
+                    <div style="color: #aaa; padding-right: 10px">战术:</div>
                     <div>执行</div>
                   </div>
 
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">平台:</div>
+                    <div style="color: #aaa; padding-right: 10px">平台:</div>
                     <div>Linux，macoS</div>
                   </div>
                 </div>
-                <div style="padding-top: 14rem">
+                <div style="padding-top: 14px">
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">
+                    <div style="color: #aaa; padding-right: 10px">
                       所需权限:
                     </div>
                     <div>User,root</div>
                   </div>
 
                   <div>
-                    <div style="color: #aaa; padding-right: 10rem">
+                    <div style="color: #aaa; padding-right: 10px">
                       是否支持远程:
                     </div>
                     <div>是</div>
@@ -196,7 +196,7 @@
           </div>
         </div>
         <!-- 可硷能会利用的漏洞 -->
-        <div class="xsloud wbb" style="margin-top: 16rem;">
+        <div class="xsloud wbb" style="margin-top: 16px">
           <div class="bordersj">
             <div class="guns"></div>
             <div class="wenz">可能会利用的漏洞</div>
@@ -209,11 +209,13 @@
           <div class="listarr" v-for="(e, i) in 5" :key="i">
             <div>CVE-2023-51443</div>
             <div>FreeSWITCH 安全漏...</div>
-            <div :class="i==0?'c':i==1?'g':i==2?'z':'d'">{{i==0?'超危':i==1?'高危':i==2?'中危':'低危'}}</div>
+            <div :class="i == 0 ? 'c' : i == 1 ? 'g' : i == 2 ? 'z' : 'd'">
+              {{ i == 0 ? "超危" : i == 1 ? "高危" : i == 2 ? "中危" : "低危" }}
+            </div>
           </div>
         </div>
         <!-- 可能会影响的应用 -->
-        <div class="xsloud wbb" style="margin-top: 16rem;">
+        <div class="xsloud wbb" style="margin-top: 16px">
           <div class="bordersj">
             <div class="guns"></div>
             <div class="wenz">可能会影响的应用</div>

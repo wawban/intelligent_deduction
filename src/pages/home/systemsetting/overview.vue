@@ -130,28 +130,28 @@ export default {
 <style lang="less" scoped>
 .overview {
   .box {
-    height: 809rem;
-    padding: 20rem 30rem;
+    height: 809px;
+    padding: 20px 30px;
 
     .dqbiaot {
       display: flex;
-      line-height: 18rem;
-      padding-bottom: 18rem;
+      line-height: 18px;
+      padding-bottom: 18px;
 
       .guns {
-        height: 18rem;
-        width: 4rem;
+        height: 18px;
+        width: 4px;
         background: #fa9600;
-        margin-right: 8rem;
+        margin-right: 8px;
       }
 
       .wenz {
-        font-size: 18rem;
+        font-size: 18px;
         font-weight: 500;
       }
     }
     .maxgk {
-      height: 256rem;
+      height: 256px;
       display: flex;
       > div {
         width: 25%;
@@ -159,15 +159,15 @@ export default {
           font-size: 16px;
           font-weight: 500;
           text-align: center;
-          padding: 30rem 0 32rem 0;
+          padding: 30px 0 32px 0;
         }
         .huanxjdu {
           display: flex;
           align-items: center;
           justify-content: center;
-          border-right: 1rem solid rgba(255, 255, 255, 0.3);
+          border-right: 1px solid rgba(255, 255, 255, 0.3);
           .huanxyet {
-            width: 125rem;
+            width: 125px;
             /deep/ .el-progress-circle {
               width: 100% !important;
               height: 100% !important;
@@ -181,24 +181,24 @@ export default {
             }
           }
           .dayuan {
-            padding-left: 20rem;
+            padding-left: 20px;
             > div {
-              padding: 6rem 0;
+              padding: 6px 0;
               display: flex;
               align-items: center;
               .fangx {
-                width: 12rem;
-                height: 12rem;
-                border-radius: 2rem;
+                width: 12px;
+                height: 12px;
+                border-radius: 2px;
                 background: #ff9a3e;
-                margin-right: 10rem;
+                margin-right: 10px;
               }
               .fangxw {
-                width: 12rem;
-                height: 12rem;
-                border-radius: 2rem;
+                width: 12px;
+                height: 12px;
+                border-radius: 2px;
                 background: #c6502d;
-                margin-right: 10rem;
+                margin-right: 10px;
               }
             }
           }
@@ -209,16 +209,16 @@ export default {
       }
     }
     .maxtj {
-      height: 455rem;
-      margin-top: 16rem;
-      padding: 30rem;
+      height: 455px;
+      margin-top: 16px;
+      padding: 30px;
       .topbt {
         text-align: center;
         font-size: 18px;
         font-weight: 500;
       }
       .zxiant {
-        height: 390rem;
+        height: 390px;
         // background: red;
       }
     }

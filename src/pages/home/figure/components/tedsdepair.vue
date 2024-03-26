@@ -38,25 +38,25 @@
 </template>
 <style lang="less" scoped>
 .Repair {
-  padding: 33rem 39rem;
+  padding: 33px 39px;
   .ckaowz {
     display: flex;
     align-items: center;
-    font-size: 14rem;
+    font-size: 14px;
     position: relative;
 
     > div {
       position: absolute;
-      height: 1rem;
+      height: 1px;
       background: rgba(255, 255, 255, 0.3);
-      width: 1300rem;
-      left: 80rem;
-      //   right: -255rem;
+      width: 1300px;
+      left: 80px;
+      //   right: -255px;
     }
   }
   .nrongh {
-    padding-top: 17rem;
-    padding-bottom: 40rem;
+    padding-top: 17px;
+    padding-bottom: 40px;
   }
 }
 </style>

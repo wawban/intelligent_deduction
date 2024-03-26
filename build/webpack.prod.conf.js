@@ -69,9 +69,9 @@ const webpackConfig = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true,
       minify: {
-        removeComments: true,
+        pxoveComments: true,
         collapseWhitespace: true,
-        removeAttributeQuotes: true
+        pxoveAttributeQuotes: true
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
       },

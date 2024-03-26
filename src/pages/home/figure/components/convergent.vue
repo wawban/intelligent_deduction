@@ -24,12 +24,12 @@
               <div>筛选</div>
               <div @click="cleark">清空</div>
             </div>
-            <div style="padding: 12rem 0; display: flex; align-items: center">
+            <div style="padding: 12px 0; display: flex; align-items: center">
               符合以下&nbsp;&nbsp;
               <el-select
                 class="zhessless"
                 size="mini"
-                style="width: 74rem"
+                style="width: 74px"
                 v-model="rysy"
                 placeholder="请选择"
               >
@@ -46,7 +46,7 @@
                     size="mini"
                     v-model="e.key"
                     filterable
-                    style="width: 180rem"
+                    style="width: 180px"
                     placeholder="请选择"
                   >
                     <el-option
@@ -62,7 +62,7 @@
                   <el-select
                     class="zhessless"
                     size="mini"
-                    style="width: 88rem"
+                    style="width: 88px"
                     v-model="e.value"
                     placeholder="请选择"
                   >
@@ -78,10 +78,10 @@
                     class="inpustyle"
                     v-model="e.type"
                     size="mini"
-                    style="width: 180rem"
+                    style="width: 180px"
                   ></el-input>
                 </div>
-                <div style="width: 20rem">
+                <div style="width: 20px">
                   <i
                     @click="cxoff(i)"
                     class="el-icon-close"
@@ -89,7 +89,7 @@
                   ></i>
                 </div>
               </div>
-              <div style="padding-top: 20rem">
+              <div style="padding-top: 20px">
                 <el-button class="buttonsy" @click="appendtj" size="mini"
                   >添加条件</el-button
                 >
@@ -144,15 +144,15 @@
           backgroundColor: '#292929',
           color: '#fff',
           borderColor: '#292929',
-          fontSize: '14rem',
-          padding: '15rem 0',
+          fontSize: '14px',
+          padding: '15px 0',
         }"
         :cell-style="{
           borderColor: 'rgba(255, 255, 255, 0.3)',
           backgroundColor: '#161616',
           color: '#fff',
-          fontSize: '14rem',
-          padding: '15rem 0',
+          fontSize: '14px',
+          padding: '15px 0',
         }"
       >
         <el-table-column
@@ -175,7 +175,7 @@
             <div v-else-if="item.label == '操作'">
               <img
                 @click="gotu(scope.row)"
-                style="height: 22rem; cursor: pointer"
+                style="height: 22px; cursor: pointer"
                 src="../../img/cx.png"
                 alt=""
               />
@@ -387,8 +387,8 @@ export default {
 </script>
 <style lang="less" scoped>
 .convergent {
-  border-top: 1rem solid rgba(255, 255, 255, 0.3);
-  margin-top: 16rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  margin-top: 16px;
   .tbbg {
     .gh {
       color: #e53a40;

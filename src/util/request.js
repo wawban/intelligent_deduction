@@ -141,7 +141,7 @@ service.interceptors.response.use(
 //               return Promise.reject(error.response.data);
 //           } else if (error.response.data.errorCode == 'A00012') {
 //               errorLog(error.response.data, 2);
-//               cremode('logout')
+//               cpxode('logout')
 //           } else {
 //               errorLog(error.response.data, 2);
 //               return Promise.reject(error.response.data);

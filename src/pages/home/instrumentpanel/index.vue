@@ -64,7 +64,7 @@
                 v-model="zq"
                 class="zhessless"
                 size="mini"
-                style="width: 60rem"
+                style="width: 60px"
                 @change="sjianrq"
               >
                 <el-option label="月" value="1"></el-option>
@@ -89,7 +89,7 @@
               <div class="tuiyannum">发现隐蔽问题数</div>
             </div>
           </div>
-          <div class="boxsjudhu" style="padding-top: 26rem">
+          <div class="boxsjudhu" style="padding-top: 26px">
             <div class="yx">
               <div class="numcs">
                 <div class="numtew">{{ fxpgy.paths_blocked }}</div>
@@ -99,7 +99,7 @@
             </div>
             <div class="zl">
               <div class="numcs">
-                <div class="numtew">{{ fxpgy.vulns_remediated }}</div>
+                <div class="numtew">{{ fxpgy.vulns_pxediated }}</div>
                 <div class="danwer">个</div>
               </div>
               <div class="tuiyannum">阻挡漏洞数</div>
@@ -119,7 +119,7 @@
             class="zhessless"
             v-model="zq"
             size="mini"
-            style="width: 60rem"
+            style="width: 60px"
             @change="sjianrq"
           >
             <el-option label="月" value="1"></el-option>
@@ -148,13 +148,13 @@
                 backgroundColor: '#161616',
                 color: '#aaa',
                 borderColor: 'rgba(255, 255, 255, 0.3)',
-                fontSize: '12rem',
+                fontSize: '12px',
               }"
               :cell-style="{
                 borderColor: 'rgba(255, 255, 255, 0.3)',
                 backgroundColor: '#161616',
                 color: '#fff',
-                fontSize: '14rem',
+                fontSize: '14px',
               }"
             >
               <el-table-column
@@ -190,14 +190,14 @@
                   <div v-else-if="item.label == '操作'">
                     <!-- <img
                     @click="gotu(scope.row)"
-                    style="height: 22rem; cursor: pointer"
+                    style="height: 22px; cursor: pointer"
                     src="../img/cx.png"
                     alt=""
                   /> -->
                     <i
                       @click="gotu(scope.row)"
                       class="el-icon-right"
-                      style="font-size: 22rem; cursor: pointer"
+                      style="font-size: 22px; cursor: pointer"
                     ></i>
                   </div>
                   <span v-else>{{ scope.row[scope.column.property] }}</span>
@@ -222,13 +222,13 @@
                   backgroundColor: '#161616',
                   color: '#aaa',
                   borderColor: 'rgba(255, 255, 255, 0.3)',
-                  fontSize: '12rem',
+                  fontSize: '12px',
                 }"
                 :cell-style="{
                   borderColor: 'rgba(255, 255, 255, 0.3)',
                   backgroundColor: '#161616',
                   color: '#fff',
-                  fontSize: '14rem',
+                  fontSize: '14px',
                 }"
               >
                 <el-table-column
@@ -301,7 +301,7 @@
               <div class="wenz">关键风险资产</div>
             </div>
             <div
-              style="font-size: 12rem; font-weight: normal; cursor: pointer"
+              style="font-size: 12px; font-weight: normal; cursor: pointer"
               @click="gjgt"
             >
               详情 >>
@@ -350,7 +350,7 @@
               </div>
             </div>
           </div>
-          <div class="btbox" style="padding: 13rem 0">
+          <div class="btbox" style="padding: 13px 0">
             <div class="guns"></div>
             <div class="wenz">资产图谱</div>
           </div>
@@ -372,7 +372,7 @@
                 v-model="gjljy"
                 class="xialacx zhessless"
                 size="mini"
-                style="width: 180rem"
+                style="width: 180px"
               >
                 <el-option label="最大收益攻击路径" value="1"></el-option>
                 <el-option label="最隐蔽攻击路径" value="2"></el-option>

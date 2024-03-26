@@ -25,12 +25,12 @@
               <div>筛选</div>
               <div @click="cleark">清空</div>
             </div>
-            <div style="padding: 12rem 0; display: flex; align-items: center">
+            <div style="padding: 12px 0; display: flex; align-items: center">
               符合以下&nbsp;&nbsp;
               <el-select
                 class="zhessless"
                 size="mini"
-                style="width: 74rem"
+                style="width: 74px"
                 v-model="rysy"
                 placeholder="请选择"
               >
@@ -47,7 +47,7 @@
                     size="mini"
                     v-model="e.key"
                     filterable
-                    style="width: 180rem"
+                    style="width: 180px"
                     placeholder="请选择"
                   >
                     <el-option
@@ -63,7 +63,7 @@
                   <el-select
                     class="zhessless"
                     size="mini"
-                    style="width: 88rem"
+                    style="width: 88px"
                     v-model="e.value"
                     placeholder="请选择"
                   >
@@ -79,10 +79,10 @@
                     class="inpustyle"
                     v-model="e.type"
                     size="mini"
-                    style="width: 180rem"
+                    style="width: 180px"
                   ></el-input>
                 </div>
-                <div style="width: 20rem">
+                <div style="width: 20px">
                   <i
                     @click="cxoff(i)"
                     class="el-icon-close"
@@ -90,7 +90,7 @@
                   ></i>
                 </div>
               </div>
-              <div style="padding-top: 20rem">
+              <div style="padding-top: 20px">
                 <el-button class="buttonsy" @click="appendtj" size="mini"
                   >添加条件</el-button
                 >
@@ -252,77 +252,77 @@ export default {
 <style lang="less" scoped>
 .def {
   .contaibox {
-    padding-top: 14rem;
-    height: 660rem;
+    padding-top: 14px;
+    height: 660px;
     overflow: auto;
     .maxt {
       border-top: 1px solid rgba(255, 255, 255, 0.2);
-      margin-top: 30rem;
-      padding-left: 100rem;
-      padding-right: 100rem;
+      margin-top: 30px;
+      padding-left: 100px;
+      padding-right: 100px;
       position: relative;
       .topzhu {
         position: absolute;
-        top: -36rem;
-        left: -94rem;
+        top: -36px;
+        left: -94px;
         display: flex;
         > div {
-          width: 389rem;
+          width: 389px;
           display: flex;
           flex-direction: column;
           align-items: center;
           .yuan {
-            width: 18rem;
-            height: 18rem;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             border: 1px solid #aaaaaa;
             display: flex;
             align-items: center;
             justify-content: center;
             > div {
-              width: 12rem;
-              height: 12rem;
+              width: 12px;
+              height: 12px;
               border-radius: 50%;
               background: #aaa;
             }
           }
           .textr {
-            padding-bottom: 10rem;
+            padding-bottom: 10px;
           }
         }
       }
       .tblist {
-        margin-top: 9rem;
+        margin-top: 9px;
         display: flex;
         > div {
-          width: 389rem;
-          min-height: 600rem;
+          width: 389px;
+          min-height: 600px;
           border-left: 1px solid rgba(255, 255, 255, 0.2);
           // ----------------
           > div {
-            padding-top: 25rem;
+            padding-top: 25px;
             position: relative;
             .paiyi {
               position: absolute;
-              left: -5rem;
+              left: -5px;
               display: flex;
               align-items: center;
               .yuan {
-                width: 10rem;
-                height: 10rem;
+                width: 10px;
+                height: 10px;
                 background: #fff;
                 border-radius: 50%;
               }
               .wenz {
-                padding-left: 10rem;
+                padding-left: 10px;
                 font-size: 14px;
                 font-weight: normal;
                 cursor: pointer;
               }
             }
             .xiaolist {
-              padding-left: 28rem;
-              padding-top: 26rem;
+              padding-left: 28px;
+              padding-top: 26px;
             }
           }
         }

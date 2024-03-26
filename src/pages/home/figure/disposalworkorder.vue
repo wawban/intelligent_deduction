@@ -38,12 +38,12 @@
                 <div>筛选</div>
                 <div @click="cleark">清空</div>
               </div>
-              <div style="padding: 12rem 0; display: flex; align-items: center">
+              <div style="padding: 12px 0; display: flex; align-items: center">
                 符合以下&nbsp;&nbsp;
                 <el-select
                   class="zhessless"
                   size="mini"
-                  style="width: 74rem"
+                  style="width: 74px"
                   v-model="rysy"
                   placeholder="请选择"
                 >
@@ -60,7 +60,7 @@
                       size="mini"
                       v-model="e.key"
                       filterable
-                      style="width: 180rem"
+                      style="width: 180px"
                       placeholder="请选择"
                     >
                       <el-option
@@ -76,7 +76,7 @@
                     <el-select
                       class="zhessless"
                       size="mini"
-                      style="width: 88rem"
+                      style="width: 88px"
                       v-model="e.value"
                       placeholder="请选择"
                     >
@@ -92,10 +92,10 @@
                       class="inpustyle"
                       v-model="e.type"
                       size="mini"
-                      style="width: 180rem"
+                      style="width: 180px"
                     ></el-input>
                   </div>
-                  <div style="width: 20rem">
+                  <div style="width: 20px">
                     <i
                       @click="cxoff(i)"
                       class="el-icon-close"
@@ -103,7 +103,7 @@
                     ></i>
                   </div>
                 </div>
-                <div style="padding-top: 20rem">
+                <div style="padding-top: 20px">
                   <el-button class="buttonsy" @click="appendtj" size="mini"
                     >添加条件</el-button
                   >
@@ -159,15 +159,15 @@
             backgroundColor: '#292929',
             color: '#fff',
             borderColor: '#292929',
-            fontSize: '14rem',
-            padding: '16rem 0',
+            fontSize: '14px',
+            padding: '16px 0',
           }"
           :cell-style="{
             borderColor: 'rgba(255, 255, 255, 0.3)',
             backgroundColor: '#161616',
             color: '#fff',
-            fontSize: '14rem',
-            padding: '16rem 0',
+            fontSize: '14px',
+            padding: '16px 0',
           }"
         >
           <el-table-column
@@ -197,7 +197,7 @@
               </div>
               <div v-else-if="item.label == '操作'">
                 <img
-                  style="height: 16rem; cursor: pointer"
+                  style="height: 16px; cursor: pointer"
                   src="../img/cx.png"
                   alt=""
                 />
@@ -226,7 +226,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="ldczflah"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -234,14 +234,14 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           漏洞处置
         </div>
-        <div class="czstyle" style="padding-top: 20rem">
+        <div class="czstyle" style="padding-top: 20px">
           <div>
             <div class="biaot">漏洞验证：</div>
             <div class="neiron">存在</div>
@@ -284,13 +284,13 @@
             class="buttonsy"
             @click="ldczflah = false"
             size="mini"
-            style="margin-right: 30rem"
+            style="margin-right: 30px"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="ldczflah = false"
             >取消</el-button
           >
@@ -301,7 +301,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="czflag"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -309,19 +309,19 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           漏洞处置
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="czForm"
             :rules="czrules"
             ref="ruleForm"
-            label-width="110rem"
+            label-width="110px"
             class="demo-ruleForm"
           >
             <el-form-item label="漏洞验证：" prop="yz">
@@ -337,7 +337,7 @@
                 size="mini"
                 v-model="czForm.fs"
                 placeholder="请选择"
-                style="width: 340rem"
+                style="width: 340px"
               >
                 <el-option label="方式1" value="1"> </el-option>
                 <el-option label="方式2" value="2"> </el-option>
@@ -350,7 +350,7 @@
                 class="inpustyle"
                 v-model="czForm.fzr"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="分配对象：">
@@ -359,7 +359,7 @@
                 class="inpustyle"
                 v-model="czForm.dx"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="处置过程：" prop="gc">
@@ -369,7 +369,7 @@
                 class="inputtextarea"
                 v-model="czForm.gc"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="处置结果：" prop="jg">
@@ -385,19 +385,19 @@
                 class="inputtextarea"
                 v-model="czForm.bz"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button class="buttonsy" size="mini" style="margin-right: 30px"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="czflag = false"
             >取消</el-button
           >
@@ -408,7 +408,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="bczflag"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -416,19 +416,19 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           漏洞处置
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="bczForm"
             :rules="bczrules"
             ref="ruleForm"
-            label-width="110rem"
+            label-width="110px"
             class="demo-ruleForm"
           >
             <el-form-item label="漏洞验证：" prop="yz">
@@ -444,7 +444,7 @@
                 class="inpustyle"
                 v-model="bczForm.fzr"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="分配对象：">
@@ -453,7 +453,7 @@
                 class="inpustyle"
                 v-model="bczForm.dx"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="处置结果：" prop="jg">
@@ -468,19 +468,19 @@
                 class="inputtextarea"
                 v-model="bczForm.bz"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button class="buttonsy" size="mini" style="margin-right: 30px"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="bczflag = false"
             >取消</el-button
           >
@@ -491,7 +491,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="yzflag"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -499,19 +499,19 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           漏洞处置
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="yzForm"
             :rules="yzrules"
             ref="ruleForm"
-            label-width="110rem"
+            label-width="110px"
             class="demo-ruleForm"
           >
             <el-form-item label="漏洞验证：" prop="yz">
@@ -527,7 +527,7 @@
                 class="inpustyle"
                 v-model="yzForm.fzr"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="分配对象：">
@@ -536,7 +536,7 @@
                 class="inpustyle"
                 v-model="yzForm.dx"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
             <el-form-item label="处置结果：" prop="jg">
@@ -551,19 +551,19 @@
                 class="inputtextarea"
                 v-model="yzForm.bz"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button class="buttonsy" size="mini" style="margin-right: 30px"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="yzflag = false"
             >取消</el-button
           >
@@ -574,7 +574,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="qzczflag"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -582,19 +582,19 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           漏洞处置
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="qzczForm"
             :rules="qzczrules"
             ref="ruleForm"
-            label-width="110rem"
+            label-width="110px"
             class="demo-ruleForm"
           >
             <el-form-item label="漏洞验证：" prop="yz">
@@ -617,19 +617,19 @@
                 class="inputtextarea"
                 v-model="qzczForm.bz"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button class="buttonsy" size="mini" style="margin-right: 30px"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="qzczflag = false"
             >取消</el-button
           >
@@ -640,7 +640,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="qzbczflag"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -648,19 +648,19 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           漏洞处置
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="qzbczForm"
             :rules="qzbczrules"
             ref="ruleForm"
-            label-width="110rem"
+            label-width="110px"
             class="demo-ruleForm"
           >
             <el-form-item label="漏洞验证：" prop="yz">
@@ -682,19 +682,19 @@
                 class="inputtextarea"
                 v-model="qzbczForm.bz"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button class="buttonsy" size="mini" style="margin-right: 30px"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="qzbczflag = false"
             >取消</el-button
           >
@@ -705,7 +705,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="qzyzflag"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -713,19 +713,19 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           漏洞处置
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="qzyzForm"
             :rules="qzyzrules"
             ref="ruleForm"
-            label-width="110rem"
+            label-width="110px"
             class="demo-ruleForm"
           >
             <el-form-item label="漏洞验证：" prop="yz">
@@ -747,19 +747,19 @@
                 class="inputtextarea"
                 v-model="qzyzForm.bz"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button class="buttonsy" size="mini" style="margin-right: 30px"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="qzyzflag = false"
             >取消</el-button
           >
@@ -821,8 +821,8 @@ export default {
         fzr: [{ required: true, message: "请输入漏洞负责人", trigger: "blur" }],
         jg: [{ required: true, message: "请选择处置结果", trigger: "change" }],
       },
-    //   qzczflag: true,//强制关闭-无法验证\不存在\存在
-      qzczflag: false,//强制关闭-存在
+      //   qzczflag: true,//强制关闭-无法验证\不存在\存在
+      qzczflag: false, //强制关闭-存在
       // 漏洞处置-强制关闭-存在
       qzczForm: {
         yz: 1,
@@ -833,7 +833,7 @@ export default {
         yz: [{ required: true, message: "请选择漏洞验证", trigger: "change" }],
         jg: [{ required: true, message: "请选择处置结果", trigger: "change" }],
       },
-      qzbczflag: false,//强制关闭-不存在
+      qzbczflag: false, //强制关闭-不存在
       // 漏洞处置-强制关闭-不存在
       qzbczForm: {
         yz: 1,
@@ -844,7 +844,7 @@ export default {
         yz: [{ required: true, message: "请选择漏洞验证", trigger: "change" }],
         jg: [{ required: true, message: "请选择处置结果", trigger: "change" }],
       },
-      qzyzflag: true,//强制关闭-无法验证
+      qzyzflag: true, //强制关闭-无法验证
       // 漏洞处置-强制关闭-无法验证
       qzyzForm: {
         yz: 1,
@@ -1084,7 +1084,7 @@ export default {
   },
   mounted() {
     // ----------------------------关联查询组件下
-    
+
     // localStorage.setItem("localdisposalworkorder",'')
     // 表格头
     this.btarr = localStorage.getItem("localdisposalworkorder")
@@ -1153,40 +1153,40 @@ export default {
     /deep/.el-dialog__body {
       // background: #676767;
       background: rgba(103, 103, 103, 0.2);
-      backdrop-filter: blur(13rem);
+      backdrop-filter: blur(13px);
       // background: #676767;
-      border-radius: 5rem;
-      border: 1rem solid;
+      border-radius: 5px;
+      border: 1px solid;
       border-image: linear-gradient(270deg, #fb8619 0%, #fcba48 100%) 1;
     }
     // -------------------------------------------------------
     // .huandk {
     //   /deep/.el-switch__core {
-    //     border: 1rem solid #aaaaaa !important;
+    //     border: 1px solid #aaaaaa !important;
     //   }
     // }
     .czstyle {
       > div {
-        padding-bottom: 20rem;
+        padding-bottom: 20px;
         display: flex;
         .biaot {
-          width: 100rem;
+          width: 100px;
           font-size: 14px;
           font-weight: normal;
           text-align: right;
           color: #aaa;
-          padding-right: 10rem;
+          padding-right: 10px;
         }
         .neiron {
           color: #fff;
-          width: 300rem;
+          width: 300px;
         }
       }
     }
   }
   .box {
-    height: 809rem;
-    padding: 20rem 30rem;
+    height: 809px;
+    padding: 20px 30px;
     .biaotab {
       .styg {
         color: #e53a40;

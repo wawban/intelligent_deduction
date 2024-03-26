@@ -1,13 +1,13 @@
 <template>
   <div id="app" class="xsdxsdcf">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
-}
+  name: "App",
+};
 </script>
 
 <style>
@@ -20,7 +20,7 @@ body {
   width: 100%;
   height: 100%;
 }
-html::-webkit-scrollbar  {  
-  width: 0rem;   
+html::-webkit-scrollbar {
+  width: 0px;
 }
 </style>

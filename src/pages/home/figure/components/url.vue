@@ -9,15 +9,15 @@
         backgroundColor: '#292929',
         color: '#fff',
         borderColor: '#292929',
-        fontSize: '14rem',
-        padding: '10rem 0',
+        fontSize: '14px',
+        padding: '10px 0',
       }"
       :cell-style="{
         borderColor: 'rgba(255, 255, 255, 0.3)',
         backgroundColor: '#161616',
         color: '#fff',
-        fontSize: '14rem',
-        padding: '14rem 0',
+        fontSize: '14px',
+        padding: '14px 0',
       }"
     >
       <el-table-column
@@ -42,7 +42,7 @@
           <div v-else-if="item.label == '操作'">
             <img
               @click="gotu(scope.row)"
-              style="height: 16rem; cursor: pointer"
+              style="height: 16px; cursor: pointer"
               src="../../img/cx.png"
               alt=""
             />
@@ -121,7 +121,7 @@ export default {
       vararr: [
         {
           label: "序号",
-          width: "100rem",
+          width: "100px",
         },
         {
           prop: "url",
@@ -130,12 +130,12 @@ export default {
         {
           prop: "method",
           label: "请求方式",
-          width: "160rem",
+          width: "160px",
         },
         {
           prop: "params",
           label: "参数名",
-          width: "260rem",
+          width: "260px",
         },
       ],
     };
@@ -155,6 +155,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .url {
-  padding: 20rem 30rem;
+  padding: 20px 30px;
 }
 </style>

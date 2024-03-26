@@ -35,9 +35,9 @@
           class="inpustyle"
           v-model="zxcd"
           size="mini"
-          style="width: 166rem"
+          style="width: 166px"
         ></el-input>
-        <span style="padding-left: 10rem">字符(6~32)</span>
+        <span style="padding-left: 10px">字符(6~32)</span>
       </div>
     </div>
     <div>
@@ -57,9 +57,9 @@
           class="inpustyle"
           v-model="ts"
           size="mini"
-          style="width: 166rem"
+          style="width: 166px"
         ></el-input>
-        <span style="padding-left: 10rem">天(10~1000)</span>
+        <span style="padding-left: 10px">天(10~1000)</span>
       </div>
     </div>
 
@@ -98,23 +98,23 @@ export default {
       border-color: #fa9600;
     }
   }
-  padding: 60rem;
+  padding: 60px;
   > div {
     display: flex;
     align-items: center;
-    margin-bottom: 30rem;
+    margin-bottom: 30px;
     .text {
-      width: 84rem;
+      width: 84px;
       text-align: right;
       font-size: 14px;
       font-weight: 500;
     }
     .xianz {
-      padding: 0 54rem 0 24rem;
+      padding: 0 54px 0 24px;
     }
     .huandk {
       /deep/.el-switch__core {
-        border: 1rem solid #aaaaaa !important;
+        border: 1px solid #aaaaaa !important;
       }
     }
   }

@@ -9,7 +9,7 @@
         >添加</el-button
       >
     </div>
-    <div style="padding-top: 20rem">
+    <div style="padding-top: 20px">
       <!-- 表格 -->
       <el-table
         class="tablebottom"
@@ -19,15 +19,15 @@
           backgroundColor: '#292929',
           color: '#fff',
           borderColor: '#292929',
-          fontSize: '14rem',
-          padding: '16rem 0',
+          fontSize: '14px',
+          padding: '16px 0',
         }"
         :cell-style="{
           borderColor: 'rgba(255, 255, 255, 0.3)',
           backgroundColor: '#161616',
           color: '#fff',
-          fontSize: '14rem',
-          padding: '16rem 0',
+          fontSize: '14px',
+          padding: '16px 0',
         }"
       >
         <el-table-column
@@ -44,13 +44,13 @@
             <div v-if="item.label == '操作'">
               <img
                 @click="dialogVisible = true"
-                style="height: 22rem; cursor: pointer"
+                style="height: 22px; cursor: pointer"
                 src="../../img/cx.png"
                 alt=""
               />
               <img
                 @click="dialogVisible = true"
-                style="height: 22rem; cursor: pointer"
+                style="height: 22px; cursor: pointer"
                 src="../../img/bj.png"
                 alt=""
               />
@@ -64,7 +64,7 @@
     <div class="tandialog">
       <el-dialog
         :visible.sync="dialogVisible"
-        width="520rem"
+        width="520px"
         :show-close="false"
         :close-on-click-modal="false"
       >
@@ -72,19 +72,19 @@
           style="
             color: #fff;
             text-align: center;
-            font-size: 18rem;
+            font-size: 18px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 16rem;
+            padding-bottom: 16px;
           "
         >
           添加
         </div>
-        <div class="formstyle" style="padding-top: 20rem">
+        <div class="formstyle" style="padding-top: 20px">
           <el-form
             :model="ruleForm"
             :rules="rules"
             ref="ruleForm"
-            label-width="100rem"
+            label-width="100px"
             class="demo-ruleForm"
           >
             <el-form-item label="添加IP：" prop="ip">
@@ -95,19 +95,19 @@
                 class="inputtextarea"
                 v-model="ruleForm.ip"
                 size="mini"
-                style="width: 340rem"
+                style="width: 340px"
               ></el-input>
             </el-form-item>
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button class="buttonsy" size="mini" style="margin-right: 30px"
             >确认</el-button
           >
           <el-button
             class="buttonsy"
             size="mini"
-            style="margin-left: 30rem"
+            style="margin-left: 30px"
             @click="dialogVisible = false"
             >取消</el-button
           >
@@ -166,7 +166,7 @@ export default {
           prop: "h",
           label: "操作",
           type: true,
-          width: "160rem",
+          width: "160px",
         },
       ],
     };
@@ -175,7 +175,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .interview {
-  padding: 40rem 50rem;
+  padding: 40px 50px;
   .tandialog {
     /deep/.el-dialog {
       background: none !important;
@@ -187,10 +187,10 @@ export default {
     /deep/.el-dialog__body {
       // background: #676767;
       background: rgba(103, 103, 103, 0.2);
-      backdrop-filter: blur(13rem);
+      backdrop-filter: blur(13px);
       // background: #676767;
-      border-radius: 5rem;
-      border: 1rem solid;
+      border-radius: 5px;
+      border: 1px solid;
       border-image: linear-gradient(270deg, #fb8619 0%, #fcba48 100%) 1;
     }
     // -------------------------------------------------------

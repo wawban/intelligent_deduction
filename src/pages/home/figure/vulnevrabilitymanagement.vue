@@ -53,27 +53,27 @@ export default {
 <style lang="less" scoped>
 .vulnevrabilitymanagement {
   .box {
-    height: 809rem;
-    padding: 20rem 30rem;
+    height: 809px;
+    padding: 20px 30px;
     .tabla {
       display: flex;
       align-items: center;
       .dian {
-        font-size: 18rem;
+        font-size: 18px;
         cursor: pointer;
       }
       .xian {
-        height: 14rem;
-        width: 1rem;
+        height: 14px;
+        width: 1px;
         background: #d8d8d8;
-        margin: 0 28rem;
+        margin: 0 28px;
       }
       .dian:hover {
         color: #fa9600;
       }
       .styxian {
         color: #fa9600;
-        border-bottom: 3rem solid #fa9600;
+        border-bottom: 3px solid #fa9600;
       }
     }
   }
