@@ -125,10 +125,11 @@
                   </div>
                   <div style="display: flex; align-items: center">
                     <div class="treestyle gdstyle">
-                      <Treemu :datatree="zczdata" />
+                      <Treemu :datatree="zczdata" @ontreee="ontreee" />
                     </div>
                     <div style="padding: 0 24rem">
                       <i
+                        @click="qiehuan"
                         class="el-icon-d-arrow-right"
                         style="
                           color: #fa9600;
@@ -138,7 +139,10 @@
                         "
                       ></i>
                     </div>
-                    <div class="treestyle gdstyle">
+                    <div class="treestyle gdstyle youji">
+                      <div v-for="(item, index) in huixiaer" :key="index">
+                        {{ item.name }}
+                      </div>
                       <!-- <Treemu :datatree="zczdata" /> -->
                     </div>
                     <div style="padding-left: 41rem">
@@ -219,6 +223,8 @@ import { governance_groups } from "@/api";
 export default {
   data() {
     return {
+      chuangdnag: {},
+      huixiaer: [],
       xxx: "",
       zczdata: [], // 资产组架构
       // +++++++++++++++++++++++++++++++++++
@@ -255,6 +261,18 @@ export default {
     this.getgovernancegroups();
   },
   methods: {
+    // 传值
+    ontreee(e) {
+      this.chuangdnag = e;
+    },
+    qiehuan() {
+      var arr = this.huixiaer.map((res) => {
+        return res.id;
+      });
+      if (arr.indexOf(this.chuangdnag.id) == -1) {
+        this.huixiaer.push(this.chuangdnag);
+      }
+    },
     // 下一步
     gouxb() {
       if (this.type == 1) {
@@ -387,6 +405,12 @@ export default {
             height: 140rem;
             overflow: auto;
             border: 1px solid #aaaaaa;
+          }
+          .youji {
+            padding: 10rem;
+            > div {
+              font-size: 14rem;
+            }
           }
         }
       }

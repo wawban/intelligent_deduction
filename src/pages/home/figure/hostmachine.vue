@@ -730,8 +730,10 @@ export default {
           obj.filter = tj.join(" " + this.rysy + " ");
         }
       }
+      obj.offset = obj.offset - 1;
       governance_hosts(obj).then((res) => {
         this.page = res.pagination;
+        this.page.offset += 1;
         this.tableData = res.results;
       });
     },

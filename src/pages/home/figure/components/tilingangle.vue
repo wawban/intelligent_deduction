@@ -492,8 +492,10 @@ export default {
           obj.filter = tj.join(" " + this.rysy + " ");
         }
       }
+      obj.offset = obj.offset - 1;
       governance_vulns(obj).then((res) => {
         this.page = res.pagination;
+        this.page.offset += 1;
         this.tableData = res.results.map((item) => {
           return item.meta;
         });

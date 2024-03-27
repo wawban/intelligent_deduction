@@ -207,8 +207,14 @@
             :width="item.width"
           >
             <template slot-scope="scope">
+              <!-- is_active -->
+
+              <div v-if="item.label == '开启/禁用'">
+                {{ scope.row.is_active ? "开启" : "禁用" }}
+              </div>
+
               <!-- 操作 -->
-              <div v-if="item.label == '操作'">
+              <div v-else-if="item.label == '操作'">
                 <img
                   @click="dkcz(scope.row)"
                   style="height: 22rem; cursor: pointer"
@@ -286,53 +292,52 @@
                 <el-option label="xxx" value="2"> </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="用户名：" prop="yhm">
+            <el-form-item label="姓名：" prop="name">
               <el-input
                 placeholder="请输入"
                 class="inpustyle"
-                v-model="ruleForm.yhm"
+                v-model="ruleForm.name"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="账号：" prop="zh">
+            <el-form-item label="账号：" prop="username">
               <el-input
                 placeholder="请输入"
                 class="inpustyle"
-                v-model="ruleForm.zh"
+                v-model="ruleForm.username"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="密码：" prop="mm">
+            <el-form-item label="密码：" prop="password">
               <el-input
                 placeholder="请输入"
+                type="password"
                 class="inpustyle"
-                v-model="ruleForm.mm"
+                v-model="ruleForm.password"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="确认密码：" prop="qrmm">
+            <el-form-item label="确认密码：" prop="qpassword">
               <el-input
                 placeholder="请输入"
+                type="password"
                 class="inpustyle"
-                v-model="ruleForm.qrmm"
+                v-model="ruleForm.qpassword"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="部门：" prop="bm">
-              <el-select
-                class="zhessless"
+            <el-form-item label="部门：" prop="department">
+              <el-input
+                placeholder="请输入"
+                class="inpustyle"
+                v-model="ruleForm.department"
                 size="mini"
-                v-model="ruleForm.bm"
-                placeholder="请选择"
                 style="width: 340rem"
-              >
-                <el-option label="管理员" value="1"> </el-option>
-                <el-option label="xxx" value="2"> </el-option>
-              </el-select>
+              ></el-input>
             </el-form-item>
             <el-form-item label="开启/禁用：">
               <el-switch
@@ -635,23 +640,27 @@ export default {
       },
       // 添加表单数据
       ruleForm: {
-        js: "",
-        yhm: "",
-        mm: "",
-        qrmm: "",
-        zh: "",
-        bm: "",
-        kqjy: false,
-        xxx: "",
+        name: "",
+        username: "",
+        password: "",
+        qpassword: "",
+        department: "",
       },
       // 添加表单验证
       rules: {
-        js: [{ required: true, message: "请选择角色 ", trigger: "change" }],
-        yhm: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-        zh: [{ required: true, message: "请输入账号", trigger: "blur" }],
-        mm: [{ required: true, message: "请输入密码", trigger: "blur" }],
-        qrmm: [{ required: true, message: "请输入确认密码", trigger: "blur" }],
-        bm: [{ required: true, message: "请输入部门", trigger: "change" }],
+        // js: [{ required: true, message: "请选择角色 ", trigger: "change" }],
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        username: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        qpassword: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        department: [
+          { required: true, message: "请输入部门", trigger: "blur" },
+        ],
+
+        // zh: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        // mm: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        // qrmm: [{ required: true, message: "请输入确认密码", trigger: "blur" }],
+        // bm: [{ required: true, message: "请输入部门", trigger: "change" }],
         // { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
         // password: [{ validator: funcpassword, trigger: "blur" }],
       },
@@ -661,7 +670,7 @@ export default {
       flagbj: false, //编辑弹窗
       // -----------------------------------------------------------------关联查询组件下
       // 表格数据
-      tableData: [{}],
+      tableData: [],
       // 表头数据
       btarr: [],
       // 表头改变数据
@@ -669,42 +678,40 @@ export default {
       // 表头原始数据
       tablearr: [
         {
-          prop: "username",
-          label: "用户名",
+          prop: "name",
+          label: "姓名",
           type: true,
         },
         {
-          prop: "b",
+          prop: "username",
           label: "账号",
           type: true,
         },
         {
-          prop: "c",
+          prop: "phone",
           label: "手机号",
           type: true,
         },
         {
-          prop: "d",
+          prop: "email",
           label: "邮箱",
           type: true,
         },
         {
-          prop: "e",
+          prop: "role",
           label: "角色",
           type: true,
         },
         {
-          prop: "f",
           label: "开启/禁用",
           type: true,
         },
         {
-          prop: "g",
+          prop: "department",
           label: "部门",
           type: true,
         },
         {
-          prop: "h",
           label: "操作",
           type: true,
         },
@@ -826,8 +833,10 @@ export default {
           obj.filter = tj.join(" " + this.rysy + " ");
         }
       }
+      obj.offset = obj.offset - 1;
       system_users(obj).then((res) => {
         this.page = res.pagination;
+        this.page.offset += 1;
         this.tableData = res.results;
         // this.tableData = [{ c: "ww" }];
         // this.tableData = res.results.map((item) => {

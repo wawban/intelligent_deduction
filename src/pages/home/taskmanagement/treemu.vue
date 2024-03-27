@@ -84,7 +84,9 @@ export default {
   methods: {
     // 点击树展开
     onxuanz(e) {
+      // console.log(e);
       this.treekry = e.id;
+      this.$emit("ontreee", e);
     },
     // 递归树
     dg(arr, e) {
