@@ -4,7 +4,7 @@
       <div v-for="(e, i) in datatree" :key="i">
         <div class="terewenr" style="background: #292929">
           <i
-            @click="onstyle(e.id + i + 'one', $event)"
+            @click="onstyle(e.id + i, $event)"
             v-if="e.sub_groups && e.sub_groups.length != 0"
             class="el-icon-arrow-right"
           ></i>
@@ -17,14 +17,14 @@
         </div>
         <!-- 循环二层 -->
         <div
-          :class="e.id + i + 'one' + ' hideen'"
+          :class="e.id + i + ' hideen'"
           v-for="(e1, i1) in e.sub_groups"
           :key="i1"
         >
           <!-- 二层内容 -->
           <div class="terewenr" style="background: #161616">
             <i
-              @click="onstyle(e1.id + i1 + 'tow', $event)"
+              @click="onstyle(e1.id + i1, $event)"
               v-if="e1.sub_groups && e1.sub_groups.length != 0"
               class="el-icon-arrow-right"
             ></i>
@@ -39,7 +39,7 @@
           </div>
           <!-- 循环三层 -->
           <div
-            :class="e1.id + i1 + 'tow' + ' hideen'"
+            :class="e1.id + i1 + ' hideen'"
             v-for="(e2, i2) in e1.sub_groups"
             :key="i2"
           >

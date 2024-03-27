@@ -288,6 +288,29 @@ export function users_password(data,id) {
         data
     })
 }
+export function auth_logout() {
+    return request({
+        url: `${url}auth/logout`,
+        method: 'delete'
+    })
+}
+
+export const infer_taskspost= (data) => {
+    return request({
+        url: `${url}infer/tasks`,
+        method: "post",
+        data
+    })
+}
+export function infer_tasksstatus(data,id) {
+    return request({
+        url: `${url}infer/tasks/${id}/status`,
+        method: 'patch',
+        data
+    })
+}
+// /infer/tasks/{id}/status
+// /infer/tasks
 // /data-governance/vulns/{id}
 // s
 // /kb/vulns/{id}

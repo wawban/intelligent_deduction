@@ -197,14 +197,42 @@
           :width="item.width"
         >
           <template slot-scope="scope">
+            <div v-if="item.label == '推演起点'">
+              <span v-for="(e, i) in scope.row.qdian" :key="i">{{ e }}</span>
+            </div>
+
+            <div v-else-if="item.label == '推演终点'">
+              <span v-for="(e, i) in scope.row.zdian" :key="i">{{ e }}</span>
+            </div>
+
             <!-- 操作 -->
-            <div v-if="item.label == '操作'">
+            <div v-else-if="item.label == '操作'">
               <img
+                v-if="
+                  scope.row.status == 'scheduled' ||
+                  scope.row.status == 'pending' ||
+                  scope.row.status == 'running'
+                "
+                @click="zzdk(scope.row, '1')"
                 style="height: 22rem; cursor: pointer"
                 src="../img/zz.png"
                 alt=""
               />
               <img
+                v-if="
+                  scope.row.status == 'stopped' ||
+                  scope.row.status == 'paused' ||
+                  scope.row.status == 'finished' ||
+                  scope.row.status == 'failed'
+                "
+                @click="zzdk(scope.row, '2')"
+                style="height: 22rem; cursor: pointer"
+                src="../img/replay.png"
+                alt=""
+              />
+
+              <img
+                @click="gotusd(scope.row)"
                 style="height: 22rem; cursor: pointer; margin: 0 26rem"
                 src="../img/jx.png"
                 alt=""
@@ -259,7 +287,7 @@
           提示
         </div>
         <div style="font-size: 16rem; padding: 20rem 0; color: #fff">
-          确定终止\删除风险推演任务一吗？
+          确定删除风险推演任务一吗？
         </div>
         <div style="text-align: right">
           <el-button
@@ -283,13 +311,70 @@
         </div>
       </el-dialog>
     </div>
+    <!-- 终止/重启 -->
+    <div class="tandialog">
+      <el-dialog
+        :visible.sync="fxzzflag"
+        width="520rem"
+        :show-close="false"
+        :close-on-click-modal="false"
+      >
+        <div
+          style="
+            color: #fa9600;
+            font-size: 18rem;
+            font-weight: 500;
+            padding-bottom: 16rem;
+            display: flex;
+            align-items: center;
+          "
+        >
+          <i
+            class="el-icon-warning-outline"
+            style="font-size: 24rem; color: #fa9600; margin-right: 10rem"
+          ></i>
+          提示
+        </div>
+        <div style="font-size: 16rem; padding: 20rem 0; color: #fff">
+          确定{{ staustype == "1" ? "终止" : "重启" }}风险推演任务吗？
+        </div>
+        <div style="text-align: right">
+          <el-button
+            size="mini"
+            style="
+              margin-right: 30rem;
+              background: #fa9600 !important;
+              color: #fff !important;
+              border-color: #fa9600;
+            "
+            @click="onzzsbmin"
+            >确认</el-button
+          >
+          <el-button
+            class="buttonsy"
+            size="mini"
+            style="margin-left: 30rem"
+            @click="fxzzflag = false"
+            >取消</el-button
+          >
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 <script>
-import { infer_tasks, infer_taskssc } from "@/api";
+import {
+  infer_tasks,
+  infer_taskssc,
+  infer_tasksstatus,
+  // governance_groups
+} from "@/api";
 export default {
   data() {
     return {
+      staustype: "",
+      zzid: "",
+      fxzzflag: false,
       scid: "", //删除ID
       rysy: "and", //符合条件，任一或所有
       //   查询数据
@@ -383,6 +468,21 @@ export default {
     this.getgovernancehosts(); // 列表
   },
   methods: {
+    onzzsbmin() {
+      infer_tasksstatus(
+        { status: this.staustype == "1" ? "stopped" : "running" },
+        this.zzid
+      ).then(() => {
+        this.fxzzflag = false;
+        this.getgovernancehosts();
+      });
+    },
+    // 终止打开
+    zzdk(e, i) {
+      this.staustype = i;
+      this.zzid = e.id;
+      this.fxzzflag = true;
+    },
     // 删除打开
     sconcl(id) {
       this.scid = id;
@@ -405,6 +505,13 @@ export default {
     },
     // 列表
     getgovernancehosts(e) {
+      // const groups = []
+      // governance_groups().then((res) => {
+      //   groups=
+      //   // this.modedata = res[0];
+      //   // this.treedata(res);
+      // });
+
       // 清空条件+查询所有
       if (e == "clear") {
         this.searcharr = [];
@@ -432,18 +539,87 @@ export default {
         this.page.offset += 1;
         this.tableData = res.results.map((item) => {
           item.yxms = item.schedule.timing_mode;
-          item.qdian = item.task_targets.tail.cidrs;
-          item.zdian = item.task_targets.head.cidrs;
+          if (item.config.target_type == "group") {
+            item.qdian = item.task_targets.tail.groups;
+            item.zdian = item.task_targets.head.groups;
+          } else {
+            item.qdian = item.task_targets.tail.cidrs;
+            item.zdian = item.task_targets.head.cidrs;
+          }
+
           item.time_created = this.$moment(item.time_created).format(
             "YYYY-MM-DD HH:mm:ss"
           );
-
           return item;
         });
-        // alert(this.tableData[0].name);
         console.log(this.tableData);
       });
     },
+    // getgovernancehosts(e) {
+    //   // 清空条件+查询所有
+    //   if (e == "clear") {
+    //     this.searcharr = [];
+    //     this.page.offset = 1;
+    //   }
+    //   var obj = {
+    //     offset: this.page.offset,
+    //     limit: this.page.limit,
+    //   };
+    //   if (this.searcharr.length != 0) {
+    //     var arr = this.searcharr.filter((item) => {
+    //       return item.key.length != 0 && item.type.length != 0;
+    //     });
+    //     if (arr.length != 0) {
+    //       var tj = arr.map((req) => {
+    //         var jihe = req.key + " " + req.value + " " + (req.type || "");
+    //         return jihe;
+    //       });
+    //       obj.filter = tj.join(" " + this.rysy + " ");
+    //     }
+    //   }
+    //   obj.offset = obj.offset - 1;
+    //   infer_tasks(obj).then((res) => {
+    //     this.page = res.pagination;
+    //     this.page.offset += 1;
+    //     this.tableData = res.results.map((item) => {
+    //       item.yxms = item.schedule.timing_mode;
+    //       // item.qdian = item.task_targets.tail.cidrs.toString();
+    //       // item.qdian = item.task_targets.tail.cidrs.join(",");
+    //       // item.zdian = item.task_targets.head.cidrs.join(",");
+    //       // item.zdian = item.task_targets.head.cidrs.toString();
+    //       // item.qdian = item.task_targets.tail.cidrs;
+    //       // item.zdian = item.task_targets.head.cidrs;
+    //       if (item.config.target_type == "group") {
+    //         item.qdian = item.task_targets.tail.groups;
+    //         item.zdian = item.task_targets.head.groups;
+    //       } else {
+    //         item.qdian = item.task_targets.tail.cidrs;
+    //         item.zdian = item.task_targets.head.cidrs;
+    //       }
+
+    //       item.time_created = this.$moment(item.time_created).format(
+    //         "YYYY-MM-DD HH:mm:ss"
+    //       );
+
+    //       // item.qdian=item.qdian.join(',')
+
+    //       //   {
+    //       //   prop: "qdian",
+    //       //   label: "推演起点",
+    //       //   type: true,
+    //       // },
+    //       // {
+    //       //   prop: "zdian",
+    //       //   label: "推演终点",
+    //       //   type: true,
+    //       // },
+
+    //       return item;
+    //     });
+    //     // alert(this.tableData[0].name);
+    //     console.log(this.tableData);
+    //   });
+    // },
     // 分页条数
     handleSizeChange(e) {
       this.page.limit = e;
@@ -472,6 +648,12 @@ export default {
     gotu(e) {
       // console.log(e)
       this.$router.push("/taskmanagement/addquest");
+    },
+    gotusd(e) {
+      this.$router.push({
+        path: "/drivingdepot",
+        query: { id: e.id },
+      });
     },
   },
 };

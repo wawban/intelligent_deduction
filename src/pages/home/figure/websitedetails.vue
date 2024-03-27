@@ -6,7 +6,9 @@
         <div class="img">
           <img src="../img/sh.png" alt="" />
         </div>
-        <div class="wys">数字空间治理/网站资产/</div>
+        <div class="wys" style="cursor: pointer" @click="goto">
+          数字空间治理/网站资产/
+        </div>
         <div class="yys">资产详情</div>
       </div>
       <div class="fanh" @click="goto">

@@ -160,8 +160,20 @@
         <el-header style="height: 60rem; background: #242322">
           <div class="headertop">
             <div>CybSeer智能推演平台</div>
-            <div>
+            <div class="userstyle">
               <img src="./img/user.png" alt="" />
+              <div class="out">
+                <el-button
+                  size="mini"
+                  style="
+                    background: #fa9600 !important;
+                    color: #fff !important;
+                    border-color: #fa9600;
+                  "
+                  @click="onout"
+                  >退出</el-button
+                >
+              </div>
             </div>
           </div>
         </el-header>
@@ -173,6 +185,7 @@
   </div>
 </template>
 <script>
+import { auth_logout } from "@/api";
 export default {
   data() {
     return {
@@ -192,6 +205,11 @@ export default {
     },
   },
   methods: {
+    onout() {
+      auth_logout().then(() => {
+        this.$router.push("/");
+      });
+    },
     gotu(e) {
       this.$router.push(e);
     },
@@ -228,6 +246,24 @@ export default {
       > img {
         height: 32rem;
       }
+    }
+    .userstyle {
+      position: relative;
+      .out {
+        display: none;
+        position: absolute;
+        // background: red;
+        // width: 200px;
+        // height: 200px;
+        top: 60rem;
+        right: 0rem;
+        // padding: 10rem;
+        // border: 1px solid rgba(255, 255, 255, 0.2);
+        // z-index: 1111111111;
+      }
+    }
+    .userstyle:hover .out {
+      display: block;
     }
   }
   .asideleft {
