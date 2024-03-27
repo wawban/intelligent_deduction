@@ -106,13 +106,14 @@
       <div class="maxtj wbb">
         <div class="topbt">网络流量概览</div>
         <div class="zxiant">
-          <Lines />
+          <Lines :liste="[]" />
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { system_status } from "@/api";
 export default {
   components: {
     Lines: () => import("./components/lines"),
@@ -124,6 +125,17 @@ export default {
   },
   created() {
     this.wwind = document.documentElement.clientWidth;
+  },
+  mounted() {
+    this.getgovernancehosts(); // 数据
+  },
+  methods: {
+    // 列表
+    getgovernancehosts(e) {
+      system_status().then((res) => {
+        // this.zdata = res.pagination;
+      });
+    },
   },
 };
 </script>
