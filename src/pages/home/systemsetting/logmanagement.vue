@@ -44,9 +44,13 @@
             :width="item.width"
           >
             <template slot-scope="scope">
+              <!-- prop: "timestamp",
+          label: "日期",
+          $moment(meta.time_updated).format("YYYY-MM-DD HH:mm:ss") -->
               <!-- 操作 -->
-              <div v-if="item.label == '操作'">
-                <img
+              <div v-if="item.label == '日期'">
+                {{ $moment(scope.row.timestamp).format("YYYY-MM-DD HH:mm:ss") }}
+                <!-- <img
                   @click="gotu(scope.row)"
                   style="height: 22rem; cursor: pointer"
                   src="../img/cx.png"
@@ -57,7 +61,7 @@
                   style="height: 22rem; cursor: pointer"
                   src="../img/bj.png"
                   alt=""
-                />
+                /> -->
               </div>
               <span v-else>{{ scope.row[scope.column.property] }}</span>
             </template>
@@ -90,32 +94,31 @@ export default {
       // 表头改变数据
       vararr: [
         {
-          prop: "a",
           label: "日期",
           type: true,
         },
         {
-          prop: "b",
+          prop: "username",
           label: "用户名",
           type: true,
         },
         {
-          prop: "c",
+          prop: "user_role",
           label: "角色",
           type: true,
         },
         {
-          prop: "d",
+          prop: "department",
           label: "部门",
           type: true,
         },
         {
-          prop: "e",
+          prop: "ip",
           label: "IP",
           type: true,
         },
         {
-          prop: "f",
+          prop: "detail",
           label: "操作详情",
           type: true,
         },
@@ -133,8 +136,14 @@ export default {
   },
   methods: {
     getgovernancehosts(e) {
-      system_logs().then((res) => {
+      var obj = {
+        offset: this.page.offset,
+        limit: this.page.limit,
+      };
+      obj.offset = obj.offset - 1;
+      system_logs(obj).then((res) => {
         this.page = res.pagination;
+        this.page.offset += 1;
         this.tableData = res.results;
       });
     },

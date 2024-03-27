@@ -22,6 +22,18 @@
     </div>
   </div>
 </template>
+<script>
+export default {
+  props: {
+    exploit: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+  },
+};
+</script>
 <style lang="less" scoped>
 .use {
   padding: 33rem 39rem;

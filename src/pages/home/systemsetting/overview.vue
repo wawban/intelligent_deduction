@@ -21,7 +21,7 @@
               class="huanxyet"
               :stroke-width="wwind == 1920 ? 16 : 16 / 1.33333333333"
               type="circle"
-              :percentage="30"
+              :percentage="zdata.memory_usage"
               color="#C6502D"
             ></el-progress>
             <div class="dayuan">
@@ -43,7 +43,7 @@
               class="huanxyet"
               :stroke-width="wwind == 1920 ? 16 : 16 / 1.33333333333"
               type="circle"
-              :percentage="30"
+              :percentage="zdata.cpu_usage"
               color="#C6502D"
             ></el-progress>
             <div class="dayuan">
@@ -65,7 +65,7 @@
               class="huanxyet"
               :stroke-width="wwind == 1920 ? 16 : 16 / 1.33333333333"
               type="circle"
-              :percentage="30"
+              :percentage="zdata.disk_usage"
               color="#C6502D"
             ></el-progress>
             <div class="dayuan">
@@ -87,7 +87,7 @@
               class="huanxyet"
               :stroke-width="wwind == 1920 ? 16 : 16 / 1.33333333333"
               type="circle"
-              :percentage="30"
+              :percentage="zdata.cpu_cores"
               color="#C6502D"
             ></el-progress>
             <div class="dayuan">
@@ -106,7 +106,7 @@
       <div class="maxtj wbb">
         <div class="topbt">网络流量概览</div>
         <div class="zxiant">
-          <Lines :liste="[]" />
+          <Lines :liste="netflow" />
         </div>
       </div>
     </div>
@@ -121,6 +121,8 @@ export default {
   data() {
     return {
       wwind: 0,
+      zdata: {},
+      netflow: {},
     };
   },
   created() {
@@ -133,7 +135,8 @@ export default {
     // 列表
     getgovernancehosts(e) {
       system_status().then((res) => {
-        // this.zdata = res.pagination;
+        this.zdata = res;
+        this.netflow = res.netflow;
       });
     },
   },

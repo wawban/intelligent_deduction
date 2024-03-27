@@ -147,6 +147,7 @@ export default {
   methods: {
     // 点击树展开
     onxuanz(e) {
+      this.$emit("onuptada", e);
       this.treekry = e.id;
     },
     // 切换本级与下级   +   初始化树

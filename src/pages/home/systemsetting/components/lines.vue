@@ -22,8 +22,7 @@ export default {
     liste: {
       handler(to, form) {
         // console.log(this.liste);
-        // this.createCharts(this.liste);
-        this.createCharts();
+        this.createCharts(this.liste);
       },
       // deep: true,
       // immediate: true,
@@ -40,17 +39,28 @@ export default {
         return e * j;
       }
     },
-    createCharts() {
+    createCharts(e) {
       this.myChart = this.$echarts.init(this.$refs[this.refName]);
-      var arr = [
-        { a: "2023年12月1号" },
-        { a: "2023年12月2号" },
-        { a: "2023年12月3号" },
-        { a: "2023年12月4号" },
-        { a: "2023年12月5号" },
-        { a: "2023年12月6号" },
-        { a: "2023年12月7号" },
-      ];
+      var sjiana = e.map((item) => {
+        return this.$moment(item.timestamp).format("HH:mm");
+        // return this.$moment(item.timestamp).format("YYYY-MM-DD HH:mm:ss");
+        // {{ $moment(e.timestamp).format("YYYY-MM-DD HH:mm:ss") }}
+      });
+      var arrjs = e.map((item) => {
+        return item.bytes_in;
+      });
+      var arrfs = e.map((item) => {
+        return item.bytes_out;
+      });
+      // var arr = [
+      //   { a: "2023年12月1号" },
+      //   { a: "2023年12月2号" },
+      //   { a: "2023年12月3号" },
+      //   { a: "2023年12月4号" },
+      //   { a: "2023年12月5号" },
+      //   { a: "2023年12月6号" },
+      //   { a: "2023年12月7号" },
+      // ];
       var option = {
         grid: {
           top: "18%",
@@ -88,7 +98,8 @@ export default {
           axisTick: { show: false },
           nameLocation: "start",
           type: "category",
-          data: ["10:00", "11:00", "13:00", "15:00", "17:00"],
+          // data: ["10:00", "11:00", "13:00", "15:00", "17:00"],
+          data: sjiana,
         },
         yAxis: [
           {
@@ -107,7 +118,9 @@ export default {
             showSymbol: false,
             name: "接收",
             type: "line",
-            data: [150, 230, 166, 218, 135],
+            // data: [150, 230, 166, 218, 135],
+            // data: [150, 230, 166, 218, 135],
+            data: arrjs,
             itemStyle: {
               color: "#FF9A3E",
             },
@@ -116,7 +129,8 @@ export default {
             showSymbol: false,
             name: "发送",
             type: "line",
-            data: [34, 77, 224, 66, 44],
+            // data: [34, 77, 224, 66, 44],
+            data: arrfs,
             itemStyle: {
               color: "#C6502D",
             },

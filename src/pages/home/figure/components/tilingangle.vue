@@ -394,7 +394,7 @@ export default {
           type: true,
         },
         {
-          prop: "e",
+          prop: "gdzt",
           label: "工单状态",
           type: true,
         },
@@ -404,7 +404,7 @@ export default {
           type: true,
         },
         {
-          prop: "g",
+          prop: "zcip",
           label: "所属资产IP",
           type: true,
         },
@@ -419,7 +419,6 @@ export default {
           type: true,
         },
         {
-          prop: "k",
           label: "操作",
           type: true,
         },
@@ -497,6 +496,8 @@ export default {
         this.page = res.pagination;
         this.page.offset += 1;
         this.tableData = res.results.map((item) => {
+          item.gdzt = item.ticket.status;
+          item.zcip = item.meta.asset.ip;
           return item.meta;
         });
       });

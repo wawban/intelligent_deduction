@@ -189,7 +189,7 @@
           >
             <template slot-scope="scope">
               <div v-if="item.label == '危害等级'">
-                <div
+                <!-- <div
                   :class="
                     scope.row.a == 1
                       ? 'styg'
@@ -208,6 +208,31 @@
                       : scope.row.a == 3
                       ? "低危"
                       : "--"
+                  }}
+                </div> -->
+                <div
+                  :class="
+                    scope.row.severity == 'low'
+                      ? 'low'
+                      : scope.row.severity == 'medium'
+                      ? 'medium'
+                      : scope.row.severity == 'high'
+                      ? 'high'
+                      : scope.row.severity == 'critical'
+                      ? 'critical'
+                      : ''
+                  "
+                >
+                  {{
+                    scope.row.severity == "low"
+                      ? "低危"
+                      : scope.row.severity == "medium"
+                      ? "中危"
+                      : scope.row.severity == "high"
+                      ? "高危"
+                      : scope.row.severity == "critical"
+                      ? "超危"
+                      : ""
                   }}
                 </div>
               </div>
@@ -247,7 +272,7 @@ export default {
     return {
       // -----------------------------------------------------------------关联查询组件下
       // 表格数据
-      tableData: [{}],
+      tableData: [],
       // 表头数据
       btarr: [],
       // 表头改变数据
@@ -255,42 +280,40 @@ export default {
       // 表头原始数据
       tablearr: [
         {
-          prop: "a",
+          prop: "name",
           label: "漏洞名称",
           type: true,
         },
         {
-          prop: "b",
+          prop: "type",
           label: "漏洞类型",
           type: true,
         },
         {
-          prop: "c",
+          prop: "cve_id",
           label: "CVE编号",
           type: true,
         },
         {
-          prop: "d",
+          prop: "cnvd_id",
           label: "CNNVD编号",
           type: true,
         },
         {
-          prop: "e",
+          prop: "cvss",
           label: "评分",
           type: true,
         },
         {
-          prop: "a",
           label: "危害等级",
           type: true,
         },
         {
-          prop: "g",
+          prop: "time_discovered",
           label: "发布日期",
           type: true,
         },
         {
-          prop: "h",
           label: "操作",
           type: true,
         },
@@ -363,7 +386,7 @@ export default {
       kb_vulns(obj).then((res) => {
         this.page = res.pagination;
         this.page.offset += 1;
-        // this.tableData = res.results;
+        this.tableData = res.results.meta;
         // this.tableData = [{ c: "ww" }];
         // this.tableData = res.results.map((item) => {
         //   return item.meta;
@@ -401,9 +424,15 @@ export default {
       this.getgovernancehosts();
     },
     // ---------------------------跳转详情
+    // gotu(e) {
+    //   // console.log(e)
+    //   this.$router.push("/knowledgedetails");
+    // },
     gotu(e) {
-      // console.log(e)
-      this.$router.push("/knowledgedetails");
+      this.$router.push({
+        path: "/knowledgedetails",
+        query: { id: e.id },
+      });
     },
   },
 };
@@ -414,15 +443,27 @@ export default {
     height: 809rem;
     padding: 20rem 30rem;
     .biaotab {
-      .styg {
-        color: #e53a40;
+      .low {
+        color: #f6d535;
       }
-      .styz {
+      .medium {
         color: #fa9600;
       }
-      .styd {
+      .high {
         color: #e53a40;
       }
+      .critical {
+        color: #8b0000;
+      }
+      // .styg {
+      //   color: #e53a40;
+      // }
+      // .styz {
+      //   color: #fa9600;
+      // }
+      // .styd {
+      //   color: #e53a40;
+      // }
     }
   }
 }

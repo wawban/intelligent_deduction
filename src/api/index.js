@@ -267,7 +267,28 @@ export const kb_vulns= (params) => {
         params
     })
 }
+export const kb_vulnsid = (id) => {
+    return request({
+        url: `${url}kb/vulns/${id}`,
+        method: "patch"
+    })
+}
 
+export const auth_roles= (params) => {
+    return request({
+        url: `${url}auth/roles`,
+        method: "get",
+        params
+    })
+}
+export function users_password(data,id) {
+    return request({
+        url: `${url}auth/users/${id}/password`,
+        method: 'put',
+        data
+    })
+}
+// /data-governance/vulns/{id}
 // s
 // /kb/vulns/{id}
 // /data-governance/vulns
