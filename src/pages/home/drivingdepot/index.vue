@@ -146,6 +146,55 @@ import zcxq from "./zcxq.vue";
 import zstp from "./zstp.vue";
 var paper;
 var clickTimer;
+//六边形间距
+var padding = 15;
+//检测指定位置是否已经存在六边形
+var isPointInside = function(x,y,r,siblings){
+	for(var i=0;i<siblings.length;i++){
+		var s = siblings[i];
+		var height = (Math.sqrt(3) / 2) * s.r;
+		var x1 = s.x - (s.r/2);
+		var y1 = s.y - height;
+		var x2 = s.x + (s.r/2);
+		var y2 = s.y + height;
+		if(x >= x1 && x <= x2 && y >= y1 && y <= y2){
+			return true;
+		}
+		for (var j = 0; j < 6; j++) {
+			var angle = (2 * Math.PI / 6) * j;
+			var cx = x + r * Math.cos(angle);
+			var cy = y + r * Math.sin(angle);
+			if(cx >= x1 && cx <= x2 && cy >= y1 && cy <= y2){
+				return true;
+			}
+		}
+	}
+	return false;
+};
+
+var nextInt = function(max){
+	return Math.floor(Math.random() * (max + 1));
+};
+
+var addGroup = function(nodes){
+	var hasHost = false;
+	var hasGroup = false;
+	nodes.forEach(function(item,index){
+		if(item.ip){
+			hasHost = true;
+		}else{
+			hasGroup = true;
+		}
+	});
+	for(var i=0;i<nodes.length;i++){
+		if(hasHost && hasGroup && nodes[i].ip){
+			nodes[i] = {children:[nodes[i]]};
+		}else if(nodes[i].children){
+			addGroup(nodes[i].children);
+		}
+	}
+};
+
 export default {
   components:{jbxx,zcxq,zstp},
   data() {
@@ -161,7 +210,7 @@ export default {
       weiguan:null,//微观图数据
       wggraps:{},//微观——根据id记录图形
       graps:{},//主图——根据id记录主机图形
-      lines:{},//主图——根据title记录线
+      lines:{},//主图——根据title记录攻击路径
       taskid:null,//当前任务id
       taskname:'未选择任务',//当前任务名
       count:{//统计数据
@@ -174,7 +223,8 @@ export default {
 	      score: 0//综合得分
       },
       path:[],//攻击路径清单
-      nodes:[]//主图数据
+      nodes:[],//主图数据
+      attack:[]//主图攻击路径
     };
   },
   mounted() {
@@ -193,13 +243,20 @@ export default {
   	//任务列表
     getTaskData() {
 		infer_tasks({}).then((res) => {
+			var defid = this.$route.query.id;
 			for(var i=0;i<res.results.length;i++){
 				var obj = res.results[i];
 				this.tasklist.push({id:obj.latest_result_id,label:obj.name});
+				if(defid != null && defid == obj.latest_result_id){
+					this.taskid = obj.latest_result_id
+					this.taskname = obj.name;
+				}
 			}
 			if(res.results.length > 0){
-				this.taskname = res.results[res.results.length-1].name;
-				this.taskid = res.results[res.results.length-1].latest_result_id;
+				if(!this.taskid){
+					this.taskname = res.results[res.results.length-1].name;
+					this.taskid = res.results[res.results.length-1].latest_result_id;
+				}
 				this.getdata();
 			}
 		});
@@ -241,6 +298,7 @@ export default {
 				path.push({
 					open:i==0,
 					detail:false,
+					id:res[i].id,
 					title:res[i].name,
 					node:nodes
 				});
@@ -249,6 +307,7 @@ export default {
 			/*this.path = [{
 		      	open:true,
 		      	detail:false,
+		      	id:'xxx-zzz',
 		      	title:'最高价值路径（路径八）',
 		      	node:[
 		      		{id:1,ip:'192.168.3.123（起点）',desc:['内部网络','内部网络11','内部网络22'],pass:'抓取评证技术等'},
@@ -259,6 +318,7 @@ export default {
 		      },{
 		      	open:false,
 		      	detail:false,
+		      	id:'xxx-yyy',
 		      	title:'最隐蔽路径（路径六）',
 		      	node:[
 		      		{id:3,ip:'192.168.3.125（起点）',desc:['内部网络','内部网络11','内部网络22'],pass:'抓取评证技术等'},
@@ -299,9 +359,10 @@ export default {
 		      		ip:node.props.ip
 				});
 			}
-			//如果只有一层，则提出来显示
-			this.nodes = nodes.length == 1 ? nodes[0].children : nodes;
-			this.drawConvas();
+			//小圆点不能单独出现，如果出现了得给它加个组
+			addGroup(nodes);
+			
+			this.nodes = nodes;
 			/*this.nodes = [{//主图数据
 		      	name:'系统1',//资产组名称
 		      	number:20,//资产数量
@@ -317,14 +378,14 @@ export default {
 			      		name:'系统1-1-1',
 			      		number:4,
 			      		children:[{
-			      			id:1,
-			      			type:'router',
+			      			id:'1',
+			      			type:'Host',
 				      		ip:'192.168.3.123'
 				      	},{
-			      			id:4,
+			      			id:'4',
 			      			name:'资产名',
 				      		ip:'192.168.3.126',
-				      		type:'ips',
+				      		type:'IPS',
 				      		typename:'terminal server',
 				      		os:'centos 7',
 				      		port:'80,443',
@@ -345,21 +406,21 @@ export default {
 			      		name:'系统1-1-2',
 			      		number:4,
 			      		children:[{
-			      			id:5,
+			      			id:'5',
 			      			type:'camera',
 				      		ip:'192.168.4.123'
 				      	},{
-			      			id:6,
+			      			id:'6',
 				      		ip:'192.168.4.124'
 				      	}]
 			      	},{
 			      		name:'系统1-1-3',
 			      		number:7,
 			      		children:[{
-			      			id:9,
+			      			id:'9',
 				      		ip:'192.168.5.123'
 				      	},{
-			      			id:10,
+			      			id:'10',
 				      		ip:'192.168.5.124'
 				      	}]
 			      	}]
@@ -367,16 +428,95 @@ export default {
 		      		name:'系统1-2',
 		      		number:4,
 		      		children:[{
-		      			id:16,
+		      			id:'16',
 			      		ip:'192.168.1.123'
 			      	},{
-		      			id:17,
+		      			id:'17',
 			      		ip:'192.168.1.124'
 			      	}]
 		      	}]
 		      }]*/
+		      
+			//攻击路线
+			var attack = [];
+			var attackEntry = {};
+			res.series.forEach(function(item,index){
+				if(item.edges){
+					item.edges.forEach(function(item1,index1){
+						var lines = attackEntry[item1.props.path_id];
+						if(!lines){
+							lines = [];
+							attackEntry[item1.props.path_id] = lines;
+							attack.push({id:item1.props.path_id,lines:lines});
+						}
+						item1.props.graph.edges.forEach(function(item2,index2){
+							lines.push({
+								source:item2.source,
+								target:item2.target,
+								label:item2.label
+							});
+						});
+					});
+				}
+			});
+			/*this.attack = [{
+				id:'id1111',
+				lines:[{
+					source:'xxxx',
+					target:'zzzz',
+					label:'攻击'
+				},{
+					source:'aaaa',
+					target:'bbb',
+					label:'勾引'
+				}]
+			}];*/
+			this.attack = attack;
+			
+			this.drawConvas();
 		});
     },
+    //画六边形
+	drawHexagon(data,x,y,r,color){
+		var self = this;
+		//n边形组
+		var points = [];
+		var n = 6;//几边形
+		for (var j = 0; j < n; j++) {
+			var angle = (2 * Math.PI / n) * j;
+			var cx = x + r * Math.cos(angle);
+			var cy = y + r * Math.sin(angle);
+			points.push(cx, cy);
+		}
+		var g = paper.path("M" + points[0] + " " + points[1] + "L" + points.join(" ") + "Z");
+		g.toBack();
+		g.attr({
+			stroke:color||'#E9E9E9',
+			fill:'rgba(0, 0, 0, 0)',
+			'stroke-width':1.5
+		});
+		//单击
+		g.click(function(e) {
+			var d = this.data('data');
+			//没名字的组是只有资产界面加的一个空组，则不显示
+			if(d.name){
+			    clearTimeout(clickTimer);
+				clickTimer = setTimeout(function(){
+			    	self.$refs.jbxx.open(e.clientX,e.clientY,d);
+				},300);
+			}
+		});
+		//双击
+		g.dblclick(function() {
+		    clearTimeout(clickTimer);
+		    self.weiguan = this.data('data');
+		    self.drawConvas();
+		   	self.backbigShow = true;
+		});
+		g.data('data',data);
+		
+		return g;
+	},
   	drawConvas(){
   		var canvasDiv = document.getElementById('canvas');
 	    var width = canvasDiv.clientWidth;
@@ -392,22 +532,22 @@ export default {
 	    //微观图
 	    if(this.weiguan){
 	    	var root = d3.hierarchy(this.weiguan).sum(function(d){return 1;});
-	    	var pack = d3.pack().size([width,height]).padding(250);
+	    	var pack = d3.pack().size([width,height]).padding(padding);
 	    	pack(root);
-	    	if(root.data.number > 0 && root.data.number == root.children.length && root.children[0].data.ip){
-		    	this.createWeiguan([root]);
-	    	}else{
-		    	this.createWeiguan(root.children||[]);
-	    	}
+	    	this.createWeiguan([root]);
 	    }
 	    //主图
 	    else{
-		    var root = d3.hierarchy({children:this.nodes}).sum(function(d){return d.ip?1:10000;});
-		    var pack = d3.pack().size([width,height]).padding(200);
-		    pack(root);
-		    this.createGrap(root.children||[]);
+		    var item = this.createGrap(this.nodes.length > 0 ? this.nodes[0] : [],width/2,height/2);
+		    //整体居中
+		    if(item){
+				paper.forEach(function(element) {
+				    element.translate(width/2 - item.x,height/2 - item.y);
+				});
+		    }
+		    //主图攻击路线
 		    if(this.gjtc){
-			    this.createPath();
+			    this.createAttack();
 		    }
 	    }
   	},
@@ -582,7 +722,7 @@ export default {
     },
     //鼠标移出路径，取消加粗显示路径
     pathLeave(item){
-    	var ps = this.lines[item.title];
+    	var ps = this.lines[item.id];
     	if(ps){
     		for(var i=0;i<ps.length;i++){
     			ps[i].attr('stroke-width',1);
@@ -590,86 +730,153 @@ export default {
     	}
     },
     //主图画图
-    createGrap(arr){
-    	var self = this;
-    	for(var i=0;i<arr.length;i++){
-			var obj = arr[i];
-			var data = obj.data || {};
-			if(obj.x && obj.y && obj.r){
-				var circle;
-				//资产
-				if(data.ip){
-					circle = paper.circle(obj.x,obj.y,3);
-					circle.attr({
-					    fill:'#E9E9E9',
-					    stroke:'#E9E9E9',
-					    'stroke-width':1
-					});
-					this.graps[data.id+''] = circle;
-					//单击
-					circle.click(function(e) {
-						var me = this;
-					    clearTimeout(clickTimer);
-						clickTimer = setTimeout(function(){
-					    	self.$refs.zcxq.open(e.clientX,e.clientY,me.data('data'));
-						},300);
-					});
-				}
-				//组
-				else{
-					//圆形组
-					//circle = paper.circle(obj.x,obj.y,obj.r);
-					
-					//n边形组
-					var points = [];
-					var n = 6;//几边形
-					for (var j = 0; j < n; j++) {
-					    var angle = (2 * Math.PI / n) * j;
-					    var x = obj.x + obj.r * Math.cos(angle);
-					    var y = obj.y + obj.r * Math.sin(angle);
-					    points.push(x, y);
-					}
-					circle = paper.path("M" + points[0] + " " + points[1] + "L" + points.join(" ") + "Z");
-					
-					circle.attr({
-					    stroke:'#E9E9E9',
-					    fill:'rgba(0, 0, 0, 0)',
-					    'stroke-width':1.5
-					});
-					//单击
-					circle.click(function(e) {
-						var me = this;
-					    clearTimeout(clickTimer);
-						clickTimer = setTimeout(function(){
-					    	self.$refs.jbxx.open(e.clientX,e.clientY,me.data('data'));
-						},300);
-					});
-					//双击
-					circle.dblclick(function() {
-					    clearTimeout(clickTimer);
-					    
-					    var wg = this.data('data');
-					    var tempFun = function(arr){
-				    		for(var i=0;i<arr.length;i++){
-				    			if(arr[i].ip){
-				    				arr[i].children = [{type:'temp'}];
-				    			}else if(arr[i].children){
-				    				tempFun(arr[i].children);
-				    			}
-				    		}
-				    	};
-					    self.weiguan = wg;//tempFun(wg);
-					    self.drawConvas();
-					   	self.backbigShow = true;
-					});
-				}
-				//绑定数据
-				circle.data('data',data);
-			}
-			if(obj.children){
-				this.createGrap(obj.children);
-			}
-		}
+    createGrap(node,x,y){
+      var self = this;
+      if(!node.children || node.children.length == 0){
+      	return null;
+      }
+	  //最里层组
+	  if(node.children[0].ip){
+		  var group = paper.set();
+		  var cx = nextInt(600);
+		  var cy = nextInt(600);
+		  var r,lines;
+		  var rowledge;//行距
+		  var colledge;//列距
+		  if(node.children.length <= 7){
+			  r = 24;
+			  lines = [2,3,2];
+			  rowledge = 4;
+			  colledge = 5;
+		  }else if(node.children.length <= 31){
+			  r = 54;
+			  lines = [3,5,7,7,5,4];
+			  rowledge = 7;
+			  colledge = 6;
+		  }else{
+			  r = 72;
+			  lines = [5,6,7,8,9,8,7,7,6];
+			  rowledge = 6;
+			  colledge = 7;
+		  }
+		  //里面的点
+		  var cR = 3;//圆点半径
+		  var edge = (Math.sqrt(3) / 2) * r;
+		  var sy = cy - edge;
+		  
+		  var index = 0;
+		  b:for (var line=0;line<lines.length;line++) {
+			  var tWidth = lines[line]*cR*2 + lines[line]*colledge - colledge;
+			  var sx = cx - tWidth/2 + cR;
+			  sy = sy + rowledge + cR*2;
+			  for (var col=0;col<lines[line];col++) {
+			  	  var data = node.children[index];
+				  var d = paper.circle(sx,sy,cR);
+				  d.attr({
+					  fill:'#E9E9E9',
+					  stroke:'#E9E9E9',
+					  'stroke-width':0
+				  });
+				  this.graps[data.id] = d;
+				  //单击
+				  d.click(function(e) {
+				  	  var d = this.data('data');
+				  	  clearTimeout(clickTimer);
+					  clickTimer = setTimeout(function(){
+						  self.$refs.zcxq.open(e.clientX,e.clientY,d);
+					  },300);
+				  });
+				  d.data('data',data);
+				  group.push(d);
+				  sx = sx + colledge + cR*2;
+				  if(++index >= 63 || index >= node.children.length){
+					  break b;
+				  }
+			  }
+		  }
+		  //六边形
+		  var g = this.drawHexagon(node,cx,cy,r);
+		  group.push(g);
+		  return {r:r,x:cx,y:cy,g:group,h:g};
+	  }else{
+		  var group = paper.set();
+		  var childs = [];
+		  node.children.forEach(function(item,index){
+		  	  var info = self.createGrap(item,x,y);
+		  	  if(info){
+				  childs.push(info);
+		  	  }
+		  });
+		  //排序
+		  childs.sort(function(a,b){
+			  return b.r - a.r;
+		  });
+		  //调整布局
+	  	  var siblings = [];
+	  	  childs.forEach(function(item,index){
+			  var nx,ny;
+			  if(index == 0){
+				  nx = x;
+				  ny = y;
+			  }else{
+				  b:for(var i=0;i<siblings.length;i++){
+					  var dest = siblings[i];
+					  //根据半径计算中心到边距离
+					  var destR = (Math.sqrt(3) / 2) * dest.r;
+					  var itemR = (Math.sqrt(3) / 2) * item.r;
+					  var nr = destR + padding + itemR;
+					  for(var pos=0;pos<6;pos++){
+						  if(pos == 0){
+							  var radians = -90 * Math.PI / 180;
+							  nx = dest.x + nr * Math.cos(radians);
+							  ny = dest.y + nr * Math.sin(radians);
+						  }else if(pos == 1){
+							  var radians = 210 * Math.PI / 180;
+							  nx = dest.x + nr * Math.cos(radians);
+							  ny = dest.y + nr * Math.sin(radians);
+						  }else if(pos == 2){
+							  var radians = 150 * Math.PI / 180;
+							  nx = dest.x + nr * Math.cos(radians);
+							  ny = dest.y + nr * Math.sin(radians);
+						  }else if(pos == 3){
+							  var radians = 90 * Math.PI / 180;
+							  nx = dest.x + nr * Math.cos(radians);
+							  ny = dest.y + nr * Math.sin(radians);
+						  }else if(pos == 4){
+							  var radians = 30 * Math.PI / 180;
+							  nx = dest.x + nr * Math.cos(radians);
+							  ny = dest.y + nr * Math.sin(radians);
+						  }else if(pos == 5){
+							  var radians = -30 * Math.PI / 180;
+							  nx = dest.x + nr * Math.cos(radians);
+							  ny = dest.y + nr * Math.sin(radians);
+						  }
+						  if(!isPointInside(nx,ny,item.r,siblings)){
+						  	break b;
+						  }
+					  }
+				  }
+			  }
+			  item.g.forEach(function (element) {
+				  element.translate(nx-item.x,ny-item.y);
+			  });
+			  
+			  item.x = nx;
+			  item.y = ny;
+			  siblings.push(item);
+			  group.push(item.g);
+		  });
+		  var bbox = group.getBBox();
+		  var centerX = bbox.x + bbox.width / 2;
+		  var centerY = bbox.y + bbox.height / 2;
+		  //根据中心到边距离计算中心到顶点距离
+		  var outEdge = Math.max(bbox.width,bbox.height)/2;
+		  var outR = (2 / Math.sqrt(3)) * outEdge;
+		  outR = (2 / Math.sqrt(3)) * (outR + padding);
+	  	  var wai = this.drawHexagon(node,centerX,centerY,outR);
+	 	  group.push(wai);
+		  return {r:outR,x:centerX,y:centerY,g:group,h:wai};
+	  }
     },
     //微观图画图
     createWeiguan(arr){
@@ -682,14 +889,15 @@ export default {
 				//资产
 				if(data.ip){
 					const image = require("../img/weiguan/"+(['Firewall','IDS','IPS','Router','Switch'].includes(data.type)?data.type:'Host')+".png");
-					circle = paper.image(image,obj.x,obj.y,52,52);
-					this.wggraps[data.id+''] = circle;
+					circle = paper.image(image,obj.x-25,obj.y-33,52,52);
+					this.wggraps[data.id] = circle;
 					//图标下方文字
-					var text = paper.text(obj.x+25,obj.y+55,data.ip);
+					var text = paper.text(obj.x,obj.y+22,data.ip);
 				    text.attr({
 				      'font-size':10,
 				      'fill':'white'
 				    });
+				    
 					//单击
 					circle.click(function(e) {
 						var me = this;
@@ -716,62 +924,59 @@ export default {
 			}
 		}
     },
-    //主图画路线
-    createPath(){
-    	for(var i=0;i<this.path.length;i++){
-    		var color = i<this.colors.length?this.colors[i]:this.colors[this.colors.length-1];
-			var nodes = this.path[i].node;
-			for(var j=0;j<nodes.length;j++){
-				if(j+1<nodes.length){
-					var n = nodes[j];
-					var n1 = nodes[j+1];
-					var g = this.graps[n.id];
-					var g1 = this.graps[n1.id];
-					if(g && g1){
-						var startX = g.attr('cx');
-						var startY = g.attr('cy');
-						var endX = g1.attr('cx');
-						var endY = g1.attr('cy');
-						//线条
-						const line = paper.path(`M${startX} ${startY}L${endX} ${endY}`);
-					    line.attr({
-							stroke:color,
-							'stroke-width':1
-					    });
-					    //箭头
-					    var angle = Math.atan2(endY - startY, endX - startX);
-						var arrowLength = 10;
-						var arrowPoint1 = {
-						    x: endX - arrowLength * Math.cos(angle - Math.PI / 6),
-						    y: endY - arrowLength * Math.sin(angle - Math.PI / 6)
-						};
-						var arrowPoint2 = {
-						    x: endX - arrowLength * Math.cos(angle + Math.PI / 6),
-						    y: endY - arrowLength * Math.sin(angle + Math.PI / 6)
-						};
-						var arrowPoint3 = {
-						    x: endX,
-						    y: endY
-						};
-						var arrow = paper.path("M" + arrowPoint1.x + " " + arrowPoint1.y +
-	                       "L" + arrowPoint2.x + " " + arrowPoint2.y +
-	                       "L" + arrowPoint3.x + " " + arrowPoint3.y);
-						arrow.attr({
-						    'stroke':color,
-						    'fill':color
-						});
-					    //记录
-					    var ps = this.lines[this.path[i].title];
-					    if(!ps){
-					    	ps = [];
-					    	this.lines[this.path[i].title] = ps;
-					    }
-					    ps.push(line);
-					    ps.push(arrow);
-					}
+    //主图攻击路线
+    createAttack(){
+    	var self = this;
+    	this.attack.forEach(function(item,index){
+    		var color = index<self.colors.length?self.colors[index]:self.colors[self.colors.length-1];
+			var lines = item.lines;
+			for(var j=0;j<lines.length;j++){
+				var g = self.graps[lines[j].source];
+				var g1 = self.graps[lines[j].target];
+				if(g && g1){
+					var startX = g.attr('cx');
+					var startY = g.attr('cy');
+					var endX = g1.attr('cx');
+					var endY = g1.attr('cy');
+					//线条
+					const line = paper.path(`M${startX} ${startY}L${endX} ${endY}`);
+				    line.attr({
+						stroke:color,
+						'stroke-width':1
+				    });
+				    //箭头
+				    var angle = Math.atan2(endY - startY, endX - startX);
+					var arrowLength = 10;
+					var arrowPoint1 = {
+					    x: endX - arrowLength * Math.cos(angle - Math.PI / 6),
+					    y: endY - arrowLength * Math.sin(angle - Math.PI / 6)
+					};
+					var arrowPoint2 = {
+					    x: endX - arrowLength * Math.cos(angle + Math.PI / 6),
+					    y: endY - arrowLength * Math.sin(angle + Math.PI / 6)
+					};
+					var arrowPoint3 = {
+					    x: endX,
+					    y: endY
+					};
+					var arrow = paper.path("M" + arrowPoint1.x + " " + arrowPoint1.y +
+                       "L" + arrowPoint2.x + " " + arrowPoint2.y +
+                       "L" + arrowPoint3.x + " " + arrowPoint3.y);
+					arrow.attr({
+					    'stroke':color,
+					    'fill':color
+					});
+				    //记录
+				    var ps = this.lines[this.path[i].id];
+				    if(!ps){
+				    	ps = [];
+				    	this.lines[this.path[i].id] = ps;
+				    }
+				    ps.push(line);
+				    ps.push(arrow);
 				}
 			}
-		}
+		});
     }
   },
 };
