@@ -8,9 +8,26 @@ export default {
       type: String,
       default: String(Math.floor(Math.random() * 100)) + "lineadd",
     },
+    liste: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
   },
-  mounted() {
-    this.createCharts();
+  // mounted() {
+  //   this.createCharts();
+  // },
+  watch: {
+    liste: {
+      handler(to, form) {
+        // console.log(this.liste);
+        // this.createCharts(this.liste);
+        this.createCharts();
+      },
+      // deep: true,
+      // immediate: true,
+    },
   },
   methods: {
     sz(e) {

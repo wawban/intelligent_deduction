@@ -219,6 +219,56 @@ export function infer_taskssc(id) {
         method: 'delete'
     })
 }
+export const system_users= (params) => {
+    return request({
+        url: `${url}system/users`,
+        method: "get",
+        params
+    })
+}
+export const system_userspost= (data) => {
+    return request({
+        url: `${url}system/users`,
+        method: "post",
+        data
+    })
+}
+export function system_userssc(id) {
+    return request({
+        url: `${url}system/users/${id}`,
+        method: 'delete'
+    })
+}
+export function system_usersbj(data,id) {
+    return request({
+        url: `${url}system/users/${id}`,
+        method: 'put',
+        data
+    })
+}
+export const system_status= (params) => {
+    return request({
+        url: `${url}system/status`,
+        method: "get",
+        params
+    })
+}
+export const system_logs= (params) => {
+    return request({
+        url: `${url}system/logs`,
+        method: "get",
+        params
+    })
+}
+
+// 
+// export const kb_vulns= (params) => {
+//     return request({
+//         url: `${url}kb/vulns`,
+//         method: "get",
+//         params
+//     })
+// }
 // /data-governance/vulns
 // export const productInfo_getList = (params) => {
 //     return request({

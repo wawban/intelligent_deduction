@@ -21,7 +21,7 @@
             class="buttonsy"
             size="mini"
             icon="el-icon-plus"
-            @click="dialogVisible = true"
+            @click="addre"
             >添加</el-button
           >
         </div>
@@ -30,7 +30,12 @@
           <div class="marginr">
             <el-popover placement="bottom" trigger="hover">
               <div class="ckqbtopqian">
-                <el-button class="buttonsy" size="mini">查看全部</el-button>
+                <el-button
+                  class="buttonsy"
+                  size="mini"
+                  @click="getgovernancehosts('clear')"
+                  >查看全部</el-button
+                >
               </div>
               <div slot="reference" class="boxjc">
                 <img src="../img/qb.png" alt="" />
@@ -38,158 +43,7 @@
               </div>
             </el-popover>
           </div>
-          <!-- --------------------------------------------------------------------------------------------------------- -->
-          <!-- <div class="marginr">
-            <el-popover placement="bottom" width="530" trigger="click">
-              <div class="tjiansxian">
-                <div class="top">
-                  <div>筛选</div>
-                  <div>清空</div>
-                </div>
-                <div class="dang">
-                  <div v-if="typei == '2' || typei == '3'">
-                    <div>当</div>
-                    <div>
-                      <el-select
-                        class="zhessless"
-                        size="mini"
-                        v-model="cxl"
-                        filterable
-                        multiple
-                        collapse-tags
-                        style="width: 180rem"
-                        placeholder="请选择"
-                      >
-                        <el-option
-                          v-for="item in 4"
-                          :key="item"
-                          :label="'条件' + item"
-                          :value="item"
-                        >
-                        </el-option>
-                      </el-select>
-                    </div>
-                    <div>
-                      <el-select
-                        class="zhessless"
-                        size="mini"
-                        style="width: 88rem"
-                        v-model="cxz"
-                        placeholder="请选择"
-                      >
-                        <el-option label="包含" value="1"></el-option>
-                        <el-option label="不包含" value="2"></el-option>
-                        <el-option label="为空" value="3"></el-option>
-                        <el-option label="不为空" value="4"></el-option>
-                      </el-select>
-                    </div>
-                    <div>
-                      <el-select
-                        class="zhessless"
-                        size="mini"
-                        v-model="cxr"
-                        filterable
-                        multiple
-                        collapse-tags
-                        style="width: 180rem"
-                        placeholder="请选择"
-                      >
-                        <el-option
-                          v-for="item in 4"
-                          :key="item"
-                          :label="'条件' + item"
-                          :value="item"
-                        >
-                        </el-option>
-                      </el-select>
-                    </div>
-                    <div style="width: 20rem">
-                      <i
-                        @click="cxoff('1')"
-                        v-if="typei == '2'"
-                        class="el-icon-close"
-                        style="cursor: pointer"
-                      ></i>
-                    </div>
-                  </div>
-                  <div v-if="typei == '3'">
-                    <div>且</div>
-                    <div>
-                      <el-select
-                        class="zhessless"
-                        size="mini"
-                        v-model="cxl"
-                        filterable
-                        multiple
-                        collapse-tags
-                        style="width: 180rem"
-                        placeholder="请选择"
-                      >
-                        <el-option
-                          v-for="item in 4"
-                          :key="item"
-                          :label="'条件' + item"
-                          :value="item"
-                        >
-                        </el-option>
-                      </el-select>
-                    </div>
-                    <div>
-                      <el-select
-                        class="zhessless"
-                        size="mini"
-                        style="width: 88rem"
-                        v-model="cxz"
-                        placeholder="请选择"
-                      >
-                        <el-option label="包含" value="1"></el-option>
-                        <el-option label="不包含" value="2"></el-option>
-                        <el-option label="为空" value="3"></el-option>
-                        <el-option label="不为空" value="4"></el-option>
-                      </el-select>
-                    </div>
-                    <div>
-                      <el-select
-                        class="zhessless"
-                        size="mini"
-                        v-model="cxr"
-                        filterable
-                        multiple
-                        collapse-tags
-                        style="width: 180rem"
-                        placeholder="请选择"
-                      >
-                        <el-option
-                          v-for="item in 4"
-                          :key="item"
-                          :label="'条件' + item"
-                          :value="item"
-                        >
-                        </el-option>
-                      </el-select>
-                    </div>
-                    <div style="width: 20rem">
-                      <i
-                        @click="cxoff('2')"
-                        class="el-icon-close"
-                        style="cursor: pointer"
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-                <div style="padding-top: 20rem">
-                  <el-button class="buttonsy" @click="appendtj" size="mini"
-                    >添加条件</el-button
-                  >
-                </div>
-              </div>
-              <div slot="reference" class="boxjc">
-                <img src="../img/tj.png" alt="" />
-                条件筛选
-              </div>
-            </el-popover>
-          </div> -->
-          <!-- xxxxxxxxxxxxxxxxxxxx -->
+          <!-- 复合查询 -->
           <div class="marginr">
             <el-popover placement="bottom" width="530" trigger="click">
               <div slot="reference" class="boxjc">
@@ -198,8 +52,8 @@
               </div>
               <div class="tjiansxian">
                 <div class="top">
-                  <div>筛选</div>
-                  <div @click="cleark">清空</div>
+                  <div @click="getgovernancehosts">筛选</div>
+                  <div @click="getgovernancehosts('clear')">清空</div>
                 </div>
                 <div
                   style="padding: 12rem 0; display: flex; align-items: center"
@@ -212,8 +66,8 @@
                     v-model="rysy"
                     placeholder="请选择"
                   >
-                    <el-option label="任一" value="1"></el-option>
-                    <el-option label="所有" value="2"></el-option>
+                    <el-option label="任一" value="or"></el-option>
+                    <el-option label="所有" value="and"></el-option>
                   </el-select>
                   &nbsp;&nbsp;条件
                 </div>
@@ -245,10 +99,15 @@
                         v-model="e.value"
                         placeholder="请选择"
                       >
-                        <el-option label="包含" value="1"></el-option>
-                        <el-option label="不包含" value="2"></el-option>
-                        <el-option label="为空" value="3"></el-option>
-                        <el-option label="不为空" value="4"></el-option>
+                        <el-option label="包含" value="contain"></el-option>
+                        <el-option
+                          label="不包含"
+                          value="notcontain"
+                        ></el-option>
+                        <el-option label="等于" value="eq"></el-option>
+                        <el-option label="不等于" value="ne"></el-option>
+                        <!-- <el-option label="为空" value="3"></el-option>
+                        <el-option label="不为空" value="4"></el-option> -->
                       </el-select>
                     </div>
                     <div>
@@ -277,8 +136,6 @@
               </div>
             </el-popover>
           </div>
-          <!-- xxxxxxxxxxxxxxxxxxxx -->
-          <!-- ------------------------------------------------------------------------------------------------------------ -->
           <div class="marginr">
             <el-popover placement="bottom" width="220" trigger="hover">
               <div class="zduanpeizi">
@@ -353,21 +210,21 @@
               <!-- 操作 -->
               <div v-if="item.label == '操作'">
                 <img
-                  @click="gotu(scope.row)"
+                  @click="dkcz(scope.row)"
                   style="height: 22rem; cursor: pointer"
-                  src="../img/cx.png"
+                  src="../img/js.png"
                   alt=""
                 />
                 <img
-                  @click="flagcz = true"
+                  @click="bjdk(scope.row)"
                   style="height: 22rem; cursor: pointer; margin: 0 26rem"
-                  src="../img/bq.png"
+                  src="../img/bj.png"
                   alt=""
                 />
                 <img
-                  @click="flagbj = true"
+                  @click="dkaisc(scope.row)"
                   style="height: 22rem; cursor: pointer"
-                  src="../img/bj.png"
+                  src="../img/sc.png"
                   alt=""
                 />
               </div>
@@ -380,9 +237,9 @@
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page="page.current"
+            :current-page="page.offset"
             :page-sizes="[10, 20]"
-            :page-size="page.size"
+            :page-size="page.limit"
             layout="total, sizes, prev, pager, next, jumper"
             :total="page.total"
           >
@@ -413,7 +270,7 @@
           <el-form
             :model="ruleForm"
             :rules="rules"
-            ref="ruleForm"
+            ref="addruleForm"
             label-width="100rem"
             class="demo-ruleForm"
           >
@@ -507,7 +364,11 @@
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button
+            class="buttonsy"
+            @click="addsbmin"
+            size="mini"
+            style="margin-right: 30rem"
             >确认</el-button
           >
           <el-button
@@ -541,9 +402,9 @@
         </div>
         <div class="formstyle" style="padding-top: 20rem">
           <el-form
-            :model="ruleForm"
+            :model="bjiform"
             :rules="rules"
-            ref="ruleForm"
+            ref="bjruleForm"
             label-width="100rem"
             class="demo-ruleForm"
           >
@@ -551,7 +412,7 @@
               <el-select
                 class="zhessless"
                 size="mini"
-                v-model="ruleForm.js"
+                v-model="bjiform.js"
                 placeholder="请选择"
                 style="width: 340rem"
               >
@@ -563,7 +424,7 @@
               <el-input
                 placeholder="请输入"
                 class="inpustyle"
-                v-model="ruleForm.yhm"
+                v-model="bjiform.yhm"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
@@ -572,7 +433,7 @@
               <el-input
                 placeholder="请输入"
                 class="inpustyle"
-                v-model="ruleForm.zh"
+                v-model="bjiform.zh"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
@@ -581,7 +442,7 @@
               <el-select
                 class="zhessless"
                 size="mini"
-                v-model="ruleForm.bm"
+                v-model="bjiform.bm"
                 placeholder="请选择"
                 style="width: 340rem"
               >
@@ -592,7 +453,7 @@
             <el-form-item label="开启/禁用：">
               <el-switch
                 class="huandk"
-                v-model="ruleForm.kqjy"
+                v-model="bjiform.kqjy"
                 active-color="#fa960069"
                 inactive-color="transparent"
               >
@@ -602,7 +463,7 @@
               <el-input
                 placeholder="请输入"
                 class="inpustyle"
-                v-model="ruleForm.sjh"
+                v-model="bjiform.sjh"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
@@ -611,7 +472,7 @@
               <el-input
                 placeholder="请输入"
                 class="inpustyle"
-                v-model="ruleForm.yx"
+                v-model="bjiform.yx"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
@@ -619,7 +480,11 @@
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button
+            class="buttonsy"
+            size="mini"
+            style="margin-right: 30rem"
+            @click="bjsbmin"
             >确认</el-button
           >
           <el-button
@@ -653,9 +518,9 @@
         </div>
         <div class="formstyle" style="padding-top: 20rem">
           <el-form
-            :model="ruleForm"
+            :model="czruleForm"
             :rules="rules"
-            ref="ruleForm"
+            ref="czruleForm"
             label-width="100rem"
             class="demo-ruleForm"
           >
@@ -663,7 +528,7 @@
               <el-input
                 placeholder="请输入"
                 class="inpustyle"
-                v-model="ruleForm.mm"
+                v-model="czruleForm.mm"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
@@ -672,7 +537,7 @@
               <el-input
                 placeholder="请输入"
                 class="inpustyle"
-                v-model="ruleForm.qrmm"
+                v-model="czruleForm.qrmm"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
@@ -693,15 +558,81 @@
         </div>
       </el-dialog>
     </div>
+    <!-- 删除框 -->
+    <div class="tandialog">
+      <el-dialog
+        :visible.sync="scflag"
+        width="520rem"
+        :show-close="false"
+        :close-on-click-modal="false"
+      >
+        <div
+          style="
+            color: #fa9600;
+            font-size: 18rem;
+            font-weight: 500;
+            padding-bottom: 16rem;
+            display: flex;
+            align-items: center;
+          "
+        >
+          <i
+            class="el-icon-warning-outline"
+            style="font-size: 24rem; color: #fa9600; margin-right: 10rem"
+          ></i>
+          提示
+        </div>
+        <div style="font-size: 16rem; padding: 20rem 0; color: #fff">
+          确定删除所选人员吗？
+        </div>
+        <div style="text-align: right">
+          <el-button
+            size="mini"
+            style="
+              margin-right: 30rem;
+              background: #fa9600 !important;
+              color: #fff !important;
+              border-color: #fa9600;
+            "
+            @click="sbmsc"
+            >确认</el-button
+          >
+          <el-button
+            class="buttonsy"
+            size="mini"
+            style="margin-left: 30rem"
+            @click="scflag = false"
+            >取消</el-button
+          >
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
   <script>
+import {
+  system_users,
+  system_userspost,
+  system_userssc,
+  system_usersbj,
+} from "@/api";
 export default {
   data() {
     return {
-      flagcz: false, //重置密码
-      flagbj: false, //编辑弹窗
-      dialogVisible: false, //添加弹窗
+      czid: "", //重置id
+      czruleForm: {}, //重置表单
+      bjiform: {}, //编辑表单
+      scid: "", //删除id
+      scflag: false, //删除判断
+      rysy: "and", //符合条件，任一或所有
+      //   查询数据
+      searcharr: [],
+      // 分页
+      page: {
+        offset: 1,
+        limit: 10,
+        total: 0,
+      },
       // 添加表单数据
       ruleForm: {
         js: "",
@@ -724,100 +655,13 @@ export default {
         // { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
         // password: [{ validator: funcpassword, trigger: "blur" }],
       },
+      dialogVisible: false, //添加弹窗
+      // --------------------------------------
+      flagcz: false, //重置密码
+      flagbj: false, //编辑弹窗
       // -----------------------------------------------------------------关联查询组件下
       // 表格数据
-      tableData: [
-        {
-          a: "张有志",
-          b: "zhangyouzhi",
-          c: "18812036503",
-          d: "265987461@qq.com",
-          e: "超级管理员",
-          f: "开启",
-          g: "人螂碍变哎肮资源部",
-        },
-        {
-          a: "张有志",
-          b: "zhangyouzhi",
-          c: "18812036503",
-          d: "265987461@qq.com",
-          e: "超级管理员",
-          f: "开启",
-          g: "人螂碍变哎肮资源部",
-        },
-        {
-          a: "张有志",
-          b: "zhangyouzhi",
-          c: "18812036503",
-          d: "265987461@qq.com",
-          e: "超级管理员",
-          f: "开启",
-          g: "人螂碍变哎肮资源部",
-        },
-        {
-          a: "张有志",
-          b: "zhangyouzhi",
-          c: "18812036503",
-          d: "265987461@qq.com",
-          e: "超级管理员",
-          f: "开启",
-          g: "人螂碍变哎肮资源部",
-        },
-        {
-          a: "张有志",
-          b: "zhangyouzhi",
-          c: "18812036503",
-          d: "265987461@qq.com",
-          e: "超级管理员",
-          f: "开启",
-          g: "人螂碍变哎肮资源部",
-        },
-        {
-          a: "张有志",
-          b: "zhangyouzhi",
-          c: "18812036503",
-          d: "265987461@qq.com",
-          e: "超级管理员",
-          f: "开启",
-          g: "人螂碍变哎肮资源部",
-        },
-        {
-          a: "张有志",
-          b: "zhangyouzhi",
-          c: "18812036503",
-          d: "265987461@qq.com",
-          e: "超级管理员",
-          f: "开启",
-          g: "人螂碍变哎肮资源部",
-        },
-        {
-          a: "张有志",
-          b: "zhangyouzhi",
-          c: "18812036503",
-          d: "265987461@qq.com",
-          e: "超级管理员",
-          f: "开启",
-          g: "人螂碍变哎肮资源部",
-        },
-        {
-          a: "张有志",
-          b: "zhangyouzhi",
-          c: "18812036503",
-          d: "265987461@qq.com",
-          e: "超级管理员",
-          f: "开启",
-          g: "人螂碍变哎肮资源部",
-        },
-        {
-          a: "张有志",
-          b: "zhangyouzhi",
-          c: "18812036503",
-          d: "265987461@qq.com",
-          e: "超级管理员",
-          f: "开启",
-          g: "人螂碍变哎肮资源部",
-        },
-      ],
+      tableData: [{}],
       // 表头数据
       btarr: [],
       // 表头改变数据
@@ -825,7 +669,7 @@ export default {
       // 表头原始数据
       tablearr: [
         {
-          prop: "a",
+          prop: "username",
           label: "用户名",
           type: true,
         },
@@ -865,26 +709,6 @@ export default {
           type: true,
         },
       ],
-      // 查询组件一排中间
-      //   cxz: "1",
-      // 查询组件一排left
-      //   cxl: "",
-      // 查询组件一排right
-      //   cxr: "",
-      // 查询组件条件显示
-      //   typei: "1",
-      //   xxxxxxxxxxxxxxxxxxxxxxxxxxx
-      rysy: "2", //符合条件，任一或所有
-      //   查询数据
-      searcharr: [{ key: "", value: "", type: "" }],
-      //   xxxxxxxxxxxxxxxxxxxxxxxxxxx
-      // -----------------------------------------------------------------关联查询组件上
-      // 分页
-      page: {
-        current: 1,
-        size: 10,
-        total: 44,
-      },
     };
   },
   watch: {
@@ -904,7 +728,6 @@ export default {
     },
   },
   mounted() {
-    // ----------------------------关联查询组件下
     // 表格头
     this.btarr = localStorage.getItem("localpersonnelmanagement")
       ? JSON.parse(localStorage.getItem("localpersonnelmanagement"))
@@ -916,10 +739,102 @@ export default {
         JSON.stringify(this.btarr)
       );
     });
-    // ----------------------------关联查询组件上
+    this.getgovernancehosts(); // 列表
   },
   methods: {
-    // ----------------------------关联查询组件下
+    // 打开重置
+    dkcz(e) {
+      this.czid = e.id;
+      this.flagcz = true;
+      this.$nextTick(() => {
+        this.$refs["czruleForm"].resetFields();
+      });
+    },
+    // 编辑提交
+    bjsbmin() {
+      this.$refs["bjruleForm"].validate((valid) => {
+        if (valid) {
+          system_usersbj(this.bjiform).then((res) => {
+            this.getgovernancehosts(); //更新数据
+            this.flagbj = false; //关闭弹窗
+          });
+        } else {
+          return false;
+        }
+      });
+    },
+    // 编辑打开
+    bjdk(e) {
+      this.flagbj = true;
+      this.$nextTick(() => {
+        this.$refs["bjruleForm"].resetFields();
+        this.bjiform = e;
+      });
+    },
+    // 删除打开
+    dkaisc(e) {
+      this.scid = e.id;
+      this.scflag = true;
+    },
+    // 删除提交
+    sbmsc() {
+      system_userssc(this.scid).then(() => {
+        this.scflag = false;
+        this.getgovernancehosts();
+      });
+    },
+    // 提交添加
+    addsbmin() {
+      this.$refs["addruleForm"].validate((valid) => {
+        if (valid) {
+          system_userspost(this.ruleForm).then((res) => {
+            this.getgovernancehosts(); //更新数据
+            this.dialogVisible = false; //关闭弹窗
+          });
+        } else {
+          return false;
+        }
+      });
+    },
+    // 打开添加
+    addre() {
+      this.dialogVisible = true;
+      this.$nextTick(() => {
+        this.$refs["addruleForm"].resetFields();
+      });
+    },
+    // 列表
+    getgovernancehosts(e) {
+      // 清空条件+查询所有
+      if (e == "clear") {
+        this.searcharr = [];
+        this.page.offset = 1;
+      }
+      var obj = {
+        offset: this.page.offset,
+        limit: this.page.limit,
+      };
+      if (this.searcharr.length != 0) {
+        var arr = this.searcharr.filter((item) => {
+          return item.key.length != 0 && item.type.length != 0;
+        });
+        if (arr.length != 0) {
+          var tj = arr.map((req) => {
+            var jihe = req.key + " " + req.value + " " + (req.type || "");
+            return jihe;
+          });
+          obj.filter = tj.join(" " + this.rysy + " ");
+        }
+      }
+      system_users(obj).then((res) => {
+        this.page = res.pagination;
+        this.tableData = res.results;
+        // this.tableData = [{ c: "ww" }];
+        // this.tableData = res.results.map((item) => {
+        //   return item.meta;
+        // });
+      });
+    },
     // 表格头
     fields(e, i) {
       if (e == "1") {
@@ -932,34 +847,23 @@ export default {
         JSON.stringify(this.btarr)
       );
     },
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // 查询组件添加条件
     appendtj() {
-      this.searcharr.push({ key: "", value: "1", type: "" });
+      this.searcharr.push({ key: "", value: "contain", type: "" });
     },
     // 查询组件减少条件
     cxoff(i) {
       this.searcharr.splice(i, 1);
     },
-    // 触发清空
-    cleark() {
-      this.searcharr = [{ key: "", value: "1", type: "" }];
+    // 分页条数
+    handleSizeChange(e) {
+      this.page.limit = e;
+      this.getgovernancehosts();
     },
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    // ----------------------------关联查询组件上
-    // ---------------------------分页
-    handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
-      alert(val);
-    },
-    handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`);
-      alert(val);
-    },
-    // ---------------------------跳转详情
-    gotu(e) {
-      // console.log(e)
-      this.$router.push("/knowledgedetails");
+    // 分页页数
+    handleCurrentChange(e) {
+      this.page.offset = e;
+      this.getgovernancehosts();
     },
   },
 };
