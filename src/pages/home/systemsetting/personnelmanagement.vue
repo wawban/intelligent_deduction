@@ -207,8 +207,14 @@
             :width="item.width"
           >
             <template slot-scope="scope">
+              <!-- is_active -->
+
+              <div v-if="item.label == '开启/禁用'">
+                {{ scope.row.is_active ? "开启" : "禁用" }}
+              </div>
+
               <!-- 操作 -->
-              <div v-if="item.label == '操作'">
+              <div v-else-if="item.label == '操作'">
                 <img
                   @click="dkcz(scope.row)"
                   style="height: 22rem; cursor: pointer"
@@ -274,89 +280,94 @@
             label-width="100rem"
             class="demo-ruleForm"
           >
-            <el-form-item label="角色：" prop="js">
+            <el-form-item label="角色：" prop="role">
               <el-select
                 class="zhessless"
                 size="mini"
-                v-model="ruleForm.js"
+                v-model="ruleForm.role"
                 placeholder="请选择"
                 style="width: 340rem"
               >
-                <el-option label="管理员" value="1"> </el-option>
-                <el-option label="xxx" value="2"> </el-option>
+                <el-option
+                  v-for="(item, index) in rolesarr"
+                  :key="index"
+                  :label="item.display_name"
+                  :value="item.name"
+                >
+                </el-option>
+                <!-- <el-option label="xxx" value="2"> </el-option> -->
               </el-select>
             </el-form-item>
-            <el-form-item label="用户名：" prop="yhm">
+            <el-form-item label="姓名：" prop="name">
               <el-input
                 placeholder="请输入"
                 class="inpustyle"
-                v-model="ruleForm.yhm"
+                v-model="ruleForm.name"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="账号：" prop="zh">
+            <el-form-item label="账号：" prop="username">
               <el-input
                 placeholder="请输入"
                 class="inpustyle"
-                v-model="ruleForm.zh"
+                v-model="ruleForm.username"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="密码：" prop="mm">
+            <el-form-item label="密码：" prop="password">
               <el-input
                 placeholder="请输入"
+                type="password"
                 class="inpustyle"
-                v-model="ruleForm.mm"
+                v-model="ruleForm.password"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="确认密码：" prop="qrmm">
+            <el-form-item label="确认密码：" prop="qpassword">
               <el-input
                 placeholder="请输入"
+                type="password"
                 class="inpustyle"
-                v-model="ruleForm.qrmm"
+                v-model="ruleForm.qpassword"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="部门：" prop="bm">
-              <el-select
-                class="zhessless"
+            <el-form-item label="部门：" prop="department">
+              <el-input
+                placeholder="请输入"
+                class="inpustyle"
+                v-model="ruleForm.department"
                 size="mini"
-                v-model="ruleForm.bm"
-                placeholder="请选择"
                 style="width: 340rem"
-              >
-                <el-option label="管理员" value="1"> </el-option>
-                <el-option label="xxx" value="2"> </el-option>
-              </el-select>
+              ></el-input>
             </el-form-item>
             <el-form-item label="开启/禁用：">
               <el-switch
                 class="huandk"
-                v-model="ruleForm.kqjy"
+                v-model="ruleForm.is_active"
                 active-color="#fa960069"
                 inactive-color="transparent"
               >
               </el-switch>
             </el-form-item>
-            <el-form-item label="手机号：" prop="sjh">
+            <el-form-item label="手机号：" prop="phone">
               <el-input
                 placeholder="请输入"
                 class="inpustyle"
-                v-model="ruleForm.sjh"
+                v-model="ruleForm.phone"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="邮箱：" prop="yx">
+            <el-form-item label="邮箱：" prop="email">
               <el-input
                 placeholder="请输入"
                 class="inpustyle"
-                v-model="ruleForm.yx"
+                v-model="ruleForm.email"
                 size="mini"
                 style="width: 340rem"
               ></el-input>
@@ -401,7 +412,7 @@
           编辑
         </div>
         <div class="formstyle" style="padding-top: 20rem">
-          <el-form
+          <!-- <el-form
             :model="bjiform"
             :rules="rules"
             ref="bjruleForm"
@@ -477,6 +488,96 @@
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
+          </el-form> -->
+          <el-form
+            :model="bjiform"
+            :rules="rules"
+            ref="bjruleForm"
+            label-width="100rem"
+            class="demo-ruleForm"
+          >
+            <el-form-item label="角色：" prop="role">
+              <!-- <el-select
+                class="zhessless"
+                size="mini"
+                v-model="bjiform.js"
+                placeholder="请选择"
+                style="width: 340rem"
+              >
+                <el-option label="管理员" value="1"> </el-option>
+                <el-option label="xxx" value="2"> </el-option>
+              </el-select> -->
+              <el-select
+                class="zhessless"
+                size="mini"
+                v-model="bjiform.role"
+                placeholder="请选择"
+                style="width: 340rem"
+              >
+                <el-option
+                  v-for="(item, index) in rolesarr"
+                  :key="index"
+                  :label="item.display_name"
+                  :value="item.name"
+                >
+                </el-option>
+                <!-- <el-option label="xxx" value="2"> </el-option> -->
+              </el-select>
+            </el-form-item>
+            <el-form-item label="姓名：" prop="name">
+              <el-input
+                placeholder="请输入"
+                class="inpustyle"
+                v-model="bjiform.name"
+                size="mini"
+                style="width: 340rem"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="账号：" prop="username">
+              <el-input
+                placeholder="请输入"
+                class="inpustyle"
+                v-model="bjiform.username"
+                size="mini"
+                style="width: 340rem"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="部门：" prop="department">
+              <el-input
+                placeholder="请输入"
+                class="inpustyle"
+                v-model="bjiform.department"
+                size="mini"
+                style="width: 340rem"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="开启/禁用：">
+              <el-switch
+                class="huandk"
+                v-model="bjiform.is_active"
+                active-color="#fa960069"
+                inactive-color="transparent"
+              >
+              </el-switch>
+            </el-form-item>
+            <el-form-item label="手机号：" prop="phone">
+              <el-input
+                placeholder="请输入"
+                class="inpustyle"
+                v-model="bjiform.phone"
+                size="mini"
+                style="width: 340rem"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱：" prop="email">
+              <el-input
+                placeholder="请输入"
+                class="inpustyle"
+                v-model="bjiform.email"
+                size="mini"
+                style="width: 340rem"
+              ></el-input>
+            </el-form-item>
           </el-form>
         </div>
         <div style="text-align: center">
@@ -524,28 +625,34 @@
             label-width="100rem"
             class="demo-ruleForm"
           >
-            <el-form-item label="密码：" prop="mm">
+            <el-form-item label="密码：" prop="password">
               <el-input
                 placeholder="请输入"
                 class="inpustyle"
-                v-model="czruleForm.mm"
+                v-model="czruleForm.password"
                 size="mini"
+                type="password"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
-            <el-form-item label="确认密码：" prop="qrmm">
+            <el-form-item label="确认密码：" prop="qpassword">
               <el-input
                 placeholder="请输入"
                 class="inpustyle"
-                v-model="czruleForm.qrmm"
+                v-model="czruleForm.qpassword"
                 size="mini"
+                type="password"
                 style="width: 340rem"
               ></el-input>
             </el-form-item>
           </el-form>
         </div>
         <div style="text-align: center">
-          <el-button class="buttonsy" size="mini" style="margin-right: 30rem"
+          <el-button
+            class="buttonsy"
+            size="mini"
+            style="margin-right: 30rem"
+            @click="czsbmin"
             >确认</el-button
           >
           <el-button
@@ -615,10 +722,13 @@ import {
   system_userspost,
   system_userssc,
   system_usersbj,
+  auth_roles,
+  users_password,
 } from "@/api";
 export default {
   data() {
     return {
+      rolesarr: [],
       czid: "", //重置id
       czruleForm: {}, //重置表单
       bjiform: {}, //编辑表单
@@ -635,23 +745,32 @@ export default {
       },
       // 添加表单数据
       ruleForm: {
-        js: "",
-        yhm: "",
-        mm: "",
-        qrmm: "",
-        zh: "",
-        bm: "",
-        kqjy: false,
-        xxx: "",
+        name: "",
+        username: "",
+        password: "",
+        qpassword: "",
+        department: "",
+        is_active: true,
+        phone: "",
+        email: "",
+        role: "",
       },
       // 添加表单验证
       rules: {
-        js: [{ required: true, message: "请选择角色 ", trigger: "change" }],
-        yhm: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-        zh: [{ required: true, message: "请输入账号", trigger: "blur" }],
-        mm: [{ required: true, message: "请输入密码", trigger: "blur" }],
-        qrmm: [{ required: true, message: "请输入确认密码", trigger: "blur" }],
-        bm: [{ required: true, message: "请输入部门", trigger: "change" }],
+        // js: [{ required: true, message: "请选择角色 ", trigger: "change" }],
+        name: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        username: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        qpassword: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        department: [
+          { required: true, message: "请输入部门", trigger: "blur" },
+        ],
+        role: [{ required: true, message: "请选中角色", trigger: "change" }],
+
+        // zh: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        // mm: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        // qrmm: [{ required: true, message: "请输入确认密码", trigger: "blur" }],
+        // bm: [{ required: true, message: "请输入部门", trigger: "change" }],
         // { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
         // password: [{ validator: funcpassword, trigger: "blur" }],
       },
@@ -661,7 +780,7 @@ export default {
       flagbj: false, //编辑弹窗
       // -----------------------------------------------------------------关联查询组件下
       // 表格数据
-      tableData: [{}],
+      tableData: [],
       // 表头数据
       btarr: [],
       // 表头改变数据
@@ -669,42 +788,40 @@ export default {
       // 表头原始数据
       tablearr: [
         {
-          prop: "username",
-          label: "用户名",
+          prop: "name",
+          label: "姓名",
           type: true,
         },
         {
-          prop: "b",
+          prop: "username",
           label: "账号",
           type: true,
         },
         {
-          prop: "c",
+          prop: "phone",
           label: "手机号",
           type: true,
         },
         {
-          prop: "d",
+          prop: "email",
           label: "邮箱",
           type: true,
         },
         {
-          prop: "e",
+          prop: "role",
           label: "角色",
           type: true,
         },
         {
-          prop: "f",
           label: "开启/禁用",
           type: true,
         },
         {
-          prop: "g",
+          prop: "department",
           label: "部门",
           type: true,
         },
         {
-          prop: "h",
           label: "操作",
           type: true,
         },
@@ -747,9 +864,32 @@ export default {
       this.czid = e.id;
       this.flagcz = true;
       this.$nextTick(() => {
+        this.czruleForm = {
+          password: "",
+          qpassword: "",
+        };
         this.$refs["czruleForm"].resetFields();
       });
     },
+    czsbmin() {
+      this.$refs["czruleForm"].validate((valid) => {
+        if (valid) {
+          if (this.czruleForm.password !== this.czruleForm.qpassword) {
+            return this.$message.error("两次密码不一致");
+          }
+          users_password(
+            { password: this.czruleForm.password },
+            this.czid
+          ).then((res) => {
+            this.getgovernancehosts(); //更新数据
+            this.flagcz = false; //关闭弹窗
+          });
+        } else {
+          return false;
+        }
+      });
+    },
+
     // 编辑提交
     bjsbmin() {
       this.$refs["bjruleForm"].validate((valid) => {
@@ -765,10 +905,13 @@ export default {
     },
     // 编辑打开
     bjdk(e) {
-      this.flagbj = true;
-      this.$nextTick(() => {
-        this.$refs["bjruleForm"].resetFields();
-        this.bjiform = e;
+      auth_roles().then((res) => {
+        this.rolesarr = res;
+        this.flagbj = true;
+        this.$nextTick(() => {
+          this.$refs["bjruleForm"].resetFields();
+          this.bjiform = JSON.parse(JSON.stringify(e));
+        });
       });
     },
     // 删除打开
@@ -787,6 +930,9 @@ export default {
     addsbmin() {
       this.$refs["addruleForm"].validate((valid) => {
         if (valid) {
+          if (this.ruleForm.password !== this.ruleForm.qpassword) {
+            return this.$message.error("两次密码不一致");
+          }
           system_userspost(this.ruleForm).then((res) => {
             this.getgovernancehosts(); //更新数据
             this.dialogVisible = false; //关闭弹窗
@@ -798,9 +944,12 @@ export default {
     },
     // 打开添加
     addre() {
-      this.dialogVisible = true;
-      this.$nextTick(() => {
-        this.$refs["addruleForm"].resetFields();
+      auth_roles().then((res) => {
+        this.rolesarr = res;
+        this.dialogVisible = true;
+        this.$nextTick(() => {
+          this.$refs["addruleForm"].resetFields();
+        });
       });
     },
     // 列表
@@ -826,8 +975,10 @@ export default {
           obj.filter = tj.join(" " + this.rysy + " ");
         }
       }
+      obj.offset = obj.offset - 1;
       system_users(obj).then((res) => {
         this.page = res.pagination;
+        this.page.offset += 1;
         this.tableData = res.results;
         // this.tableData = [{ c: "ww" }];
         // this.tableData = res.results.map((item) => {

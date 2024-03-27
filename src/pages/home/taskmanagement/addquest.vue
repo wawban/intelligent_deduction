@@ -56,6 +56,7 @@
               </el-form-item>
               <el-form-item label="任务描述：" prop="description">
                 <el-input
+                  :autosize="{ minRows: 5 }"
                   type="textarea"
                   placeholder="请输入"
                   class="inputtextarea"
@@ -125,10 +126,15 @@
                   </div>
                   <div style="display: flex; align-items: center">
                     <div class="treestyle gdstyle">
-                      <Treemu :datatree="zczdata" />
+                      <Treemu
+                        :datatree="zczdata"
+                        @ontreee="ontreee"
+                        ktype="1"
+                      />
                     </div>
                     <div style="padding: 0 24rem">
                       <i
+                        @click="qiehuan"
                         class="el-icon-d-arrow-right"
                         style="
                           color: #fa9600;
@@ -138,10 +144,12 @@
                         "
                       ></i>
                     </div>
-                    <div class="treestyle gdstyle">
-                      <!-- <Treemu :datatree="zczdata" /> -->
+                    <div class="treestyle gdstyle youji">
+                      <div v-for="(item, index) in huixiaer" :key="index">
+                        {{ item.name }}
+                      </div>
                     </div>
-                    <div style="padding-left: 41rem">
+                    <!-- <div style="padding-left: 41rem">
                       <el-radio-group class="dxradio" v-model="xxx">
                         <div>
                           <el-radio label="1">外界资产优先</el-radio>
@@ -153,7 +161,97 @@
                           <el-radio label="3">脆弱性资产优先</el-radio>
                         </div>
                       </el-radio-group>
+                    </div> -->
+                  </div>
+                </div>
+                <div style="margin: 20rem 0">
+                  <div style="color: #aaa; font-size: 14rem">
+                    选择途径资产组：
+                  </div>
+                  <div style="display: flex; align-items: center">
+                    <div class="treestyle gdstyle">
+                      <treemutow
+                        :datatree="zczdata"
+                        @ontreee="ontreee"
+                        ktype="2"
+                      />
                     </div>
+                    <div style="padding: 0 24rem">
+                      <i
+                        @click="qiehuan"
+                        class="el-icon-d-arrow-right"
+                        style="
+                          color: #fa9600;
+                          font-size: 28rem;
+                          cursor: pointer;
+                          font-weight: bolder;
+                        "
+                      ></i>
+                    </div>
+                    <div class="treestyle gdstyle youji">
+                      <div v-for="(item, index) in tuixiaer" :key="index">
+                        {{ item.name }}
+                      </div>
+                      <!-- <Treemu :datatree="zczdata" /> -->
+                    </div>
+                    <!-- <div style="padding-left: 41rem">
+                      <el-radio-group class="dxradio" v-model="xxx">
+                        <div>
+                          <el-radio label="1">外界资产优先</el-radio>
+                        </div>
+                        <div style="padding: 38rem 0">
+                          <el-radio label="2">外联资产优先</el-radio>
+                        </div>
+                        <div>
+                          <el-radio label="3">脆弱性资产优先</el-radio>
+                        </div>
+                      </el-radio-group>
+                    </div> -->
+                  </div>
+                </div>
+                <div>
+                  <div style="color: #aaa; font-size: 14rem">
+                    选择结束资产组：
+                  </div>
+                  <div style="display: flex; align-items: center">
+                    <div class="treestyle gdstyle">
+                      <treemutree
+                        :datatree="zczdata"
+                        @ontreee="ontreee"
+                        ktype="3"
+                      />
+                    </div>
+                    <div style="padding: 0 24rem">
+                      <i
+                        @click="qiehuan"
+                        class="el-icon-d-arrow-right"
+                        style="
+                          color: #fa9600;
+                          font-size: 28rem;
+                          cursor: pointer;
+                          font-weight: bolder;
+                        "
+                      ></i>
+                    </div>
+                    <div class="treestyle gdstyle youji">
+                      <div v-for="(item, index) in zzixiaer" :key="index">
+                        {{ item.name }}
+                      </div>
+                      <!-- <Treemu :datatree="zczdata" /> -->
+                    </div>
+                    <!-- <div style="padding-left: 41rem">
+                      <el-radio-group class="dxradio" v-model="xxx">
+                        <div>
+                          <el-radio label="1">外界资产优先</el-radio>
+                        </div>
+                        <div style="padding: 38rem 0">
+                          <el-radio label="2">外联资产优先</el-radio>
+                        </div>
+                        <div>
+                          <el-radio label="3">脆弱性资产优先</el-radio>
+                        </div>
+                      </el-radio-group>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -206,7 +304,11 @@
             @click="gouxb"
             >下一步</el-button
           >
-          <el-button v-if="type == 3" class="tsbuttonsy" size="mini"
+          <el-button
+            v-if="type == 3"
+            class="tsbuttonsy"
+            size="mini"
+            @click="onsbin"
             >完成</el-button
           >
         </div>
@@ -215,10 +317,17 @@
   </div>
 </template>
 <script>
-import { governance_groups } from "@/api";
+import { governance_groups, infer_taskspost } from "@/api";
 export default {
   data() {
     return {
+      ityew: "",
+      huixiaer: [],
+      tuixiaer: [],
+      zzixiaer: [],
+      chuangdnag: {},
+      tujingar: {},
+      zdianjd: {},
       xxx: "",
       zczdata: [], // 资产组架构
       // +++++++++++++++++++++++++++++++++++
@@ -234,6 +343,9 @@ export default {
         tail_cidrs: "",
         stem_cidrs: "",
         head_cidrs: "",
+        // tail_groups: "",
+        // stem_groups: "",
+        // head_groups: "",
       },
       // 表单验证
       rules: {
@@ -250,11 +362,107 @@ export default {
   },
   components: {
     Treemu: () => import("./treemu.vue"),
+    treemutow: () => import("./treemutow.vue"),
+    treemutree: () => import("./treemutree.vue"),
   },
   mounted() {
     this.getgovernancegroups();
   },
   methods: {
+    // 提交
+    onsbin() {
+      var obj = {
+        name: this.ruleForm.name,
+        config: {
+          infer_type: this.ruleForm.infer_type,
+          target_type: this.ruleForm.target_type,
+        },
+        description: this.ruleForm.description,
+        schedule: {
+          timing_mode: this.ruleForm.timing_mode,
+        },
+        task_targets: {
+          // head:{
+          //   cidrs:[]
+          // }
+          tail: {
+            // cidrs:[],
+            // groups:[]
+            // cidrs: [this.ruleForm.tail_cidrs],
+            cidrs: this.ruleForm.tail_cidrs.split("\n"),
+            groups: this.huixiaer.map((e) => {
+              return e.id;
+            }),
+          },
+          stem: {
+            cidrs: this.ruleForm.stem_cidrs.split("\n"),
+            groups: this.tuixiaer.map((e) => {
+              return e.id;
+            }),
+          },
+          head: {
+            // cidrs: [this.ruleForm.head_cidrs],
+            cidrs: this.ruleForm.head_cidrs.split("\n"),
+            // groups: [], //this.zdianjd
+            groups: this.zzixiaer.map((e) => {
+              return e.id;
+            }),
+          },
+        },
+        algorithm: [
+          {
+            id: "1",
+            name: "2",
+            class: "3",
+          },
+        ],
+      };
+
+      // <el-radio-group v-model="ruleForm.target_type" class="dxradio">
+      //             <el-radio label="cidr">IP/IP段</el-radio>
+      //             <el-radio label="group">资产组</el-radio>
+
+      infer_taskspost(obj).then((res) => {
+        this.$router.go(-1);
+      });
+    },
+    // 传值
+    ontreee(e, i) {
+      this.ityew = i;
+      if (i == "1") {
+        this.chuangdnag = e;
+      } else if (i == "2") {
+        this.tujingar = e;
+      } else {
+        this.zdianjd = e;
+      }
+    },
+    // 选中资产
+    qiehuan() {
+      // alert(this.ityew);
+      if (this.ityew == "1") {
+        var arr = this.huixiaer.map((res) => {
+          return res.id;
+        });
+        if (arr.indexOf(this.chuangdnag.id) == -1) {
+          this.huixiaer.push(this.chuangdnag);
+        }
+      } else if (this.ityew == "2") {
+        var arr = this.tuixiaer.map((res) => {
+          return res.id;
+        });
+        if (arr.indexOf(this.tujingar.id) == -1) {
+          this.tuixiaer.push(this.tujingar);
+        }
+      } else {
+        var arr = this.zzixiaer.map((res) => {
+          return res.id;
+        });
+        if (arr.indexOf(this.zdianjd.id) == -1) {
+          this.zzixiaer.push(this.zdianjd);
+        }
+      }
+    },
     // 下一步
     gouxb() {
       if (this.type == 1) {
@@ -266,6 +474,28 @@ export default {
           }
         });
       } else if (this.type == 2) {
+        if (this.ruleForm.target_type == "cidr") {
+          if (this.ruleForm.tail_cidrs.length == 0) {
+            return this.$message.error("请输入起点");
+          }
+          if (this.ruleForm.stem_cidrs.length == 0) {
+            return this.$message.error("请输入途径点");
+          }
+          if (this.ruleForm.head_cidrs.length == 0) {
+            return this.$message.error("请输入终点");
+          }
+        }
+        if (this.ruleForm.target_type == "group") {
+          if (this.huixiaer.length == 0) {
+            return this.$message.error("请选择起点");
+          }
+          if (this.tuixiaer.length == 0) {
+            return this.$message.error("请选择途径点");
+          }
+          if (this.zzixiaer.length == 0) {
+            return this.$message.error("请选择终点");
+          }
+        }
         this.type = 3;
       }
     },
@@ -387,6 +617,12 @@ export default {
             height: 140rem;
             overflow: auto;
             border: 1px solid #aaaaaa;
+          }
+          .youji {
+            padding: 10rem;
+            > div {
+              font-size: 14rem;
+            }
           }
         }
       }

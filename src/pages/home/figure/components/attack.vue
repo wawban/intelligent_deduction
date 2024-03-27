@@ -5,10 +5,11 @@
       <div class="list">
         <div class="numl"></div>
         <div class="nrongt">
-          <div v-for="(e, i) in 8" :key="i">
+          <!-- <div v-for="(e, i) in 8" :key="i">
             <div>{{ i }}</div>
             GET /jbossmq-httpil/HTTPServerILServlet
-          </div>
+          </div> -->
+          {{ snapshot.request }}
         </div>
       </div>
     </div>
@@ -17,15 +18,28 @@
       <div class="list" style="height: 167rem">
         <div class="numl"></div>
         <div class="nrongt">
-          <div v-for="(e, i) in 8" :key="i">
+          <!-- <div v-for="(e, i) in 8" :key="i">
             <div>{{ i }}</div>
             GET /jbossmq-httpil/HTTPServerILServlet
-          </div>
+          </div> -->
+          {{ snapshot.response }}
         </div>
       </div>
     </div>
   </div>
 </template>
+<script>
+export default {
+  props: {
+    snapshot: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+  },
+};
+</script>
 <style lang="less" scoped>
 .attack {
   padding: 39rem 40rem 0;

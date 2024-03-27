@@ -35,7 +35,7 @@
                 <div class="wenz">http://192.168.0.121:8081</div>
               </div>
               <div class="sjianimg">
-                <img src="../img/cx.png" alt="" />
+                <img src="../img/nz.png" alt="" />
                 <span>更新时间：2024.1.28 20:55:55</span>
               </div>
             </div>

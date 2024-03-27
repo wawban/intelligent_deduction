@@ -221,27 +221,27 @@ export function infer_taskssc(id) {
 }
 export const system_users= (params) => {
     return request({
-        url: `${url}system/users`,
+        url: `${url}auth/users`,
         method: "get",
         params
     })
 }
 export const system_userspost= (data) => {
     return request({
-        url: `${url}system/users`,
+        url: `${url}auth/users`,
         method: "post",
         data
     })
 }
 export function system_userssc(id) {
     return request({
-        url: `${url}system/users/${id}`,
+        url: `${url}auth/users/${id}`,
         method: 'delete'
     })
 }
 export function system_usersbj(data,id) {
     return request({
-        url: `${url}system/users/${id}`,
+        url: `${url}auth/users/${id}`,
         method: 'put',
         data
     })
@@ -260,15 +260,60 @@ export const system_logs= (params) => {
         params
     })
 }
+export const kb_vulns= (params) => {
+    return request({
+        url: `${url}kb/vulns`,
+        method: "get",
+        params
+    })
+}
+export const kb_vulnsid = (id) => {
+    return request({
+        url: `${url}kb/vulns/${id}`,
+        method: "patch"
+    })
+}
 
-// 
-// export const kb_vulns= (params) => {
-//     return request({
-//         url: `${url}kb/vulns`,
-//         method: "get",
-//         params
-//     })
-// }
+export const auth_roles= (params) => {
+    return request({
+        url: `${url}auth/roles`,
+        method: "get",
+        params
+    })
+}
+export function users_password(data,id) {
+    return request({
+        url: `${url}auth/users/${id}/password`,
+        method: 'put',
+        data
+    })
+}
+export function auth_logout() {
+    return request({
+        url: `${url}auth/logout`,
+        method: 'delete'
+    })
+}
+
+export const infer_taskspost= (data) => {
+    return request({
+        url: `${url}infer/tasks`,
+        method: "post",
+        data
+    })
+}
+export function infer_tasksstatus(data,id) {
+    return request({
+        url: `${url}infer/tasks/${id}/status`,
+        method: 'patch',
+        data
+    })
+}
+// /infer/tasks/{id}/status
+// /infer/tasks
+// /data-governance/vulns/{id}
+// s
+// /kb/vulns/{id}
 // /data-governance/vulns
 // export const productInfo_getList = (params) => {
 //     return request({
