@@ -22,12 +22,13 @@
               <div
                 class="zjiannum"
                 :style="{
-                  color:
-                    fxianpgutu.compared_value >= 80
-                      ? '#e53a40'
-                      : fxianpgutu.compared_value < 40
-                      ? '#f6d535'
-                      : '#fa9600',
+                  color: '#fa9600',
+                  // color:
+                  //   fxianpgutu.compared_value >= 80
+                  //     ? '#e53a40'
+                  //     : fxianpgutu.compared_value < 40
+                  //     ? '#f6d535'
+                  //     : '#fa9600',
                 }"
               >
                 {{ fxianpgutu.compared_value }}
