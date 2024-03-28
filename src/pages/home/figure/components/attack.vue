@@ -5,11 +5,11 @@
       <div class="list">
         <div class="numl"></div>
         <div class="nrongt">
-          <!-- <div v-for="(e, i) in 8" :key="i">
+          <div v-for="(e, i) in snapshot.request" :key="i">
             <div>{{ i }}</div>
-            GET /jbossmq-httpil/HTTPServerILServlet
-          </div> -->
-          {{ snapshot.request }}
+            {{ e }}
+          </div>
+          <!-- {{ snapshot.request }} -->
         </div>
       </div>
     </div>
@@ -18,11 +18,11 @@
       <div class="list" style="height: 167rem">
         <div class="numl"></div>
         <div class="nrongt">
-          <!-- <div v-for="(e, i) in 8" :key="i">
+          <div v-for="(e, i) in snapshot.response" :key="i">
             <div>{{ i }}</div>
-            GET /jbossmq-httpil/HTTPServerILServlet
-          </div> -->
-          {{ snapshot.response }}
+            {{ e }}
+          </div>
+          <!-- {{ snapshot.response }} -->
         </div>
       </div>
     </div>

@@ -6,7 +6,9 @@
         <div class="img">
           <img src="../../img/sh.png" alt="" />
         </div>
-        <div class="wys">数字空间治理/漏洞治理/</div>
+        <div class="wys" style="cursor: pointer" @click="goto">
+          数字空间治理/漏洞治理/
+        </div>
         <div class="yys">聚合视角查看</div>
       </div>
       <div class="fanh" @click="goto">
@@ -34,7 +36,12 @@
           <div class="marginr">
             <el-popover placement="bottom" trigger="hover">
               <div class="ckqbtopqian">
-                <el-button class="buttonsy" size="mini">查看全部</el-button>
+                <el-button
+                  class="buttonsy"
+                  size="mini"
+                  @click="getgovernancehosts('clear')"
+                  >查看全部</el-button
+                >
               </div>
               <div slot="reference" class="boxjc">
                 <img src="../../img/qb.png" alt="" />
@@ -42,6 +49,7 @@
               </div>
             </el-popover>
           </div>
+          <!-- 复合查询 -->
           <div class="marginr">
             <el-popover placement="bottom" width="530" trigger="click">
               <div slot="reference" class="boxjc">
@@ -50,8 +58,8 @@
               </div>
               <div class="tjiansxian">
                 <div class="top">
-                  <div>筛选</div>
-                  <div @click="cleark">清空</div>
+                  <div @click="getgovernancehosts">筛选</div>
+                  <div @click="getgovernancehosts('clear')">清空</div>
                 </div>
                 <div
                   style="padding: 12rem 0; display: flex; align-items: center"
@@ -64,8 +72,8 @@
                     v-model="rysy"
                     placeholder="请选择"
                   >
-                    <el-option label="任一" value="1"></el-option>
-                    <el-option label="所有" value="2"></el-option>
+                    <el-option label="任一" value="or"></el-option>
+                    <el-option label="所有" value="and"></el-option>
                   </el-select>
                   &nbsp;&nbsp;条件
                 </div>
@@ -97,10 +105,15 @@
                         v-model="e.value"
                         placeholder="请选择"
                       >
-                        <el-option label="包含" value="1"></el-option>
-                        <el-option label="不包含" value="2"></el-option>
-                        <el-option label="为空" value="3"></el-option>
-                        <el-option label="不为空" value="4"></el-option>
+                        <el-option label="包含" value="contain"></el-option>
+                        <el-option
+                          label="不包含"
+                          value="notcontain"
+                        ></el-option>
+                        <el-option label="等于" value="eq"></el-option>
+                        <el-option label="不等于" value="ne"></el-option>
+                        <!-- <el-option label="为空" value="3"></el-option>
+                        <el-option label="不为空" value="4"></el-option> -->
                       </el-select>
                     </div>
                     <div>
@@ -199,8 +212,8 @@
             <template slot-scope="scope">
               <!-- 工单状态 -->
               <div v-if="item.label == '工单状态'">
-                <div :class="scope.row.c == '1' ? 'gh' : 'zh'">
-                  {{ scope.row.c == "1" ? "待下发" : "待处理" }}
+                <div :class="scope.row.gdzt == 0 ? 'gh' : 'zh'">
+                  {{ scope.row.gdzt == 0 ? "待下发" : "待处理" }}
                 </div>
               </div>
               <!-- 操作 -->
@@ -227,9 +240,9 @@
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page="page.current"
+            :current-page="page.offset"
             :page-sizes="[10, 20]"
-            :page-size="page.size"
+            :page-size="page.limit"
             layout="total, sizes, prev, pager, next, jumper"
             :total="page.total"
           >
@@ -329,6 +342,7 @@
   </div>
 </template>
 <script>
+import { vulns_by } from "@/api";
 export default {
   data() {
     return {
@@ -349,103 +363,12 @@ export default {
       },
       // 分页
       page: {
-        current: 1,
-        size: 10,
-        total: 44,
+        offset: 1,
+        limit: 10,
+        total: 0,
       },
       // 表格数据
-      tableData: [
-        {
-          a: "11.0.0.126(8080)",
-          b: "人力资源部",
-          c: "1",
-          d: "张有志",
-          e: "李友田",
-          f: "2023.10.23 02:12:15",
-          g: "-",
-        },
-        {
-          a: "11.0.0.126(8080)",
-          b: "人力资源部",
-          c: "2",
-          d: "张有志",
-          e: "李友田",
-          f: "2023.10.23 02:12:15",
-          g: "-",
-        },
-        {
-          a: "11.0.0.126(8080)",
-          b: "人力资源部",
-          c: "1",
-          d: "张有志",
-          e: "李友田",
-          f: "2023.10.23 02:12:15",
-          g: "-",
-        },
-        {
-          a: "11.0.0.126(8080)",
-          b: "人力资源部",
-          c: "1",
-          d: "张有志",
-          e: "李友田",
-          f: "2023.10.23 02:12:15",
-          g: "-",
-        },
-        {
-          a: "11.0.0.126(8080)",
-          b: "人力资源部",
-          c: "1",
-          d: "张有志",
-          e: "李友田",
-          f: "2023.10.23 02:12:15",
-          g: "-",
-        },
-        {
-          a: "11.0.0.126(8080)",
-          b: "人力资源部",
-          c: "1",
-          d: "张有志",
-          e: "李友田",
-          f: "2023.10.23 02:12:15",
-          g: "-",
-        },
-        {
-          a: "11.0.0.126(8080)",
-          b: "人力资源部",
-          c: "1",
-          d: "张有志",
-          e: "李友田",
-          f: "2023.10.23 02:12:15",
-          g: "-",
-        },
-        {
-          a: "11.0.0.126(8080)",
-          b: "人力资源部",
-          c: "1",
-          d: "张有志",
-          e: "李友田",
-          f: "2023.10.23 02:12:15",
-          g: "-",
-        },
-        {
-          a: "11.0.0.126(8080)",
-          b: "人力资源部",
-          c: "1",
-          d: "张有志",
-          e: "李友田",
-          f: "2023.10.23 02:12:15",
-          g: "-",
-        },
-        {
-          a: "11.0.0.126(8080)",
-          b: "人力资源部",
-          c: "1",
-          d: "张有志",
-          e: "李友田",
-          f: "2023.10.23 02:12:15",
-          g: "-",
-        },
-      ],
+      tableData: [],
       // 表头数据
       btarr: [],
       // 表头改变数据
@@ -453,49 +376,47 @@ export default {
       // 表头原始数据
       tablearr: [
         {
-          prop: "a",
+          prop: "mb",
           label: "目标",
           type: true,
         },
         {
-          prop: "b",
+          prop: "zcz",
           label: "资产组",
           type: true,
         },
         {
-          prop: "c",
           label: "工单状态",
           type: true,
         },
         {
-          prop: "d",
+          prop: "manager",
           label: "漏洞负责人",
           type: true,
         },
         {
-          prop: "e",
+          prop: "assignee",
           label: "分配对象",
           type: true,
         },
         {
-          prop: "f",
+          prop: "deadline",
           label: "截止时间",
           type: true,
         },
         {
-          prop: "g",
+          prop: "note",
           label: "工单备注",
           type: true,
         },
         {
-          prop: "k",
           label: "操作",
           type: true,
         },
       ],
-      rysy: "2", //符合条件，任一或所有
+      rysy: "and", //符合条件，任一或所有
       //   查询数据
-      searcharr: [{ key: "", value: "", type: "" }],
+      searcharr: [],
       dialogVisible: false, //创建工单弹窗
     };
   },
@@ -515,9 +436,6 @@ export default {
     },
   },
   mounted() {
-    // localStorage.setItem("localaggregateview", "");
-    // ----------------------------关联查询组件下
-    // 表格头
     this.btarr = localStorage.getItem("localaggregateview")
       ? JSON.parse(localStorage.getItem("localaggregateview"))
       : this.tablearr;
@@ -525,9 +443,57 @@ export default {
       this.btarr = e.value.list;
       localStorage.setItem("localaggregateview", JSON.stringify(this.btarr));
     });
-    // ----------------------------关联查询组件上
+    this.getgovernancehosts(); // 列表
   },
   methods: {
+    // 主机资产列表
+    getgovernancehosts(e) {
+      // 清空条件+查询所有
+      if (e == "clear") {
+        this.searcharr = [];
+        this.page.offset = 1;
+      }
+      var obj = {
+        offset: this.page.offset,
+        limit: this.page.limit,
+      };
+      if (this.searcharr.length != 0) {
+        var arr = this.searcharr.filter((item) => {
+          return item.key.length != 0 && item.type.length != 0;
+        });
+        if (arr.length != 0) {
+          var tj = arr.map((req) => {
+            var jihe = req.key + " " + req.value + " " + (req.type || "");
+            return jihe;
+          });
+          obj.filter = tj.join(" " + this.rysy + " ");
+        }
+      }
+      obj.offset = obj.offset - 1;
+      vulns_by(obj, this.$route.query.id).then((res) => {
+        this.page = res.pagination;
+        this.page.offset += 1;
+        this.tableData = res.results.map((item) => {
+          item.meta.mb = item.meta.asset.ip + ":" + item.meta.asset.port;
+          item.meta.zcz = item.meta.asset.asset_group_name;
+          item.meta.gdzt = item.ticket.result;
+          item.meta.manager = item.ticket.manager;
+          item.meta.assignee = item.ticket.assignee;
+          item.meta.note = item.ticket.note;
+          item.meta.id = item.id;
+          item.meta.deadline = this.$moment(item.ticket.deadline).format(
+            "YYYY-MM-DD HH:mm:ss"
+          );
+
+          // alert(item.meta.mb);
+          return item.meta;
+        });
+        console.log(this.tableData);
+        // this.tableData.map((e) => {
+        //   e.severity = e.severity.toLowerCase();
+        // });
+      });
+    },
     goto() {
       this.$router.go(-1);
     },
@@ -541,34 +507,32 @@ export default {
       }
       localStorage.setItem("localaggregateview", JSON.stringify(this.btarr));
     },
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // 查询组件添加条件
     appendtj() {
-      this.searcharr.push({ key: "", value: "1", type: "" });
+      this.searcharr.push({ key: "", value: "contain", type: "" });
     },
     // 查询组件减少条件
     cxoff(i) {
       this.searcharr.splice(i, 1);
     },
-    // 触发清空
-    cleark() {
-      this.searcharr = [{ key: "", value: "1", type: "" }];
+    // 分页条数
+    handleSizeChange(e) {
+      this.page.limit = e;
+      this.getgovernancehosts();
     },
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    // ----------------------------关联查询组件上
-    // ---------------------------分页
-    handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
-      alert(val);
-    },
-    handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`);
-      alert(val);
+    // 分页页数
+    handleCurrentChange(e) {
+      this.page.offset = e;
+      this.getgovernancehosts();
     },
     // ---------------------------跳转详情
     gotu(e) {
       // console.log(e)
-      this.$router.push("/figure/vulnevrabilitymanagement/governancedetails");
+      // this.$router.push("/figure/vulnevrabilitymanagement/governancedetails");
+      this.$router.push({
+        path: "/figure/vulnevrabilitymanagement/governancedetails",
+        query: { id: e.id },
+      });
     },
   },
 };

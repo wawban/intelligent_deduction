@@ -290,17 +290,17 @@ export default {
           type: true,
         },
         {
-          prop: "cve_id",
+          prop: "cve",
           label: "CVE编号",
           type: true,
         },
         {
-          prop: "cnvd_id",
+          prop: "cnnvd",
           label: "CNNVD编号",
           type: true,
         },
         {
-          prop: "cvss",
+          prop: "cvss_score",
           label: "评分",
           type: true,
         },
@@ -309,7 +309,7 @@ export default {
           type: true,
         },
         {
-          prop: "time_discovered",
+          prop: "publish_date",
           label: "发布日期",
           type: true,
         },
@@ -386,7 +386,13 @@ export default {
       kb_vulns(obj).then((res) => {
         this.page = res.pagination;
         this.page.offset += 1;
-        this.tableData = res.results.meta;
+        // this.tableData = res.results.meta;
+        this.tableData = res.results;
+        this.tableData.map((item) => {
+          item.publish_date = this.$moment(item.publish_date).format(
+            "YYYY-MM-DD HH:mm:ss"
+          );
+        });
         // this.tableData = [{ c: "ww" }];
         // this.tableData = res.results.map((item) => {
         //   return item.meta;

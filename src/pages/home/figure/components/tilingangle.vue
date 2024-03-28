@@ -215,15 +215,21 @@
             </div>
 
             <!-- 漏洞状态 -->
-            <div v-else-if="item.label == '漏洞状态'">
-              <div :class="scope.row.d == '1' ? 'gh' : 'zh'">
+            <!-- <div v-else-if="item.label == '漏洞状态'">
+              <div :class="scope.row.status == '1' ? 'gh' : 'zh'">
                 {{ scope.row.d == "1" ? "待验证" : "待修复" }}
+              </div>
+            </div> -->
+            <div v-else-if="item.label == '漏洞状态'">
+              <div :class="scope.row.status == 0 ? 'gh' : 'zh'">
+                {{ scope.row.status == 0 ? "待验证" : "待修复" }}
+                <!-- {{ scope.row.status }} -->
               </div>
             </div>
             <!-- 工单状态 -->
             <div v-else-if="item.label == '工单状态'">
-              <div :class="scope.row.e == '1' ? 'gh' : 'zh'">
-                {{ scope.row.e == "1" ? "待下发" : "待处理" }}
+              <div :class="scope.row.gdzt == 0 ? 'gh' : 'zh'">
+                {{ scope.row.e == gdzt ? "待下发" : "待处理" }}
               </div>
             </div>
             <!-- 操作 -->
@@ -389,7 +395,6 @@ export default {
           type: true,
         },
         {
-          prop: "d",
           label: "漏洞状态",
           type: true,
         },
@@ -409,12 +414,12 @@ export default {
           type: true,
         },
         {
-          prop: "h",
+          prop: "manager",
           label: "漏洞负责人",
           type: true,
         },
         {
-          prop: "i",
+          prop: "assignee",
           label: "分配对象",
           type: true,
         },
@@ -496,8 +501,17 @@ export default {
         this.page = res.pagination;
         this.page.offset += 1;
         this.tableData = res.results.map((item) => {
-          item.gdzt = item.ticket.status;
-          item.zcip = item.meta.asset.ip;
+          item.meta.id = item.id;
+          item.meta.assignee = item.ticket.assignee;
+          item.meta.manager = item.ticket.manager;
+          // console.log(item);
+          item.meta.gdzt = item.ticket.status;
+          item.meta.zcip = item.meta.asset.ip;
+          item.meta.time_discovered = this.$moment(
+            item.meta.time_discovered
+          ).format("YYYY-MM-DD HH:mm:ss");
+          // alert(item.time_discovered);
+
           return item.meta;
         });
       });

@@ -270,7 +270,7 @@ export const kb_vulns= (params) => {
 export const kb_vulnsid = (id) => {
     return request({
         url: `${url}kb/vulns/${id}`,
-        method: "patch"
+        method: "get"
     })
 }
 
@@ -307,6 +307,27 @@ export function infer_tasksstatus(data,id) {
         url: `${url}infer/tasks/${id}/status`,
         method: 'patch',
         data
+    })
+}
+export const vulns_aggregated= (params) => {
+    return request({
+        url: `${url}data-governance/vulns-aggregated`,
+        method: "get",
+        params
+    })
+}
+export const vulns_by= (params,id) => {
+    return request({
+        url: `${url}data-governance/vulns-by-vi/${id}`,
+        method: "get",
+        params
+    })
+}
+export const kb_techniques= (params) => {
+    return request({
+        url: `${url}kb/techniques`,
+        method: "get",
+        params
     })
 }
 // /infer/tasks/{id}/status

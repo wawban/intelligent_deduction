@@ -7,7 +7,9 @@
         <div class="img">
           <img src="../img/sh.png" alt="" />
         </div>
-        <div class="wys">知识库/漏洞知识库/</div>
+        <div class="wys" style="cursor: pointer" @click="goto">
+          知识库/漏洞知识库/
+        </div>
         <div class="yys">漏洞知识详情</div>
       </div>
       <div class="fanh" @click="goto">
@@ -32,14 +34,14 @@
                     <div style="color: #aaa; padding-right: 10rem">
                       CVE编号:
                     </div>
-                    <div>{{ quanbu.cve_id }}</div>
+                    <div>{{ quanbu.cve }}</div>
                   </div>
 
                   <div>
                     <div style="color: #aaa; padding-right: 10rem">
                       CNNVD编号:
                     </div>
-                    <div>{{ quanbu.cnvd_id }}</div>
+                    <div>{{ quanbu.cnnvd }}</div>
                   </div>
                 </div>
                 <div style="padding-top: 14rem">
@@ -54,7 +56,14 @@
                     <div style="color: #aaa; padding-right: 10rem">
                       发布日期:
                     </div>
-                    <div>{{ quanbu.time_discovered }}</div>
+                    <!-- <div>{{ quanbu.publish_date }}</div> -->
+                    <div>
+                      {{
+                        $moment(quanbu.publish_date).format(
+                          "YYYY-MM-DD HH:mm:ss"
+                        )
+                      }}
+                    </div>
                   </div>
                 </div>
                 <div class="xiantiao">
@@ -70,29 +79,29 @@
                     <div style="color: #aaa; padding-right: 10rem">
                       操作系统:
                     </div>
-                    <div>xxx</div>
+                    <div>{{ quanbu.os }}</div>
                   </div>
 
                   <div>
                     <div style="color: #aaa; padding-right: 10rem">厂商:</div>
-                    <div>xxx</div>
+                    <div>{{ quanbu.vendor }}</div>
                   </div>
                 </div>
                 <div style="padding-top: 14rem">
                   <div>
                     <div style="color: #aaa; padding-right: 10rem">产品:</div>
-                    <div>xxx</div>
+                    <div>{{ quanbu.product }}</div>
                   </div>
 
                   <div>
                     <div style="color: #aaa; padding-right: 10rem">应用:</div>
-                    <div>xxx</div>
+                    <div>{{ quanbu.application }}</div>
                   </div>
                 </div>
                 <div style="padding-top: 14rem">
                   <div>
                     <div style="color: #aaa; padding-right: 10rem">版本:</div>
-                    <div>xxx</div>
+                    <div>{{ quanbu.version }}</div>
                   </div>
                 </div>
                 <div class="xiantiao">
@@ -102,14 +111,13 @@
               </div>
               <!--  -->
               <div class="jianjier">
-                <p>
-                  Cybrosys Techno Solutions Website Blog
-                  Search是博客中提供了搜索选项。
+                <p v-for="(e, i) in quanbu.description" :key="i">
+                  {{ e }}
                 </p>
-                <p>
+                <!-- <p>
                   Cybrosys Techno Solutions Website Blog Search
                   13.0版本至13.0.1.0.1版本存在安全漏洞，该漏洞源于存在SOL注入漏洞。
-                </p>
+                </p> -->
               </div>
               <!-- 修复建议 -->
               <div class="ckaowz">
@@ -117,14 +125,17 @@
                 <div></div>
               </div>
               <div class="jianyibox">
-                <p>
+                <p v-for="(e, i) in quanbu.advice" :key="i">
+                  {{ e }}
+                </p>
+                <!-- <p>advice   description
                   Cybrosys Techno Solutions Website Blog
                   Search是博客中提供了搜索选项。
-                </p>
-                <p>
+                </p> -->
+                <!-- <p>
                   Cybrosys Techno Solutions Website Blg Search
                   13.0版本至13.0.1.0.1版本存在安全漏洞，该漏洞源于存在SOL注入漏洞，允许远程攻击者执行任意
-                </p>
+                </p> -->
                 <p>代码并获取权限。</p>
               </div>
               <!-- 参考网址 -->
@@ -132,14 +143,18 @@
                 <i class="el-icon-caret-right"></i>参考网址
                 <div></div>
               </div>
-              <div class="laiyaunxd">
+              <div
+                v-for="(item, index) in quanbu.reference"
+                :key="index"
+                :class="index == 0 ? 'laiyaunxd' : 'laiyaunxd paddingt'"
+              >
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">来源:</div>
-                  <div>nvd.nist.gov</div>
+                  <div>{{ item.source }}</div>
                 </div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">链接:</div>
-                  <a href="">https://nvd.nist.gov/vuln/detail/CVE-2023-48049</a>
+                  <a href="">{{ item.link }}</a>
                   <!-- <div>CVE-2023-48049</div> -->
                 </div>
               </div>
@@ -148,10 +163,13 @@
                 <i class="el-icon-caret-right"></i>官方补丁
                 <div></div>
               </div>
-              <div style="padding: 20rem 0">
-                <a href="" style="color: #02a7f0"
-                  >https://nvd.nist.gov/vuln/detail/CVE-2023-48049</a
-                >
+
+              <div
+                v-for="(item, index) in quanbu.patch"
+                :key="index"
+                :class="index == 0 ? 'stybd' : 'stybd stybdpadd'"
+              >
+                <a href="" style="color: #02a7f0">{{ item }}</a>
               </div>
             </div>
             <div class="anqunrigth">
@@ -173,10 +191,35 @@
       <!-- ---------------- -->
       <div class="rigth">
         <!-- 超危 -->
+        <!-- cvss -->
         <div class="cweixian wbb">
           <div class="paiyi">
-            <div class="numtext">9.1</div>
-            <div class="strtext">超危</div>
+            <div class="numtext">{{ quanbu.cvss_score }}</div>
+            <div
+              :class="
+                quanbu.severity == 'low'
+                  ? 'low strtext'
+                  : quanbu.severity == 'medium'
+                  ? 'medium strtext'
+                  : quanbu.severity == 'high'
+                  ? 'high strtext'
+                  : quanbu.severity == 'critical'
+                  ? 'critical strtext'
+                  : 'strtext'
+              "
+            >
+              {{
+                quanbu.severity == "low"
+                  ? "低危"
+                  : quanbu.severity == "medium"
+                  ? "中危"
+                  : quanbu.severity == "high"
+                  ? "高危"
+                  : quanbu.severity == "critical"
+                  ? "超危"
+                  : ""
+              }}
+            </div>
           </div>
           <div class="pailist">
             <div>
@@ -243,10 +286,34 @@
             <div>漏洞名称</div>
             <div>漏洞等级</div>
           </div>
-          <div class="listarr" v-for="(e, i) in 5" :key="i">
-            <div>CVE-2017-11889</div>
-            <div>libaom 中的堆缓冲...</div>
-            <div class="cweis">超危</div>
+          <div class="listarr" v-for="(e, i) in related_vulns" :key="i">
+            <div>{{ e.id }}</div>
+            <div>{{ e.name }}</div>
+            <div
+              :class="
+                e.severity == 'low'
+                  ? 'low'
+                  : e.severity == 'medium'
+                  ? 'medium'
+                  : e.severity == 'high'
+                  ? 'high'
+                  : e.severity == 'critical'
+                  ? 'critical'
+                  : ''
+              "
+            >
+              {{
+                e.severity == "low"
+                  ? "低危"
+                  : e.severity == "medium"
+                  ? "中危"
+                  : e.severity == "high"
+                  ? "高危"
+                  : e.severity == "critical"
+                  ? "超危"
+                  : ""
+              }}
+            </div>
           </div>
         </div>
         <!-- 可能使用的战术 -->
@@ -259,9 +326,9 @@
             <div>技战术编号</div>
             <div>技战术名称</div>
           </div>
-          <div class="listarr" v-for="(e, i) in 5" :key="i">
-            <div>T1190</div>
-            <div>利用面向公众的应用程序</div>
+          <div class="listarr" v-for="(e, i) in related_techs" :key="i">
+            <div>{{ e.id }}</div>
+            <div>{{ e.name }}</div>
           </div>
         </div>
       </div>
@@ -276,6 +343,8 @@ export default {
   },
   data() {
     return {
+      related_vulns: [],
+      related_techs: [],
       quanbu: {},
       // typenum: "1", //标签页判断
       // meta: { asset_group: {} }, //风险评估
@@ -293,8 +362,16 @@ export default {
     // 获取详情
     getgovernancehostsid() {
       kb_vulnsid(this.$route.query.id).then((res) => {
-        this.quanbu = res;
+        // this.quanbu = res;
+        this.quanbu = res.meta;
+        // this.quanbu.map((item) => {
+        this.quanbu.advice = this.quanbu.advice.split("\n");
+        this.quanbu.description = this.quanbu.description.split("\n");
+        // });
+
         this.datasj = res.graph; //资产图谱
+        this.related_vulns = res.related_vulns;
+        this.related_techs = res.related_techs;
         // this.meta = res.meta; //风险评估
         // this.vulns = res.vulns; //漏洞信息
         // this.ports = res.ports; //端口信息

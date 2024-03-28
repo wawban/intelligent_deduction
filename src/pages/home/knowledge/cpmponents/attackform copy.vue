@@ -24,19 +24,19 @@
           <td>战术名称</td>
           <td>战术编号</td>
         </tr>
-        <tr v-for="(e, i) in 11" :key="i">
-          <td>战术名称{{ e }}</td>
-          <td>战术编号{{ e }}</td>
-          <td>战术名称{{ e }}</td>
-          <td>战术编号{{ e }}</td>
-          <td>战术名称{{ e }}</td>
-          <td>战术编号{{ e }}</td>
-          <td>战术名称{{ e }}</td>
-          <td>战术编号{{ e }}</td>
-          <td>战术名称{{ e }}</td>
-          <td>战术编号{{ e }}</td>
-          <td>战术名称{{ e }}</td>
-          <td>战术编号{{ e }}</td>
+        <tr v-for="(e,i) in 11" :key="i">
+            <td>战术名称{{ e }}</td>
+            <td>战术编号{{ e }}</td>
+            <td>战术名称{{ e }}</td>
+            <td>战术编号{{ e }}</td>
+            <td>战术名称{{ e }}</td>
+            <td>战术编号{{ e }}</td>
+            <td>战术名称{{ e }}</td>
+            <td>战术编号{{ e }}</td>
+            <td>战术名称{{ e }}</td>
+            <td>战术编号{{ e }}</td>
+            <td>战术名称{{ e }}</td>
+            <td>战术编号{{ e }}</td>
         </tr>
         <!-- <tr v-for="(e, i) in nim" :key="i">
           <td>{{ arr[0].d[i] || "" }}</td>
@@ -50,23 +50,23 @@
   padding-top: 20rem;
   height: 720rem;
   overflow: auto;
-  > div {
-    tr {
-      td {
-        text-align: center;
-        line-height: 46rem;
-      }
+  >div{
+    tr{
+        td{
+            text-align: center;
+            line-height: 46rem;
+        }
     }
-    .jianjian {
-      td {
-        color: #aaa;
-        font-size: 20rem;
-      }
+    .jianjian{
+        td{
+            color: #aaa;
+            font-size: 20rem;
+        }
     }
-    .tows {
-      td {
-        font-size: 16rem;
-      }
+    .tows{
+        td{
+            font-size: 16rem;
+        }
     }
   }
 }

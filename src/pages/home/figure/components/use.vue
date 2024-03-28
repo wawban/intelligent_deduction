@@ -6,19 +6,19 @@
     </div>
     <div style="margin-top: 15rem; display: flex">
       <div style="color: #aaa; padding-right: 10rem">shell类型:</div>
-      <div>HostShell</div>
+      <div>{{ exploit.type }}</div>
     </div>
     <div style="margin-top: 15rem; display: flex">
       <div style="color: #aaa; padding-right: 10rem">shell路径:</div>
-      <div>/tmp/qziFGl4b</div>
+      <div>{{ exploit.path }}</div>
     </div>
     <div style="margin-top: 15rem; display: flex">
       <div style="color: #aaa; padding-right: 10rem">当前用户:</div>
-      <div>root</div>
+      <div>{{ exploit.user }}</div>
     </div>
     <div style="margin-top: 15rem; display: flex">
       <div style="color: #aaa; padding-right: 10rem">操作系统类型:</div>
-      <div>Linux 3.10.0-1160.el7.x86_64</div>
+      <div>{{ exploit.os }}</div>
     </div>
   </div>
 </template>

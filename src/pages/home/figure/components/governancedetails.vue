@@ -75,9 +75,9 @@
               <div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">
-                    原理性漏洞:
+                    是否可利用:
                   </div>
-                  <div>-</div>
+                  <div>{{ meta.proof_method ? "是" : "否" }}</div>
                 </div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">CVE编号:</div>
@@ -171,7 +171,7 @@
                 处置信息
               </div>
               <div style="width: 40rem"></div>
-              <div class="zsyuanq" style="background: #aaaaaa">0</div>
+              <!-- <div class="zsyuanq" style="background: #aaaaaa">0</div> -->
             </div>
           </div>
           <div>
@@ -189,7 +189,7 @@
               <Graph :datasj="graph" />
             </div>
             <!-- 处置信息 -->
-            <Disposal v-if="typenum == '5'" />
+            <Disposal v-if="typenum == '5'" :ticket="ticket" />
           </div>
         </div>
       </div>
@@ -237,6 +237,7 @@ export default {
       exploit: {},
       graph: {}, //资产图谱
       lifecycle: "", //资产生命周期
+      ticket: {},
     };
   },
   mounted() {
@@ -248,9 +249,15 @@ export default {
       governance_vulnsxq(this.$route.query.id).then((res) => {
         // console.log(res);
         this.meta = res.meta; //漏洞等级
+        // this.snapshot = res.snapshot;
         this.snapshot = res.snapshot;
+        this.snapshot.response = this.snapshot.response.split("\n");
+        this.snapshot.request = this.snapshot.request.split("\n");
+        // alert(this.snapshot.request);
         this.exploit = res.exploit;
         this.graph = res.graph; //资产图谱
+        this.ticket = res.ticket; //资产图谱
+        this.ticket.procedure = this.ticket.procedure.split("\n"); //资产图谱
 
         // this.vulns = res.vulns; //漏洞信息
         // this.ports = res.ports; //端口信息
