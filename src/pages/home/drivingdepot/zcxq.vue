@@ -7,31 +7,55 @@
 			<span :class="{'text':true,'active':active==2}" @click="active=2">爆破范围</span>
 		</div>
 		<div class="body">
-			<ul v-show="active==1">
+			<ul v-if="active==1">
 				<li>资产名称：{{data.name}}</li>
-				<li>资产类型：{{data.typename}}</li>
+				<li>资产类型：{{data.category}}</li>
 				<li>操作系统：{{data.os}}</li>
 				<li>IP地址：{{data.ip}}</li>
-				<li>端口信息：{{data.port}}</li>
-				<li>来源：{{data.src}}</li>
-				<li>业务重要程度：{{data.busin}}</li>
-				<li>资产连通性：{{data.connectivity}}</li>
-				<li>首次探测时间：{{data.sdetetime}}</li>
-				<li>最后探测时间：{{data.edetetime}}</li>
-				<li>首次扫描时间：{{data.sscantime}}</li>
-				<li>最后扫描时间：{{data.escantime}}</li>
+				<li>来源：{{data.source}}</li>
+				<li>业务重要程度：{{data.value==0?'未知':data.value}}</li>
+				<li>存活状态：{{data.state==1?'存活':'不存活'}}</li>
 			</ul>
-			<ul v-show="active==2">
-				<li>评估分值：{{data.pgfz}}</li>
-				<li>风险画像：{{data.fxhx}}</li>
-				<li>潜在受感染目标：{{data.sgrmb}}</li>
-				<li>已获得权限：{{data.hdqx}}</li>
-				<li>影响业务：{{data.yxyw}}</li>
+			<ul v-else>
+				<li>评估分值：{{data.er.score}}</li>
+				<li>
+					<div class="item">
+						<div>风险画像：</div>
+						<div>
+							<span v-for="(item,index) in data.er.risk_portrait" :key="index">{{item}}</span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="item">
+						<div>潜在受感染目标：</div>
+						<div>
+							<span v-for="(item,index) in data.er.potential_affected_targets" :key="index">{{item}}</span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="item">
+						<div>已获得权限：</div>
+						<div>
+							<span v-for="(item,index) in data.er.permissions" :key="index">{{item}}</span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="item">
+						<div>影响业务：</div>
+						<div>
+							<span v-for="(item,index) in data.er.affected_business" :key="index">{{item}}</span>
+						</div>
+					</div>
+				</li>
 			</ul>
 		</div>
 	</div>
 </template>
 <script>
+	import {host_info} from "@/api/steer";
     export default {
 		data(){
 			return {
@@ -40,11 +64,8 @@
 		      	y:0,
 		      	show:false,
 		      	active:1,
-		      	data:{}
+		      	data:{er:{}}
 			};
-		},
-		mounted() {
-			
 		},
 		methods: {
         	open:function(x,y,data){
@@ -52,6 +73,7 @@
 				this.y = y;
 				this.active = 1;
 				this.data = data;
+				
 				this.show = true;
 				var me = this;
 				setTimeout(function(){
@@ -65,6 +87,14 @@
 				    	me.y = window.innerHeight - height - 20;
 				    }
 				},100);
+				
+				host_info(data.id).then((res) => {
+					if(res.meta){
+						for (let key in res.meta) {
+							me.$set(me.data,key,res.meta[key]);
+						}
+					}
+				});
         	},
         	close:function(){
 				this.show = false;
@@ -87,4 +117,7 @@
 .popinfo .header .text.active{border-bottom:2px #FA9600 solid;padding-bottom:5px;}
 .popinfo .body{background:#1E1E1D;margin:0 20px 20px 20px;padding:10px;max-height:350px;overflow-y:auto;}
 .popinfo .body li{line-height:18px;margin:15px 0;word-break:break-all;word-wrap: anywhere;}
+.item{overflow:hidden;}
+.item div{float:left;}
+.item span{display:block;}
 </style>
