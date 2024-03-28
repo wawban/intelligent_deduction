@@ -1,37 +1,10 @@
 <template>
   <div class="treerew">
     <div class="container wbb">
-      <!-- 循环一层 -->
       <div v-for="(e, i) in datatree" :key="i">
-        <!-- 一层内容 -->
-        <!-- <div class="terewenr" style="background: #292929">
-          <i
-            @click="style(e.label + i, $event)"
-            v-if="e.children && e.children.length != 0"
-            class="el-icon-arrow-right"
-          ></i>
-          <div
-            :class="treekry == e.label ? 'xuanz weizc' : 'weizc'"
-            @click="onxuanz(e)"
-          >
-            {{ e.label }}
-          </div>
-          <div class="sandina">
-            <el-popover placement="right" trigger="hover">
-              <div class="treekub">
-                <div @click="qiehuan(e)">
-                  {{ e.type ? "只看本级" : "查看本级和下级" }}
-                </div>
-              </div>
-              <div slot="reference">
-                <img style="height: 16rem" src="./sd.png" alt="" />
-              </div>
-            </el-popover>
-          </div>
-        </div> -->
         <div class="terewenr" style="background: #292929">
           <i
-            @click="onstyle(e.id + i, $event)"
+            @click="onstyle(e.id + i + 'one', $event)"
             v-if="e.sub_groups && e.sub_groups.length != 0"
             class="el-icon-arrow-right"
           ></i>
@@ -41,29 +14,17 @@
           >
             {{ e.name }}
           </div>
-          <div class="sandina">
-            <el-popover placement="right" trigger="hover">
-              <div class="treekub">
-                <div @click="qiehuan(e)">
-                  {{ e.type ? "只看本级" : "查看本级和下级" }}
-                </div>
-              </div>
-              <div slot="reference">
-                <img style="height: 16rem" src="./sd.png" alt="" />
-              </div>
-            </el-popover>
-          </div>
         </div>
         <!-- 循环二层 -->
         <div
-          :class="e.id + i + ' hideen'"
+          :class="e.id + i + 'one' + ' hideen'"
           v-for="(e1, i1) in e.sub_groups"
           :key="i1"
         >
           <!-- 二层内容 -->
           <div class="terewenr" style="background: #161616">
             <i
-              @click="onstyle(e1.id + i1, $event)"
+              @click="onstyle(e1.id + i1 + 'tow', $event)"
               v-if="e1.sub_groups && e1.sub_groups.length != 0"
               class="el-icon-arrow-right"
             ></i>
@@ -75,22 +36,10 @@
             >
               {{ e1.name }}
             </div>
-            <div class="sandina">
-              <el-popover placement="right" trigger="hover">
-                <div class="treekub">
-                  <div @click="qiehuan(e1)">
-                    {{ e1.type ? "只看本级" : "查看本级和下级" }}
-                  </div>
-                </div>
-                <div slot="reference">
-                  <img style="height: 16rem" src="./sd.png" alt="" />
-                </div>
-              </el-popover>
-            </div>
           </div>
           <!-- 循环三层 -->
           <div
-            :class="e1.id + i1 + ' hideen'"
+            :class="e1.id + i1 + 'tow' + ' hideen'"
             v-for="(e2, i2) in e1.sub_groups"
             :key="i2"
           >
@@ -108,18 +57,6 @@
                 style="padding-left: 40rem"
               >
                 {{ e2.name }}
-              </div>
-              <div class="sandina">
-                <el-popover placement="right" trigger="hover">
-                  <div class="treekub">
-                    <div @click="qiehuan(e2)">
-                      {{ e2.type ? "只看本级" : "查看本级和下级" }}
-                    </div>
-                  </div>
-                  <div slot="reference">
-                    <img style="height: 16rem" src="./sd.png" alt="" />
-                  </div>
-                </el-popover>
               </div>
             </div>
           </div>
@@ -143,29 +80,19 @@ export default {
       type: String,
       default: "",
     },
+    ktype: {
+      type: String,
+      default: "",
+    },
   },
   methods: {
     // 点击树展开
     onxuanz(e) {
-      this.$emit("onuptada", e);
+      // alert(this.ktype);
+      // e.ktype = this.ktype;
+      // console.log(e);
       this.treekry = e.id;
-    },
-    // 切换本级与下级   +   初始化树
-
-    qiehuan(e, type) {
-      for (var i = 0; i < this.datatree.length; i++) {
-        if (this.datatree[i].id == e.id) {
-          this.datatree[i].type = !this.datatree[i].type;
-          this.treekry = this.datatree[i].id;
-          return;
-        }
-        if (
-          this.datatree[i].sub_groups &&
-          this.datatree[i].sub_groups.length !== 0
-        ) {
-          this.dg(this.datatree[i].sub_groups, e.id);
-        }
-      }
+      this.$emit("ontreee", e, this.ktype);
     },
     // 递归树
     dg(arr, e) {
@@ -236,10 +163,6 @@ export default {
       display: flex;
       align-items: center;
       position: relative;
-      .sandina {
-        position: absolute;
-        right: 16rem;
-      }
     }
     i {
       // padding: 0 22rem;

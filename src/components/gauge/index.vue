@@ -110,6 +110,13 @@ export default {
                     // Number(this.num) / 100,
                     numd / 100,
                     "#FF9A3E", // 数值变量
+                    // "#FF9A3E", // 数值变量
+
+                    // _this.text == "高"
+                    //   ? "#e53a40"
+                    //   : _this.text == "中"
+                    //   ? "#fa9600"
+                    //   : "#f6d535",
                   ],
                   [1, "rgba(255,255,255,.0)"],
                 ],
@@ -132,12 +139,13 @@ export default {
               offsetCenter: [0, 0],
               textStyle: {
                 fontSize: this.sz(20),
-                color:
-                  _this.text == "高"
-                    ? "#e53a40"
-                    : _this.text == "中"
-                    ? "#fa9600"
-                    : "#f6d535",
+                // color:
+                //   _this.text == "高"
+                //     ? "#e53a40"
+                //     : _this.text == "中"
+                //     ? "#fa9600"
+                //     : "#f6d535",
+                color: "#fa9600",
                 backgroundColor: "#81520C",
                 width: this.sz(48),
                 height: this.sz(48),

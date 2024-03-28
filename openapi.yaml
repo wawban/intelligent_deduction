@@ -1,0 +1,4247 @@
+openapi: 3.0.0
+info:
+  version: 0.1.0
+  title: Cybseer WebClient API
+  description: API for Cybseer WebClient
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: 'https://virtserver.swaggerhub.com/cybseer/webclient/0.1.0'
+  - description: Localhost Development Server
+    url: 'http://localhost:4321'
+  - description: Proxyed Development Server
+    url: 'https://cybseer.vokeylee.com/api'
+paths:
+  /auth/login:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    post:
+      summary: 登录 Login
+      tags:
+        - Auth
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: |-
+            登录成功
+            Login successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /auth/logout:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    delete:
+      summary: 登出 Logout
+      tags:
+        - Auth
+      responses:
+        '204':
+          description: |-
+            登出成功
+            Logout successfully
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /dashboard/evaluation:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 仪表盘 风险评估 Dashboard Evaluation
+      tags:
+        - Dashboard
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: period
+          description: 数据周期
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - weekly
+              - monthly
+      responses:
+        '200':
+          description: |-
+            成功获取数据
+
+            Successfully fetched data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardEvaluation'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /dashboard/summary:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 仪表盘 数据汇总 Dashboard Summary
+      tags:
+        - Dashboard
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: period
+          description: 数据周期
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - weekly
+              - monthly
+      responses:
+        '200':
+          description: |-
+            成功获取数据
+
+            Successfully fetched data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardSummary'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /dashboard/potential-risk-assets:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 仪表盘 潜在风险资产 Dashboard Potential Risk Assets
+      tags:
+        - Dashboard
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: |-
+            成功获取数据
+
+            Successfully fetched data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PotentialRiskAssets'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /dashboard/potential-attack-surface:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 仪表盘 潜在攻击面 Dashboard Potential Attack Surface
+      tags:
+        - Dashboard
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: period
+          description: 数据周期
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - weekly
+              - monthly
+      responses:
+        '200':
+          description: |-
+            成功获取数据
+
+            Successfully fetched data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PotentialAttackSurface'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /dashboard/issues-trend:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 仪表盘 隐蔽问题趋势 Dashboard Issues Trend
+      tags:
+        - Dashboard
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: period
+          description: 数据周期
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - weekly
+              - monthly
+      responses:
+        '200':
+          description: |-
+            成功获取数据
+
+            Successfully fetched data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IssuesTrend'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /dashboard/key-risk-assets:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 仪表盘 关键风险资产 Dashboard Key Risk Assets
+      tags:
+        - Dashboard
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: |-
+            成功获取数据
+
+            Successfully fetched data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KeyRiskAssets'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /data-governance/groups:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 资产组列表 Asset Groups List
+      tags:
+        - Assets
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: |-
+            成功获取到资产组列表
+
+            Successfully fetched groups list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AssetGroup'
+                example:
+                  - id: '123'
+                    name: A大区
+                    fullname: A大区
+                    fullpath: '123'
+                    time_created: '2021-01-01T00:00:00Z'
+                    time_updated: '2021-01-01T00:00:00Z'
+                    parent_group: '0'
+                    cidrs:
+                      - 10.1.0.0/16
+                      - 10.2.0.0/16
+                    sub_groups:
+                      - id: '456'
+                        name: B地市
+                        fullname: A大区 / B地市
+                        fullpath: 123/456
+                        time_created: '2021-01-01T00:00:00Z'
+                        time_updated: '2021-01-01T00:00:00Z'
+                        parent_group: '123'
+                        cidrs:
+                          - 10.8.0.0/16
+                          - 10.9.0.0/16
+                        sub_groups:
+                          - id: '789'
+                            name: C部门
+                            fullname: A大区 / B地市 / C部门
+                            fullpath: 123/456/789
+                            time_created: '2021-01-01T00:00:00Z'
+                            time_updated: '2021-01-01T00:00:00Z'
+                            parent_group: '456'
+                            cidrs:
+                              - 10.16.0.0/24
+                              - 10.16.1.0/24
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+    post:
+      summary: 创建资产组 Create Asset Group
+      tags:
+        - Assets
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssetGroup'
+            example:
+              name: A大区
+              parent_group: '0'
+              cidrs:
+                - 10.0.0.0/24
+              manager: 管理员
+      responses:
+        '201':
+          description: |-
+            成功创建资产组
+
+            Successfully created asset group
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+              example:
+                id: '123'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/data-governance/groups/{id}':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 资产组详情 Asset Group Detail
+      tags:
+        - Assets
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |-
+            成功获取到资产组详情
+
+            Successfully fetched group detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetGroup'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /data-governance/hosts:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 主机资产列表 Assets-Hosts-List
+      tags:
+        - Assets
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: |-
+            成功获取到主机资产列表
+
+            Successfully fetched hosts list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfHosts'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/data-governance/hosts/{id}':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 主机资产详情 Assets-Host-Detail
+      tags:
+        - Assets
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/AssetID'
+      responses:
+        '200':
+          description: |-
+            成功获取到主机资产详情
+
+            Successfully fetched host detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/data-governance/hosts/{id}/meta':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 主机资产元数据 Assets-Host-Meta
+      tags:
+        - Assets
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/AssetID'
+      responses:
+        '200':
+          description: |-
+            成功获取到数据
+
+            Successfully fetched data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostMeta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+    patch:
+      summary: 更新主机资产元数据 Assets-Host-Meta
+      tags:
+        - Assets
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/AssetID'
+        - $ref: '#/components/parameters/RequestID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HostMeta'
+      responses:
+        '200':
+          description: |-
+            成功更新数据
+
+            Successfully updated data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostMeta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/data-governance/hosts/{id}/tags':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    patch:
+      summary: 增加主机资产标签 Assets-Host-Tags
+      tags:
+        - Assets
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/AssetID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tags:
+                  type: array
+                  items:
+                    type: string
+                    description: 预置标签 ID
+                custom_tags:
+                  type: array
+                  items:
+                    type: string
+                    description: 自定义标签 ID
+      responses:
+        '200':
+          description: |-
+            成功更新数据
+
+            Successfully updated data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostMeta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /data-governance/sites:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 网站资产列表 Assets Sites List
+      tags:
+        - Assets
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: |-
+            成功获取到数据
+
+            Successfully fetched data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SiteDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/data-governance/sites/{id}':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 网站资产详情 Assets Site Detail
+      tags:
+        - Assets
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/AssetID'
+      responses:
+        '200':
+          description: |-
+            成功获取到数据
+
+            Successfully fetched data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/data-governance/sites/{id}/meta':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 网站资产元数据 Assets-Site-Meta
+      tags:
+        - Assets
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/AssetID'
+      responses:
+        '200':
+          description: |-
+            成功获取到数据
+
+            Successfully fetched data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteMeta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+    patch:
+      summary: 更新网站资产元数据 Assets-Site-Meta
+      tags:
+        - Assets
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/AssetID'
+        - $ref: '#/components/parameters/RequestID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SiteMeta'
+      responses:
+        '200':
+          description: |-
+            成功更新数据
+
+            Successfully updated data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteMeta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/data-governance/sites/{id}/tags':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    patch:
+      summary: 增加网站资产标签 Assets-Site-Tags
+      tags:
+        - Assets
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/AssetID'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tags:
+                  type: array
+                  items:
+                    type: string
+                    description: 预置标签 ID
+                custom_tags:
+                  type: array
+                  items:
+                    type: string
+                    description: 自定义标签 ID
+      responses:
+        '200':
+          description: |-
+            成功更新数据
+
+            Successfully updated data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteMeta'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /data-governance/vulns:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 漏洞治理-平铺视角 Vulnerabilities-List-Flat
+      tags:
+        - Vulnerabilities
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: |-
+            成功获取到漏洞列表
+
+            Successfully fetched vulnerabilities list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfVulnsFlat'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/data-governance/vulns/{id}':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 漏洞治理-漏洞详情 Vulnerability-Detail
+      tags:
+        - Vulnerabilities
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/VulnerabilityID'
+      responses:
+        '200':
+          description: |-
+            成功获取到漏洞详情
+
+            Successfully fetched vulnerability detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vulnerability'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /data-governance/tags/host-tags:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 标签管理 主机标签列表 Assets-Host-Tags-List
+      tags:
+        - Tags
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: |-
+            成功获取到主机标签列表
+            Successfully fetched host tags list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: 类型ID
+                    category:
+                      type: string
+                      description: 标签类型
+                    tags:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/HostTag'
+                example:
+                  - id: '0'
+                    category: 其它类型
+                    tags:
+                      - id: '0'
+                        name: 其它类型
+                        is_favorite: false
+                        count_assets: 12
+                  - id: '1000'
+                    category: 存储设备
+                    tags:
+                      - id: '1001'
+                        name: 存储设备
+                        is_favorite: true
+                        count_assets: 15
+                      - id: '1002'
+                        name: NAS
+                        is_favorite: false
+                        count_assets: 8
+                  - id: '2000'
+                    category: 服务器设备
+                    tags:
+                      - id: '2001'
+                        name: 负载均衡
+                        is_favorite: true
+                        count_assets: 26
+                      - id: '2002'
+                        name: 硬件服务器
+                        is_favorite: false
+                        count_assets: 19
+                      - id: '2003'
+                        name: 代理服务器
+                        is_favorite: false
+                        count_assets: 19
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/data-governance/tags/host-tags/{id}':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    patch:
+      summary: 标签管理 更新主机标签 Update Host Tag
+      tags:
+        - Tags
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HostTag'
+      responses:
+        '200':
+          description: |-
+            成功更新主机标签
+            Successfully updated host tag
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HostTag'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /data-governance/tags/site-tags:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 标签管理 网站标签列表 Site Tags List
+      tags:
+        - Tags
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: |-
+            成功获取到网站标签列表
+            Successfully fetched site tags list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: 类型ID
+                    category:
+                      type: string
+                      description: 标签类型
+                    tags:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/SiteTag'
+                example:
+                  - id: '0'
+                    category: 其它类型
+                    tags:
+                      - id: '0'
+                        name: 其它类型
+                        is_favorite: false
+                        count_assets: 12
+                  - id: '1000'
+                    category: 服务器管理产品
+                    tags:
+                      - id: '1001'
+                        name: Docker容器管理
+                        is_favorite: true
+                        count_assets: 15
+                      - id: '1002'
+                        name: 远程管理
+                        is_favorite: false
+                        count_assets: 8
+                      - id: '1003'
+                        name: 监控系统
+                        is_favorite: true
+                        count_assets: 26
+                      - id: '1004'
+                        name: 流量管理
+                        is_favorite: false
+                        count_assets: 19
+                      - id: '1005'
+                        name: 日志分析
+                        is_favorite: false
+                        count_assets: 19
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/data-governance/tags/site-tags/{id}':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    patch:
+      summary: 标签管理 更新网站标签 Update Site Tag
+      tags:
+        - Tags
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SiteTag'
+      responses:
+        '200':
+          description: |-
+            成功更新网站标签
+            Successfully updated site tag
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteTag'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /data-governance/tags/custom-tags:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 标签管理 自定义标签列表 Custom Tags List
+      tags:
+        - Tags
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: |-
+            成功获取到自定义标签列表
+
+            Successfully fetched custom tags list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CustomTag'
+                    example:
+                      - id: '1'
+                        name: 风险资产
+                        count_assets: 12
+                        time_created: '2021-01-01T00:00:00Z'
+                        time_updated: '2021-01-01T00:00:00Z'
+                        creator: admin
+                      - id: '2'
+                        name: 重点关注
+                        count_assets: 15
+                        time_created: '2021-01-01T00:00:00Z'
+                        time_updated: '2021-01-01T00:00:00Z'
+                        creator: admin
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+    post:
+      summary: 标签管理 自定义标签管理-创建自定义标签
+      tags:
+        - Tags
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomTag'
+      responses:
+        '201':
+          description: |-
+            成功创建自定义标签
+
+            Successfully created custom tag
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomTag'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/data-governance/tags/custom-tags/{id}':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    delete:
+      summary: 标签管理 自定义标签管理-删除自定义标签
+      tags:
+        - Tags
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: |-
+            成功删除自定义标签
+
+            Successfully deleted custom tag
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+    patch:
+      summary: 标签管理 自定义标签管理-更新自定义标签
+      tags:
+        - Tags
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomTag'
+      responses:
+        '200':
+          description: |-
+            成功更新自定义标签
+
+            Successfully updated custom tag
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomTag'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /infer/tasks:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    post:
+      summary: 任务管理-创建推演任务
+      tags:
+        - Infer
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InferTask'
+      responses:
+        '201':
+          description: |-
+            成功创建推演任务
+
+            Successfully created infer task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InferTask'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+    get:
+      summary: 任务管理-推演任务列表
+      tags:
+        - Infer
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: |-
+            成功获取到任务列表
+
+            Successfully fetched tasks list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InferTask'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/infer/tasks/{id}':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 推演任务-任务详情 Infer-Task-Detail
+      tags:
+        - Infer
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |-
+            成功获取到推演任务详情
+
+            Successfully fetched the infer task detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InferTask'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: 推演任务-删除任务 Infer-Task-Delete
+      tags:
+        - Infer
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: |-
+            成功删除推演任务
+
+            Successfully deleted the infer task
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/infer/tasks/{id}/status':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    patch:
+      summary: 推演任务-更改任务状态 Infer-Task-Status
+      tags:
+        - Infer
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  description: 任务状态
+                  enum:
+                    - running
+                    - stopped
+      responses:
+        '200':
+          description: |-
+            成功更改推演任务状态
+            Successfully changed the infer task status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: 任务ID
+                  status:
+                    type: string
+                    description: 任务状态
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /infer/algos:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 推演算法列表 Infer-Algorithms-List
+      tags:
+        - Infer
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: |-
+            成功获取到推演算法列表
+
+            Successfully fetched infer algorithms list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InferAlgorithm'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/results/{id}/summary':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 驾驶舱 综合面板 Cockpit Summary
+      tags:
+        - Cockpit
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          description: 推演结果 ID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |-
+            成功获取到数据
+
+            Successfully fetched the data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CockpitSummary'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/results/{id}/paths':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 驾驶舱 攻击路径 Cockpit Attack Paths
+      tags:
+        - Cockpit
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          description: 推演结果 ID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |-
+            成功获取到数据
+
+            Successfully fetched the data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CockpitAttackPaths'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/results/{id}/graph':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 驾驶舱 全图序列 Cockpit Full Graph
+      tags:
+        - Cockpit
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          description: 推演结果 ID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |-
+            成功获取到数据
+
+            Successfully fetched the data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CockpitFullGraph'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /kb/vulns:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 漏洞知识库
+      tags:
+        - KB
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: |-
+            成功获取到漏洞知识库列表
+
+            Successfully fetched vulnerabilities list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArrayOfVulnsFlat'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/kb/vulns/{id}':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 漏洞详情
+      tags:
+        - KB
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: |-
+            成功获取到漏洞详情
+
+            Successfully fetched vulnerability detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KBVuln'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /system/users:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    post:
+      summary: 系统管理 创建用户 Create User
+      tags:
+        - System
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: |-
+            成功创建用户
+
+            Successfully created user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+    get:
+      summary: 系统管理 用户列表 User List
+      tags:
+        - System
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Offset'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: |-
+            成功获取到用户列表
+
+            Successfully fetched user list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  '/system/users/{id}':
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 用户详情 User Detail
+      tags:
+        - System
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            description: 用户 ID
+      responses:
+        '200':
+          description: |-
+            成功获取到数据
+
+            Successfully fetched the data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+    put:
+      summary: 用户详情-更新 User Detail-Update
+      tags:
+        - System
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            description: 用户 ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: |-
+            成功更新用户
+
+            Successfully updated the user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+    delete:
+      summary: 用户详情-删除 User Detail-Delete
+      tags:
+        - System
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            description: 用户 ID
+      responses:
+        '204':
+          description: |-
+            成功删除用户
+
+            Successfully deleted the user
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /system/status:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 系统概况
+      tags:
+        - System
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: |-
+            成功获取数据
+
+            Successfully fetched data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  time_updated:
+                    type: string
+                    format: date-time
+                    description: 更新时间
+                  cpu_usage:
+                    type: number
+                    description: CPU 使用率
+                    minimum: 0
+                    maximum: 100
+                  memory_usage:
+                    type: number
+                    description: 内存使用率
+                    minimum: 0
+                    maximum: 100
+                  disk_usage:
+                    type: number
+                    description: 磁盘使用率
+                    minimum: 0
+                    maximum: 100
+                  cpu_cores:
+                    type: integer
+                    description: CPU 核心数
+                    minimum: 1
+                  netflow:
+                    type: array
+                    description: 网络流量
+                    items:
+                      type: object
+                      properties:
+                        time:
+                          type: string
+                          format: date-time
+                          description: 时间
+                        in:
+                          type: number
+                          description: 入流量
+                          minimum: 0
+                        out:
+                          type: number
+                          description: 出流量
+                          minimum: 0
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+  /system/logs:
+    parameters:
+      - $ref: '#/components/parameters/RequestID'
+      - $ref: '#/components/parameters/ClientID'
+    get:
+      summary: 系统日志 System Logs
+      tags:
+        - System
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: |-
+            成功获取数据
+
+            Successfully fetched data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          description: 日志 ID
+                        timestamp:
+                          type: string
+                          format: date-time
+                          description: 时间
+                        user:
+                          type: string
+                          description: 用户
+                        role:
+                          type: string
+                          description: 角色
+                        department:
+                          type: string
+                          description: 部门
+                        ip:
+                          type: string
+                          format: ipv4
+                          description: IP 地址
+                        detail:
+                          type: string
+                          description: 详情
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        5XX:
+          $ref: '#/components/responses/ServerError'
+components:
+  parameters:
+    RequestID:
+      name: X-Request-ID
+      in: header
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ClientID:
+      name: x-cybseer-client-id
+      in: header
+      required: false
+      schema:
+        type: string
+    Filter:
+      name: filter
+      description: |-
+        结果集的过滤条件
+
+        The filter of the resultset
+
+        Operator      | Description     | Example
+        ------------- | --------------- | -------
+        **Logical Operators** | |
+        eq            | 等于            |  name eq 'host1'
+        ne            | 不等于          |  name ne 'host1'
+        contain       | 包含            |  name contain 'host'
+        notcontain    | 不包含          |  name notcontain 'host'
+        **Comparison Operators** | |
+        and          | 与              |  name eq 'host1' and ip eq '1.2.3.4'
+        or           | 或              |  name eq 'host1' or ip eq '1.2.3.4'
+
+        ---
+        Example:
+        - All Host Assets with name 'host1'
+          - <endpoint>/assets?filter=name eq 'host1'
+        - All Host Assets with name 'host1' and ip '1.2.3.4'
+          - <endpoint>/assets?filter=name eq 'host1' and ip eq '1.2.3.4'
+
+        Notice:
+        - 文本类型的值需要用单引号括起来，如 name eq 'host1'
+        - 空值可使用 ''，如 name eq '' （为空），或 name ne '' （不为空）
+      in: query
+      required: false
+      schema:
+        type: string
+    Limit:
+      name: limit
+      description: |-
+        当前页的数量限制
+
+        The limit of the current page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 10
+    Offset:
+      name: offset
+      description: |-
+        当前页的偏移量
+
+        The offset of the current page in the full resultset
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+  responses:
+    BadRequest:
+      description: |-
+        400 错误请求 Bad Request
+
+        此错误响应表示服务器无法理解该请求。通常因为客户端发送了无效的请求，例如请求体格式错误、请求参数错误等。
+
+        This error response indicates that the server cannot understand the request. It is because the client sent an invalid request, such as an error in the request body format, request parameter error, etc.
+
+        [RFC 7231](https://tools.ietf.org/html/rfc7231#section-6.5.1)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            InvalidRequest:
+              value:
+                error:
+                  code: E400_InvalidRequest
+                  message: 'Invalid request, please check the request body or parameters.'
+            InvalidParameter:
+              value:
+                error:
+                  code: E400_InvalidParameter
+                  message: 'Invalid parameter, please check the request parameters.'
+                  details:
+                    reason: The parameters 'id' and 'name' are invalid.
+                    invalidParameters:
+                      - name: id
+                      - name: name
+    Unauthorized:
+      description: |-
+        401 未认证 Unauthorized
+
+        此错误响应实际与认证流程 Authentication 相关，表示用户未认证或认证失败。
+        与授权流程 Authorization 相关的错误响应请参见 Forbidden。
+
+        This error response is related to the authentication process, indicating that the user is not authenticated or the authentication failed.
+        For error responses related to the authorization process, please refer to Forbidden.
+
+        [RFC 7235](https://tools.ietf.org/html/rfc7235#section-3.1)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            AuthenticationRequired:
+              value:
+                error:
+                  code: E401_AuthenticationRequired
+                  message: Please provide a valid token.
+            InvalidCredentials:
+              value:
+                error:
+                  code: E401_InvalidCredentials
+                  message: 'Credentials are invalid, wrong username or password.'
+            InvalidToken:
+              value:
+                error:
+                  code: E401_InvalidToken
+                  message: Token is invalid or expired.
+            TooManyAttempts:
+              value:
+                error:
+                  code: E401_TooManyAttempts
+                  message: 'Too many attempts, please try again later.'
+    Forbidden:
+      description: |-
+        403 无权限 Forbidden
+
+        此错误响应与授权流程 Authorization 相关，表示用户无权限访问资源。
+        与认证流程 Authentication 相关的错误响应请参见 Unauthorized。
+
+        This error response is related to the authorization process, indicating that the user does not have permission to access the resource.
+        For error responses related to the authentication process, please refer to Unauthorized.
+
+        [RFC 7231](https://tools.ietf.org/html/rfc7231#section-6.5.3)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            PermissionDenied:
+              value:
+                error:
+                  code: E403_PermissionDenied
+                  message: User does not have sufficient permission to access the resource.
+    NotFound:
+      description: 未找到所请求资源 The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: |-
+        409 冲突 Conflict
+
+        此错误响应表示由于请求的状态冲突，因此无法完成请求。
+
+        This error response indicates that the request could not be completed due to a conflict with the current state of the resource.
+
+        [RFC 7231](https://tools.ietf.org/html/rfc7231#section-6.5.8)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            ResourceAlreadyExists:
+              value:
+                error:
+                  code: E409_ResourceAlreadyExists
+                  message: The resource already exists.
+            ResourceConflict:
+              value:
+                error:
+                  code: E409_ResourceConflict
+                  message: The resource is in conflict with the current state.
+                  details:
+                    reason: Cannot stop a finished task.
+                    conflictResource:
+                      id: '123'
+                      name: resource
+    ServerError:
+      description: 服务端错误 Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            UnexpectedError:
+              value:
+                error:
+                  code: E500_UnexpectedError
+                  message: Unexpected internal error.
+            NotImplemented:
+              value:
+                error:
+                  code: E501_NotImplemented
+                  message: The requested API is not implemented.
+  schemas:
+    Pagination:
+      description: |-
+        列表分页
+
+        The pagination of a list
+      type: object
+      required:
+        - total
+        - offset
+      properties:
+        total:
+          description: The total count of the full resultset
+          type: integer
+          example: 999
+        offset:
+          description: The offset of the current page in the full resultset
+          type: integer
+          example: 50
+        limit:
+          description: The limit of the current page
+          type: integer
+          example: 10
+        count:
+          description: The count of the current page
+          type: integer
+          example: 10
+    Error:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: object
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: string
+              description: Error Code for quick reference
+              example: E401_AuthenticationRequired
+            message:
+              description: A human readable error message
+              type: string
+              example: Please provide a valid token.
+            details:
+              type: object
+              description: Additional details for the error
+              additionalProperties: true
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          $ref: '#/components/schemas/User/properties/username'
+        password:
+          allOf:
+            - $ref: '#/components/schemas/User/properties/password'
+            - writeOnly: true
+    LoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          format: jwt
+          description: 访问令牌
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNzU5NjA2MyIsIm5hbWUiOiJBZG1pbiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwOTIzOTAyMn0.hVJ4QVUvbav25DF-5LRbz4oBddWi6AaGy62rxZdysfI
+        expires_in:
+          type: integer
+          description: 令牌过期时间
+          example: 3600
+        token_type:
+          type: string
+          description: 令牌类型
+          example: Bearer
+    User:
+      type: object
+      required:
+        - username
+        - password
+        - role
+      properties:
+        id:
+          type: string
+          description: 用户 ID
+          readOnly: true
+        username:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+        role:
+          type: string
+          enum:
+            - superadmin
+            - admin
+            - operator
+            - auditor
+        department:
+          type: object
+          description: 部门 (资产组)
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+        time_created:
+          type: string
+          format: date-time
+          readOnly: true
+        time_updated:
+          type: string
+          format: date-time
+          readOnly: true
+        last_login:
+          type: string
+          format: date-time
+          readOnly: true
+        is_active:
+          type: boolean
+          description: 是否启用
+          default: true
+        phone:
+          type: string
+          description: 手机号
+        email:
+          type: string
+          format: email
+          description: 邮箱
+    Lifecycle:
+      description: 漏洞生命周期
+      type: array
+      items:
+        type: object
+        properties:
+          timestamp:
+            type: string
+            format: date-time
+            description: 时间戳
+          user:
+            type: string
+            description: 操作用户
+            example: admin
+          action:
+            type: string
+            description: 操作动作
+            example: 创建XX
+          message:
+            type: string
+            description: 操作消息
+            example: 发现XX
+      example:
+        - timestamp: '2021-01-01T00:00:00'
+          user: 系统
+          action: 更新评分
+          message: 评分更新为 80
+        - timestamp: '2021-01-02T00:00:00'
+          user: admin
+          action: 创建任务
+          message: 发现漏洞 15 个
+    RiskScore:
+      type: number
+      description: |-
+        风险评估（风险评分）数值，此 schema 适用于所有风险类评分 0-100 的场景
+        - 风险评估
+        - 风险评分
+        - 综合评分
+
+        等级划分：
+        - low 低 显示黄色 [0-40)
+        - medium 中 显示橙色 [40-70)
+        - high 高 显示红色 [70-100]
+
+        此评分不适用于漏洞评分
+      minimum: 0
+      maximum: 100
+      example: 76.8
+      readOnly: true
+    RiskLevel:
+      type: string
+      description: |-
+        风险评估等级，此 schema 适用于所有风险类评分 0-100 的场景
+        - 风险评估
+        - 风险评分
+        - 综合评分
+
+        等级划分：
+        - low: 低 显示黄色 [0-40)
+        - medium: 中 显示橙色 [40-70)
+        - high: 高 显示红色 [70-100]
+
+        此等级不适用于漏洞等级，漏洞等级请使用 severity
+      enum:
+        - low
+        - medium
+        - high
+      example: high
+      readOnly: true
+    Graph:
+      type: object
+      required:
+        - nodes
+        - edges
+      properties:
+        id:
+          type: string
+          description: 图 ID
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphNode'
+        edges:
+          type: array
+          items:
+            $ref: '#/components/schemas/GraphEdge'
+        highlight_nodes:
+          type: array
+          items:
+            type: string
+          description: 高亮节点 ID
+        props:
+          description: 图属性
+          type: object
+          additionalProperties: true
+      example:
+        id: '10000'
+        highlight_nodes:
+          - '5'
+        nodes:
+          - id: '1'
+            label: IP
+            name: 10.0.0.2
+          - id: '2'
+            label: 资产组
+            name: IT部
+          - id: '3'
+            label: IP
+            name: 192.168.0.6
+          - id: '4'
+            label: 资产组
+            name: 财务部
+          - id: '5'
+            label: IP
+            name: 192.168.0.121
+          - id: '6'
+            label: OS
+            name: Windows 7 SP1
+          - id: '7'
+            label: 探测工具
+            name: Nmap
+          - id: '8'
+            label: 权限
+            name: SysAdmin-RWE
+          - id: '9'
+            label: 应用
+            name: SMB共享
+          - id: '10'
+            label: 漏洞
+            name: CVE-2017-0143
+          - id: '11'
+            label: 服务
+            name: SMB服务 445端口
+        edges:
+          - id: '1'
+            source: '2'
+            target: '1'
+            label: 包含资产
+          - id: '2'
+            source: '4'
+            target: '3'
+            label: 包含资产
+          - id: '3'
+            source: '4'
+            target: '2'
+            label: 入组访问
+          - id: '4'
+            source: '5'
+            target: '4'
+            label: 归属
+          - id: '5'
+            source: '5'
+            target: '6'
+            label: 运行
+          - id: '6'
+            source: '7'
+            target: '5'
+            label: 探测发现
+          - id: '7'
+            source: '6'
+            target: '8'
+            label: 具备
+          - id: '8'
+            source: '6'
+            target: '9'
+            label: 运行
+          - id: '9'
+            source: '9'
+            target: '11'
+            label: 监听
+          - id: '10'
+            source: '10'
+            target: '9'
+            label: 影响
+          - id: '11'
+            source: '10'
+            target: '8'
+            label: 获得
+    GraphNode:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          description: 节点ID
+          type: string
+        label:
+          description: |-
+            节点标签（节点类型）
+            - 在图谱中展示时，通常为点上的文字
+            - 在路径中展示时，通常为节点的副标题
+          type: string
+        name:
+          description: |-
+            节点名称
+            - 在图谱中展示时，通常为点下面的文字
+            - 在路径中展示时，通常为节点的标题
+          type: string
+        props:
+          description: 节点属性
+          type: object
+          additionalProperties: true
+          properties:
+            asset_group:
+              description: 资产组
+              type: object
+              properties:
+                id:
+                  description: 资产组ID
+                  type: string
+                name:
+                  description: 资产组名称
+                  type: string
+                fullpath:
+                  description: 资产组完整路径
+                  type: string
+            type:
+              description: 节点类型 根据节点类型不同，展示不同的图标
+              type: string
+            ip:
+              description: IP地址
+              type: string
+              format: ipv4
+            asset_id:
+              description: 资产ID
+              type: string
+            state:
+              description: |-
+                节点状态
+                - 0: 未知态
+                - 1: 已知态 大于等于1的整数表示已知态的状态值
+                - 16: 攻击态 大于等于16的整数表示攻击态的状态值
+              type: integer
+              enum:
+                - 0
+                - 1
+                - 16
+    GraphEdge:
+      type: object
+      required:
+        - id
+        - source
+        - target
+      properties:
+        id:
+          description: 边ID
+          type: string
+        source:
+          description: 源节点ID
+          type: string
+        target:
+          description: 目标节点ID
+          type: string
+        label:
+          description: 边标签 （边类型）线上的文字
+          type: string
+        path_id:
+          description: |-
+            路径ID （边所属的路径ID）
+
+            用于标识边所属的路径ID，点击路径时，高亮显示该路径的所有边。
+          type: string
+        props:
+          description: 边属性
+          type: object
+          additionalProperties: true
+          properties:
+            current_node:
+              description: 当前节点
+              type: object
+              properties:
+                id:
+                  description: 当前节点ID
+                  type: string
+                labels:
+                  description: 当前节点标签
+                  type: array
+                  items:
+                    type: string
+            next_node:
+              description: 下一个节点
+              type: object
+              properties:
+                id:
+                  description: 下一个节点ID
+                  type: string
+                labels:
+                  description: 下一个节点标签
+                  type: array
+                  items:
+                    type: string
+            decision_process:
+              description: 决策过程
+              type: object
+              properties:
+                id:
+                  description: 决策过程ID
+                  type: string
+                cost:
+                  description: 攻击成本
+                  type: string
+                  enum:
+                    - low
+                    - medium
+                    - high
+                stealth:
+                  description: 攻击隐蔽性
+                  type: string
+                  enum:
+                    - low
+                    - medium
+                    - high
+                weapon_adaptability:
+                  description: 武器适应性
+                  type: string
+                  enum:
+                    - low
+                    - medium
+                    - high
+                defending_capability:
+                  description: 防御能力 防御设施对抗能力 Defense facility countermeasure capability
+                  type: string
+                  enum:
+                    - low
+                    - medium
+                    - high
+            evaluation:
+              description: 收益评估
+              type: object
+              properties:
+                id:
+                  description: 收益评估ID
+                  type: string
+                asset_value:
+                  description: 资产价值
+                  type: string
+                  enum:
+                    - low
+                    - medium
+                    - high
+                data_value:
+                  description: 数据价值
+                  type: string
+                  enum:
+                    - low
+                    - medium
+                    - high
+                stealth_value:
+                  description: 隐蔽性价值
+                  type: string
+                  enum:
+                    - low
+                    - medium
+                    - high
+                impact_value:
+                  description: 影响力价值
+                  type: string
+                  enum:
+                    - low
+                    - medium
+                    - high
+            graph:
+              allOf:
+                - $ref: '#/components/schemas/Graph'
+                - description: 知识图谱 （边对应的知识图谱）
+            details:
+              description: 对抗详情 （暂略）
+              type: object
+              additionalProperties: true
+    AssetID:
+      type: string
+      description: 资产 ID The unique identifier of an asset
+      readOnly: true
+    ArrayOfHosts:
+      type: object
+      required:
+        - pagination
+        - results
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          items:
+            type: object
+            required:
+              - id
+              - name
+            properties:
+              id:
+                $ref: '#/components/schemas/AssetID'
+              risk_score:
+                $ref: '#/components/schemas/RiskScore'
+              risk_level:
+                $ref: '#/components/schemas/RiskLevel'
+              name:
+                type: string
+                description: 主机资产名称
+                example: host1
+              ip:
+                type: string
+                format: ipv4
+                description: IP Addr
+                example: 10.64.128.196
+              state:
+                type: integer
+                enum:
+                  - 0
+                  - 1
+                description: '存活状态 0: 不存活 1: 存活'
+                example: 1
+              category:
+                type: string
+                description: 资产类型
+                example: WEB服务器
+              tags:
+                type: array
+                description: 资产标签
+                items:
+                  $ref: '#/components/schemas/HostTag'
+              custom_tags:
+                type: array
+                description: 自定义标签
+                items:
+                  $ref: '#/components/schemas/CustomTag'
+              count_vulns:
+                type: integer
+                description: 关联漏洞数
+                minimum: 0
+                example: 1
+              count_ports:
+                type: integer
+                description: 暴露端口数
+                minimum: 0
+                maximum: 65535
+                example: 5
+              asset_group:
+                type: object
+                description: 所属资产组
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: 所属资产组 ID
+                  name:
+                    type: string
+                    description: 所属资产组名称 (子级)
+                    example: 服务器
+                  fullname:
+                    type: string
+                    description: 所属资产组完整名称 AA / BB / CC
+                    example: A地区 / 人力资源中心 / 服务器
+    HostMeta:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          $ref: '#/components/schemas/AssetID'
+        time_created:
+          type: string
+          format: date-time
+          description: 创建时间
+          example: '2020-01-01T00:00:00Z'
+          readOnly: true
+        time_updated:
+          type: string
+          format: date-time
+          description: 更新时间
+          example: '2020-01-01T00:00:00Z'
+          readOnly: true
+        name:
+          type: string
+          description: 主机资产名称
+          example: host1
+        risk_score:
+          $ref: '#/components/schemas/RiskScore'
+        risk_level:
+          $ref: '#/components/schemas/RiskLevel'
+        reason:
+          type: string
+          description: 风险原因
+          example: 存在多个高危漏洞
+          readOnly: true
+        ip:
+          type: string
+          format: ipv4
+          description: IP Addr
+          example: 10.16.32.64
+          readOnly: true
+        mac:
+          type: string
+          format: mac
+          description: MAC Addr
+          example: '00:0c:29:3e:3e:3e'
+          readOnly: true
+        os:
+          type: string
+          description: 操作系统
+          example: Windows Server 2016
+        value:
+          type: integer
+          description: 价值 1-5，5 为最高，为 0 时表示未知（不展示）
+          minimum: 0
+          maximum: 5
+          example: 0
+        state:
+          type: integer
+          enum:
+            - 0
+            - 1
+          description: '存活状态 0: 不存活 1: 存活'
+          example: 1
+          readOnly: true
+        intranet:
+          type: integer
+          enum:
+            - -1
+            - 0
+            - 1
+          description: '是否为内网资产 -1: 未知 0: 外网 1: 内网'
+          example: 1
+        category:
+          type: string
+          description: 资产类型
+          example: 服务器
+          readOnly: true
+        tags:
+          type: array
+          description: 资产标签
+          items:
+            $ref: '#/components/schemas/HostTag'
+          readOnly: true
+        custom_tags:
+          type: array
+          description: 自定义标签
+          items:
+            $ref: '#/components/schemas/CustomTag'
+          readOnly: true
+        infer_tags:
+          type: array
+          description: 推理标签
+          items:
+            type: string
+          readOnly: true
+        asset_group:
+          type: object
+          description: 所属资产组
+          properties:
+            id:
+              type: string
+              description: 所属资产组 ID
+            name:
+              type: string
+              description: 所属资产组名称 (子级)
+              example: 服务器
+              readOnly: true
+            fullname:
+              type: string
+              description: 所属资产组完整名称 AA / BB / CC
+              example: A地区 / 人力资源中心 / 服务器
+              readOnly: true
+          readOnly: true
+        source:
+          type: string
+          description: 数据来源
+          example: 数据推送
+          readOnly: true
+        location:
+          type: string
+          description: 位置
+          example: XX省XX市XX区XX路XX号XX园区XX楼2F2-1
+    HostDetail:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          $ref: '#/components/schemas/AssetID'
+        meta:
+          $ref: '#/components/schemas/HostMeta'
+        lifecycle:
+          allOf:
+            - $ref: '#/components/schemas/Lifecycle'
+            - description: 资产生命周期
+            - example:
+                - timestamp: '2021-01-01T00:00:00'
+                  user: 系统
+                  action: 更新评分
+                  message: 评分更新为 80
+                - timestamp: '2021-01-02T00:00:00'
+                  user: admin
+                  action: 创建任务
+                  message: 发现漏洞 15 个
+        vulns:
+          type: array
+          items:
+            $ref: '#/components/schemas/VulnerabilityMeta'
+        graph:
+          allOf:
+            - $ref: '#/components/schemas/Graph'
+            - description: 资产图谱
+        ports:
+          type: array
+          items:
+            type: object
+            properties:
+              port:
+                type: integer
+                description: 端口号
+                example: 80
+              protocol:
+                type: string
+                description: 协议
+                example: http
+              service:
+                type: string
+                description: 服务
+                example: nginx
+              version:
+                type: string
+                description: 版本
+                example: 1.18.0
+              product:
+                type: string
+                description: 产品
+                example: nginx
+              cpe:
+                type: string
+                description: CPE
+                example: 'cpe:/a:nginx:nginx:1.18.0'
+              banner:
+                type: string
+                description: Banner
+                example: nginx 1.18.0
+        related_assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedAsset'
+    SiteMeta:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          $ref: '#/components/schemas/AssetID'
+        time_created:
+          type: string
+          format: date-time
+          description: 创建时间
+          example: '2020-01-01T00:00:00Z'
+          readOnly: true
+        time_updated:
+          type: string
+          format: date-time
+          description: 更新时间
+          example: '2020-01-01T00:00:00Z'
+          readOnly: true
+        name:
+          type: string
+          description: 网站资产名称
+          example: site1
+        site_url:
+          type: string
+          format: uri
+          description: 网站 URL
+          example: 'http://www.site1.com'
+          readOnly: true
+        risk_score:
+          $ref: '#/components/schemas/RiskScore'
+        risk_level:
+          $ref: '#/components/schemas/RiskLevel'
+        reason:
+          type: string
+          description: 风险原因
+          example: 存在多个高危漏洞
+          readOnly: true
+        ip:
+          type: string
+          format: ipv4
+          description: IP Addr
+          example: 10.16.32.64
+          readOnly: true
+        port:
+          type: integer
+          description: 端口
+          minimum: 0
+          maximum: 65535
+          example: 80
+          readOnly: true
+        os:
+          type: string
+          description: 操作系统
+          example: Windows Server 2016
+        value:
+          type: integer
+          description: 资产价值 1-5，5 为最高，为 0 时表示未知（不展示）
+          minimum: 0
+          maximum: 5
+          example: 0
+        state:
+          type: integer
+          enum:
+            - 0
+            - 1
+          description: '存活状态 0: 不存活 1: 存活'
+          example: 1
+          readOnly: true
+        intranet:
+          type: integer
+          enum:
+            - -1
+            - 0
+            - 1
+          description: '是否为内网资产 -1: 未知 0: 外网 1: 内网'
+          example: 1
+        category:
+          type: string
+          description: 资产类型
+          example: 服务器
+          readOnly: true
+        tags:
+          type: array
+          description: 资产标签
+          items:
+            $ref: '#/components/schemas/SiteTag'
+          readOnly: true
+        custom_tags:
+          type: array
+          description: 自定义标签
+          items:
+            $ref: '#/components/schemas/CustomTag'
+          readOnly: true
+        asset_group:
+          type: object
+          description: 所属资产组
+          properties:
+            id:
+              type: string
+              description: 所属资产组 ID
+            name:
+              type: string
+              description: 所属资产组名称 (子级)
+              example: 服务器
+            fullname:
+              type: string
+              description: 所属资产组完整名称 AA / BB / CC
+              example: A地区 / 人力资源中心 / 服务器
+          readOnly: true
+        source:
+          type: string
+          description: 数据来源
+          example: 数据推送
+          readOnly: true
+        location:
+          type: string
+          description: 位置
+          example: XX省XX市XX区XX路XX号XX园区XX楼2F2-1
+        fingerprint:
+          $ref: '#/components/schemas/SiteFingerprint'
+    SiteFingerprint:
+      type: object
+      description: 网站指纹信息
+      properties:
+        application:
+          type: string
+          description: 应用
+          example: Apache
+        programming_language:
+          type: string
+          description: 编程语言
+          example: PHP
+        framework:
+          type: string
+          description: 框架
+          example: ThinkPHP
+        waf:
+          type: string
+          description: WAF
+          example: '360'
+        cdn:
+          type: string
+          description: CDN
+          example: 阿里云
+      readOnly: true
+    SiteDetail:
+      type: object
+      description: 网站详情
+      required:
+        - id
+        - name
+      properties:
+        id:
+          $ref: '#/components/schemas/AssetID'
+        meta:
+          $ref: '#/components/schemas/SiteMeta'
+        lifecycle:
+          allOf:
+            - $ref: '#/components/schemas/Lifecycle'
+            - description: 资产生命周期
+        vulns:
+          type: array
+          items:
+            $ref: '#/components/schemas/VulnerabilityMeta'
+        graph:
+          allOf:
+            - $ref: '#/components/schemas/Graph'
+            - description: 资产图谱
+        related_assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedAsset'
+        urls:
+          type: array
+          description: URL 信息
+          items:
+            type: object
+            properties:
+              url:
+                type: string
+                format: uri
+                description: URL
+                example: 'http://www.site1.com'
+              method:
+                type: string
+                description: 请求方法
+                example: GET
+              params:
+                type: string
+                description: 请求参数
+                example: id=1
+    RelatedAsset:
+      type: object
+      description: 关联资产
+      properties:
+        id:
+          $ref: '#/components/schemas/AssetID'
+        relation:
+          type: string
+          description: 关联关系
+          example: 连接关系
+        protocol:
+          type: string
+          description: 协议
+          example: TCP
+        ip:
+          type: string
+          format: ipv4
+          description: IP
+          example: 192.168.0.120
+        category:
+          type: string
+          description: 设备（资产）类型
+          example: 数据服务器
+        name:
+          type: string
+          description: 设备（资产）名称
+          example: ASM-31509
+    AssetGroup:
+      type: object
+      description: 资产组（部门） Asset Group
+      properties:
+        id:
+          type: string
+          description: 资产组 ID
+          example: '789'
+        name:
+          type: string
+          description: 资产组名称 (部门名称)
+          example: XX部门
+        manager:
+          type: string
+          description: 资产组负责人 （部门负责人）
+          example: 张有志
+        location:
+          type: string
+          description: 资产组地址 （部门地址）
+          example: XX省XX市XX区XX路XX号
+        fullname:
+          type: string
+          description: 资产组全名
+          example: XX大区 / XX地市 / XX部门
+        fullpath:
+          type: string
+          description: 资产组全路径
+          example: 123/456/789
+        time_created:
+          type: string
+          format: date-time
+          description: 资产组创建时间
+          example: '2021-01-01T00:00:00Z'
+          readOnly: true
+        time_updated:
+          type: string
+          format: date-time
+          description: 资产组更新时间
+          example: '2021-01-01T00:00:00Z'
+          readOnly: true
+        cidrs:
+          type: array
+          description: IP 范围
+          items:
+            type: string
+            format: ipv4
+            example: 10.12.16.20/24
+        parent_group:
+          type: string
+          description: 父资产组
+          example: '456'
+        sub_groups:
+          type: array
+          description: 子资产组
+          items:
+            $ref: '#/components/schemas/AssetGroup'
+    HostTag:
+      type: object
+      description: 主机标签
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: 标签 ID
+          example: '1023'
+          readOnly: true
+        category:
+          type: string
+          description: 标签类型（分类）
+          example: 服务器设备
+          readOnly: true
+        name:
+          type: string
+          description: 标签名称
+          example: 负载均衡
+          readOnly: true
+        count_assets:
+          type: integer
+          description: 应用资产数 （使用此标签的资产数量）
+          minimum: 0
+          example: 123
+          readOnly: true
+        is_favorite:
+          type: boolean
+          description: 是否为常用标签
+          example: true
+    SiteTag:
+      type: object
+      description: 网站标签
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: 标签 ID
+          example: '1023'
+          readOnly: true
+        category:
+          type: string
+          description: 标签类型（分类）
+          example: 服务器管理产品
+          readOnly: true
+        name:
+          type: string
+          description: 标签名称
+          example: 远程管理
+          readOnly: true
+        count_assets:
+          type: integer
+          description: 应用资产数 （使用此标签的资产数量）
+          minimum: 0
+          example: 123
+          readOnly: true
+        is_favorite:
+          type: boolean
+          description: 是否为常用标签
+          example: true
+    CustomTag:
+      type: object
+      description: 自定义标签
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: 标签 ID
+          example: '123'
+          readOnly: true
+        time_created:
+          type: string
+          format: date-time
+          description: 标签创建时间
+          example: '2021-01-01T00:00:00Z'
+          readOnly: true
+        time_updated:
+          type: string
+          format: date-time
+          description: 标签更新时间
+          example: '2021-01-01T00:00:00Z'
+          readOnly: true
+        creator:
+          type: string
+          description: 创建人
+          example: admin
+          readOnly: true
+        name:
+          type: string
+          description: 标签名称
+          example: 入侵防护
+        count_assets:
+          type: integer
+          description: 应用资产数 （使用此标签的资产数量）
+          minimum: 0
+          example: 123
+          readOnly: true
+    VulnerabilityID:
+      description: Unique identifier for a vulnerability
+      type: string
+      format: uuid
+    VulnerabilityMeta:
+      type: object
+      required:
+        - id
+        - name
+        - category
+        - type
+      properties:
+        id:
+          $ref: '#/components/schemas/VulnerabilityID'
+        name:
+          type: string
+          description: 漏洞名称
+          example: XXX SQL 注入漏洞
+        category:
+          type: string
+          description: 漏洞分类
+          example:
+            - 网站漏洞
+            - 主机漏洞
+        type:
+          type: string
+          description: 漏洞类型
+          example: SQL 注入
+        severity:
+          type: string
+          description: |-
+            漏洞等级
+
+            - low: 低危 黄色
+            - medium: 中危 橙色
+            - high: 高危 红色
+            - critical: 超危 深红色
+          enum:
+            - low
+            - medium
+            - high
+            - critical
+          example: high
+        time_discovered:
+          type: string
+          format: date-time
+          description: 发现时间
+          example: '2020-01-01T00:00:00Z'
+        cvss:
+          type: number
+          format: float
+          description: CVSS评分
+          minimum: 0
+          maximum: 10
+          example: 5.6
+        platforms:
+          type: array
+          description: 漏洞影响平台
+          items:
+            type: string
+            example:
+              - Windows
+        products:
+          type: array
+          description: 漏洞影响产品
+          items:
+            type: string
+            example:
+              - IIS
+        cve_id:
+          type: string
+          description: CVE编号
+          example: CVE-2020-12345
+        cnvd_id:
+          type: string
+          description: CNVD编号
+          example: CNVD-2020-12345
+        cnnvd_id:
+          type: string
+          description: CNNVD编号
+          example: CNNVD-202012-345
+        proof_method:
+          type: integer
+          enum:
+            - -1
+            - 0
+            - 1
+          description: '验证方式（可原理性验证） -1: 未知 0: 不可原理性验证 1: 可原理性验证'
+          example: 1
+        treatment_result:
+          type: string
+          description: 处置结果
+          example: 已修复
+        asset:
+          type: object
+          description: 漏洞影响资产
+          properties:
+            id:
+              $ref: '#/components/schemas/AssetID'
+            ip:
+              type: string
+              format: ipv4
+              description: IP Addr
+              example: 10.8.16.32
+            port:
+              type: integer
+              description: 漏洞影响端口
+              minimum: 0
+              maximum: 65535
+              example: 80
+            url:
+              type: string
+              format: uri
+              description: 漏洞影响URL
+              example: 'http://www.example.com/vuln'
+        description:
+          type: string
+          description: 漏洞描述
+          example: XXX SQL 注入漏洞
+    Vulnerability:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/VulnerabilityID'
+        meta:
+          $ref: '#/components/schemas/VulnerabilityMeta'
+        lifecycle:
+          allOf:
+            - $ref: '#/components/schemas/Lifecycle'
+            - description: 漏洞生命周期
+        graph:
+          allOf:
+            - $ref: '#/components/schemas/Graph'
+            - description: 漏洞图谱
+        snapshot:
+          allOf:
+            - $ref: '#/components/schemas/Snapshot'
+            - description: 漏洞快照
+        exploit:
+          allOf:
+            - $ref: '#/components/schemas/Exploit'
+            - description: 漏洞利用
+    Exploit:
+      type: object
+      properties:
+        type:
+          type: string
+        path:
+          type: string
+        user:
+          type: string
+        os:
+          type: string
+    Snapshot:
+      type: object
+      properties:
+        request:
+          type: string
+        response:
+          type: string
+    Ticket:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: 工单ID
+        manager:
+          type: string
+          description: 工单负责人
+          example: admin
+        assignee:
+          type: string
+          description: 工单处理人
+          example: admin
+        status:
+          type: string
+          description: 工单状态
+          example: open
+        note:
+          type: string
+          description: 工单备注
+        deadline:
+          type: string
+          format: date-time
+          description: 截止时间
+    ArrayOfVulnsFlat:
+      type: object
+      required:
+        - pagination
+        - results
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/VulnerabilityID'
+              meta:
+                $ref: '#/components/schemas/VulnerabilityMeta'
+              ticket:
+                $ref: '#/components/schemas/Ticket'
+    KBVuln:
+      type: object
+      required:
+        - id
+        - name
+        - category
+        - type
+      properties:
+        id:
+          $ref: '#/components/schemas/VulnerabilityID'
+        name:
+          type: string
+          description: 漏洞名称
+          example: XXX SQL 注入漏洞
+        category:
+          type: string
+          description: 漏洞分类
+          example:
+            - 网站漏洞
+            - 主机漏洞
+        type:
+          type: string
+          description: 漏洞类型
+          example: SQL 注入
+        severity:
+          type: string
+          description: |-
+            漏洞等级
+
+            - low: 低危 黄色
+            - medium: 中危 橙色
+            - high: 高危 红色
+            - critical: 超危 深红色
+          enum:
+            - low
+            - medium
+            - high
+            - critical
+          example: high
+        time_discovered:
+          type: string
+          format: date-time
+          description: 发现时间
+          example: '2020-01-01T00:00:00Z'
+        cvss:
+          type: number
+          format: float
+          description: CVSS评分
+          minimum: 0
+          maximum: 10
+          example: 5.6
+        platforms:
+          type: array
+          description: 漏洞影响平台
+          items:
+            type: string
+            example:
+              - Windows
+        products:
+          type: array
+          description: 漏洞影响产品
+          items:
+            type: string
+            example:
+              - IIS
+        cve_id:
+          type: string
+          description: CVE编号
+          example: CVE-2020-12345
+        cnvd_id:
+          type: string
+          description: CNVD编号
+          example: CNVD-2020-12345
+        cnnvd_id:
+          type: string
+          description: CNNVD编号
+          example: CNNVD-202012-345
+        proof_method:
+          type: integer
+          enum:
+            - -1
+            - 0
+            - 1
+          description: '验证方式（可原理性验证） -1: 未知 0: 不可原理性验证 1: 可原理性验证'
+          example: 1
+        description:
+          type: string
+          description: 漏洞描述
+          example: XXX SQL 注入漏洞
+        solution:
+          type: string
+          description: 漏洞解决方案
+          example: 请及时升级到最新版本
+        advice:
+          type: string
+          description: 漏洞建议
+          example: 请及时升级到最新版本
+        graph:
+          $ref: '#/components/schemas/Graph'
+    TaskBase:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 任务 ID
+          readOnly: true
+        time_created:
+          type: string
+          format: date-time
+          description: 创建时间
+          example: '2020-01-01T00:00:00Z'
+          readOnly: true
+        time_updated:
+          type: string
+          format: date-time
+          description: 更新时间
+          example: '2020-01-01T00:00:00Z'
+          readOnly: true
+        creator:
+          type: string
+          description: 创建者
+          example: admin
+          readOnly: true
+        name:
+          type: string
+          description: 任务名称
+          example: 推演任务XXX
+        description:
+          type: string
+          description: 任务描述
+          example: 推演任务描述
+        config:
+          type: object
+          description: 任务配置
+        schedule:
+          $ref: '#/components/schemas/Scheduler'
+        task_targets:
+          type: object
+          description: 任务目标
+        task_range:
+          type: object
+          description: 任务范围
+        task_type:
+          type: string
+          description: 任务类型
+          enum:
+            - infer
+            - vul_scan
+            - baseline
+            - bas
+          example: infer
+        status:
+          type: string
+          description: 任务状态
+          enum:
+            - scheduled
+            - pending
+            - running
+            - paused
+            - finished
+            - failed
+            - stopped
+          example: pending
+          readOnly: true
+      required:
+        - task_type
+        - task_targets
+        - config
+        - name
+        - status
+    InferTask:
+      allOf:
+        - $ref: '#/components/schemas/TaskBase'
+        - properties:
+            config:
+              $ref: '#/components/schemas/InferConfig'
+            task_targets:
+              type: object
+              description: 任务目标
+              properties:
+                head:
+                  allOf:
+                    - $ref: '#/components/schemas/InferTarget'
+                    - description: 终点
+                tail:
+                  allOf:
+                    - $ref: '#/components/schemas/InferTarget'
+                    - description: 起始点
+                stem:
+                  allOf:
+                    - $ref: '#/components/schemas/InferTarget'
+                    - description: 途径点
+            task_range:
+              allOf:
+                - $ref: '#/components/schemas/InferTarget'
+                - description: 推演任务资产范围
+            latest_result_id:
+              type: string
+              description: 最近一次任务执行的结果ID(子任务ID)
+    InferTarget:
+      type: object
+      description: 推演任务的目标，用于起点终点途径点等
+      properties:
+        cidrs:
+          type: array
+          description: CIDRs
+          items:
+            type: string
+            example: 10.8.16.24/32
+        groups:
+          type: array
+          description: 资产组 ID
+          items:
+            type: string
+            example: group1
+    InferConfig:
+      type: object
+      description: 推演任务配置
+      properties:
+        infer_type:
+          type: string
+          description: 推演类型
+          enum:
+            - standard
+            - simulated
+          example: standard
+        target_type:
+          type: string
+          description: 目标类型
+          enum:
+            - cidr
+            - group
+        algorithm:
+          type: array
+          description: 推演算法
+          items:
+            type: object
+            $ref: '#/components/schemas/InferAlgorithm'
+        template_id:
+          type: string
+          description: 推演模板 ID
+          example: template1
+    InferAlgorithm:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 算法ID
+        name:
+          type: string
+          description: 算法名称
+        class:
+          type: string
+          description: 算法类型
+          enum:
+            - decision
+            - assessment
+            - path
+          example: path
+    AttackPath:
+      type: object
+      description: 攻击路径 Attack Path
+      properties:
+        id:
+          type: string
+          description: 路径 ID
+        type:
+          type: string
+          description: 路径类型
+        name:
+          type: string
+          description: 路径名称
+        series:
+          type: array
+          description: 路径序列，第一个元素是起点和边的组合，最后一个元素是终点
+          items:
+            type: object
+            description: 点边组合，终点不包含边
+            required:
+              - node
+            properties:
+              node:
+                $ref: '#/components/schemas/GraphNode'
+              edge:
+                $ref: '#/components/schemas/GraphEdge'
+      example:
+        id: '1000'
+        type: XX攻击路径
+        name: XX攻击路径
+        series:
+          - node:
+              id: '1'
+              label: 文件服务器
+              name: 192.168.0.121
+            edge:
+              id: '1'
+              source: '1'
+              target: '2'
+              label: 抓取凭证技术
+          - node:
+              id: '2'
+              label: 数据库服务器
+              name: 192.168.1.20
+            edge:
+              id: '2'
+              source: '2'
+              target: '3'
+              label: 渗透测试技术
+          - node:
+              id: '3'
+              label: Web应用服务器
+              name: 203.0.113.50
+            edge:
+              id: '3'
+              source: '3'
+              target: '4'
+              label: 注入攻击技术
+          - node:
+              id: '4'
+              label: 域控服务器
+              name: 192.168.1.100
+            edge:
+              id: '4'
+              source: '4'
+              target: '5'
+              label: 提权技术
+          - node:
+              id: '5'
+              label: 工作站
+              name: 203.0.113.60
+    InferTemplate:
+      type: object
+      description: 推演任务模板，包含场景配置等
+      properties:
+        template_id:
+          type: string
+          description: 模板 ID
+          example: template-1
+        name:
+          type: string
+          description: 模板名称
+          example: 模板XXX
+    Scheduler:
+      type: object
+      description: 调度器配置，包含时间周期以及运行模式等
+      properties:
+        timing_mode:
+          type: string
+          description: 任务定时模式
+          enum:
+            - immediate
+            - scheduled
+            - periodic
+          example: immediate
+        schedule:
+          type: string
+          format: date-time
+          description: 任务定时时间
+          example: '2020-01-01T00:00:00Z'
+      required:
+        - timing_mode
+    CockpitSummary:
+      type: object
+      description: 驾驶舱 综合面板 Cockpit Summary
+      properties:
+        id:
+          type: string
+          description: 推演结果 ID
+          readOnly: true
+        task_id:
+          type: string
+          description: 推演任务 ID
+          readOnly: true
+        risk_score:
+          $ref: '#/components/schemas/RiskScore'
+        risk_level:
+          $ref: '#/components/schemas/RiskLevel'
+        count_assets:
+          type: integer
+          minimum: 0
+          description: 资产总数
+          example: 123
+        count_asset_groups:
+          type: integer
+          minimum: 0
+          description: 资产组总数
+        count_exposures:
+          type: integer
+          minimum: 0
+          description: 暴露资产总数（关键资产数）
+        count_healths:
+          type: integer
+          minimum: 0
+          description: 健康资产总数
+        count_edges:
+          type: integer
+          minimum: 0
+          description: 边界资产总数
+        count_shields:
+          type: integer
+          minimum: 0
+          description: 防护资产总数
+    CockpitAttackPaths:
+      type: object
+      description: 驾驶舱 攻击路径 Attack Paths
+      properties:
+        id:
+          type: string
+          description: 推演结果 ID
+        highest_value_paths:
+          type: array
+          description: 最高价值攻击路径
+          items:
+            $ref: '#/components/schemas/AttackPath'
+        shortest_paths:
+          type: array
+          description: 最短攻击路径
+          items:
+            $ref: '#/components/schemas/AttackPath'
+        most_stealthy_paths:
+          type: array
+          description: 最隐蔽攻击路径
+          items:
+            $ref: '#/components/schemas/AttackPath'
+        other_paths:
+          type: array
+          description: 其他攻击路径
+          items:
+            $ref: '#/components/schemas/AttackPath'
+    CockpitFullGraph:
+      type: object
+      description: 驾驶舱 全图序列 Cockpit Full Graph
+      properties:
+        id:
+          type: string
+          description: 推演结果 ID
+        base_graph:
+          type: object
+          description: |-
+            基础图 （底图）
+
+            基础图是推演过程的第0帧，只包含点不包含边。
+          properties:
+            nodes:
+              type: array
+              description: 节点
+              items:
+                $ref: '#/components/schemas/GraphNode'
+        series:
+          type: array
+          description: 图数据
+          items:
+            type: object
+            description: |-
+              帧 Frame
+
+              除了基础图外的其他帧，每一帧都包含了点的变动信息和增量的边。
+            properties:
+              id:
+                type: string
+                description: 帧 ID
+              time:
+                type: string
+                format: date-time
+                description: 帧时间
+              graph:
+                $ref: '#/components/schemas/Graph'
+    DashboardEvaluation:
+      type: object
+      description: |-
+        仪表盘 风险评估 Dashboard Evaluation
+
+        用于展示仪表盘的 Meter Chart
+      properties:
+        time_updated:
+          type: string
+          format: date-time
+          description: 评估时间
+        risk_score:
+          $ref: '#/components/schemas/RiskScore'
+        risk_level:
+          $ref: '#/components/schemas/RiskLevel'
+        compared_to:
+          type: string
+          format: date-time
+          description: '对比时间 与 {compared_to} 相比'
+        compared_value:
+          type: number
+          description: 对比值
+          minimum: 0
+          maximum: 100
+          example: 84.8
+        compared_diff:
+          type: number
+          description: 对比差值的绝对值
+          minimum: 0
+          maximum: 100
+          example: 8
+        compare_trend:
+          type: string
+          description: |-
+            对比趋势
+
+            - up: 上升
+            - down: 下降
+            - flat: 持平
+          enum:
+            - up
+            - down
+            - flat
+        period:
+          type: string
+          description: 统计周期
+          enum:
+            - weekly
+            - monthly
+          example: weekly
+    DashboardSummary:
+      type: object
+      description: |-
+        仪表盘 概要 Dashboard Summary
+
+        用于展示仪表盘的概要数据
+      properties:
+        time_updated:
+          type: string
+          format: date-time
+          description: 更新时间
+        total_tasks:
+          type: integer
+          description: 推演任务数
+          minimum: 0
+          example: 120
+        issues_discovered:
+          type: integer
+          description: 发现隐蔽问题数
+          minimum: 0
+          example: 262
+        paths_blocked:
+          type: integer
+          description: 阻断路径数 （有效封堵路径数）
+          minimum: 0
+          example: 80
+        vulns_remediated:
+          type: integer
+          description: 漏洞修复数 （阻挡漏洞数）
+          minimum: 0
+          example: 499
+        period:
+          type: string
+          description: 统计周期
+          enum:
+            - weekly
+            - monthly
+    PotentialRiskAssets:
+      type: object
+      properties:
+        time_updated:
+          type: string
+          format: date-time
+          description: 更新时间
+        items:
+          type: array
+          description: 潜在风险资产列表
+          minItems: 0
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/HostMeta'
+    PotentialAttackSurface:
+      type: object
+      description: 潜在攻击面
+      properties:
+        time_updated:
+          type: string
+          format: date-time
+          description: 更新时间
+        items:
+          type: array
+          description: 潜在攻击面列表
+          minItems: 0
+          maxItems: 10
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: 资产组名称
+              count_exposed_nodes:
+                type: integer
+                description: 暴露节点数
+                minimum: 0
+                example: 120
+              percentage_exposed_nodes:
+                type: number
+                description: 暴露节点占比
+                minimum: 0
+                maximum: 100
+                example: 76.8
+        compared_to:
+          type: string
+          format: date-time
+          description: 对比时间
+        compared_diff:
+          type: number
+          description: 改善面积 （对比差值）
+          minimum: 0
+          maximum: 100
+          example: 8
+        compare_trend:
+          type: string
+          description: 对比趋势
+          enum:
+            - up
+            - down
+            - flat
+        period:
+          type: string
+          description: 统计周期
+          enum:
+            - weekly
+            - monthly
+          example: weekly
+    IssuesTrend:
+      type: object
+      description: 隐蔽问题趋势
+      properties:
+        time_updated:
+          type: string
+          format: date-time
+          description: 更新时间
+          readOnly: true
+        period:
+          type: string
+          description: 统计周期
+          enum:
+            - weekly
+            - monthly
+          example: weekly
+        series:
+          type: array
+          description: 数据序列
+          minItems: 0
+          maxItems: 31
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+                description: 日期
+              value:
+                type: integer
+                description: 数值
+                minimum: 0
+                example: 120
+          readOnly: true
+      example:
+        time_updated: '2021-01-01T00:00:00Z'
+        period: weekly
+        series:
+          - date: '2020-01-01'
+            value: 180
+          - date: '2020-01-02'
+            value: 160
+          - date: '2020-01-03'
+            value: 120
+          - date: '2020-01-04'
+            value: 150
+          - date: '2020-01-05'
+            value: 100
+          - date: '2020-01-06'
+            value: 90
+          - date: '2020-01-07'
+            value: 80
+    KeyRiskAssets:
+      type: object
+      description: 关键风险资产
+      properties:
+        items:
+          type: array
+          description: 关键风险资产列表
+          minItems: 0
+          maxItems: 10
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: 资产 ID
+              ip:
+                type: string
+                description: IP 地址
+                format: ipv4
+                example: 192.168.0.121
+              asset_group_name:
+                type: string
+                description: 资产组名称
+                example: 人力资源部
+              risk_score:
+                $ref: '#/components/schemas/RiskScore'
+              risk_level:
+                $ref: '#/components/schemas/RiskLevel'
+              risk_profile:
+                type: array
+                description: 风险画像
+                items:
+                  type: string
+                example:
+                  - 未经授权的访问
+                  - 敏感数据泄露
+                  - 远程代码执行
+              graph:
+                $ref: '#/components/schemas/Graph'
+              highest_value_path:
+                allOf:
+                  - $ref: '#/components/schemas/AttackPath'
+                  - type: object
+                    description: 最高价值路径
+              shortest_path:
+                allOf:
+                  - $ref: '#/components/schemas/AttackPath'
+                  - type: object
+                    description: 最短攻击路径
+              most_stealthy_path:
+                allOf:
+                  - $ref: '#/components/schemas/AttackPath'
+                  - type: object
+                    description: 最隐蔽路径
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - BearerAuth: []
+tags:
+  - name: Auth
+    description: 认证及授权 AuthN & AuthZ
+  - name: Dashboard
+    description: 仪表盘 Dashboard
+  - name: Assets
+    description: 资产治理 Assets governance
+  - name: Vulnerabilities
+    description: 漏洞治理 Vulnerabilities governance
+  - name: Tags
+    description: 标签管理 Tags management
+  - name: Cockpit
+    description: 驾驶舱 Cockpit
+  - name: Infer
+    description: |-
+      推演管理 Infer management
+
+      The consideration of /infer/tasks other than /tasks/infer,
+      is that the former one is more intuitive since the infer engine is a standard service, and might be standalone.
+  - name: System
+    description: 系统管理 System management
+  - name: KB
+    description: 知识库 Knowledge Base

@@ -17,10 +17,14 @@
       <!-- 查询组件 -->
       <div class="zheipr">
         <div class="marginr">
-          <!-- <el-popover placement="bottom" width="500" trigger="click"> hover-->
           <el-popover placement="bottom" trigger="hover">
             <div class="ckqbtopqian">
-              <el-button class="buttonsy" size="mini">查看全部</el-button>
+              <el-button
+                class="buttonsy"
+                size="mini"
+                @click="getgovernancehosts('clear')"
+                >查看全部</el-button
+              >
             </div>
             <div slot="reference" class="boxjc">
               <img src="../img/qb.png" alt="" />
@@ -28,93 +32,94 @@
             </div>
           </el-popover>
         </div>
+        <!-- 复合查询 -->
         <div class="marginr">
-            <el-popover placement="bottom" width="530" trigger="click">
-              <div slot="reference" class="boxjc">
-                <img src="../img/tj.png" alt="" />
-                条件筛选
+          <el-popover placement="bottom" width="530" trigger="click">
+            <div slot="reference" class="boxjc">
+              <img src="../img/tj.png" alt="" />
+              条件筛选
+            </div>
+            <div class="tjiansxian">
+              <div class="top">
+                <div @click="getgovernancehosts">筛选</div>
+                <div @click="getgovernancehosts('clear')">清空</div>
               </div>
-              <div class="tjiansxian">
-                <div class="top">
-                  <div>筛选</div>
-                  <div @click="cleark">清空</div>
-                </div>
-                <div
-                  style="padding: 12rem 0; display: flex; align-items: center"
+              <div style="padding: 12rem 0; display: flex; align-items: center">
+                符合以下&nbsp;&nbsp;
+                <el-select
+                  class="zhessless"
+                  size="mini"
+                  style="width: 74rem"
+                  v-model="rysy"
+                  placeholder="请选择"
                 >
-                  符合以下&nbsp;&nbsp;
-                  <el-select
-                    class="zhessless"
-                    size="mini"
-                    style="width: 74rem"
-                    v-model="rysy"
-                    placeholder="请选择"
-                  >
-                    <el-option label="任一" value="1"></el-option>
-                    <el-option label="所有" value="2"></el-option>
-                  </el-select>
-                  &nbsp;&nbsp;条件
-                </div>
-                <div class="tjiansearch">
-                  <div v-for="(e, i) in searcharr" :key="i">
-                    <div>
-                      <el-select
-                        class="zhessless"
-                        size="mini"
-                        v-model="e.key"
-                        filterable
-                        style="width: 180rem"
-                        placeholder="请选择"
-                      >
-                        <el-option
-                          v-for="item in 4"
-                          :key="item"
-                          :label="'条件' + item"
-                          :value="item"
-                        >
-                        </el-option>
-                      </el-select>
-                    </div>
-                    <div>
-                      <el-select
-                        class="zhessless"
-                        size="mini"
-                        style="width: 88rem"
-                        v-model="e.value"
-                        placeholder="请选择"
-                      >
-                        <el-option label="包含" value="1"></el-option>
-                        <el-option label="不包含" value="2"></el-option>
-                        <el-option label="为空" value="3"></el-option>
-                        <el-option label="不为空" value="4"></el-option>
-                      </el-select>
-                    </div>
-                    <div>
-                      <el-input
-                        placeholder="请输入"
-                        class="inpustyle"
-                        v-model="e.type"
-                        size="mini"
-                        style="width: 180rem"
-                      ></el-input>
-                    </div>
-                    <div style="width: 20rem">
-                      <i
-                        @click="cxoff(i)"
-                        class="el-icon-close"
-                        style="cursor: pointer"
-                      ></i>
-                    </div>
-                  </div>
-                  <div style="padding-top: 20rem">
-                    <el-button class="buttonsy" @click="appendtj" size="mini"
-                      >添加条件</el-button
+                  <el-option label="任一" value="or"></el-option>
+                  <el-option label="所有" value="and"></el-option>
+                </el-select>
+                &nbsp;&nbsp;条件
+              </div>
+              <div class="tjiansearch">
+                <div v-for="(e, i) in searcharr" :key="i">
+                  <div>
+                    <el-select
+                      class="zhessless"
+                      size="mini"
+                      v-model="e.key"
+                      filterable
+                      style="width: 180rem"
+                      placeholder="请选择"
                     >
+                      <el-option
+                        v-for="item in 4"
+                        :key="item"
+                        :label="'条件' + item"
+                        :value="item"
+                      >
+                      </el-option>
+                    </el-select>
                   </div>
+                  <div>
+                    <el-select
+                      class="zhessless"
+                      size="mini"
+                      style="width: 88rem"
+                      v-model="e.value"
+                      placeholder="请选择"
+                    >
+                      <el-option label="包含" value="contain"></el-option>
+                      <el-option label="不包含" value="notcontain"></el-option>
+                      <el-option label="等于" value="eq"></el-option>
+                      <el-option label="不等于" value="ne"></el-option>
+                      <!-- <el-option label="为空" value="3"></el-option>
+                        <el-option label="不为空" value="4"></el-option> -->
+                    </el-select>
+                  </div>
+                  <div>
+                    <el-input
+                      placeholder="请输入"
+                      class="inpustyle"
+                      v-model="e.type"
+                      size="mini"
+                      style="width: 180rem"
+                    ></el-input>
+                  </div>
+                  <div style="width: 20rem">
+                    <i
+                      @click="cxoff(i)"
+                      class="el-icon-close"
+                      style="cursor: pointer"
+                    ></i>
+                  </div>
+                </div>
+                <div style="padding-top: 20rem">
+                  <el-button class="buttonsy" @click="appendtj" size="mini"
+                    >添加条件</el-button
+                  >
                 </div>
               </div>
-            </el-popover>
-          </div>
+            </div>
+          </el-popover>
+        </div>
         <div class="marginr">
           <el-popover placement="bottom" width="220" trigger="hover">
             <div class="zduanpeizi">
@@ -184,7 +189,7 @@
           >
             <template slot-scope="scope">
               <div v-if="item.label == '危害等级'">
-                <div
+                <!-- <div
                   :class="
                     scope.row.a == 1
                       ? 'styg'
@@ -203,6 +208,31 @@
                       : scope.row.a == 3
                       ? "低危"
                       : "--"
+                  }}
+                </div> -->
+                <div
+                  :class="
+                    scope.row.severity == 'low'
+                      ? 'low'
+                      : scope.row.severity == 'medium'
+                      ? 'medium'
+                      : scope.row.severity == 'high'
+                      ? 'high'
+                      : scope.row.severity == 'critical'
+                      ? 'critical'
+                      : ''
+                  "
+                >
+                  {{
+                    scope.row.severity == "low"
+                      ? "低危"
+                      : scope.row.severity == "medium"
+                      ? "中危"
+                      : scope.row.severity == "high"
+                      ? "高危"
+                      : scope.row.severity == "critical"
+                      ? "超危"
+                      : ""
                   }}
                 </div>
               </div>
@@ -223,9 +253,9 @@
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page="page.current"
+            :current-page="page.offset"
             :page-sizes="[10, 20]"
-            :page-size="page.size"
+            :page-size="page.limit"
             layout="total, sizes, prev, pager, next, jumper"
             :total="page.total"
           >
@@ -236,23 +266,13 @@
   </div>
 </template>
 <script>
+import { kb_vulns } from "@/api";
 export default {
   data() {
     return {
       // -----------------------------------------------------------------关联查询组件下
       // 表格数据
-      tableData: [
-        { a: "1", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "2", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-        { a: "1", b: "2", c: "3" },
-      ],
+      tableData: [],
       // 表头数据
       btarr: [],
       // 表头改变数据
@@ -260,57 +280,52 @@ export default {
       // 表头原始数据
       tablearr: [
         {
-          prop: "a",
+          prop: "name",
           label: "漏洞名称",
           type: true,
         },
         {
-          prop: "b",
+          prop: "type",
           label: "漏洞类型",
           type: true,
         },
         {
-          prop: "c",
+          prop: "cve_id",
           label: "CVE编号",
           type: true,
         },
         {
-          prop: "d",
+          prop: "cnvd_id",
           label: "CNNVD编号",
           type: true,
         },
         {
-          prop: "e",
+          prop: "cvss",
           label: "评分",
           type: true,
         },
         {
-          prop: "a",
           label: "危害等级",
           type: true,
         },
         {
-          prop: "g",
+          prop: "time_discovered",
           label: "发布日期",
           type: true,
         },
         {
-          prop: "h",
           label: "操作",
           type: true,
         },
       ],
-      //   xxxxxxxxxxxxxxxxxxxxxxxxxxx
-      rysy: "2", //符合条件，任一或所有
+      rysy: "and", //符合条件，任一或所有
       //   查询数据
-      searcharr: [{ key: "", value: "", type: "" }],
-      //   xxxxxxxxxxxxxxxxxxxxxxxxxxx
-      // -----------------------------------------------------------------关联查询组件上
+      searcharr: [],
       // 分页
       page: {
-        current: 1,
-        size: 10,
-        total: 44,
+        offset: 1,
+        limit: 10,
+        total: 0,
       },
     };
   },
@@ -331,8 +346,6 @@ export default {
     },
   },
   mounted() {
-    // ----------------------------关联查询组件下
-    // 表格头
     this.btarr = localStorage.getItem("vulnerabilityknowledgebasesw")
       ? JSON.parse(localStorage.getItem("vulnerabilityknowledgebasesw"))
       : this.tablearr;
@@ -343,10 +356,43 @@ export default {
         JSON.stringify(this.btarr)
       );
     });
-    // ----------------------------关联查询组件上
+    this.getgovernancehosts(); // 列表
   },
   methods: {
-    // ----------------------------关联查询组件下
+    // 列表
+    getgovernancehosts(e) {
+      // 清空条件+查询所有
+      if (e == "clear") {
+        this.searcharr = [];
+        this.page.offset = 1;
+      }
+      var obj = {
+        offset: this.page.offset,
+        limit: this.page.limit,
+      };
+      if (this.searcharr.length != 0) {
+        var arr = this.searcharr.filter((item) => {
+          return item.key.length != 0 && item.type.length != 0;
+        });
+        if (arr.length != 0) {
+          var tj = arr.map((req) => {
+            var jihe = req.key + " " + req.value + " " + (req.type || "");
+            return jihe;
+          });
+          obj.filter = tj.join(" " + this.rysy + " ");
+        }
+      }
+      obj.offset = obj.offset - 1;
+      kb_vulns(obj).then((res) => {
+        this.page = res.pagination;
+        this.page.offset += 1;
+        this.tableData = res.results.meta;
+        // this.tableData = [{ c: "ww" }];
+        // this.tableData = res.results.map((item) => {
+        //   return item.meta;
+        // });
+      });
+    },
     // 表格头
     fields(e, i) {
       if (e == "1") {
@@ -359,34 +405,34 @@ export default {
         JSON.stringify(this.btarr)
       );
     },
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     // 查询组件添加条件
     appendtj() {
-      this.searcharr.push({ key: "", value: "1", type: "" });
+      this.searcharr.push({ key: "", value: "contain", type: "" });
     },
     // 查询组件减少条件
     cxoff(i) {
       this.searcharr.splice(i, 1);
     },
-    // 触发清空
-    cleark() {
-      this.searcharr = [{ key: "", value: "1", type: "" }];
+    // 分页条数
+    handleSizeChange(e) {
+      this.page.limit = e;
+      this.getgovernancehosts();
     },
-    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    // ----------------------------关联查询组件上
-    // ---------------------------分页
-    handleSizeChange(val) {
-      // console.log(`每页 ${val} 条`);
-      alert(val);
-    },
-    handleCurrentChange(val) {
-      // console.log(`当前页: ${val}`);
-      alert(val);
+    // 分页页数
+    handleCurrentChange(e) {
+      this.page.offset = e;
+      this.getgovernancehosts();
     },
     // ---------------------------跳转详情
+    // gotu(e) {
+    //   // console.log(e)
+    //   this.$router.push("/knowledgedetails");
+    // },
     gotu(e) {
-      // console.log(e)
-      this.$router.push("/knowledgedetails");
+      this.$router.push({
+        path: "/knowledgedetails",
+        query: { id: e.id },
+      });
     },
   },
 };
@@ -397,15 +443,27 @@ export default {
     height: 809rem;
     padding: 20rem 30rem;
     .biaotab {
-      .styg {
-        color: #e53a40;
+      .low {
+        color: #f6d535;
       }
-      .styz {
+      .medium {
         color: #fa9600;
       }
-      .styd {
+      .high {
         color: #e53a40;
       }
+      .critical {
+        color: #8b0000;
+      }
+      // .styg {
+      //   color: #e53a40;
+      // }
+      // .styz {
+      //   color: #fa9600;
+      // }
+      // .styd {
+      //   color: #e53a40;
+      // }
     }
   }
 }

@@ -29,7 +29,6 @@
             </div>
           </el-popover>
         </div>
-        <!-- 复合查询 -->
         <div class="marginr">
           <el-popover placement="bottom" width="530" trigger="click">
             <div slot="reference" class="boxjc">
@@ -38,8 +37,8 @@
             </div>
             <div class="tjiansxian">
               <div class="top">
-                <div @click="getgovernancehosts">筛选</div>
-                <div @click="getgovernancehosts('clear')">清空</div>
+                <div>筛选</div>
+                <div @click="cleark">清空</div>
               </div>
               <div style="padding: 12rem 0; display: flex; align-items: center">
                 符合以下&nbsp;&nbsp;
@@ -50,8 +49,8 @@
                   v-model="rysy"
                   placeholder="请选择"
                 >
-                  <el-option label="任一" value="or"></el-option>
-                  <el-option label="所有" value="and"></el-option>
+                  <el-option label="任一" value="1"></el-option>
+                  <el-option label="所有" value="2"></el-option>
                 </el-select>
                 &nbsp;&nbsp;条件
               </div>
@@ -83,12 +82,10 @@
                       v-model="e.value"
                       placeholder="请选择"
                     >
-                      <el-option label="包含" value="contain"></el-option>
-                      <el-option label="不包含" value="notcontain"></el-option>
-                      <el-option label="等于" value="eq"></el-option>
-                      <el-option label="不等于" value="ne"></el-option>
-                      <!-- <el-option label="为空" value="3"></el-option>
-                        <el-option label="不为空" value="4"></el-option> -->
+                      <el-option label="包含" value="1"></el-option>
+                      <el-option label="不包含" value="2"></el-option>
+                      <el-option label="为空" value="3"></el-option>
+                      <el-option label="不为空" value="4"></el-option>
                     </el-select>
                   </div>
                   <div>
@@ -187,33 +184,10 @@
           <template slot-scope="scope">
             <!-- 漏洞等级 -->
             <div v-if="item.label == '漏洞等级'">
-              <div
-                :class="
-                  scope.row.severity == 'low'
-                    ? 'low'
-                    : scope.row.severity == 'medium'
-                    ? 'medium'
-                    : scope.row.severity == 'high'
-                    ? 'high'
-                    : scope.row.severity == 'critical'
-                    ? 'critical'
-                    : ''
-                "
-              >
-                {{
-                  scope.row.severity == "low"
-                    ? "低危"
-                    : scope.row.severity == "medium"
-                    ? "中危"
-                    : scope.row.severity == "high"
-                    ? "高危"
-                    : scope.row.severity == "critical"
-                    ? "超危"
-                    : ""
-                }}
+              <div :class="scope.row.c == '1' ? 'gh' : 'zh'">
+                {{ scope.row.c == "1" ? "高危" : "中危" }}
               </div>
             </div>
-
             <!-- 漏洞状态 -->
             <div v-else-if="item.label == '漏洞状态'">
               <div :class="scope.row.d == '1' ? 'gh' : 'zh'">
@@ -250,9 +224,9 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="page.offset"
+          :current-page="page.current"
           :page-sizes="[10, 20]"
-          :page-size="page.limit"
+          :page-size="page.size"
           layout="total, sizes, prev, pager, next, jumper"
           :total="page.total"
         >
@@ -356,74 +330,6 @@ import { governance_vulns } from "@/api";
 export default {
   data() {
     return {
-      // 复合查询
-      rysy: "and", //符合条件，任一或所有
-      //   查询数据
-      searcharr: [],
-      // 分页
-      page: {
-        offset: 1,
-        limit: 10,
-        total: 0,
-      },
-      // 表格数据
-      tableData: [],
-      // 表头数据
-      btarr: [],
-      // 表头改变数据
-      vararr: [],
-      // 表头原始数据
-      tablearr: [
-        {
-          prop: "name",
-          label: "漏洞名称",
-          type: true,
-        },
-        {
-          prop: "type",
-          label: "漏洞类型",
-          type: true,
-        },
-        {
-          label: "漏洞等级",
-          type: true,
-        },
-        {
-          prop: "d",
-          label: "漏洞状态",
-          type: true,
-        },
-        {
-          prop: "gdzt",
-          label: "工单状态",
-          type: true,
-        },
-        {
-          prop: "time_discovered",
-          label: "发现时间",
-          type: true,
-        },
-        {
-          prop: "zcip",
-          label: "所属资产IP",
-          type: true,
-        },
-        {
-          prop: "h",
-          label: "漏洞负责人",
-          type: true,
-        },
-        {
-          prop: "i",
-          label: "分配对象",
-          type: true,
-        },
-        {
-          label: "操作",
-          type: true,
-        },
-      ],
-      // ============================================================
       // 添加表单数据
       ruleForm: {
         ld: "",
@@ -439,6 +345,185 @@ export default {
         ],
         jz: [{ required: true, message: "请选择截止时间 ", trigger: "change" }],
       },
+      // 分页
+      page: {
+        current: 1,
+        size: 10,
+        total: 44,
+      },
+      // 表格数据
+      tableData: [
+        {
+          a: "Kashipara Job PortalSQL注入漏洞",
+          b: "认证机制不恰当",
+          c: "1",
+          d: "1",
+          e: "1",
+          f: "2023.10.23 02:12:15",
+          g: "192.168.0.120",
+          h: "张有志",
+          i: "张有志",
+        },
+        {
+          a: "Kashipara Job PortalSQL注入漏洞",
+          b: "认证机制不恰当",
+          c: "1",
+          d: "2",
+          e: "2",
+          f: "2023.10.23 02:12:15",
+          g: "192.168.0.120",
+          h: "张有志",
+          i: "张有志",
+        },
+        {
+          a: "Kashipara Job PortalSQL注入漏洞",
+          b: "认证机制不恰当",
+          c: "2",
+          d: "1",
+          e: "1",
+          f: "2023.10.23 02:12:15",
+          g: "192.168.0.120",
+          h: "张有志",
+          i: "张有志",
+        },
+        {
+          a: "Kashipara Job PortalSQL注入漏洞",
+          b: "认证机制不恰当",
+          c: "1",
+          d: "1",
+          e: "1",
+          f: "2023.10.23 02:12:15",
+          g: "192.168.0.120",
+          h: "张有志",
+          i: "张有志",
+        },
+        {
+          a: "Kashipara Job PortalSQL注入漏洞",
+          b: "认证机制不恰当",
+          c: "1",
+          d: "1",
+          e: "1",
+          f: "2023.10.23 02:12:15",
+          g: "192.168.0.120",
+          h: "张有志",
+          i: "张有志",
+        },
+        {
+          a: "Kashipara Job PortalSQL注入漏洞",
+          b: "认证机制不恰当",
+          c: "1",
+          d: "1",
+          e: "1",
+          f: "2023.10.23 02:12:15",
+          g: "192.168.0.120",
+          h: "张有志",
+          i: "张有志",
+        },
+        {
+          a: "Kashipara Job PortalSQL注入漏洞",
+          b: "认证机制不恰当",
+          c: "1",
+          d: "1",
+          e: "1",
+          f: "2023.10.23 02:12:15",
+          g: "192.168.0.120",
+          h: "张有志",
+          i: "张有志",
+        },
+        {
+          a: "Kashipara Job PortalSQL注入漏洞",
+          b: "认证机制不恰当",
+          c: "1",
+          d: "1",
+          e: "1",
+          f: "2023.10.23 02:12:15",
+          g: "192.168.0.120",
+          h: "张有志",
+          i: "张有志",
+        },
+        {
+          a: "Kashipara Job PortalSQL注入漏洞",
+          b: "认证机制不恰当",
+          c: "1",
+          d: "1",
+          e: "1",
+          f: "2023.10.23 02:12:15",
+          g: "192.168.0.120",
+          h: "张有志",
+          i: "张有志",
+        },
+        {
+          a: "Kashipara Job PortalSQL注入漏洞",
+          b: "认证机制不恰当",
+          c: "1",
+          d: "1",
+          e: "1",
+          f: "2023.10.23 02:12:15",
+          g: "192.168.0.120",
+          h: "张有志",
+          i: "张有志",
+        },
+      ],
+      // 表头数据
+      btarr: [],
+      // 表头改变数据
+      vararr: [],
+      // 表头原始数据
+      tablearr: [
+        {
+          prop: "a",
+          label: "漏洞名称",
+          type: true,
+        },
+        {
+          prop: "b",
+          label: "漏洞类型",
+          type: true,
+        },
+        {
+          prop: "c",
+          label: "漏洞等级",
+          type: true,
+        },
+        {
+          prop: "d",
+          label: "漏洞状态",
+          type: true,
+        },
+        {
+          prop: "e",
+          label: "工单状态",
+          type: true,
+        },
+        {
+          prop: "f",
+          label: "发现时间",
+          type: true,
+        },
+        {
+          prop: "g",
+          label: "所属资产IP",
+          type: true,
+        },
+        {
+          prop: "h",
+          label: "漏洞负责人",
+          type: true,
+        },
+        {
+          prop: "i",
+          label: "分配对象",
+          type: true,
+        },
+        {
+          prop: "k",
+          label: "操作",
+          type: true,
+        },
+      ],
+      rysy: "2", //符合条件，任一或所有
+      //   查询数据
+      searcharr: [{ key: "", value: "", type: "" }],
       dialogVisible: false, //创建工单弹窗
     };
   },
@@ -458,6 +543,9 @@ export default {
     },
   },
   mounted() {
+    // localStorage.setItem("localtilingangle", "");
+    // ----------------------------关联查询组件下
+    // 表格头
     this.btarr = localStorage.getItem("localtilingangle")
       ? JSON.parse(localStorage.getItem("localtilingangle"))
       : this.tablearr;
@@ -465,61 +553,10 @@ export default {
       this.btarr = e.value.list;
       localStorage.setItem("localtilingangle", JSON.stringify(this.btarr));
     });
-    this.getgovernancehosts(); // 列表
+    // ----------------------------关联查询组件上
   },
   methods: {
-    // 主机资产列表
-    getgovernancehosts(e) {
-      // 清空条件+查询所有
-      if (e == "clear") {
-        this.searcharr = [];
-        this.page.offset = 1;
-      }
-      var obj = {
-        offset: this.page.offset,
-        limit: this.page.limit,
-      };
-      if (this.searcharr.length != 0) {
-        var arr = this.searcharr.filter((item) => {
-          return item.key.length != 0 && item.type.length != 0;
-        });
-        if (arr.length != 0) {
-          var tj = arr.map((req) => {
-            var jihe = req.key + " " + req.value + " " + (req.type || "");
-            return jihe;
-          });
-          obj.filter = tj.join(" " + this.rysy + " ");
-        }
-      }
-      obj.offset = obj.offset - 1;
-      governance_vulns(obj).then((res) => {
-        this.page = res.pagination;
-        this.page.offset += 1;
-        this.tableData = res.results.map((item) => {
-          item.gdzt = item.ticket.status;
-          item.zcip = item.meta.asset.ip;
-          return item.meta;
-        });
-      });
-    },
-    // 查询组件添加条件
-    appendtj() {
-      this.searcharr.push({ key: "", value: "contain", type: "" });
-    },
-    // 查询组件减少条件
-    cxoff(i) {
-      this.searcharr.splice(i, 1);
-    },
-    // 分页条数
-    handleSizeChange(e) {
-      this.page.limit = e;
-      this.getgovernancehosts();
-    },
-    // 分页页数
-    handleCurrentChange(e) {
-      this.page.offset = e;
-      this.getgovernancehosts();
-    },
+    // ----------------------------关联查询组件下
     // 表格头
     fields(e, i) {
       if (e == "1") {
@@ -529,42 +566,40 @@ export default {
       }
       localStorage.setItem("localtilingangle", JSON.stringify(this.btarr));
     },
-    // ================================================================================
-    // ----------------------------关联查询组件下
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // 查询组件添加条件
+    appendtj() {
+      this.searcharr.push({ key: "", value: "1", type: "" });
+    },
+    // 查询组件减少条件
+    cxoff(i) {
+      this.searcharr.splice(i, 1);
+    },
+    // 触发清空
+    cleark() {
+      this.searcharr = [{ key: "", value: "1", type: "" }];
+    },
+    // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    // ----------------------------关联查询组件上
+    // ---------------------------分页
+    handleSizeChange(val) {
+      // console.log(`每页 ${val} 条`);
+      alert(val);
+    },
+    handleCurrentChange(val) {
+      // console.log(`当前页: ${val}`);
+      alert(val);
+    },
     // ---------------------------跳转详情
     gotu(e) {
       // console.log(e)
-      // this.$router.push("/figure/vulnevrabilitymanagement/governancedetails");
-      this.$router.push({
-        path: "/figure/vulnevrabilitymanagement/governancedetails",
-        query: { id: e.id },
-      });
+      this.$router.push("/figure/vulnevrabilitymanagement/governancedetails");
     },
   },
 };
 </script>
 <style lang="less" scoped>
 .tilingangle {
-  .tablebottom {
-    .low {
-      color: #f6d535;
-    }
-    .medium {
-      color: #fa9600;
-    }
-    .high {
-      color: #e53a40;
-    }
-    .critical {
-      color: #8b0000;
-    }
-    // .clizt {
-    //   color: #29ca9b;
-    // }
-    // .clizt {
-    //   color: #29ca9b;
-    // }
-  }
   .tandialog {
     /deep/.el-dialog {
       background: none !important;

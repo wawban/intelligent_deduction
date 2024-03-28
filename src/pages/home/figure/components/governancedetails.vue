@@ -16,16 +16,31 @@
     <div class="box">
       <div class="left">
         <div class="l_top wbb">
+          <!-- 漏洞等级 -->
           <div class="yuanqiu">
             <div class="textwz">漏洞等级</div>
             <span class="radius">
               <div>
                 <div>
-                  <div>中危</div>
+                  <!-- <div>中危</div> -->
+                  <div>
+                    {{
+                      meta.severity == "low"
+                        ? "低危"
+                        : meta.severity == "medium"
+                        ? "中危"
+                        : meta.severity == "high"
+                        ? "高危"
+                        : meta.severity == "critical"
+                        ? "超危"
+                        : ""
+                    }}
+                  </div>
                 </div>
               </div>
             </span>
           </div>
+          <!-- 关键风险资产 -->
           <div class="xqdata">
             <div class="btbox_bji">
               <div class="teshude">
@@ -34,27 +49,27 @@
                 <div class="biqoq">主机漏洞</div>
               </div>
               <div class="rightsian">
-                <img src="../../img/cx.png" alt="" />
-                更新时间：2023.10.23
+                <img src="../../img/nz.png" alt="" />
+                更新时间：{{ meta.time_discovered }}
               </div>
             </div>
             <div class="lidlbi">
               <div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">漏洞分类:</div>
-                  <div>SQL注入</div>
+                  <div>{{ meta.severity }}</div>
                 </div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">CVSS评分:</div>
-                  <div>8.8</div>
+                  <div>{{ meta.cvss }}</div>
                 </div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">影响系统:</div>
-                  <div>Windows</div>
+                  <div>{{ meta.platforms }}</div>
                 </div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">影响产品:</div>
-                  <div>phantompdf,reader</div>
+                  <div>{{ meta.products }}</div>
                 </div>
               </div>
               <div>
@@ -66,33 +81,33 @@
                 </div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">CVE编号:</div>
-                  <div>CVE-2023-48049</div>
+                  <div>{{ meta.cve_id }}</div>
                 </div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">CNVD编号:</div>
-                  <div>CNVD-2018-21835</div>
+                  <div>{{ meta.cnvd_id }}</div>
                 </div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">
                     CNNVD编号:
                   </div>
-                  <div>-</div>
+                  <div>{{ meta.cnnvd_id }}</div>
                 </div>
               </div>
               <div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">处置结果:</div>
-                  <div class="bianshe">已处理</div>
+                  <div class="bianshe">{{ meta.treatment_result }}</div>
                 </div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">
                     所在资产IP:
                   </div>
-                  <div>10.0.0.252</div>
+                  <div>{{ meta.asset.ip }}</div>
                 </div>
                 <div>
                   <div style="color: #aaa; padding-right: 10rem">端口:</div>
-                  <div>8080</div>
+                  <div>{{ meta.asset.port }}</div>
                 </div>
               </div>
               <div>
@@ -100,11 +115,7 @@
                   <div style="color: #aaa; padding-right: 10rem; width: 82rem">
                     漏洞描述:
                   </div>
-                  <div>
-                    基于Windws平台的Foxt Reader 9.20.9297及之前版本和FXt
-                    PhantomPDF92..9297及之前版本中opePlaye法的处过程存在存用，洞源于在对对象执行作之前在
-                    序未能验证该对象是否存在。远程攻击者可借助恶意的文件或页面利用该漏洞在当前进程的上下文中执行代码。
-                  </div>
+                  <div>{{ meta.description }}</div>
                 </div>
               </div>
             </div>
@@ -120,7 +131,7 @@
                 修复建议
               </div>
               <div class="zxxian"></div>
-              <div class="zsyuanq">33</div>
+              <!-- <div class="zsyuanq">33</div> -->
             </div>
             <div>
               <div
@@ -130,7 +141,7 @@
                 攻击快照
               </div>
               <div class="zxxian"></div>
-              <div class="zsyuanq">33</div>
+              <!-- <div class="zsyuanq">33</div> -->
             </div>
             <div>
               <div
@@ -140,7 +151,7 @@
                 利用信息
               </div>
               <div class="zxxian"></div>
-              <div class="zsyuanq">33</div>
+              <!-- <div class="zsyuanq">33</div> -->
             </div>
             <div>
               <div
@@ -150,7 +161,7 @@
                 漏洞图谱
               </div>
               <div class="zxxian"></div>
-              <div class="zsyuanq">33</div>
+              <!-- <div class="zsyuanq">33</div> -->
             </div>
             <div>
               <div
@@ -167,32 +178,41 @@
             <!-- 修复建议 -->
             <Repair v-if="typenum == '1'" />
             <!-- 攻击快照 -->
-            <Attack v-if="typenum == '2'" />
+            <Attack v-if="typenum == '2'" :snapshot="snapshot" />
             <!-- 利用信息 -->
-            <Uset v-if="typenum == '3'" />
+            <Uset v-if="typenum == '3'" :exploit="exploit" />
             <!-- 漏洞图谱 -->
             <div
               v-if="typenum == '4'"
               style="height: 460rem; padding-top: 20rem"
             >
-              <Graph />
+              <Graph :datasj="graph" />
             </div>
             <!-- 处置信息 -->
             <Disposal v-if="typenum == '5'" />
           </div>
         </div>
       </div>
+      <!-- 漏洞生命周期 -->
       <div class="right wbb">
         <div class="zsbtboxdq">
           <div class="guns"></div>
-          <div class="wenz">漏洞生命周期</div>
+          <div class="wenz">资产生命周期</div>
         </div>
         <div class="xdelis">
-          <div v-for="(e, i) in 3" :key="i">
+          <div
+            v-for="(e, i) in lifecycle"
+            :key="i"
+            :class="lifecycle.length != i + 1 ? 'disple_none' : ''"
+          >
             <div class="yuanq"></div>
-            <div class="biaot">2023.12.13 13:55:23</div>
-            <div class="textr">张有志提交漏洞处置</div>
-            <!-- <div class="textr">中，76.8</div> -->
+            <div class="biaot">
+              {{ $moment(e.timestamp).format("YYYY-MM-DD HH:mm:ss") }}
+            </div>
+            <div class="textr">
+              {{ e.user + " " + e.action }}
+            </div>
+            <div class="textr">{{ e.message }}</div>
           </div>
         </div>
       </div>
@@ -200,9 +220,10 @@
   </div>
 </template>
 <script>
+import { governance_vulnsxq } from "@/api";
 export default {
   components: {
-    Repair: () => import("./repair.vue"),
+    Repair: () => import("./tedsdepair.vue"),
     Attack: () => import("./attack.vue"),
     Uset: () => import("./use.vue"),
     Graph: () => import("./graph.vue"),
@@ -211,9 +232,53 @@ export default {
   data() {
     return {
       typenum: "1",
+      meta: { asset: {} },
+      snapshot: {},
+      exploit: {},
+      graph: {}, //资产图谱
+      lifecycle: "", //资产生命周期
     };
   },
+  mounted() {
+    this.getgovernancehostsid(); //获取详情
+  },
   methods: {
+    // 获取详情
+    getgovernancehostsid() {
+      governance_vulnsxq(this.$route.query.id).then((res) => {
+        // console.log(res);
+        this.meta = res.meta; //漏洞等级
+        this.snapshot = res.snapshot;
+        this.exploit = res.exploit;
+        this.graph = res.graph; //资产图谱
+
+        // this.vulns = res.vulns; //漏洞信息
+        // this.ports = res.ports; //端口信息
+        // this.graph = res.graph; //资产图谱
+        // this.related_assets = res.related_assets; //关联资产
+        this.lifecycle = res.lifecycle; //资产生命周期
+        // this.lifecycle = [
+        //   {
+        //     timestamp: "2024-03-13T13:16:33.713Z",
+        //     user: "admin",
+        //     action: "创建XX1",
+        //     message: "发现XX",
+        //   },
+        //   {
+        //     timestamp: "2024-02-13T13:16:33.713Z",
+        //     user: "admin",
+        //     action: "创建XX2",
+        //     message: "发现XX",
+        //   },
+        //   {
+        //     timestamp: "2024-03-13T13:16:33.713Z",
+        //     user: "admin",
+        //     action: "创建XX3",
+        //     message: "发现XX",
+        //   },
+        // ];
+      });
+    },
     goto() {
       this.$router.go(-1);
     },
@@ -445,4 +510,4 @@ export default {
     }
   }
 }
-</style>
+</style>./tedsdepair.vue./tedsdepair.vue

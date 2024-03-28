@@ -2,6 +2,7 @@
   <div :ref="refName" class="gauge_charts"></div>
 </template>
 <script>
+// import { number } from "echarts";
 export default {
   props: {
     refName: {
@@ -9,17 +10,35 @@ export default {
       default: String(Math.floor(Math.random() * 100)) + "lineadd",
     },
     num: {
-      type: String,
-      default: "0",
+      type: Number,
+      default: () => {
+        return 0;
+      },
     },
     text: {
       type: String,
       default: "",
     },
   },
-  mounted() {
-    this.createCharts();
+  watch: {
+    // list() {
+    //   alert(8);
+    // },
+    num: {
+      handler(to, form) {
+        // this.type = this.$route.meta.type || "";
+        // this.name = this.$route.meta.nemr || "";
+        // alert(8);
+        // alert(this.list.length);
+        this.createCharts(this.num);
+      },
+      // deep: true,
+      // immediate: true,
+    },
   },
+  // mounted() {
+  //   this.createCharts();
+  // },
   methods: {
     sz(e) {
       // let w = document.documentElement.clientWidth;
@@ -36,7 +55,7 @@ export default {
         return e * j;
       }
     },
-    createCharts() {
+    createCharts(numd) {
       this.myChart = this.$echarts.init(this.$refs[this.refName]);
       const _this = this;
       var option = {
@@ -88,7 +107,8 @@ export default {
                 width: this.sz(20),
                 color: [
                   [
-                    Number(this.num) / 100,
+                    // Number(this.num) / 100,
+                    numd / 100,
                     "#FF9A3E", // 数值变量
                   ],
                   [1, "rgba(255,255,255,.0)"],
@@ -112,7 +132,12 @@ export default {
               offsetCenter: [0, 0],
               textStyle: {
                 fontSize: this.sz(20),
-                color: "#FFA514",
+                color:
+                  _this.text == "高"
+                    ? "#e53a40"
+                    : _this.text == "中"
+                    ? "#fa9600"
+                    : "#f6d535",
                 backgroundColor: "#81520C",
                 width: this.sz(48),
                 height: this.sz(48),

@@ -44,9 +44,13 @@
             :width="item.width"
           >
             <template slot-scope="scope">
+              <!-- prop: "timestamp",
+          label: "日期",
+          $moment(meta.time_updated).format("YYYY-MM-DD HH:mm:ss") -->
               <!-- 操作 -->
-              <div v-if="item.label == '操作'">
-                <img
+              <div v-if="item.label == '日期'">
+                {{ $moment(scope.row.timestamp).format("YYYY-MM-DD HH:mm:ss") }}
+                <!-- <img
                   @click="gotu(scope.row)"
                   style="height: 22rem; cursor: pointer"
                   src="../img/cx.png"
@@ -57,7 +61,7 @@
                   style="height: 22rem; cursor: pointer"
                   src="../img/bj.png"
                   alt=""
-                />
+                /> -->
               </div>
               <span v-else>{{ scope.row[scope.column.property] }}</span>
             </template>
@@ -68,9 +72,9 @@
           <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page="page.current"
+            :current-page="page.offset"
             :page-sizes="[10, 20]"
-            :page-size="page.size"
+            :page-size="page.limit"
             layout="total, sizes, prev, pager, next, jumper"
             :total="page.total"
           >
@@ -81,132 +85,78 @@
   </div>
 </template>
   <script>
+import { system_logs } from "@/api";
 export default {
   data() {
     return {
       //列表数据
-      tableData: [
-        {
-          a: "2023.10.23 02:12:15",
-          b: "admin",
-          c: "超级管理员",
-          d: "人力资源部",
-          e: "10.128.240.2",
-          f: "安全性控制·-盲区资产扫描限制",
-        },
-        {
-          a: "2023.10.23 02:12:15",
-          b: "admin",
-          c: "超级管理员",
-          d: "人力资源部",
-          e: "10.128.240.2",
-          f: "安全性控制·-盲区资产扫描限制",
-        },
-        {
-          a: "2023.10.23 02:12:15",
-          b: "admin",
-          c: "超级管理员",
-          d: "人力资源部",
-          e: "10.128.240.2",
-          f: "安全性控制·-盲区资产扫描限制",
-        },
-        {
-          a: "2023.10.23 02:12:15",
-          b: "admin",
-          c: "超级管理员",
-          d: "人力资源部",
-          e: "10.128.240.2",
-          f: "安全性控制·-盲区资产扫描限制",
-        },
-        {
-          a: "2023.10.23 02:12:15",
-          b: "admin",
-          c: "超级管理员",
-          d: "人力资源部",
-          e: "10.128.240.2",
-          f: "安全性控制·-盲区资产扫描限制",
-        },
-        {
-          a: "2023.10.23 02:12:15",
-          b: "admin",
-          c: "超级管理员",
-          d: "人力资源部",
-          e: "10.128.240.2",
-          f: "安全性控制·-盲区资产扫描限制",
-        },
-        {
-          a: "2023.10.23 02:12:15",
-          b: "admin",
-          c: "超级管理员",
-          d: "人力资源部",
-          e: "10.128.240.2",
-          f: "安全性控制·-盲区资产扫描限制",
-        },
-        {
-          a: "2023.10.23 02:12:15",
-          b: "admin",
-          c: "超级管理员",
-          d: "人力资源部",
-          e: "10.128.240.2",
-          f: "安全性控制·-盲区资产扫描限制",
-        },
-        {
-          a: "2023.10.23 02:12:15",
-          b: "admin",
-          c: "超级管理员",
-          d: "人力资源部",
-          e: "10.128.240.2",
-          f: "安全性控制·-盲区资产扫描限制",
-        },
-        {
-          a: "2023.10.23 02:12:15",
-          b: "admin",
-          c: "超级管理员",
-          d: "人力资源部",
-          e: "10.128.240.2",
-          f: "安全性控制·-盲区资产扫描限制",
-        },
-      ],
+      tableData: [],
       // 表头改变数据
       vararr: [
         {
-          prop: "a",
           label: "日期",
           type: true,
         },
         {
-          prop: "b",
+          prop: "username",
           label: "用户名",
           type: true,
         },
         {
-          prop: "c",
+          prop: "user_role",
           label: "角色",
           type: true,
         },
         {
-          prop: "d",
+          prop: "department",
           label: "部门",
           type: true,
         },
         {
-          prop: "e",
+          prop: "ip",
           label: "IP",
           type: true,
         },
         {
-          prop: "f",
+          prop: "detail",
           label: "操作详情",
           type: true,
         },
       ],
       // 分页
       page: {
-        current: 1,
-        size: 10,
-        total: 44,
+        offset: 1,
+        limit: 10,
+        total: 0,
       },
     };
+  },
+  mounted() {
+    this.getgovernancehosts(); // 数据
+  },
+  methods: {
+    getgovernancehosts(e) {
+      var obj = {
+        offset: this.page.offset,
+        limit: this.page.limit,
+      };
+      obj.offset = obj.offset - 1;
+      system_logs(obj).then((res) => {
+        this.page = res.pagination;
+        this.page.offset += 1;
+        this.tableData = res.results;
+      });
+    },
+    // 分页条数
+    handleSizeChange(e) {
+      this.page.limit = e;
+      this.getgovernancehosts();
+    },
+    // 分页页数
+    handleCurrentChange(e) {
+      this.page.offset = e;
+      this.getgovernancehosts();
+    },
   },
 };
 </script>

@@ -16,41 +16,13 @@
           <div class="guns"></div>
           <div class="wenz">资产组架构</div>
         </div>
-        <div class="treestyle">
-          <el-tree
-            :data="data"
-            :expand-on-click-node="false"
-            :current-node-key="treekry"
-            node-key="label"
-            default-expand-all
-          >
-            <span
-              style="
-                padding-right: 12rem;
-                flex: 1;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-              "
-              slot-scope="{ node, data }"
-            >
-              <span style="font-size: 16rem; display: flex; align-items: center"
-                >{{ node.label }}
-              </span>
-              <div>
-                <el-popover placement="right" trigger="hover">
-                  <div class="treekub">
-                    <div @click="qiehuan(data)">
-                      {{ data.type ? "只看本级" : "查看本级和下级" }}
-                    </div>
-                  </div>
-                  <div slot="reference">
-                    <img style="height: 14rem" src="../img/sd.png" alt="" />
-                  </div>
-                </el-popover>
-              </div>
-            </span>
-          </el-tree>
+        <div class="treestyle gdstyle">
+          <!-- 树形 -->
+          <Trees
+            :datatree="zczdata"
+            :treekry="modedata.id"
+            @onuptada="onuptada"
+          />
         </div>
       </div>
       <div class="right wbb">
@@ -59,7 +31,7 @@
             <div class="guns"></div>
             <div class="wenz">部门信息</div>
           </div>
-          <div class="youb" v-if="flag" @click="flag = false">
+          <div class="youb" v-if="flag" @click="dkbj">
             <img src="../img/bj.png" alt="" />
             编辑
           </div>
@@ -67,19 +39,21 @@
         <div v-if="flag" class="xqinq">
           <div>
             <div class="qtext">部门名称:</div>
-            <div>后勤保障部</div>
+            <div>{{ modedata.name }}</div>
           </div>
           <div>
             <div class="qtext">部门负责人:</div>
-            <div>张有志</div>
+            <div>{{ modedata.manager }}</div>
           </div>
           <div>
             <div class="qtext">部门地址:</div>
-            <div>湖南省宝现市莲池区华理技术园6楼201</div>
+            <div>{{ modedata.location }}</div>
           </div>
           <div>
             <div class="qtext">资产IP范围:</div>
-            <div>192.168.0.121/24; 192.168.0.159/24</div>
+            <div>
+              <span v-for="(e, i) in modedata.cidrs" :key="i">{{ e }}</span>
+            </div>
           </div>
         </div>
         <!-- 表单 -->
@@ -304,15 +278,16 @@
   </div>
 </template>
   <script>
+import { governance_groups } from "@/api";
 export default {
   data() {
     return {
-      flag: false, //详情与表单切换
+      modedata: {}, //资产组架构-树形默认选中数据
+      zczdata: [], // 资产组架构
+      flag: true, //详情与表单切换
       // ------------------------------
       // 表单数据
-      ruleForm: {
-        iparr: [{ ip: "" }],
-      },
+      ruleForm: {},
       // 表单验证
       rules: {
         bmmc: [{ required: true, message: "请输入部门名称", trigger: "blur" }],
@@ -320,67 +295,49 @@ export default {
         // { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
         // password: [{ validator: funcpassword, trigger: "blur" }],
       },
-      //   dialogVisible: false, // 编辑弹窗
-      // --------------------------------------------------------------------------------------
-      // 默认选中值
-      treekry: "地区3",
-      // 树形数据
-      data: [
-        {
-          label: "A地区",
-          type: true,
-          children: [
-            {
-              label: "地区1",
-              type: true,
-            },
-            {
-              label: "地区2",
-              type: true,
-            },
-            {
-              label: "地区3",
-              type: true,
-              children: [
-                {
-                  label: "地区11",
-                  type: true,
-                },
-                {
-                  label: "地区22",
-                  type: true,
-                },
-                {
-                  label: "地区33",
-                  type: true,
-                },
-              ],
-            },
-          ],
-        },
-        {
-          label: "服务器组",
-          type: true,
-          children: [
-            {
-              label: "服务器组1",
-              type: true,
-            },
-            {
-              label: "服务器组2",
-              type: true,
-            },
-            {
-              label: "服务器组3",
-              type: true,
-            },
-          ],
-        },
-      ],
     };
   },
-  mounted() {},
+  mounted() {
+    this.getgovernancegroups(); //资产组架构
+  },
   methods: {
+    onuptada(e) {
+      this.modedata = e;
+    },
+    // 打开编辑
+    dkbj() {
+      this.flag = false;
+      this.$nextTick(() => {
+        this.$refs["ruleForm"].resetFields();
+        this.ruleForm = JSON.parse(JSON.stringify(this.modedata));
+      });
+    },
+    // 资产组架构
+    getgovernancegroups() {
+      governance_groups().then((res) => {
+        this.modedata = res[0];
+        this.treedata(res);
+      });
+    },
+    // 资产组架-tree数据处理
+    treedata(e) {
+      for (var i = 0; i < e.length; i++) {
+        this.$set(e[i], "type", true);
+        if (e[i].sub_groups && e[i].sub_groups.length !== 0) {
+          this.dgtree(e[i].sub_groups);
+        }
+      }
+      this.zczdata = e;
+    },
+    // 资产组架-tree数据处理递归
+    dgtree(arr) {
+      for (var i = 0; i < arr.length; i++) {
+        this.$set(arr[i], "type", true);
+        if (arr[i].sub_groups && arr[i].sub_groups.length !== 0) {
+          this.dgtree(arr[i].sub_groups);
+        }
+      }
+    },
     // 表单提交
     sbmin() {
       this.$refs["ruleForm"].validate((valid) => {
@@ -404,34 +361,6 @@ export default {
     // 表单删除ip
     delrte(i) {
       this.ruleForm.iparr.splice(i, 1);
-    },
-    // -----------------------------------------------------------------------------------------------
-    // 切换本级与下级
-    qiehuan(e) {
-      for (var i = 0; i < this.data.length; i++) {
-        if (this.data[i].label == e.label) {
-          this.data[i].type = !this.data[i].type;
-          // console.log(this.data[i].label);
-          this.treekry = this.data[i].label;
-          return;
-        }
-        if (this.data[i].children && this.data[i].children.length !== 0) {
-          this.dg(this.data[i].children, e.label);
-        }
-      }
-    },
-    // 递归树
-    dg(arr, e) {
-      for (var i = 0; i < arr.length; i++) {
-        if (arr[i].label == e) {
-          arr[i].type = !arr[i].type;
-          this.treekry = arr[i].label;
-          return;
-        }
-        if (arr[i].children && arr[i].children.length !== 0) {
-          this.dg(arr[i].children, e);
-        }
-      }
     },
   },
 };

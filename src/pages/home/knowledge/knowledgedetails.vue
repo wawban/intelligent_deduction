@@ -11,7 +11,7 @@
         <div class="yys">漏洞知识详情</div>
       </div>
       <div class="fanh" @click="goto">
-        <img src="../img/fh.png" alt="">返回
+        <img src="../img/fh.png" alt="" />返回
       </div>
     </div>
     <!-- 主体 -->
@@ -32,14 +32,14 @@
                     <div style="color: #aaa; padding-right: 10rem">
                       CVE编号:
                     </div>
-                    <div>CVE-2023-48049</div>
+                    <div>{{ quanbu.cve_id }}</div>
                   </div>
 
                   <div>
                     <div style="color: #aaa; padding-right: 10rem">
                       CNNVD编号:
                     </div>
-                    <div>CNNVD-202312-1496</div>
+                    <div>{{ quanbu.cnvd_id }}</div>
                   </div>
                 </div>
                 <div style="padding-top: 14rem">
@@ -47,14 +47,14 @@
                     <div style="color: #aaa; padding-right: 10rem">
                       漏洞类型:
                     </div>
-                    <div>关键资源的不正确权限授予</div>
+                    <div>{{ quanbu.type }}</div>
                   </div>
 
                   <div>
                     <div style="color: #aaa; padding-right: 10rem">
                       发布日期:
                     </div>
-                    <div>2023-12-15</div>
+                    <div>{{ quanbu.time_discovered }}</div>
                   </div>
                 </div>
                 <div class="xiantiao">
@@ -165,7 +165,9 @@
             <div class="guns"></div>
             <div class="wenz">漏洞知识图谱</div>
           </div>
-          <div class="tuput"><Graph /></div>
+          <div class="tuput">
+            <Graph :datasj="graph" />
+          </div>
         </div>
       </div>
       <!-- ---------------- -->
@@ -267,18 +269,66 @@
   </div>
 </template>
 <script>
+import { kb_vulnsid } from "@/api";
 export default {
   components: {
-    Graph: () => import("@/components/graph"),
+    Graph: () => import("./cpmponents/graph.vue"),
   },
-  methods:{
-    goto(){
-        this.$router.go(-1)
+  data() {
+    return {
+      quanbu: {},
+      // typenum: "1", //标签页判断
+      // meta: { asset_group: {} }, //风险评估
+      // vulns: [], //漏洞信息
+      // ports: [], //端口信息
+      datasj: {}, //资产图谱
+      // related_assets: [], //关联资产
+      // lifecycle: "", //资产生命周期
+    };
+  },
+  mounted() {
+    this.getgovernancehostsid(); //获取详情
+  },
+  methods: {
+    // 获取详情
+    getgovernancehostsid() {
+      kb_vulnsid(this.$route.query.id).then((res) => {
+        this.quanbu = res;
+        this.datasj = res.graph; //资产图谱
+        // this.meta = res.meta; //风险评估
+        // this.vulns = res.vulns; //漏洞信息
+        // this.ports = res.ports; //端口信息
+        // this.related_assets = res.related_assets; //关联资产
+        // this.lifecycle = res.lifecycle; //资产生命周期
+        // this.lifecycle = [
+        //   {
+        //     timestamp: "2024-03-13T13:16:33.713Z",
+        //     user: "admin",
+        //     action: "创建XX1",
+        //     message: "发现XX",
+        //   },
+        //   {
+        //     timestamp: "2024-02-13T13:16:33.713Z",
+        //     user: "admin",
+        //     action: "创建XX2",
+        //     message: "发现XX",
+        //   },
+        //   {
+        //     timestamp: "2024-03-13T13:16:33.713Z",
+        //     user: "admin",
+        //     action: "创建XX3",
+        //     message: "发现XX",
+        //   },
+        // ];
+      });
+    },
+    goto() {
+      this.$router.go(-1);
     },
     // tz(){
     //   this.$router.push("/defensivetechniquesandtactics");
     // }
-  }
+  },
 };
 </script>
 <style lang="less" scoped>

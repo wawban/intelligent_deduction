@@ -119,6 +119,202 @@ export const governance_metatags = (data,id) => {
         data
     })
 }
+// 数字空间治理 网站资产 网站资产列表
+export const governance_sites = (params) => {
+    return request({
+        url: `${url}data-governance/sites`,
+        method: "get",
+        params
+    })
+}
+// 数字空间治理 网站资产 网站资产资产详情
+export const governance_sitesid = (params) => {
+    return request({
+        url: `${url}data-governance/sites/${params}`,
+        method: "get",
+    })
+}
+// 数字空间治理 网站资产 网站标签列表
+export const governance_tagssite = (params) => {
+    return request({
+        url: `${url}data-governance/tags/site-tags`,
+        method: "get",
+        params
+    })
+}
+// 数字空间治理 网站资产 网站资产添加标签
+export const governance_metatagssites = (data,id) => {
+    return request({
+        url: `${url}data-governance/sites/${id}/tags`,
+        method: "patch",
+        data
+    })
+}
+// 数字空间治理 网站资产 网站资产资产编辑
+export const governance_metasites = (data,id) => {
+    return request({
+        url: `${url}data-governance/sites/${id}/meta`,
+        method: "patch",
+        data
+    })
+}
+// 数字空间治理 标签管理 主机标签-更新
+export const governance_tagshosttags = (data,id) => {
+    return request({
+        url: `${url}data-governance/tags/host-tags/${id}`,
+        method: "patch",
+        data
+    })
+}
+// 数字空间治理 标签管理 网站标签-更新
+export const governance_tagssitetags = (data,id) => {
+    return request({
+        url: `${url}data-governance/tags/site-tags/${id}`,
+        method: "patch",
+        data
+    })
+}
+// 数字空间治理 标签管理 自定义标签-更新
+export const governance_tagscustomtags = (data,id) => {
+    return request({
+        url: `${url}data-governance/tags/custom-tags/${id}`,
+        method: "patch",
+        data
+    })
+}
+// 数字空间治理 标签管理 自定义标签-删除
+export function productInfo_remove(id) {
+    return request({
+        url: `${url}data-governance/tags/custom-tags/${id}`,
+        method: 'delete'
+    })
+}
+// 任务管理/推演任务 列表
+export const infer_tasks = (params) => {
+    return request({
+        url: `${url}infer/tasks`,
+        method: "get",
+        params
+    })
+}
+// 数字空间治理/漏洞治理 平铺视角
+export const governance_vulns= (params) => {
+    return request({
+        url: `${url}data-governance/vulns`,
+        method: "get",
+        params
+    })
+}
+// 数字空间治理 漏洞详情
+export function governance_vulnsxq(id) {
+    return request({
+        url: `${url}data-governance/vulns/${id}`,
+        method: 'get'
+    })
+}
+// 任务管理/推演任务 删除
+export function infer_taskssc(id) {
+    return request({
+        url: `${url}infer/tasks/${id}`,
+        method: 'delete'
+    })
+}
+export const system_users= (params) => {
+    return request({
+        url: `${url}auth/users`,
+        method: "get",
+        params
+    })
+}
+export const system_userspost= (data) => {
+    return request({
+        url: `${url}auth/users`,
+        method: "post",
+        data
+    })
+}
+export function system_userssc(id) {
+    return request({
+        url: `${url}auth/users/${id}`,
+        method: 'delete'
+    })
+}
+export function system_usersbj(data,id) {
+    return request({
+        url: `${url}auth/users/${id}`,
+        method: 'put',
+        data
+    })
+}
+export const system_status= (params) => {
+    return request({
+        url: `${url}system/status`,
+        method: "get",
+        params
+    })
+}
+export const system_logs= (params) => {
+    return request({
+        url: `${url}system/logs`,
+        method: "get",
+        params
+    })
+}
+export const kb_vulns= (params) => {
+    return request({
+        url: `${url}kb/vulns`,
+        method: "get",
+        params
+    })
+}
+export const kb_vulnsid = (id) => {
+    return request({
+        url: `${url}kb/vulns/${id}`,
+        method: "patch"
+    })
+}
+
+export const auth_roles= (params) => {
+    return request({
+        url: `${url}auth/roles`,
+        method: "get",
+        params
+    })
+}
+export function users_password(data,id) {
+    return request({
+        url: `${url}auth/users/${id}/password`,
+        method: 'put',
+        data
+    })
+}
+export function auth_logout() {
+    return request({
+        url: `${url}auth/logout`,
+        method: 'delete'
+    })
+}
+
+export const infer_taskspost= (data) => {
+    return request({
+        url: `${url}infer/tasks`,
+        method: "post",
+        data
+    })
+}
+export function infer_tasksstatus(data,id) {
+    return request({
+        url: `${url}infer/tasks/${id}/status`,
+        method: 'patch',
+        data
+    })
+}
+// /infer/tasks/{id}/status
+// /infer/tasks
+// /data-governance/vulns/{id}
+// s
+// /kb/vulns/{id}
+// /data-governance/vulns
 // export const productInfo_getList = (params) => {
 //     return request({
 //         url: `${url}productInfo/getList`,
