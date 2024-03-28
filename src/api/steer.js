@@ -33,3 +33,19 @@ export const results_graph = (params) => {
 		method: "get"
 	})
 }
+
+//获取资产信息
+export const host_info = (params) => {
+	return request({
+		url: `${url}data-governance/hosts/${params}`,
+		method: "get"
+	})
+}
+
+//获取组信息
+export const group_info = (params) => {
+	return request({
+		url: `${url}data-governance/groups/${params}`,
+		method: "get"
+	})
+}

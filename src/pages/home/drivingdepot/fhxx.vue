@@ -2,15 +2,29 @@
 <template>
 	<div class="popinfo" v-show="show" :style="popstyle()" :id="id">
 		<div class="header">
-			<span class="text active">防护信息</span><span class="line"></span><span class="text">设备性能</span>
+			<span :class="{'text':true,'active':active==1}" @click="active=1">防护信息</span>
+			<span class="line"></span>
+			<span :class="{'text':true,'active':active==2}" @click="active=2">设备性能</span>
 		</div>
 		<div class="body">
-			<ul>
-				<li>资产名称：{{data.name}}</li>
-				<li>资产类型：{{data.typename}}</li>
-				<li>设备IP：{{data.ip}}</li>
-				<li>阻断攻击路径：{{data.port}}</li>
-				<li>防护范围：{{data.src}}</li>
+			<ul v-if="active==1">
+				<li>资产名称：{{data.dc.device_name}}</li>
+				<li>资产类型：{{data.dc.device_type}}</li>
+				<li>设备IP：{{data.dc.device_ip}}</li>
+				<li>阻断攻击路径：{{data.dc.attack_paths_blocked}}</li>
+				<li>
+					<div class="item">
+						<div>防护范围：</div>
+						<div>
+							<span v-for="(item,index) in data.dc.shielded_range" :key="index">{{item}}</span>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<ul v-else>
+				<li>CPU使用率：{{data.dc.memory_usage}}</li>
+				<li>内存使用率：{{data.dc.cpu_usage}}</li>
+				<li>宽带使用率：{{data.dc.bandwidth_usage}}</li>
 			</ul>
 		</div>
 	</div>
@@ -22,12 +36,10 @@
 				id:'id'+Math.random(),
 				x:0,
 		      	y:0,
-		      	data:{},
+		      	active:1,
+		      	data:{dc:{}},
 		      	show:false
 			};
-		},
-		mounted() {
-			
 		},
 		methods: {
         	open:function(x,y,data){
@@ -69,4 +81,7 @@
 .popinfo .header .text.active{border-bottom:2px #FA9600 solid;padding-bottom:5px;}
 .popinfo .body{background:#1E1E1D;margin:0 20px 20px 20px;padding:10px;max-height:350px;overflow-y:auto;}
 .popinfo .body li{line-height:18px;margin:15px 0;word-break:break-all;word-wrap: anywhere;}
+.item{overflow:hidden;}
+.item div{float:left;}
+.item span{display:block;}
 </style>

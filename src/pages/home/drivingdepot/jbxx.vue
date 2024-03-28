@@ -1,4 +1,4 @@
-<!-- 基本信息、防护信息 -->
+<!-- 基本信息、风险信息 -->
 <template>
 	<div class="popinfo" v-show="show" :style="popstyle()" :id="id">
 		<div class="header">
@@ -7,22 +7,45 @@
 			<span :class="{'text':true,'active':active==2}" @click="active=2">风险信息</span>
 		</div>
 		<div class="body">
-			<ul v-show="active==1">
+			<ul v-if="active==1">
 				<li>资产组名称：{{data.name}}</li>
-				<li>资产数量：{{data.number}}</li>
-				<li>部门IP：{{data.depip}}</li>
-				<li>部门地址：{{data.depaddr}}</li>
+				<li>资产数量：{{data.count_assets}}</li>
+				<li>
+					<div class="item">
+						<div>部门IP：</div>
+						<div>
+							<span v-for="(item,index) in data.cidrs" :key="index">{{item}}</span>
+						</div>
+					</div>
+				</li>
+				
+				<li>部门地址：{{data.location}}</li>
 			</ul>
-			<ul v-show="active==2">
-				<li>风险资产数量：{{data.fxzcs}}</li>
-				<li>业务受影响面积：{{data.syxmj}}</li>
-				<li>可能受影响资产组：{{data.yxzcz}}</li>
-				<li>风险画像：{{data.fxhx}}</li>
+			<ul v-else>
+				<li>风险资产数量：{{data.count_risk_assets}}</li>
+				<li>业务受影响面积：{{data.affected_business_area}}</li>
+				<li>
+					<div class="item">
+						<div>可能受影响资产组：</div>
+						<div>
+							<span v-for="(item,index) in data.affected_groups" :key="index">{{item}}</span>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="item">
+						<div>风险画像：</div>
+						<div>
+							<span v-for="(item,index) in data.risk_portrait" :key="index">{{item}}</span>
+						</div>
+					</div>
+				</li>
 			</ul>
 		</div>
 	</div>
 </template>
 <script>
+	import {group_info} from "@/api/steer";
     export default {
 		data(){
 			return {
@@ -33,9 +56,6 @@
 		      	active:1,
 		      	data:{}
 			};
-		},
-		mounted() {
-			
 		},
 		methods: {
         	open:function(x,y,data){
@@ -56,6 +76,12 @@
 				    	me.y = window.innerHeight - height - 20;
 				    }
 				},100);
+				
+				group_info(data.id).then((res) => {
+					for (let key in res) {
+						me.$set(me.data,key,res[key]);
+					}
+				});
         	},
         	close:function(){
 				this.show = false;
@@ -78,4 +104,7 @@
 .popinfo .header .text.active{border-bottom:2px #FA9600 solid;padding-bottom:5px;}
 .popinfo .body{background:#1E1E1D;margin:0 20px 20px 20px;padding:10px;max-height:350px;overflow-y:auto;}
 .popinfo .body li{line-height:18px;margin:15px 0;word-break:break-all;word-wrap: anywhere;}
+.item{overflow:hidden;}
+.item div{float:left;}
+.item span{display:block;}
 </style>
